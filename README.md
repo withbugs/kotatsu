@@ -27,8 +27,9 @@ All times are Japan Standard Time.
 
 | Time | Agent | Environment | Main responsibility |
 | --- | --- | --- | --- |
-| 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, and create the monthly planning Issue when needed. |
+| 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, create the monthly planning Issue when needed, and route previous visual work to copy editing. |
 | 10:00 | Editor-in-chief | local | Decide the monthly editorial direction, article lineup, publishing order, tone, candidate memo, and formal plan. |
+| 11:00 | Copy editor | local | Check tone, readability, banned expressions, factual risk, and reader-facing trust issues after managing-editor routing. |
 | 12:00 | Managing editor | local | Check the approved formal plan from a production standpoint, then split it into article, visual, copy-editing, and publishing Issues. |
 | 14:00 | STYLE writer | worktree | Draft articles assigned with `agent:style-writer`. |
 | 14:00 | LIFE writer | worktree | Draft articles assigned with `agent:life-writer`. |
@@ -36,12 +37,11 @@ All times are Japan Standard Time.
 | 14:00 | CULTURE writer | worktree | Draft articles assigned with `agent:culture-writer`. |
 | 14:00 | PEOPLE writer | worktree | Draft articles assigned with `agent:people-writer`. |
 | 14:00 | SHOPPING writer | worktree | Draft articles assigned with `agent:shopping-writer`. |
-| 16:00 | Managing editor | local | Review writer output and route tasks to visual editing, copy editing, or publishing preparation. |
+| 16:00 | Managing editor | local | Review writer output, route article drafts to visual editing, and route copy-edited work to publishing preparation. |
 | 18:00 | Visual editor | local | Prepare AI-generated visuals, alt text, prompt summaries, metadata, and placement guidance. |
-| 18:10 | Copy editor | local | Check tone, readability, banned expressions, factual risk, and reader-facing trust issues. |
-| 18:20 | Publisher | local | Run publishing gates, build checks, screenshot checks, and GitHub Pages publishing preparation. |
+| 19:00 | Publisher | local | Run publishing gates, build checks, screenshot checks, and GitHub Pages publishing preparation after managing-editor routing. |
 
-The writer group runs at the same time because each writer uses an isolated worktree. Later production roles run in the local workspace and are staggered in the 18:00 hour to avoid touching the same files at once.
+The writer group runs at the same time because each writer uses an isolated worktree. Later production roles do not hand work directly to one another: visual editing finishes into `kotatsu:review`, the next 09:00 managing-editor run routes approved visual work to the 11:00 copy editor, and the 16:00 managing-editor run routes approved copy-edited work to the 19:00 publisher.
 
 ### Handoff Rules
 
@@ -52,6 +52,7 @@ The writer group runs at the same time because each writer uses an isolated work
 - When an agent starts, it removes `kotatsu:ready` and adds `kotatsu:running`.
 - When an agent finishes, it comments with the result and moves the Issue to `kotatsu:review`.
 - The managing editor reviews `kotatsu:review`, assigns the next `agent:*` label, and returns the Issue to `kotatsu:ready` when the next role can safely continue.
+- Visual editing, copy editing, and publishing are separated by managing-editor desk checks; they do not directly pass `kotatsu:ready` to each other.
 - Publishing tasks pass through `kotatsu:publish` and move to `kotatsu:done` only after the publishing gate succeeds.
 
 ### Publishing Cadence
