@@ -21,27 +21,25 @@ The key production mechanism for KOTATSU is Codex scheduled automation. Each AI 
 
 The scheduled automation settings themselves live in the local Codex app. This repository stores the durable production rules, role cards, issue labels, scripts, and CI/CD workflows. If the project moves to another machine, recreate the Codex scheduled automations from this README, `.agents/kotatsu`, and `docs/editorial`.
 
-### Daily Schedule
+### Two-Day Production Schedule
 
-All times are Japan Standard Time.
+All times are Japan Standard Time. The automations run every day, but a single article does not move from visual editing to publication in one evening. The fastest normal path is a two-day handoff with managing-editor checks between production roles.
 
-| Time | Agent | Environment | Main responsibility |
-| --- | --- | --- | --- |
-| 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, create the monthly planning Issue when needed, and route previous visual work to copy editing. |
-| 10:00 | Editor-in-chief | local | Decide the monthly editorial direction, article lineup, publishing order, tone, candidate memo, and formal plan. |
-| 11:00 | Copy editor | local | Check tone, readability, banned expressions, factual risk, and reader-facing trust issues after managing-editor routing. |
-| 12:00 | Managing editor | local | Check the approved formal plan from a production standpoint, then split it into article, visual, copy-editing, and publishing Issues. |
-| 14:00 | STYLE writer | worktree | Draft articles assigned with `agent:style-writer`. |
-| 14:00 | LIFE writer | worktree | Draft articles assigned with `agent:life-writer`. |
-| 14:00 | WEEKEND writer | worktree | Draft articles assigned with `agent:weekend-writer`. |
-| 14:00 | CULTURE writer | worktree | Draft articles assigned with `agent:culture-writer`. |
-| 14:00 | PEOPLE writer | worktree | Draft articles assigned with `agent:people-writer`. |
-| 14:00 | SHOPPING writer | worktree | Draft articles assigned with `agent:shopping-writer`. |
-| 16:00 | Managing editor | local | Review writer output, route article drafts to visual editing, and route copy-edited work to publishing preparation. |
-| 18:00 | Visual editor | local | Prepare AI-generated visuals, alt text, prompt summaries, metadata, and placement guidance. |
-| 19:00 | Publisher | local | Run publishing gates, build checks, screenshot checks, and GitHub Pages publishing preparation after managing-editor routing. |
+| Production day | Time | Agent | Environment | Main responsibility |
+| --- | --- | --- | --- | --- |
+| Day 1 | 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, and create the monthly planning Issue when needed. |
+| Day 1 | 10:00 | Editor-in-chief | local | Decide the monthly editorial direction, article lineup, publishing order, tone, candidate memo, and formal plan. |
+| Day 1 | 12:00 | Managing editor | local | Check approved plans and split them into article, visual, copy-editing, and publishing Issues. |
+| Day 1 | 14:00 | STYLE / LIFE / WEEKEND / CULTURE / PEOPLE / SHOPPING writers | worktree | Draft assigned article Issues in isolated worktrees. |
+| Day 1 | 16:00 | Managing editor | local | Review writer output and route article drafts to visual editing when ready. |
+| Day 1 | 18:00 | Visual editor | local | Prepare AI-generated visuals, alt text, prompt summaries, metadata, and placement guidance, then return the Issue to `kotatsu:review`. |
+| Day 2 | 09:00 | Managing editor | local | Review visual-editor output and route approved work to copy editing. |
+| Day 2 | 11:00 | Copy editor | local | Check tone, readability, banned expressions, factual risk, and reader-facing trust issues, then return the Issue to `kotatsu:review`. |
+| Day 2 | 12:00 | Managing editor | local | Review copy-editor output and route approved work to publishing preparation. |
+| Day 2 | 13:00 | Publisher | local | Run publishing gates, build checks, screenshot checks, and GitHub Pages publishing preparation. |
+| Day 2 | 16:00 | Managing editor | local | Review any publishing failures, revisions, or stalled handoffs and schedule the next step. |
 
-The writer group runs at the same time because each writer uses an isolated worktree. Later production roles do not hand work directly to one another: visual editing finishes into `kotatsu:review`, the next 09:00 managing-editor run routes approved visual work to the 11:00 copy editor, and the 16:00 managing-editor run routes approved copy-edited work to the 19:00 publisher.
+The writer group runs at the same time because each writer uses an isolated worktree. Visual editing, copy editing, and publishing do not hand work directly to one another: each role finishes into `kotatsu:review`, and the managing editor decides whether the next role can safely receive `kotatsu:ready` or `kotatsu:publish`. If visual generation, copy editing, or publishing gates need revision, the item moves to the next available day instead of being rushed through.
 
 ### Handoff Rules
 
