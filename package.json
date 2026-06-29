@@ -1,0 +1,31 @@
+{
+  "name": "zipangu.kotatsu",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev --host 127.0.0.1",
+    "build": "pnpm content:check && cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview --host 127.0.0.1",
+    "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check && pnpm content:check",
+    "content:check": "node scripts/editorial/check-content.mjs && node scripts/editorial/check-ai-visuals.mjs && node scripts/editorial/check-publishing-schedule.mjs && node scripts/editorial/check-reader-facing-copy.mjs",
+    "article:new": "node scripts/editorial/create-article-from-issue.mjs",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots",
+    "publish:check": "node scripts/editorial/check-publishing-schedule.mjs",
+    "article:publish": "node scripts/editorial/publish-article.mjs",
+    "copy:check": "node scripts/editorial/check-reader-facing-copy.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.1",
+    "astro": "^5.11.0",
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^22.10.0",
+    "cross-env": "^7.0.3",
+    "typescript": "^5.8.3"
+  }
+}

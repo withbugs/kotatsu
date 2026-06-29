@@ -1,0 +1,64 @@
+name: Article Task
+description: 記事の企画、執筆、編集タスク
+title: "[Article] "
+labels:
+  - type:article
+  - kotatsu:planned
+body:
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - STYLE
+        - LIFE
+        - WEEKEND
+        - CULTURE
+        - PEOPLE
+        - SHOPPING
+        - COLUMN
+    validations:
+      required: true
+  - type: input
+    id: monthly_issue
+    attributes:
+      label: Monthly issue
+      placeholder: "ISSUE 001 創刊号テーマ検討"
+    validations:
+      required: true
+  - type: input
+    id: working_title
+    attributes:
+      label: Working title
+    validations:
+      required: true
+  - type: textarea
+    id: brief
+    attributes:
+      label: Brief
+      description: 記事の狙い、読後感、扱うものを書く
+    validations:
+      required: true
+  - type: textarea
+    id: visual_notes
+    attributes:
+      label: Visual notes
+      description: AI生成ビジュアル、余白、hero画像、キャプションの方向性
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Editorial checks
+      options:
+        - label: 月刊号のテーマに沿っている
+        - label: 商品紹介だけになっていない
+        - label: 読者を煽っていない
+        - label: 服と生活がつながっている
+        - label: 撮影写真ではなくAI生成ビジュアルを使う
+          required: true
+
+
+
+
+

@@ -1,0 +1,39 @@
+name: Monthly Issue
+description: 月刊号のテーマと構成を決める
+title: "ISSUE 000: "
+labels:
+  - type:monthly-issue
+  - agent:editor-in-chief
+  - kotatsu:ready
+body:
+  - type: input
+    id: issue_number
+    attributes:
+      label: Issue number
+      placeholder: "001"
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: "創刊号テーマ候補"
+    validations:
+      required: true
+  - type: textarea
+    id: concept
+    attributes:
+      label: Editorial concept
+      description: この号で読者に残したい感覚を書く
+    validations:
+      required: true
+  - type: textarea
+    id: lineup
+    attributes:
+      label: Article lineup
+      description: カバーストーリー、特集、LIFE、CULTURE、SHOPPINGなど
+    validations:
+      required: true
+
+
+

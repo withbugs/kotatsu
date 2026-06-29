@@ -1,0 +1,21 @@
+---
+import { assetPath } from '../lib/kotatsu';
+
+const nav = [
+  ['STYLE', '/style/'],
+  ['LIFE', '/life/'],
+  ['WEEKEND', '/weekend/'],
+  ['CULTURE', '/culture/'],
+  ['PEOPLE', '/people/'],
+  ['SHOPPING', '/shopping/']
+];
+---
+<header class="site-header">
+  <a class="site-mark" href={assetPath('/')} aria-label="KOTATSU home">
+    <img src={assetPath('/logo.svg')} alt="KOTATSU" />
+  </a>
+  <nav class="site-nav" aria-label="Primary navigation">
+    {nav.map(([label, path]) => <a href={assetPath(path)}>{label}</a>)}
+  </nav>
+</header>
+

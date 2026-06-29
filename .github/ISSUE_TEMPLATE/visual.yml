@@ -1,0 +1,52 @@
+name: Visual Task
+description: AI生成ビジュアル、レイアウト、スクリーンショット確認
+title: "[Visual] "
+labels:
+  - type:visual
+  - agent:visual-editor
+  - kotatsu:planned
+body:
+  - type: input
+    id: target
+    attributes:
+      label: Target article or page
+    validations:
+      required: true
+  - type: textarea
+    id: direction
+    attributes:
+      label: Visual direction
+      description: AI生成ビジュアルの方向、余白、色、見せ方
+    validations:
+      required: true
+  - type: dropdown
+    id: visual_mode
+    attributes:
+      label: Visual mode
+      options:
+        - photorealistic
+        - illustration
+        - collage
+        - still-life
+    validations:
+      required: true
+  - type: checkboxes
+    id: ai_visual_rules
+    attributes:
+      label: AI visual rules
+      options:
+        - label: 撮影写真、ストックフォト、公式商品写真を使わない
+          required: true
+        - label: すべての画像をAIで生成する
+          required: true
+        - label: 実在ブランドロゴ、実在店舗看板、著名人の顔を生成しない
+          required: true
+  - type: textarea
+    id: screenshot_points
+    attributes:
+      label: Screenshot check points
+      description: desktop/mobileで確認したい箇所
+    validations:
+      required: false
+
+

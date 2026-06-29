@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+playwright-report/
+test-results/
+.env
+.env.local
+npm-debug.log*
+pnpm-debug.log*
+.pnpm-store/
+

@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { categories, visibleArticles } from '../lib/kotatsu';
+
+export function getStaticPaths() {
+  return categories.map((category) => ({ params: { category: category.slug }, props: { category } }));
+}
+
+const { category } = Astro.props;
+const articles = visibleArticles(await getCollection('articles')).filter((article) => article.data.category === category.id);
+---
+<BaseLayout title={category.label} description={category.description}>
+  <main>
+    <section class="section category-page">
+      <div class="section__head">
+        <p class="eyebrow">CATEGORY</p>
+        <h1>{category.label}</h1>
+        <p>{category.description}</p>
+      </div>
+      <div class="article-grid article-grid--issue">
+        {articles.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+

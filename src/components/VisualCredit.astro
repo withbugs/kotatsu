@@ -1,0 +1,10 @@
+---
+interface Props {
+  mode: string;
+  intent: string;
+}
+
+const { mode, intent } = Astro.props;
+---
+<p class="visual-credit">AI-generated visual / {mode} / {intent}</p>
+

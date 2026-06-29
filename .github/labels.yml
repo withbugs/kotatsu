@@ -1,0 +1,91 @@
+- name: kotatsu:ready
+  color: "2f6f4e"
+  description: Ready for an editorial agent to process
+- name: kotatsu:planned
+  color: "8f8f7a"
+  description: Planned but not ready for agent processing
+- name: kotatsu:running
+  color: "7a6846"
+  description: Currently being processed
+- name: kotatsu:review
+  color: "b88a44"
+  description: Waiting for editorial review
+- name: kotatsu:revise
+  color: "b85c44"
+  description: Needs revision
+- name: kotatsu:publish
+  color: "3f5f7f"
+  description: Ready for publishing preparation
+- name: kotatsu:done
+  color: "6f7d65"
+  description: Completed
+- name: type:monthly-issue
+  color: "111111"
+  description: Monthly issue planning
+- name: type:article
+  color: "444444"
+  description: Article task
+- name: type:visual
+  color: "888888"
+  description: AI visual direction or screenshot task
+- name: type:copy-edit
+  color: "a0a0a0"
+  description: Copy editing and fact checking
+- name: type:publish
+  color: "555555"
+  description: Publishing task
+- name: category:style
+  color: "d8d3c7"
+  description: STYLE category
+- name: category:life
+  color: "c5c0b5"
+  description: LIFE category
+- name: category:weekend
+  color: "a9b29f"
+  description: WEEKEND category
+- name: category:culture
+  color: "8d9aa5"
+  description: CULTURE category
+- name: category:people
+  color: "b3aaa1"
+  description: PEOPLE category
+- name: category:shopping
+  color: "9c8b7b"
+  description: SHOPPING category
+- name: agent:editor-in-chief
+  color: "1f1f1f"
+  description: Editor-in-chief agent
+- name: agent:managing-editor
+  color: "333333"
+  description: Managing editor agent
+- name: agent:style-writer
+  color: "5c6458"
+  description: STYLE writer agent
+- name: agent:life-writer
+  color: "65605a"
+  description: LIFE writer agent
+- name: agent:weekend-writer
+  color: "6d755d"
+  description: WEEKEND writer agent
+- name: agent:culture-writer
+  color: "596475"
+  description: CULTURE writer agent
+- name: agent:people-writer
+  color: "75685d"
+  description: PEOPLE writer agent
+- name: agent:shopping-writer
+  color: "7a6a55"
+  description: SHOPPING writer agent
+- name: agent:visual-editor
+  color: "4f5f68"
+  description: AI visual editor and art director agent
+- name: agent:copy-editor
+  color: "6a6a6a"
+  description: Copy editor and fact-checking agent
+- name: agent:publisher
+  color: "2f4f5f"
+  description: Publishing agent
+
+
+
+

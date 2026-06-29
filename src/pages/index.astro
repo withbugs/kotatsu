@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import VisualCredit from '../components/VisualCredit.astro';
+import { assetPath, categories, visibleArticles } from '../lib/kotatsu';
+
+const issues = await getCollection('issues');
+const issue = issues.find((entry) => entry.slug === 'issue-001') ?? issues[0];
+const issueIsPlanning = issue.data.status === 'planning';
+const allArticles = issueIsPlanning ? [] : visibleArticles(await getCollection('articles'));
+const issueArticles = allArticles.filter((article) => article.data.issue === issue.slug);
+const leadArticle = issueArticles.find((article) => article.data.kind === 'cover-story') ?? issueArticles[0];
+const secondaryArticles = issueArticles.filter((article) => article.id !== leadArticle?.id);
+---
+<BaseLayout title="KOTATSU" description={issue.data.subtitle} image={issueIsPlanning ? assetPath('/logo.svg') : assetPath(issue.data.coverImage)}>
+  <main>
+    <section class:list={['home-hero', { 'home-hero--planning': issueIsPlanning }]}>
+      {issueIsPlanning ? (
+        <div class="home-hero__paper"></div>
+      ) : (
+        <>
+          <img src={assetPath(issue.data.coverImage)} alt={issue.data.coverAlt} />
+          <div class="home-hero__shade"></div>
+        </>
+      )}
+      <div class="home-hero__copy">
+        <p class="issue-label">ISSUE {String(issue.data.number).padStart(3, '0')}</p>
+        <img class="home-hero__logo" src={assetPath('/logo.svg')} alt="KOTATSU" />
+        <p class="home-hero__issue">{issue.data.title}</p>
+        <p class="home-hero__lead">{issue.data.subtitle}</p>
+        <a class:list={['text-link', { 'text-link--light': !issueIsPlanning }]} href={assetPath(`/issues/${issue.slug}/`)}>
+          {issueIsPlanning ? '準備状況を見る' : 'Read the issue'}
+        </a>
+      </div>
+      {!issueIsPlanning && <VisualCredit mode={issue.data.visual.mode} intent={issue.data.visual.intent} />}
+    </section>
+
+    <section class="section section--intro">
+      <div class="section__head">
+        <p class="eyebrow">MONTHLY ISSUE</p>
+        <h2>{issue.data.title}</h2>
+      </div>
+      <p class="intro-copy">
+        {issueIsPlanning
+          ? '最初の号は、テーマと記事構成を丁寧に準備しています。公開日が決まり次第、このページでお知らせします。'
+          : '大人の日常を、少しだけ洒落たものにする。服、喫茶店、街歩き、道具、音楽をひとつの号として編んでいきます。'}
+      </p>
+    </section>
+
+    {issueIsPlanning ? (
+      <section class="section planning-panel" aria-label="Editorial planning status">
+        <p class="eyebrow">PREPARING</p>
+        <h2>準備中</h2>
+        <p>記事ラインナップと公開日は、決まり次第このページでお知らせします。</p>
+      </section>
+    ) : (
+      <>
+        {leadArticle && (
+          <section class="section feature-band">
+            <ArticleCard article={leadArticle} emphasis />
+          </section>
+        )}
+
+        <section class="section">
+          <div class="section__head section__head--row">
+            <div>
+              <p class="eyebrow">LATEST</p>
+              <h2>創刊号の記事</h2>
+            </div>
+            <a class="text-link" href={assetPath(`/issues/${issue.slug}/`)}>View all</a>
+          </div>
+          <div class="article-grid">
+            {secondaryArticles.map((article) => <ArticleCard article={article} />)}
+          </div>
+        </section>
+      </>
+    )}
+
+    <section class="section category-strip" aria-label="Categories">
+      {categories.map((category) => (
+        <a href={assetPath(`/${category.slug}/`)}>
+          <span>{category.label}</span>
+          <small>{category.description}</small>
+        </a>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
+

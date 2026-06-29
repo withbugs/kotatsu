@@ -1,0 +1,40 @@
+---
+import type { Article } from '../lib/kotatsu';
+import { assetPath, categorySlug, formatDate, isArticlePublished } from '../lib/kotatsu';
+
+interface Props {
+  article: Article;
+  emphasis?: boolean;
+}
+
+const { article, emphasis = false } = Astro.props;
+const published = isArticlePublished(article);
+const articleHref = assetPath(`/articles/${article.slug}/`);
+const statusLabel = article.data.status === 'scheduled' ? `公開予定: ${formatDate(article.data.publishAt)}` : '公開準備中';
+---
+<article class:list={['article-card', { 'article-card--large': emphasis, 'article-card--pending': !published }]}>
+  {published ? (
+    <a class="article-card__image" href={articleHref} aria-label={article.data.title}>
+      <img src={assetPath(article.data.heroImage)} alt={article.data.heroAlt} loading="lazy" />
+    </a>
+  ) : (
+    <div class="article-card__image" aria-hidden="true">
+      <img src={assetPath(article.data.heroImage)} alt="" loading="lazy" />
+      <span class="article-card__badge">公開準備中</span>
+    </div>
+  )}
+  <div class="article-card__body">
+    <a class="eyebrow" href={assetPath(`/${categorySlug(article.data.category)}/`)}>{article.data.category}</a>
+    <h3>
+      {published ? <a href={articleHref}>{article.data.title}</a> : <span>{article.data.title}</span>}
+    </h3>
+    <p>{article.data.description}</p>
+    {published ? (
+      <time datetime={article.data.publishAt}>{formatDate(article.data.publishAt)}</time>
+    ) : (
+      <p class="article-card__status">{statusLabel}</p>
+    )}
+  </div>
+</article>
+
+

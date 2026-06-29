@@ -1,0 +1,9 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "editorialIntent": "週末の朝に、自分のリズムへ戻る感覚",
+  "promptSummary": "自然光の喫茶店、白シャツ、オリーブのジャケット、革靴、コーヒー、本を配した創刊号カバー。",
+  "avoid": ["real brand logos", "real store signage", "celebrity likeness", "stock photo look"],
+  "reviewedBy": "agent:visual-editor"
+}
+

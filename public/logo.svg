@@ -1,0 +1,17 @@
+<svg width="180" height="120" viewBox="250 30 180 120" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- 脚 -->
+  <line x1="270" y1="80"  x2="270" y2="100" stroke="#1A1A1A" stroke-width="0.9"/>
+  <line x1="410" y1="80"  x2="410" y2="100" stroke="#1A1A1A" stroke-width="0.9"/>
+  <line x1="340" y1="122" x2="340" y2="142" stroke="#1A1A1A" stroke-width="0.9"/>
+
+  <!-- 天板 -->
+  <polygon points="340,38 410,80 340,122 270,80" fill="#1A1A1A"/>
+
+  <!-- KOTATSU（白抜き） -->
+  <text x="340" y="83"
+    font-family="Georgia,'Times New Roman',serif"
+    font-size="8" fill="#FFFFFF"
+    text-anchor="middle" letter-spacing="6">KOTATSU</text>
+
+</svg>
