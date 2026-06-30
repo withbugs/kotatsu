@@ -45,12 +45,12 @@ kind: feature
 template: feature
 status: draft
 publishAt: "${new Date().toISOString()}"
-heroImage: /images/volumes/001/cover-weekend-clothes.png
-heroAlt: TODO: AI生成ビジュアルの内容を書く
+heroImage: "__AI_VISUAL_PENDING__"
+heroAlt: TODO: AI生成ビジュアルをビジュアル編集工程で生成する
 visual:
   source: ai-generated
   mode: photorealistic
-  promptSummary: TODO: 生成プロンプトの要約を書く。
+  promptSummary: TODO: ビジュアル編集工程で生成プロンプトの要約を書く。
   intent: TODO: 編集意図を書く。
   avoid:
     - real brand logos

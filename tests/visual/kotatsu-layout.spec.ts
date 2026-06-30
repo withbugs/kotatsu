@@ -69,7 +69,7 @@ test('planning volume hides cover image and article table of contents', async ({
   await expect(page.getByText('AI生成ビジュアル方針')).toHaveCount(0);
   await expect(page.getByText('月刊号設計')).toHaveCount(0);
   await expect(page.getByText('Vol.設計')).toHaveCount(0);
-  await expect(page.locator('img[src$="/images/volumes/001/cover-weekend-clothes.png"]')).toHaveCount(0);
+  await expect(page.locator('img[src*="/images/volumes/001/"]')).toHaveCount(0);
 
   const articleTitles = [
     '大人の週末服',
@@ -82,9 +82,7 @@ test('planning volume hides cover image and article table of contents', async ({
     await expect(page.getByText(title)).toHaveCount(0);
   }
 
-  for (const slug of ['vol-001-cover', 'white-shirt-weekend', 'cafe-clothes-and-belongings', 'weekend-tools']) {
-    await expect(page.locator(`a[href="/kotatsu/articles/${slug}/"]`)).toHaveCount(0);
-  }
+  await expect(page.locator('a[href^="/kotatsu/articles/"]')).toHaveCount(0);
 });
 
 

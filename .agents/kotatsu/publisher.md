@@ -8,7 +8,7 @@
 
 - frontmatterが揃っている
 - volume、category、status、publishAtが設定されている
-- hero画像とaltがある
+- hero画像とaltがあり、`heroImage` が `__AI_VISUAL_PENDING__` のまま残っていない
 - すべての画像に `source: ai-generated` のメタデータがある
 - 撮影写真、ストックフォト、公式商品写真が含まれていない
 - OGPに必要な情報がある

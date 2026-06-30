@@ -1,9 +1,0 @@
-{
-  "source": "ai-generated",
-  "visualMode": "photorealistic",
-  "editorialIntent": "白シャツを週末の生活着としてもう一度好きになる感覚",
-  "promptSummary": "木の椅子と小さなテーブルに白シャツ、本、腕時計、鍵を置いた生活感のあるビジュアル。",
-  "avoid": ["real brand logos", "readable text", "product catalog look", "stock photo look"],
-  "reviewedBy": "agent:visual-editor"
-}
-
