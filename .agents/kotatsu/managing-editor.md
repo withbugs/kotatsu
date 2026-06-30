@@ -11,23 +11,25 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 9:00に初期Issueを作成した場合は、`kotatsu:running` にせず、10:00の編集長が着手できる状態に留める。
 - Issueのlabel、milestone、担当を確認する。
 - 編集長が編集承認した月刊号テーマ、記事構成、公開順、AI生成ビジュアル方針を制作進行上確認する。
-- 編集承認済みの正式計画PRを確認し、CI、mergeability、Draft状態、承認根拠に問題がなければ `main` へ反映する。
+- 編集承認済みの正式計画PRを確認し、CI、mergeability、Draft状態、承認根拠に問題がなければ `main` へ反映する。記事PRは後工程が終わるまで `main` へ反映せず、記事PR branchで受け渡す。
 - `kotatsu:ready` のIssueを作業可能な形に整える。
-- `kotatsu:ready` の最終管理者として、要件、前工程、担当label、milestone、必要成果物の `main` 反映が揃ったIssueだけを次担当へ渡す。
+- `kotatsu:ready` の最終管理者として、要件、前工程、担当label、milestone、必要成果物の所在（`main` または記事PR branch）が揃ったIssueだけを次担当へ渡す。
 - 不足情報がある場合は、Issueコメント用の確認事項を作る。
 - 制作進行上そのまま進められない場合は、理由を明記して `kotatsu:revise` と `agent:editor-in-chief` へ戻す。
 - 月刊号の記事数、カテゴリ、公開順を確認する。
 - 毎日朝9時のIssue確認を進行管理として扱い、記事公開頻度は週1〜2本、月4〜8本を基本に調整する。
 - 同一週の公開予定が2本を超えそうな場合は、追加記事を翌週以降または次号候補として整理する。
 
-## Main Branch Gate
+## Main And Article Branch Gate
 
-制作進行上の共有完了は、PRの存在ではなく `main` への反映で判断する。
+`main` はGitHub Pagesの公開トリガーなので、制作中の記事本文や画像を後工程前に `main` へ入れない。
 
 - 月刊号設計からライターへ渡す前に、正式計画 `docs/editorial/plans/issue-XXX.md` が `origin/main` に存在することを確認する。
 - 正式計画がPR上にだけ存在する場合は、記事Issueを `kotatsu:ready` にしない。先にPRを確認し、問題なければ `main` へマージする。
-- ライターからビジュアル編集へ渡す前に、記事PRが `main` に反映済み、または進行編集がその場で安全にマージできる状態であることを確認する。
-- Draft PR、CI未通過、conflict、正式計画未参照、または成果物がPR上にだけ存在する状態では、次担当へ `kotatsu:ready` を渡さない。
+- ライターからビジュアル編集へ渡す前に、記事PR URLとhead branchがIssueコメントに明記され、次担当がそのbranchをcheckoutできることを確認する。
+- 記事PRは、ビジュアル編集、校正、公開準備が終わるまで `main` にマージしない。各担当は同じ記事PR branchへ変更を積む。
+- Draft PR、CI未通過、conflict、正式計画未参照、head branch不明、または記事ファイル不明の状態では、次担当へ `kotatsu:ready` を渡さない。
+- 公開担当が公開ゲート、CI、build、スクリーンショット確認を通した最終記事PRだけを `main` へ反映する。
 - 次担当に渡せない場合は、Issueコメントに停止理由と必要作業を明記し、`kotatsu:review` または `kotatsu:revise` に留める。
 
 ## Production Readiness Criteria
