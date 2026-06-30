@@ -30,7 +30,7 @@ All times are Japan Standard Time. The automations run every day, but a single a
 | Day 1 | 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, and create the monthly planning Issue when needed. |
 | Day 1 | 10:00 | Editor-in-chief | local | Decide the monthly editorial direction, article lineup, publishing order, tone, candidate memo, and formal plan. |
 | Day 1 | 12:00 | Managing editor | local | Check approved plan PRs, merge safe plans to `main`, then split `main`-available plans into article, visual, copy-editing, and publishing Issues. |
-| Day 1 | 14:00 | STYLE / LIFE / WEEKEND / CULTURE / PEOPLE / SHOPPING writers | worktree | Draft assigned article Issues in isolated worktrees. |
+| Day 1 | 14:00 | STYLE / LIFE / WEEKEND / CULTURE / PEOPLE / SHOPPING writers | worktree | Draft only article Issues scheduled for publication in the current JST week, using isolated worktrees. |
 | Day 1 | 16:00 | Managing editor | local | Review writer PRs, record their head branches, and route article production branches to visual editing without merging drafts to `main`. |
 | Day 1 | 18:00 | Visual editor | local | Prepare AI-generated visuals, alt text, prompt summaries, metadata, and placement guidance, then return the Issue to `kotatsu:review`. |
 | Day 2 | 09:00 | Managing editor | local | Review visual-editor output and route approved work to copy editing. |
@@ -45,7 +45,7 @@ The writer group runs at the same time because each writer uses an isolated work
 
 - A monthly GitHub milestone represents one magazine issue.
 - Planning, article writing, AI visual work, copy editing, and publishing tasks are managed as GitHub Issues.
-- Each agent only handles open Issues that have a milestone, `kotatsu:ready`, and that agent's own `agent:*` label.
+- Each agent only handles open Issues that have a milestone, `kotatsu:ready`, and that agent's own `agent:*` label. Writer agents also require the article to be scheduled for publication in the current JST week.
 - The managing editor owns the final decision to add or remove `kotatsu:ready`.
 - When an agent starts, it removes `kotatsu:ready` and adds `kotatsu:running`.
 - When an agent finishes, it comments with the result and moves the Issue to `kotatsu:review`.
@@ -54,6 +54,9 @@ The writer group runs at the same time because each writer uses an isolated work
 - Visual editing, copy editing, and publishing are separated by managing-editor desk checks; they do not directly pass `kotatsu:ready` to each other.
 - Publishing tasks pass through `kotatsu:publish` and move to `kotatsu:done` only after the publishing gate succeeds.
 
+### Weekly Writing Gate
+
+Writer agents run every day at 14:00, but they only draft articles scheduled for publication in the current Japan Standard Time week, from Monday 00:00 through Sunday 23:59. The managing editor keeps future-week article Issues in `kotatsu:planned` or `kotatsu:revise` and only adds `kotatsu:ready` when that publication week arrives. If a future-week or undated article is accidentally marked ready, the writer removes `kotatsu:ready`, returns it to `kotatsu:planned`, and comments why it was skipped.
 ### Publishing Cadence
 
 Scheduled agents run every day, but that does not mean articles are published every day. Daily execution is for Issue cleanup, handoff, unblocking, and pre-publication checks. The publishing cadence remains one to two articles per week and four to eight articles per monthly issue.

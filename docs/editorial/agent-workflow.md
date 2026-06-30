@@ -82,7 +82,7 @@ open の月刊号設計Issueが存在しない場合だけ、進行編集が `IS
 - Day 1 09:00 進行編集: 前日分整理、当日の対象確認、label/milestone/担当確認、滞留Issue整理。月刊号設計Issueがなければ作成する
 - Day 1 10:00 編集長: 号全体、企画、見出し、公開可否の編集判断
 - Day 1 12:00 進行編集: 編集長が編集承認した正式計画PRを確認し、問題なければ `main` へ反映する。`main` 上で正式計画を確認できる場合だけ記事Issue化してライターへ渡す。不足があれば差し戻す
-- Day 1 14:00 ライター群: STYLE、WEEKEND、LIFE、CULTURE、PEOPLE、SHOPPINGをworktreeで同時実行
+- Day 1 14:00 ライター群: STYLE、WEEKEND、LIFE、CULTURE、PEOPLE、SHOPPINGをworktreeで同時実行。ただしJSTの現在週に公開予定の記事だけを執筆する
 - Day 1 16:00 進行編集: ライター成果PRを確認し、PR URLとhead branchをIssueに明記したうえで、記事PR branchをビジュアル編集へ渡す。後工程前の記事PRは `main` にマージしない
 - Day 1 18:00 ビジュアル編集: AI生成ビジュアル、alt、プロンプト要約、メタデータ、配置方針を整え、`kotatsu:review` に戻す
 - Day 2 09:00 進行編集: ビジュアル編集済みIssueを確認し、校正へ渡せる場合だけ `agent:copy-editor` と `kotatsu:ready` を整える
@@ -93,11 +93,20 @@ open の月刊号設計Issueが存在しない場合だけ、進行編集が `IS
 
 ライター群は分離されたworktreeで同時実行する。ビジュアル編集、校正、公開担当は直接受け渡しをしない。各担当は完了後に `kotatsu:review` へ進め、進行編集が次の定時実行で内容を確認してから次担当へ渡す。最短でも、ビジュアル編集から公開担当までは Day 1 18:00 から Day 2 13:00 までを使う。
 
+## 今週執筆ゲート
+
+ライター自動化は毎日14:00に起動するが、執筆するのはJSTの現在週（月曜00:00から日曜23:59）に公開予定の記事だけとする。
+
+- 進行編集は、未来週の記事Issueを `kotatsu:planned` または `kotatsu:revise` のまま保持し、公開予定週の9:00または12:00確認で `kotatsu:ready` にする。
+- Article Issueには、公開予定日、公開予定週、または `publishAt` を必ず記載する。
+- 公開予定が未記載、判定不能、または未来週の記事には、ライター担当labelが付いていても `kotatsu:ready` を付けない。
+- 同じ週に3本以上の記事をライターreadyにしない。週1〜2本を超える場合は翌週以降へ送る。
+- ライターが未来週または公開予定不明のready Issueを見つけた場合は、執筆せず `kotatsu:ready` を外して `kotatsu:planned` に戻し、理由をIssueへコメントする。
 ## `main` と記事PR branch のゲート
 
 `main` はGitHub Pagesの公開トリガーなので、制作中の記事本文や画像を後工程前に `main` へ入れない。次担当への共有は、正式計画では `main`、記事制作では記事PR branchを使い分ける。
 
-- 月刊号設計 -> ライター: 正式計画が `main` に反映済みであること。PRだけ、ローカルだけ、候補メモだけでは不可。
+- 月刊号設計 -> ライター: 正式計画が `main` に反映済みであり、対象記事がJSTの現在週に公開予定であること。PRだけ、ローカルだけ、候補メモだけでは不可。
 - ライター -> ビジュアル編集: 記事PR URLとhead branchがIssueコメントにあり、次担当がそのbranchをcheckoutできること。記事PRは `main` にマージしない。
 - ビジュアル編集 -> 校正: 同じ記事PR branch上でAI生成ビジュアル、alt、caption、metadata、避けた要素が確認できること。
 - 校正 -> 公開担当: 同じ記事PR branch上で校正結果が公開可能で、残修正がないこと。
@@ -107,7 +116,7 @@ open の月刊号設計Issueが存在しない場合だけ、進行編集が `IS
 
 ## `kotatsu:ready` の責任
 
-`kotatsu:ready` は「次担当が迷わず着手できる状態」を示す。原則として進行編集が最終管理者として付与、維持、解除を判断する。ユーザー、編集長、各担当エージェントが `kotatsu:ready` を提案することはできるが、前工程の不足、担当label、milestone、公開週、素材条件、必要成果物の所在（`main` または記事PR branch）を確認して確定するのは進行編集の役割とする。
+`kotatsu:ready` は「次担当が迷わず着手できる状態」を示す。原則として進行編集が最終管理者として付与、維持、解除を判断する。ユーザー、編集長、各担当エージェントが `kotatsu:ready` を提案することはできるが、前工程の不足、担当label、milestone、公開週、素材条件、必要成果物の所在（`main` または記事PR branch）を確認して確定するのは進行編集の役割とする。ライターへ渡す場合は、JSTの現在週に公開予定の記事だけを `kotatsu:ready` にする。
 
 各担当エージェントは、自分の作業が終わったら `kotatsu:review` に進め、Issueコメントで次担当候補を提案する。進行編集がその内容を確認し、次の `agent:*` label と `kotatsu:ready` を整えて次工程へ渡す。月刊号設計Issueでは、編集長が編集承認者、進行編集が制作進行上の通過判定者となる。進行上の不足がある場合は `kotatsu:revise` と `agent:editor-in-chief` へ戻す。
 

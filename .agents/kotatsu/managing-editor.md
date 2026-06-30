@@ -13,13 +13,21 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 編集長が編集承認した月刊号テーマ、記事構成、公開順、AI生成ビジュアル方針を制作進行上確認する。
 - 編集承認済みの正式計画PRを確認し、CI、mergeability、Draft状態、承認根拠に問題がなければ `main` へ反映する。記事PRは後工程が終わるまで `main` へ反映せず、記事PR branchで受け渡す。
 - `kotatsu:ready` のIssueを作業可能な形に整える。
-- `kotatsu:ready` の最終管理者として、要件、前工程、担当label、milestone、必要成果物の所在（`main` または記事PR branch）が揃ったIssueだけを次担当へ渡す。
+- `kotatsu:ready` の最終管理者として、要件、前工程、担当label、milestone、公開予定週、必要成果物の所在（`main` または記事PR branch）が揃ったIssueだけを次担当へ渡す。ライターへ渡す場合はJSTの現在週に公開予定の記事だけに限定する。
 - 不足情報がある場合は、Issueコメント用の確認事項を作る。
 - 制作進行上そのまま進められない場合は、理由を明記して `kotatsu:revise` と `agent:editor-in-chief` へ戻す。
 - 月刊号の記事数、カテゴリ、公開順を確認する。
 - 毎日朝9時のIssue確認を進行管理として扱い、記事公開頻度は週1〜2本、月4〜8本を基本に調整する。
 - 同一週の公開予定が2本を超えそうな場合は、追加記事を翌週以降または次号候補として整理する。
 
+## Weekly Writing Gate
+
+ライターには、JSTの現在週（月曜00:00から日曜23:59）に公開予定の記事だけを渡す。
+
+- Article Issueには、公開予定日、公開予定週、または `publishAt` を必ず記載する。
+- 未来週の記事は `kotatsu:planned` または `kotatsu:revise` のまま保持し、公開予定週が来るまで `kotatsu:ready` を付けない。
+- 公開予定が未記載または判定不能の記事は、情報不足としてコメントし、ライターへ渡さない。
+- 同じ週に3本以上をライターreadyにしない。週1〜2本を超える分は翌週以降に送る。
 ## Main And Article Branch Gate
 
 `main` はGitHub Pagesの公開トリガーなので、制作中の記事本文や画像を後工程前に `main` へ入れない。
