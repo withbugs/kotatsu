@@ -29,9 +29,9 @@ All times are Japan Standard Time. The automations run every day, but a single a
 | --- | --- | --- | --- | --- |
 | Day 1 | 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, and create the monthly planning Issue when needed. |
 | Day 1 | 10:00 | Editor-in-chief | local | Decide the monthly editorial direction, article lineup, publishing order, tone, candidate memo, and formal plan. |
-| Day 1 | 12:00 | Managing editor | local | Check approved plans and split them into article, visual, copy-editing, and publishing Issues. |
+| Day 1 | 12:00 | Managing editor | local | Check approved plan PRs, merge safe plans to `main`, then split `main`-available plans into article, visual, copy-editing, and publishing Issues. |
 | Day 1 | 14:00 | STYLE / LIFE / WEEKEND / CULTURE / PEOPLE / SHOPPING writers | worktree | Draft assigned article Issues in isolated worktrees. |
-| Day 1 | 16:00 | Managing editor | local | Review writer output and route article drafts to visual editing when ready. |
+| Day 1 | 16:00 | Managing editor | local | Review writer PRs, merge safe drafts to `main`, and route only `main`-available article drafts to visual editing. |
 | Day 1 | 18:00 | Visual editor | local | Prepare AI-generated visuals, alt text, prompt summaries, metadata, and placement guidance, then return the Issue to `kotatsu:review`. |
 | Day 2 | 09:00 | Managing editor | local | Review visual-editor output and route approved work to copy editing. |
 | Day 2 | 11:00 | Copy editor | local | Check tone, readability, banned expressions, factual risk, and reader-facing trust issues, then return the Issue to `kotatsu:review`. |
@@ -50,6 +50,7 @@ The writer group runs at the same time because each writer uses an isolated work
 - When an agent starts, it removes `kotatsu:ready` and adds `kotatsu:running`.
 - When an agent finishes, it comments with the result and moves the Issue to `kotatsu:review`.
 - The managing editor reviews `kotatsu:review`, assigns the next `agent:*` label, and returns the Issue to `kotatsu:ready` when the next role can safely continue.
+- A PR alone is not a handoff. The managing editor only marks the next role ready after the required plan, article, visual, or copy-editing result is available on `main`, or after explicitly merging a safe PR to `main`.
 - Visual editing, copy editing, and publishing are separated by managing-editor desk checks; they do not directly pass `kotatsu:ready` to each other.
 - Publishing tasks pass through `kotatsu:publish` and move to `kotatsu:done` only after the publishing gate succeeds.
 
