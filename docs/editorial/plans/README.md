@@ -1,12 +1,12 @@
-# Approved Issue Plans
+# Approved GitHub Volume Plans
 
-Approved issue plans are created only after the editor-in-chief or user approves a monthly issue theme and lineup.
+Approved volume plans are created only after the editor-in-chief or user approves a monthly volume theme and lineup.
 
-They are the source of truth for article Issues, visual Issues, copy-editing Issues, and publishing Issues.
+They are the source of truth for article GitHub Issues, visual GitHub Issues, copy-editing GitHub Issues, and publishing GitHub Issues.
 
 Naming:
 
-- `issue-001.md`
-- `issue-002.md`
+- `vol-001.md`
+- `vol-002.md`
 
-Do not create an approved plan from a draft candidate memo without explicit approval in the monthly issue GitHub Issue.
+Do not create an approved plan from a draft candidate memo without explicit approval in the monthly volume GitHub Issue.

@@ -10,7 +10,7 @@ export const categories = [
 ] as const;
 
 export type Article = CollectionEntry<'articles'>;
-export type Issue = CollectionEntry<'issues'>;
+export type Volume = CollectionEntry<'volumes'>;
 
 export function assetPath(path: string): string {
   const base = import.meta.env.BASE_URL || '/';
@@ -44,6 +44,3 @@ export function isArticlePublished(article: Article): boolean {
 export function visibleArticles(articles: Article[]): Article[] {
   return sortByPublishDate(articles.filter((article) => article.data.status !== 'draft'));
 }
-
-
-

@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import VisualCredit from '../../components/VisualCredit.astro';
+import { assetPath, visibleArticles } from '../../lib/kotatsu';
+
+export async function getStaticPaths() {
+  const volumes = await getCollection('volumes');
+  return volumes.map((volume) => ({ params: { slug: volume.slug }, props: { volume } }));
+}
+
+const { volume } = Astro.props;
+const volumeIsPlanning = volume.data.status === 'planning';
+const articles = volumeIsPlanning
+  ? []
+  : visibleArticles(await getCollection('articles')).filter((article) => article.data.volume === volume.slug);
+---
+<BaseLayout title={volume.data.title} description={volume.data.subtitle} image={volumeIsPlanning ? assetPath('/logo.svg') : assetPath(volume.data.coverImage)}>
+  <main>
+    <section class:list={['volume-hero', { 'volume-hero--planning': volumeIsPlanning }]}>
+      {volumeIsPlanning ? (
+        <div class="volume-hero__mark">
+          <img src={assetPath('/logo.svg')} alt="KOTATSU" />
+        </div>
+      ) : (
+        <div class="volume-hero__image">
+          <img src={assetPath(volume.data.coverImage)} alt={volume.data.coverAlt} />
+        </div>
+      )}
+      <div class="volume-hero__copy">
+        <p class="volume-label">Vol. {String(volume.data.number).padStart(3, '0')}</p>
+        <h1>{volume.data.title}</h1>
+        <p>{volume.data.subtitle}</p>
+        {volumeIsPlanning ? (
+          <p class="planning-status">このVol.は準備中です。記事ラインナップと公開日は、決まり次第お知らせします。</p>
+        ) : (
+          <VisualCredit mode={volume.data.visual.mode} intent={volume.data.visual.intent} />
+        )}
+      </div>
+    </section>
+    {volumeIsPlanning ? (
+      <section class="section planning-panel" aria-label="Editorial planning status">
+        <p class="eyebrow">PREPARING</p>
+        <h2>記事ラインナップは準備中です</h2>
+        <p>公開前の記事ページにはリンクしません。公開予定が決まり次第、目次に掲載します。</p>
+      </section>
+    ) : (
+      <section class="section">
+        <div class="article-grid article-grid--volume">
+          {articles.map((article) => <ArticleCard article={article} />)}
+        </div>
+      </section>
+    )}
+  </main>
+</BaseLayout>

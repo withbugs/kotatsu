@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 
 const root = process.cwd();
 const contentDirs = [
-  path.join(root, 'src', 'content', 'issues'),
+  path.join(root, 'src', 'content', 'volumes'),
   path.join(root, 'src', 'content', 'articles')
 ];
 const publicDir = path.join(root, 'public');

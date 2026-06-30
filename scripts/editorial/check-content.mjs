@@ -38,7 +38,7 @@ for (const file of listContentFiles(articleDir)) {
     }
   }
 
-  const requiredFields = ['title', 'description', 'category', 'issue', 'status', 'publishAt', 'heroImage', 'heroAlt'];
+  const requiredFields = ['title', 'description', 'category', 'volume', 'status', 'publishAt', 'heroImage', 'heroAlt'];
   for (const field of requiredFields) {
     if (!parsed.data[field]) {
       errors.push(`${rel}: missing frontmatter field: ${field}`);

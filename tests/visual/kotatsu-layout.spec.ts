@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const paths = ['/kotatsu/', '/kotatsu/issues/issue-001/'];
+const paths = ['/kotatsu/', '/kotatsu/volumes/vol-001/'];
 
 for (const targetPath of paths) {
   test(`KOTATSU layout renders without overflow: ${targetPath}`, async ({ page }, testInfo) => {
@@ -54,20 +54,22 @@ for (const targetPath of paths) {
   });
 }
 
-test('planning issue hides cover image and article table of contents', async ({ page }) => {
+test('planning volume hides cover image and article table of contents', async ({ page }) => {
   await page.goto('/kotatsu/');
 
   await expect(page.getByRole('heading', { name: '準備中', exact: true })).toBeVisible();
-  await expect(page.getByText('創刊号の記事')).toHaveCount(0);
+  await expect(page.getByText('創刊Vol.の記事')).toHaveCount(0);
   await expect(page.getByText('Coming Soon')).toHaveCount(0);
   await expect(page.getByText('Comming Soon')).toHaveCount(0);
   await expect(page.getByText('Issue planning')).toHaveCount(0);
+  await expect(page.getByText('Volume planning')).toHaveCount(0);
   await expect(page.getByText('NOW PLANNING')).toHaveCount(0);
   await expect(page.getByText('編集長')).toHaveCount(0);
   await expect(page.getByText('進行編集')).toHaveCount(0);
   await expect(page.getByText('AI生成ビジュアル方針')).toHaveCount(0);
   await expect(page.getByText('月刊号設計')).toHaveCount(0);
-  await expect(page.locator('img[src$="/images/issues/001/cover-weekend-clothes.png"]')).toHaveCount(0);
+  await expect(page.getByText('Vol.設計')).toHaveCount(0);
+  await expect(page.locator('img[src$="/images/volumes/001/cover-weekend-clothes.png"]')).toHaveCount(0);
 
   const articleTitles = [
     '大人の週末服',
@@ -80,7 +82,7 @@ test('planning issue hides cover image and article table of contents', async ({ 
     await expect(page.getByText(title)).toHaveCount(0);
   }
 
-  for (const slug of ['issue-001-cover', 'white-shirt-weekend', 'cafe-clothes-and-belongings', 'weekend-tools']) {
+  for (const slug of ['vol-001-cover', 'white-shirt-weekend', 'cafe-clothes-and-belongings', 'weekend-tools']) {
     await expect(page.locator(`a[href="/kotatsu/articles/${slug}/"]`)).toHaveCount(0);
   }
 });
