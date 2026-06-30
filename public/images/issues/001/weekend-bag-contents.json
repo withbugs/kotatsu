@@ -1,0 +1,14 @@
+{
+  "source": "ai-generated",
+  "visualMode": "still-life",
+  "editorialIntent": "週末に持ち出すものを減らすことで、手元の道具と時間の感触が残ること。",
+  "promptSummary": "朝の木のテーブルに、使い込んだ布の鞄、無地の革財布、文庫本、折ったハンカチ、白シャツの袖口を置いた静物。",
+  "avoid": [
+    "real brand logos",
+    "official product photography",
+    "stock photo look",
+    "visible store signage",
+    "celebrity likeness"
+  ],
+  "reviewedBy": "agent:life-writer"
+}
