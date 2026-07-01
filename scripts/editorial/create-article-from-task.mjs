@@ -19,12 +19,12 @@ function slugify(input) {
 
 const title = args.title || process.env.KOTATSU_ARTICLE_TITLE;
 if (!title) {
-  console.error('Usage: pnpm article:new -- --title="..." --category=STYLE --issue=issue-001');
+  console.error('Usage: pnpm article:new -- --title="..." --category=STYLE --volume=vol-001');
   process.exit(1);
 }
 
 const category = args.category || 'STYLE';
-const issue = args.issue || 'issue-001';
+const volume = args.volume || 'vol-001';
 const slug = args.slug || slugify(title);
 const outDir = path.join(process.cwd(), 'src', 'content', 'articles');
 const outPath = path.join(outDir, `${slug}.mdx`);
@@ -40,17 +40,17 @@ const template = `---
 title: ${title}
 description: TODO: 記事の狙いを一文で書く。
 category: ${category}
-issue: ${issue}
+volume: ${volume}
 kind: feature
 template: feature
 status: draft
 publishAt: "${new Date().toISOString()}"
-heroImage: /images/issues/001/cover-weekend-clothes.png
-heroAlt: TODO: AI生成ビジュアルの内容を書く
+heroImage: "__AI_VISUAL_PENDING__"
+heroAlt: TODO: AI生成ビジュアルをビジュアル編集工程で生成する
 visual:
   source: ai-generated
   mode: photorealistic
-  promptSummary: TODO: 生成プロンプトの要約を書く。
+  promptSummary: TODO: ビジュアル編集工程で生成プロンプトの要約を書く。
   intent: TODO: 編集意図を書く。
   avoid:
     - real brand logos
@@ -64,6 +64,3 @@ TODO: 本文を書く。
 
 fs.writeFileSync(outPath, template, 'utf8');
 console.log(`Created ${path.relative(process.cwd(), outPath)}`);
-
-
-

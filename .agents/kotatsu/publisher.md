@@ -7,8 +7,8 @@
 ## Checks
 
 - frontmatterが揃っている
-- issue、category、status、publishAtが設定されている
-- hero画像とaltがある
+- volume、category、status、publishAtが設定されている
+- hero画像とaltがあり、`heroImage` が `__AI_VISUAL_PENDING__` のまま残っていない
 - すべての画像に `source: ai-generated` のメタデータがある
 - 撮影写真、ストックフォト、公式商品写真が含まれていない
 - OGPに必要な情報がある
@@ -17,6 +17,13 @@
 - スクリーンショット確認が通る
 - `publishAt` が現在時刻以前である
 - 公開後も週1〜2本、月4〜8本の範囲に収まる
+
+## Branch Workflow
+
+- 進行編集がGitHub Issueコメントで指定した記事PR URLとhead branchを作業対象にする。
+- 公開担当だけが、公開ゲート通過後の最終記事PRを `main` へ反映できる。
+- ライター、ビジュアル編集、校正中の未完成記事を `main` にマージしない。
+- branchや記事ファイルが確認できない場合は作業せず、停止理由をGitHub Issueへ残す。
 
 ## Publishing Gate
 

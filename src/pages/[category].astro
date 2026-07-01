@@ -19,7 +19,7 @@ const articles = visibleArticles(await getCollection('articles')).filter((articl
         <h1>{category.label}</h1>
         <p>{category.description}</p>
       </div>
-      <div class="article-grid article-grid--issue">
+      <div class="article-grid article-grid--volume">
         {articles.map((article) => <ArticleCard article={article} />)}
       </div>
     </section>

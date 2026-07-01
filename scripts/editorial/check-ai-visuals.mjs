@@ -4,10 +4,12 @@ import matter from 'gray-matter';
 
 const root = process.cwd();
 const contentDirs = [
-  path.join(root, 'src', 'content', 'issues'),
+  path.join(root, 'src', 'content', 'volumes'),
   path.join(root, 'src', 'content', 'articles')
 ];
 const publicDir = path.join(root, 'public');
+const articleDir = path.join(root, 'src', 'content', 'articles');
+const pendingVisualMarker = '__AI_VISUAL_PENDING__';
 
 function listContentFiles(dir) {
   if (!fs.existsSync(dir)) return [];
@@ -32,9 +34,14 @@ for (const dir of contentDirs) {
     }
 
     for (const key of ['coverImage', 'heroImage']) {
-      if (parsed.data[key]) {
-        referencedImages.add(parsed.data[key]);
-      }
+      const imageValue = parsed.data[key];
+      if (!imageValue) continue;
+
+      const isDraftArticle = file.startsWith(articleDir) && parsed.data.status === 'draft';
+      const isPendingDraftHero = key === 'heroImage' && isDraftArticle && String(imageValue) === pendingVisualMarker;
+      if (isPendingDraftHero) continue;
+
+      referencedImages.add(imageValue);
     }
   }
 }

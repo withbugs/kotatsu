@@ -26,6 +26,7 @@ function listContentFiles(dir) {
 }
 
 const errors = [];
+const pendingVisualMarker = '__AI_VISUAL_PENDING__';
 
 for (const file of listContentFiles(articleDir)) {
   const raw = fs.readFileSync(file, 'utf8');
@@ -38,7 +39,7 @@ for (const file of listContentFiles(articleDir)) {
     }
   }
 
-  const requiredFields = ['title', 'description', 'category', 'issue', 'status', 'publishAt', 'heroImage', 'heroAlt'];
+  const requiredFields = ['title', 'description', 'category', 'volume', 'status', 'publishAt', 'heroImage', 'heroAlt'];
   for (const field of requiredFields) {
     if (!parsed.data[field]) {
       errors.push(`${rel}: missing frontmatter field: ${field}`);
@@ -47,6 +48,10 @@ for (const file of listContentFiles(articleDir)) {
 
   if (parsed.data.heroAlt && !String(parsed.data.heroAlt).includes('AI生成')) {
     errors.push(`${rel}: heroAlt must disclose AI生成ビジュアル`);
+  }
+
+  if (parsed.data.status !== 'draft' && String(parsed.data.heroImage) === pendingVisualMarker) {
+    errors.push(`${rel}: heroImage is still pending; generate article-specific AI visual before scheduling or publishing`);
   }
 
   if (parsed.content.trim().length < 80) {

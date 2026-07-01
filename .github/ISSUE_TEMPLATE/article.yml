@@ -20,10 +20,10 @@ body:
     validations:
       required: true
   - type: input
-    id: monthly_issue
+    id: volume
     attributes:
-      label: Monthly issue
-      placeholder: "ISSUE 001 創刊号テーマ検討"
+      label: Volume
+      placeholder: "Vol. 001 創刊Vol.テーマ検討"
     validations:
       required: true
   - type: input
@@ -51,14 +51,9 @@ body:
     attributes:
       label: Editorial checks
       options:
-        - label: 月刊号のテーマに沿っている
+        - label: Vol.のテーマに沿っている
         - label: 商品紹介だけになっていない
         - label: 読者を煽っていない
         - label: 服と生活がつながっている
         - label: 撮影写真ではなくAI生成ビジュアルを使う
           required: true
-
-
-
-
-

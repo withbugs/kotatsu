@@ -8,7 +8,7 @@ const visualSchema = z.object({
   avoid: z.array(z.string()).default([])
 });
 
-const issues = defineCollection({
+const volumes = defineCollection({
   type: 'content',
   schema: z.object({
     number: z.number(),
@@ -29,7 +29,7 @@ const articles = defineCollection({
     title: z.string(),
     description: z.string(),
     category: z.enum(['STYLE', 'LIFE', 'WEEKEND', 'CULTURE', 'PEOPLE', 'SHOPPING', 'COLUMN']),
-    issue: z.string(),
+    volume: z.string(),
     kind: z.enum(['cover-story', 'feature', 'essay', 'interview', 'shopping-guide', 'column']),
     template: z.enum(['cover-story', 'feature', 'photo-essay', 'interview', 'shopping-guide', 'column']),
     status: z.enum(['draft', 'scheduled', 'published']),
@@ -41,6 +41,4 @@ const articles = defineCollection({
   })
 });
 
-export const collections = { issues, articles };
-
-
+export const collections = { volumes, articles };

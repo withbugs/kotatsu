@@ -1,15 +1,15 @@
-name: Monthly Issue
-description: 月刊号のテーマと構成を決める
-title: "ISSUE 000: "
+name: Volume Plan
+description: 発行Vol.のテーマと構成を決める
+title: "Vol. 000: "
 labels:
-  - type:monthly-issue
+  - type:volume-plan
   - agent:editor-in-chief
   - kotatsu:ready
 body:
   - type: input
-    id: issue_number
+    id: volume_number
     attributes:
-      label: Issue number
+      label: Volume number
       placeholder: "001"
     validations:
       required: true
@@ -17,14 +17,14 @@ body:
     id: title
     attributes:
       label: Title
-      placeholder: "創刊号テーマ候補"
+      placeholder: "創刊Vol.テーマ候補"
     validations:
       required: true
   - type: textarea
     id: concept
     attributes:
       label: Editorial concept
-      description: この号で読者に残したい感覚を書く
+      description: このVol.で読者に残したい感覚を書く
     validations:
       required: true
   - type: textarea
@@ -34,6 +34,3 @@ body:
       description: カバーストーリー、特集、LIFE、CULTURE、SHOPPINGなど
     validations:
       required: true
-
-
-

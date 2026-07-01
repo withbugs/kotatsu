@@ -19,9 +19,9 @@
 - name: kotatsu:done
   color: "6f7d65"
   description: Completed
-- name: type:monthly-issue
+- name: type:volume-plan
   color: "111111"
-  description: Monthly issue planning
+  description: Volume planning
 - name: type:article
   color: "444444"
   description: Article task

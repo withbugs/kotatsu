@@ -10,7 +10,7 @@ const sourceDirs = [
   path.join(root, 'src', 'layouts')
 ];
 const contentDirs = [
-  path.join(root, 'src', 'content', 'issues'),
+  path.join(root, 'src', 'content', 'volumes'),
   path.join(root, 'src', 'content', 'articles')
 ];
 
@@ -23,6 +23,7 @@ const blockedTerms = [
   '編集長',
   '進行編集',
   '月刊号設計',
+  'Vol.設計',
   'AI生成ビジュアル方針',
   '候補案',
   'TODO',
