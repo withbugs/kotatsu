@@ -1,0 +1,24 @@
+{
+  "source": "ai-generated",
+  "visualMode": "still-life",
+  "volume": "vol-001",
+  "article": "white-shirt-weekend-life",
+  "githubIssue": 13,
+  "editorialIntent": "仕事着の緊張から離れ、週末の支度へ戻る白シャツの余白を見せる。",
+  "subject": "洗いざらしの白シャツ、本、コーヒー、鍵、ハンカチ",
+  "setting": "朝の自然光が入る窓辺の木のテーブル",
+  "composition": "横長のhero向け静物構図。白シャツを主役に、本とコーヒーを左側へ置き、余白を残す。",
+  "colorMood": "白い綿、温かい木目、グレー、コーヒーブラウンを中心にした静かな朝の色調。",
+  "promptSummary": "自然光の入る朝の木のテーブルに、洗いざらしの白シャツ、本、コーヒー、鍵、ハンカチを静かに配置する。",
+  "caption": "洗いざらしの白シャツを、週末の支度として置き直すAI生成ビジュアル。",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "official product photo look",
+    "stock photo look",
+    "readable typography"
+  ],
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-07-02T18:05:07+09:00"
+}
