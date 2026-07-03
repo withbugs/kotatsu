@@ -63,7 +63,7 @@ GitHub Issueを編集タスクとして扱い、labelとmilestoneで状態を管
 
 編集長は候補メモを作成し、推奨するテーマ、記事構成、公開順、AI生成ビジュアル方針をVol.設計GitHub Issueへ提案する。編集長が編集方針として承認した内容を `docs/editorial/plans/vol-XXX.md` に正式計画として確定する。進行編集は編集方針そのものを承認せず、承認済み正式計画について、記事化できる粒度、担当、公開ペース、素材条件が揃っているかを制作進行上確認する。
 
-正式計画を制作進行へ渡せるのは、計画PRが作られた時点ではなく、`docs/editorial/plans/vol-XXX.md` が `main` に反映され、通常の作業ディレクトリから読める時点とする。進行編集は、承認済み正式計画PRのCI、mergeability、Draft状態、承認根拠を確認し、問題がなければ `main` へ反映する。`main` で正式計画を確認できる場合だけ、記事、ビジュアル、校正、公開準備のGitHub Issueを展開する。進行上の不足がある場合は、理由をGitHub Issueコメントに明記して `kotatsu:revise` と `agent:editor-in-chief` へ戻す。
+正式計画を制作進行へ渡せるのは、計画PRが作られた時点ではなく、`docs/editorial/plans/vol-XXX.md` が `main` に反映され、通常の作業ディレクトリから読める時点とする。進行編集は、承認済み正式計画PRのCI、mergeability、Draft状態、承認根拠を確認し、問題がなければ `main` へ反映する。`main` で正式計画を確認できる場合だけ、正式Vol.カバー、記事、記事ビジュアル、校正、公開準備のGitHub Issueを展開する。進行上の不足がある場合は、理由をGitHub Issueコメントに明記して `kotatsu:revise` と `agent:editor-in-chief` へ戻す。
 
 
 ## 初期ブートストラップ
@@ -81,10 +81,10 @@ open のVol.設計GitHub Issueが存在しない場合だけ、進行編集が `
 
 - Day 1 09:00 進行編集: 前日分整理、当日の対象確認、label/milestone/担当確認、滞留Issue整理。Vol.設計GitHub Issueがなければ作成する
 - Day 1 10:00 編集長: Vol.全体、企画、見出し、公開可否の編集判断
-- Day 1 12:00 進行編集: 編集長が編集承認した正式計画PRを確認し、問題なければ `main` へ反映する。`main` 上で正式計画を確認できる場合だけ記事Issue化してライターへ渡す。不足があれば差し戻す
+- Day 1 12:00 進行編集: 編集長が編集承認した正式計画PRを確認し、問題なければ `main` へ反映する。`main` 上で正式計画を確認できる場合だけ、正式Vol.カバーIssueと記事Issueを作成/更新する。不足があれば差し戻す
 - Day 1 14:00 ライター群: STYLE、WEEKEND、LIFE、CULTURE、PEOPLE、SHOPPINGをworktreeで同時実行。ただしJSTの現在週に公開予定の記事だけを執筆する
 - Day 1 16:00 進行編集: ライター成果PRを確認し、PR URLとhead branchをGitHub Issueに明記したうえで、記事PR branchをビジュアル編集へ渡す。後工程前の記事PRは `main` にマージしない
-- Day 1 18:00 ビジュアル編集: AI生成ビジュアル、alt、プロンプト要約、メタデータ、配置方針を整え、`kotatsu:review` に戻す
+- Day 1 18:00 ビジュアル編集: 記事heroまたは正式Vol.カバーのAI生成ビジュアル、alt、プロンプト要約、メタデータ、配置方針を整え、`kotatsu:review` に戻す
 - Day 2 09:00 進行編集: ビジュアル編集済みGitHub Issueを確認し、校正へ渡せる場合だけ `agent:copy-editor` と `kotatsu:ready` を整える
 - Day 2 11:00 校正: 進行編集が校正へ渡したIssueだけを確認し、`kotatsu:review` に戻す
 - Day 2 12:00 進行編集: 校正済みGitHub Issueを確認し、記事PR branch上で掲載予約できる場合は `pnpm article:schedule` で `status: scheduled` を整える。`publishAt` が未来の場合は公開待機に戻し、到来済みの場合だけ `agent:publisher` と `kotatsu:publish` を整える
@@ -92,6 +92,18 @@ open のVol.設計GitHub Issueが存在しない場合だけ、進行編集が `
 - Day 2 16:00 進行編集: 公開担当で失敗したIssue、修正待ち、滞留GitHub Issueを確認して次工程へ整理する
 
 ライター群は分離されたworktreeで同時実行する。ビジュアル編集、校正、公開担当は直接受け渡しをしない。各担当は完了後に `kotatsu:review` へ進め、進行編集が次の定時実行で内容を確認してから次担当へ渡す。最短でも、ビジュアル編集から公開担当までは Day 1 18:00 から Day 2 13:00 までを使う。
+
+## Vol.カバー制作ゲート
+
+Vol.カバーは記事heroの流用ではなく、発行Vol.を代表する正式ビジュアルとして制作する。
+
+- 正式計画 `docs/editorial/plans/vol-XXX.md` が `main` に入ったら、進行編集は同じVol.のopenな `type:volume-cover` Issueがあるか確認する。なければ `[Vol. XXX][VISUAL] 正式カバー制作` を作成する。
+- カバーIssueには `type:visual`、`type:volume-cover`、`agent:visual-editor`、milestone、必要に応じて `kotatsu:ready` を付ける。
+- Issue本文には、対象Vol.、正式計画パス、テーマ、サブコピー、カバー方針、出力先 `public/images/volumes/XXX/cover.png` と `cover.json`、更新対象 `src/content/volumes/vol-XXX.md` を明記する。
+- ビジュアル編集は `origin/main` から専用branchを作り、正式カバー画像、sidecar metadata、Vol. frontmatter更新を1つのPRにする。
+- sidecar metadataには `source: "ai-generated"` と `usage: "volume-cover"` を必ず含める。
+- Vol.カバーPRは記事本文を含まないため、CIと内容確認が通れば進行編集が `main` に反映してよい。
+- 最初の記事公開前には、対象Vol.の `coverImage` が `/images/volumes/` 配下の正式カバーであることを必須とする。正式カバーがない場合、公開担当へ渡さない。
 
 ## 今週執筆ゲート
 
@@ -119,6 +131,7 @@ open のVol.設計GitHub Issueが存在しない場合だけ、進行編集が `
 `main` はGitHub Pagesの公開トリガーなので、制作中の記事本文や画像を後工程前に `main` へ入れない。次担当への共有は、正式計画では `main`、記事制作では記事PR branchを使い分ける。
 
 - Vol.設計 -> ライター: 正式計画が `main` に反映済みであり、対象記事がJSTの現在週に公開予定であること。PRだけ、ローカルだけ、候補メモだけでは不可。
+- Vol.カバー -> `main`: 正式計画が `main` にあり、カバーPRがAI生成画像、metadata、Vol. frontmatterだけを含み、CIが通っていること。
 - ライター -> ビジュアル編集: 記事PR URLとhead branchがGitHub Issueコメントにあり、次担当がそのbranchをcheckoutできること。記事PRは `main` にマージしない。
 - ビジュアル編集 -> 校正: 同じ記事PR branch上でAI生成ビジュアル、alt、caption、metadata、避けた要素が確認できること。
 - 校正 -> 公開担当: 同じ記事PR branch上で校正結果が公開可能で、残修正がないこと。
@@ -183,7 +196,7 @@ Issue監視ジョブは、次の条件を満たすGitHub Issueを対象にする
 公開担当は、記事frontmatterを手作業で `published` に変更しない。必ず次の順で機械的な公開ゲートを通す。
 
 1. `pnpm publish:check -- --candidate=<slug>` で対象記事を検査する。
-2. ゲートが通った場合だけ `pnpm article:publish -- --slug=<slug>` で `published` に昇格する。このコマンドは、対象Vol.が `planning` の場合に `active` へ切り替え、Vol.カバー未設定時は最初の記事heroを暫定カバーとして使う。
+2. ゲートが通った場合だけ `pnpm article:publish -- --slug=<slug>` で `published` に昇格する。このコマンドは、対象Vol.が `planning` の場合に `active` へ切り替えるが、Vol.カバーは正式カバー制作Issueで作成済みであることを前提とする。
 3. トップページとVol.ページが準備中表示のまま残っていないことを確認する。
 4. `pnpm check` と `pnpm build` を通す。
 5. 可能なら `pnpm test:visual` を通す。

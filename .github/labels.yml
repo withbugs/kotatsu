@@ -28,6 +28,9 @@
 - name: type:visual
   color: "888888"
   description: AI visual direction or screenshot task
+- name: type:volume-cover
+  color: "6d7f8f"
+  description: Formal volume cover visual task
 - name: type:copy-edit
   color: "a0a0a0"
   description: Copy editing and fact checking

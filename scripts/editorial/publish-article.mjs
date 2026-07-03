@@ -9,6 +9,59 @@ import {
   parseNow
 } from './publishing-schedule.mjs';
 
+const OFFICIAL_VOLUME_COVER_PREFIX = '/images/volumes/';
+
+function validateFormalVolumeCover(article) {
+  const errors = [];
+  if (!article?.data?.volume) return errors;
+
+  const root = process.cwd();
+  const volumeFile = path.join(root, 'src', 'content', 'volumes', `${article.data.volume}.md`);
+  if (!fs.existsSync(volumeFile)) {
+    return [`${article.relativePath}: volume file not found: ${path.relative(root, volumeFile)}`];
+  }
+
+  const parsed = matter(fs.readFileSync(volumeFile, 'utf8'));
+  const coverImage = parsed.data.coverImage;
+  const coverAlt = parsed.data.coverAlt;
+  const rel = path.relative(root, volumeFile);
+
+  if (!coverImage) {
+    errors.push(`${rel}: formal volume coverImage is required before publishing articles in ${article.data.volume}`);
+    return errors;
+  }
+
+  if (!String(coverImage).startsWith(OFFICIAL_VOLUME_COVER_PREFIX)) {
+    errors.push(`${rel}: formal volume coverImage must live under ${OFFICIAL_VOLUME_COVER_PREFIX}`);
+  }
+
+  if (!coverAlt || !String(coverAlt).includes('AI生成')) {
+    errors.push(`${rel}: coverAlt must disclose AI生成ビジュアル`);
+  }
+
+  const imagePath = path.join(root, 'public', String(coverImage).replace(/^\//, ''));
+  if (!fs.existsSync(imagePath)) {
+    errors.push(`${rel}: formal volume cover image does not exist in public/: ${coverImage}`);
+    return errors;
+  }
+
+  const metaPath = imagePath.replace(/\.(png|jpe?g|webp|avif)$/i, '.json');
+  if (!fs.existsSync(metaPath)) {
+    errors.push(`${rel}: formal volume cover metadata sidecar is missing: ${path.relative(root, metaPath)}`);
+    return errors;
+  }
+
+  const metadata = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+  if (metadata.source !== 'ai-generated') {
+    errors.push(`${path.relative(root, metaPath)}: source must be ai-generated`);
+  }
+
+  if (metadata.usage !== 'volume-cover') {
+    errors.push(`${path.relative(root, metaPath)}: usage must be volume-cover`);
+  }
+
+  return errors;
+}
 function isBlank(value) {
   return !value || String(value).trim() === '';
 }
@@ -77,37 +130,6 @@ function activateVolumeForArticle(article) {
     setField('subtitle', plan.subtitle || article.data.description);
   }
 
-  if (isBlank(data.coverImage)) {
-    setField('coverImage', article.data.heroImage);
-  }
-
-  if (isBlank(data.coverAlt)) {
-    setField('coverAlt', article.data.heroAlt);
-  }
-
-  const shouldUseArticleVisual =
-    !data.visual ||
-    isPreparationText(data.visual.promptSummary) ||
-    isPreparationText(data.visual.intent) ||
-    data.coverImage === article.data.heroImage;
-
-  if (shouldUseArticleVisual) {
-    const previousAvoid = Array.isArray(data.visual?.avoid) ? data.visual.avoid : [];
-    const articleAvoid = Array.isArray(article.data.visual?.avoid) ? article.data.visual.avoid : [];
-    data.visual = {
-      source: 'ai-generated',
-      mode: article.data.visual?.mode ?? data.visual?.mode ?? 'photorealistic',
-      promptSummary:
-        article.data.visual?.promptSummary ??
-        `${article.data.title}を代表するAI生成ビジュアルを、Vol.の暫定カバーとして使用する。`,
-      intent:
-        article.data.visual?.intent ??
-        '最初に公開された記事のAI生成ビジュアルを、Vol.公開開始時の代表画像として使用する。',
-      avoid: previousAvoid.length > 0 ? previousAvoid : articleAvoid
-    };
-    changed = true;
-  }
-
   if (!changed) return;
 
   fs.writeFileSync(volumeFile, matter.stringify(parsed.content.trimStart(), data), 'utf8');
@@ -125,6 +147,10 @@ if (!slug) {
 const now = parseNow(args.now || process.env.KOTATSU_NOW);
 const articles = loadArticles();
 const result = evaluatePublishCandidate(articles, String(slug), { now });
+
+if (result.candidate) {
+  result.errors.push(...validateFormalVolumeCover(result.candidate));
+}
 
 for (const warning of result.warnings) {
   console.warn(`Warning: ${warning}`);
