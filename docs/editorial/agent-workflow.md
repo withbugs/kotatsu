@@ -87,8 +87,8 @@ open のVol.設計GitHub Issueが存在しない場合だけ、進行編集が `
 - Day 1 18:00 ビジュアル編集: AI生成ビジュアル、alt、プロンプト要約、メタデータ、配置方針を整え、`kotatsu:review` に戻す
 - Day 2 09:00 進行編集: ビジュアル編集済みGitHub Issueを確認し、校正へ渡せる場合だけ `agent:copy-editor` と `kotatsu:ready` を整える
 - Day 2 11:00 校正: 進行編集が校正へ渡したIssueだけを確認し、`kotatsu:review` に戻す
-- Day 2 12:00 進行編集: 校正済みGitHub Issueを確認し、公開準備へ進められる場合だけ `agent:publisher` と `kotatsu:publish` または `kotatsu:ready` を整える
-- Day 2 13:00 公開担当: 進行編集が公開担当へ渡したIssueだけを公開ゲートに通す
+- Day 2 12:00 進行編集: 校正済みGitHub Issueを確認し、記事PR branch上で掲載予約できる場合は `pnpm article:schedule` で `status: scheduled` を整える。`publishAt` が未来の場合は公開待機に戻し、到来済みの場合だけ `agent:publisher` と `kotatsu:publish` を整える
+- Day 2 13:00 公開担当: 進行編集が公開担当へ渡した、`status: scheduled` かつ `publishAt` 到来済みのIssueだけを公開ゲートに通す
 - Day 2 16:00 進行編集: 公開担当で失敗したIssue、修正待ち、滞留GitHub Issueを確認して次工程へ整理する
 
 ライター群は分離されたworktreeで同時実行する。ビジュアル編集、校正、公開担当は直接受け渡しをしない。各担当は完了後に `kotatsu:review` へ進め、進行編集が次の定時実行で内容を確認してから次担当へ渡す。最短でも、ビジュアル編集から公開担当までは Day 1 18:00 から Day 2 13:00 までを使う。
@@ -102,6 +102,18 @@ open のVol.設計GitHub Issueが存在しない場合だけ、進行編集が `
 - 公開予定が未記載、判定不能、または未来週の記事には、ライター担当labelが付いていても `kotatsu:ready` を付けない。
 - 同じ週に3本以上の記事をライターreadyにしない。週1〜2本を超える場合は翌週以降へ送る。
 - ライターが未来週または公開予定不明のready GitHub Issueを見つけた場合は、執筆せず `kotatsu:ready` を外して `kotatsu:planned` に戻し、理由をGitHub Issueへコメントする。
+
+## 掲載予約ゲート
+
+校正完了後、公開担当へ渡す前に、進行編集が記事PR branch上で掲載予約を確定する。公開担当は `scheduled -> published` の最終公開だけを担当し、`draft -> scheduled` は進行編集の公開前整理とする。
+
+- 校正結果が必須修正なし、記事PRがcheckout可能、CIが重大失敗していない、AI生成ビジュアルとmetadataが揃っている場合だけ掲載予約へ進める。
+- 掲載予約は `pnpm article:schedule -- --slug=<slug>` を使う。公開日時を調整する必要がある場合は `--publishAt=<ISO日時>` を付ける。
+- `article:schedule` が通る条件は、記事が `draft` または `scheduled`、`publishAt` が有効、`heroImage` が `__AI_VISUAL_PENDING__` ではない、`heroAlt` がAI生成ビジュアルであることを明示している、`visual.source` が `ai-generated` であること。
+- `publishAt` が未来の場合、進行編集はGitHub Issueを公開待機として `kotatsu:planned` に戻す。`agent:publisher` は残してよいが、`kotatsu:ready` と `kotatsu:publish` は付けない。
+- `publishAt` が現在時刻以前の場合だけ、進行編集は `agent:publisher` と `kotatsu:publish` を付けて公開担当へ渡す。
+- `status: draft` のまま、または `publishAt` が未来のまま、公開担当へ渡さない。
+
 ## `main` と記事PR branch のゲート
 
 `main` はGitHub Pagesの公開トリガーなので、制作中の記事本文や画像を後工程前に `main` へ入れない。次担当への共有は、正式計画では `main`、記事制作では記事PR branchを使い分ける。
@@ -157,7 +169,7 @@ Issue監視ジョブは、次の条件を満たすGitHub Issueを対象にする
 
 - 発行Vol.に紐づいている
 - カテゴリが設定されている
-- 公開対象の記事は `status: scheduled` である
+- 公開対象の記事は `status: scheduled` である。`draft` の記事は公開担当へ渡さず、進行編集が掲載予約へ戻す
 - `publishAt` が現在時刻以前である
 - hero画像とaltがある
 - すべての画像がAI生成物であり、撮影写真、ストックフォト、公式商品写真を含まない
