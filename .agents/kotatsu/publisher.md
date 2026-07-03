@@ -17,7 +17,7 @@
 - スクリーンショット確認が通る
 - `publishAt` が現在時刻以前である
 - 公開後も週1〜2本、月4〜8本の範囲に収まる
-- 最初の公開記事があるVol.は、トップページが準備中表示のまま残らない
+- 最初の公開記事があるVol.には、正式なVol.カバー画像とmetadataがある
 
 ## Branch Workflow
 
@@ -40,10 +40,11 @@
 
 1. 対象記事が `scheduled` で、`publishAt` が現在時刻以前であることを確認する。`draft` または未来日時なら Too-Early Handoff として戻す。
 2. `pnpm publish:check -- --candidate=<slug>` を実行する。
-3. 公開ゲートが通った場合だけ `pnpm article:publish -- --slug=<slug>` を実行する。このコマンドは、対象Vol.が `planning` なら `active` にし、Vol.カバー未設定時は最初の記事heroを暫定カバーとして使う。
-4. トップページとVol.ページが準備中表示のまま残っていないことを確認する。
-5. `pnpm check` と `pnpm build` を実行する。
-6. 可能なら `pnpm test:visual` を実行する。
+3. 対象Vol.の `coverImage` が `/images/volumes/` 配下の正式カバーで、sidecar metadataに `source: ai-generated` と `usage: volume-cover` があることを確認する。
+4. 公開ゲートが通った場合だけ `pnpm article:publish -- --slug=<slug>` を実行する。
+5. トップページとVol.ページが準備中表示のまま残っていないことを確認する。
+6. `pnpm check` と `pnpm build` を実行する。
+7. 可能なら `pnpm test:visual` を実行する。
 
 公開ゲートは次を検査する。
 
@@ -52,6 +53,7 @@
 - 同じ週の `published` 記事が2本を超えないこと
 - 同じ月の `published` 記事が8本を超えないこと
 - 既存の `published` 記事に未来日公開や公開本数超過がないこと
+- 対象Vol.に正式Vol.カバーがあること
 
 ## Output
 

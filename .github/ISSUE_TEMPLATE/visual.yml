@@ -1,22 +1,34 @@
 name: Visual Task
-description: AI生成ビジュアル、レイアウト、スクリーンショット確認
+description: AI生成ビジュアル、Vol.カバー、レイアウト、スクリーンショット確認
 title: "[Visual] "
 labels:
   - type:visual
   - agent:visual-editor
   - kotatsu:planned
 body:
+  - type: dropdown
+    id: target_type
+    attributes:
+      label: Target type
+      options:
+        - article-visual
+        - volume-cover
+        - page-visual
+        - screenshot-check
+    validations:
+      required: true
   - type: input
     id: target
     attributes:
-      label: Target article or page
+      label: Target article, volume, or page
+      description: "Examples: white-shirt-weekend-life, vol-001, /"
     validations:
       required: true
   - type: textarea
     id: direction
     attributes:
       label: Visual direction
-      description: AI生成ビジュアルの方向、余白、色、見せ方
+      description: AI生成ビジュアルの方向、余白、色、見せ方。Vol.カバーでは正式計画のテーマ、サブコピー、カバー方針を含める。
     validations:
       required: true
   - type: dropdown
@@ -30,6 +42,13 @@ body:
         - still-life
     validations:
       required: true
+  - type: textarea
+    id: expected_outputs
+    attributes:
+      label: Expected outputs
+      description: "For volume-cover: public/images/volumes/XXX/cover.png, sidecar JSON, and src/content/volumes/vol-XXX.md coverImage/coverAlt/visual updates."
+    validations:
+      required: false
   - type: checkboxes
     id: ai_visual_rules
     attributes:
@@ -41,6 +60,8 @@ body:
           required: true
         - label: 実在ブランドロゴ、実在店舗看板、著名人の顔を生成しない
           required: true
+        - label: Vol.カバーではサンプル画像や記事heroを流用しない
+          required: false
   - type: textarea
     id: screenshot_points
     attributes:
@@ -48,5 +69,3 @@ body:
       description: desktop/mobileで確認したい箇所
     validations:
       required: false
-
-

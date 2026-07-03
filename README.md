@@ -29,10 +29,10 @@ All times are Japan Standard Time. The automations run every day, but a single a
 | --- | --- | --- | --- | --- |
 | Day 1 | 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, and create the monthly planning GitHub Issue when needed. |
 | Day 1 | 10:00 | Editor-in-chief | local | Decide the monthly editorial direction, article lineup, publishing order, tone, candidate memo, and formal plan. |
-| Day 1 | 12:00 | Managing editor | local | Check approved plan PRs, merge safe plans to `main`, then split `main`-available plans into article, visual, copy-editing, and publishing GitHub Issues. |
+| Day 1 | 12:00 | Managing editor | local | Check approved plan PRs, merge safe plans to `main`, then create/update formal volume-cover and article GitHub Issues. |
 | Day 1 | 14:00 | STYLE / LIFE / WEEKEND / CULTURE / PEOPLE / SHOPPING writers | worktree | Draft only article GitHub Issues scheduled for publication in the current JST week, using isolated worktrees. |
 | Day 1 | 16:00 | Managing editor | local | Review writer PRs, record their head branches, and route article production branches to visual editing without merging drafts to `main`. |
-| Day 1 | 18:00 | Visual editor | local | Prepare AI-generated visuals, alt text, prompt summaries, metadata, and placement guidance, then return the GitHub Issue to `kotatsu:review`. |
+| Day 1 | 18:00 | Visual editor | local | Prepare AI-generated article visuals or formal volume covers, alt text, prompt summaries, metadata, and placement guidance, then return the GitHub Issue to `kotatsu:review`. |
 | Day 2 | 09:00 | Managing editor | local | Review visual-editor output and route approved work to copy editing. |
 | Day 2 | 11:00 | Copy editor | local | Check tone, readability, banned expressions, factual risk, and reader-facing trust issues, then return the GitHub Issue to `kotatsu:review`. |
 | Day 2 | 12:00 | Managing editor | local | Review copy-editor output, run the scheduling gate on the article branch, and either hold future publications or route due work to publishing. |
@@ -44,7 +44,7 @@ The writer group runs at the same time because each writer uses an isolated work
 ### Handoff Rules
 
 - A GitHub milestone represents one magazine volume.
-- Planning, article writing, AI visual work, copy editing, and publishing tasks are managed as GitHub Issues.
+- Planning, formal volume-cover work, article writing, AI visual work, copy editing, and publishing tasks are managed as GitHub Issues.
 - Each agent only handles open GitHub Issues that have a milestone, `kotatsu:ready`, and that agent's own `agent:*` label. Writer agents also require the article to be scheduled for publication in the current JST week.
 - The managing editor owns the final decision to add or remove `kotatsu:ready`.
 - When an agent starts, it removes `kotatsu:ready` and adds `kotatsu:running`.
@@ -54,9 +54,20 @@ The writer group runs at the same time because each writer uses an isolated work
 - Visual editing, copy editing, and publishing are separated by managing-editor desk checks; they do not directly pass `kotatsu:ready` to each other.
 - Publishing tasks pass through `kotatsu:publish` only after the managing editor has scheduled the article and its `publishAt` is due. They move to `kotatsu:done` only after the publishing gate succeeds.
 
+### Formal Volume Covers
+
+Each monthly volume must have a formal AI-generated cover before the first article is published. The cover is not derived from an article hero and must be tracked as its own GitHub Issue.
+
+- The managing editor creates `[Vol. XXX][VISUAL] Formal cover` after the approved volume plan reaches `main`.
+- The task uses `type:visual`, `type:volume-cover`, and `agent:visual-editor`.
+- The visual editor writes the cover to `public/images/volumes/XXX/cover.png`, adds `cover.json`, and updates `src/content/volumes/vol-XXX.md`.
+- The metadata sidecar must include `source: "ai-generated"` and `usage: "volume-cover"`.
+- The publisher does not publish the first article in a volume until the formal cover is present.
+
 ### Weekly Writing Gate
 
 Writer agents run every day at 14:00, but they only draft articles scheduled for publication in the current Japan Standard Time week, from Monday 00:00 through Sunday 23:59. The managing editor keeps future-week article GitHub Issues in `kotatsu:planned` or `kotatsu:revise` and only adds `kotatsu:ready` when that publication week arrives. If a future-week or undated article is accidentally marked ready, the writer removes `kotatsu:ready`, returns it to `kotatsu:planned`, and comments why it was skipped.
+
 ### Publishing Cadence
 
 Scheduled agents run every day, but that does not mean articles are published every day. Daily execution is for GitHub Issue cleanup, handoff, unblocking, and pre-publication checks. The publishing cadence remains one to two articles per week and four to eight articles per monthly volume.
@@ -71,8 +82,8 @@ If `publishAt` is still in the future, the GitHub Issue stays in a waiting state
 The publisher must not manually change an article's `status` to `published`. Publishing must go through the scripted gate:
 
 1. `pnpm publish:check -- --candidate=<slug>`
-2. `pnpm article:publish -- --slug=<slug>`; this also activates a planning volume and uses the first article hero as a temporary volume cover when no cover is set
-3. Confirm the home page and volume page no longer show the planning state once a published article exists
+2. `pnpm article:publish -- --slug=<slug>`; this activates a planning volume, while the formal volume cover must already exist
+3. Confirm the home page and volume page use the formal volume cover and no longer show the planning state once a published article exists
 4. `pnpm check`
 5. `pnpm build`
 6. `pnpm test:visual` when possible
