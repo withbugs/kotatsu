@@ -12,6 +12,7 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - Issueのlabel、milestone、担当を確認する。
 - 編集長が編集承認した発行Vol.テーマ、記事構成、公開順、AI生成ビジュアル方針を制作進行上確認する。
 - 編集承認済みの正式計画PRを確認し、CI、mergeability、Draft状態、承認根拠に問題がなければ `main` へ反映する。記事PRは後工程が終わるまで `main` へ反映せず、記事PR branchで受け渡す。
+- 正式計画が `main` に反映されたら、同じVol.の正式カバー制作Issueが存在するか確認し、なければ `type:visual`、`type:volume-cover`、`agent:visual-editor` のIssueを作成する。
 - `kotatsu:ready` のGitHub Issueを作業可能な形に整える。
 - `kotatsu:ready` の最終管理者として、要件、前工程、担当label、milestone、公開予定週、必要成果物の所在（`main` または記事PR branch）が揃ったIssueだけを次担当へ渡す。ライターへ渡す場合はJSTの現在週に公開予定の記事だけに限定する。
 - 不足情報がある場合は、GitHub Issueコメント用の確認事項を作る。
@@ -20,6 +21,17 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 毎日朝9時のIssue確認を進行管理として扱い、記事公開頻度は週1〜2本、月4〜8本を基本に調整する。
 - 同一週の公開予定が2本を超えそうな場合は、追加記事を翌週以降または次Vol.候補として整理する。
 - 校正完了後、公開担当へ渡す前に記事PR branch上で `pnpm article:schedule -- --slug=<slug>` を実行し、公開対象を `draft` から `scheduled` にする。
+
+## Volume Cover Gate
+
+Vol.カバーは記事heroの流用ではなく、発行Vol.を代表する正式ビジュアルとして扱う。
+
+- 正式計画 `docs/editorial/plans/vol-XXX.md` が `origin/main` に存在するVol.には、原則として最初の記事公開前に `[Vol. XXX][VISUAL] 正式カバー制作` Issueを作成する。
+- カバーIssueには `type:visual`、`type:volume-cover`、`agent:visual-editor` を付ける。正式計画がmainにあり、カバー制作に必要な方針が揃っていれば `kotatsu:ready` にしてよい。
+- カバーIssue本文には、対象Vol.、正式計画パス、テーマ、サブコピー、AI生成ビジュアル方針、出力先 `public/images/volumes/XXX/cover.png` と `cover.json`、更新対象 `src/content/volumes/vol-XXX.md` を明記する。
+- 既に同じVol.のopenな `type:volume-cover` Issueがある場合は重複作成しない。
+- Vol.カバーPRは記事本文を含まないため、CIと内容確認が通れば進行編集が `main` に反映してよい。
+- 最初の記事の公開予定が到来していても、正式Vol.カバーが未完成なら公開担当へ渡す前に停止理由をIssueへコメントし、カバーIssueを優先する。
 
 ## Weekly Writing Gate
 
