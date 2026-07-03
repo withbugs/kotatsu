@@ -13,6 +13,7 @@
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "publish:check": "node scripts/editorial/check-publishing-schedule.mjs",
+    "article:schedule": "node scripts/editorial/schedule-article.mjs",
     "article:publish": "node scripts/editorial/publish-article.mjs",
     "copy:check": "node scripts/editorial/check-reader-facing-copy.mjs"
   },
