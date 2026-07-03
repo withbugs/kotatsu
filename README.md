@@ -71,10 +71,11 @@ If `publishAt` is still in the future, the GitHub Issue stays in a waiting state
 The publisher must not manually change an article's `status` to `published`. Publishing must go through the scripted gate:
 
 1. `pnpm publish:check -- --candidate=<slug>`
-2. `pnpm article:publish -- --slug=<slug>`
-3. `pnpm check`
-4. `pnpm build`
-5. `pnpm test:visual` when possible
+2. `pnpm article:publish -- --slug=<slug>`; this also activates a planning volume and uses the first article hero as a temporary volume cover when no cover is set
+3. Confirm the home page and volume page no longer show the planning state once a published article exists
+4. `pnpm check`
+5. `pnpm build`
+6. `pnpm test:visual` when possible
 
 After approved changes reach `main`, the GitHub Pages workflow deploys the site to the project URL.
 

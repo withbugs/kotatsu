@@ -183,9 +183,10 @@ Issue監視ジョブは、次の条件を満たすGitHub Issueを対象にする
 公開担当は、記事frontmatterを手作業で `published` に変更しない。必ず次の順で機械的な公開ゲートを通す。
 
 1. `pnpm publish:check -- --candidate=<slug>` で対象記事を検査する。
-2. ゲートが通った場合だけ `pnpm article:publish -- --slug=<slug>` で `published` に昇格する。
-3. `pnpm check` と `pnpm build` を通す。
-4. 可能なら `pnpm test:visual` を通す。
+2. ゲートが通った場合だけ `pnpm article:publish -- --slug=<slug>` で `published` に昇格する。このコマンドは、対象Vol.が `planning` の場合に `active` へ切り替え、Vol.カバー未設定時は最初の記事heroを暫定カバーとして使う。
+3. トップページとVol.ページが準備中表示のまま残っていないことを確認する。
+4. `pnpm check` と `pnpm build` を通す。
+5. 可能なら `pnpm test:visual` を通す。
 
 CI/CDでは `pnpm content:check` の中で `scripts/editorial/check-publishing-schedule.mjs` が実行され、未来日公開、週2本超過、月8本超過を検出する。
 
