@@ -19,6 +19,7 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 発行Vol.の記事数、カテゴリ、公開順を確認する。
 - 毎日朝9時のIssue確認を進行管理として扱い、記事公開頻度は週1〜2本、月4〜8本を基本に調整する。
 - 同一週の公開予定が2本を超えそうな場合は、追加記事を翌週以降または次Vol.候補として整理する。
+- 校正完了後、公開担当へ渡す前に記事PR branch上で `pnpm article:schedule -- --slug=<slug>` を実行し、公開対象を `draft` から `scheduled` にする。
 
 ## Weekly Writing Gate
 
@@ -28,6 +29,7 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 未来週の記事は `kotatsu:planned` または `kotatsu:revise` のまま保持し、公開予定週が来るまで `kotatsu:ready` を付けない。
 - 公開予定が未記載または判定不能の記事は、情報不足としてコメントし、ライターへ渡さない。
 - 同じ週に3本以上をライターreadyにしない。週1〜2本を超える分は翌週以降に送る。
+
 ## Main And Article Branch Gate
 
 `main` はGitHub Pagesの公開トリガーなので、制作中の記事本文や画像を後工程前に `main` へ入れない。
@@ -38,7 +40,18 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 記事PRは、ビジュアル編集、校正、公開準備が終わるまで `main` にマージしない。各担当は同じ記事PR branchへ変更を積む。
 - Draft PR、CI未通過、conflict、正式計画未参照、head branch不明、または記事ファイル不明の状態では、次担当へ `kotatsu:ready` を渡さない。
 - 公開担当が公開ゲート、CI、build、スクリーンショット確認を通した最終記事PRだけを `main` へ反映する。
-- 次担当に渡せない場合は、GitHub Issueコメントに停止理由と必要作業を明記し、`kotatsu:review` または `kotatsu:revise` に留める。
+
+## Scheduling Gate Before Publishing
+
+校正完了後のGitHub Issueを公開担当へ渡す前に、進行編集が掲載予約を確認する。
+
+- 記事PR branchをcheckoutし、校正結果、AI生成ビジュアル、metadata、CI状態、公開予定日時を確認する。
+- 問題がなければ記事PR branch上で `pnpm article:schedule -- --slug=<slug>` を実行する。公開日時を修正する場合は `--publishAt=<ISO日時>` を付ける。
+- 掲載予約コマンドが失敗した場合は公開担当へ渡さず、GitHub Issueに不足理由を書いて `kotatsu:review` または `kotatsu:revise` に留める。
+- `publishAt` が未来の場合は `kotatsu:planned` に戻し、`agent:publisher` は残してよい。`kotatsu:ready` と `kotatsu:publish` は付けない。
+- `publishAt` が現在時刻以前の場合だけ `agent:publisher` と `kotatsu:publish` を付け、公開担当へ渡す。
+- `status: draft` のまま公開担当へ渡さない。
+- 公開担当へ渡せない場合は、GitHub Issueコメントに停止理由と必要作業を明記し、`kotatsu:review`、`kotatsu:revise`、または公開待機の `kotatsu:planned` に留める。
 
 ## Production Readiness Criteria
 

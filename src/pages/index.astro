@@ -7,20 +7,24 @@ import { assetPath, categories, visibleArticles } from '../lib/kotatsu';
 
 const volumes = await getCollection('volumes');
 const volume = volumes.find((entry) => entry.slug === 'vol-001') ?? volumes[0];
-const volumeIsPlanning = volume.data.status === 'planning';
-const allArticles = volumeIsPlanning ? [] : visibleArticles(await getCollection('articles'));
+const allArticles = visibleArticles(await getCollection('articles'));
 const volumeArticles = allArticles.filter((article) => article.data.volume === volume.slug);
+const hasPublishedVolumeArticles = volumeArticles.some((article) => article.data.status === 'published');
+const volumeIsPlanning = volume.data.status === 'planning' && !hasPublishedVolumeArticles;
 const leadArticle = volumeArticles.find((article) => article.data.kind === 'cover-story') ?? volumeArticles[0];
 const secondaryArticles = volumeArticles.filter((article) => article.id !== leadArticle?.id);
+const heroImage = volume.data.coverImage || leadArticle?.data.heroImage || '/logo.svg';
+const heroAlt = volume.data.coverAlt || leadArticle?.data.heroAlt || 'KOTATSU';
+const heroVisual = volume.data.coverImage ? volume.data.visual : (leadArticle?.data.visual ?? volume.data.visual);
 ---
-<BaseLayout title="KOTATSU" description={volume.data.subtitle} image={volumeIsPlanning ? assetPath('/logo.svg') : assetPath(volume.data.coverImage)}>
+<BaseLayout title="KOTATSU" description={volume.data.subtitle} image={assetPath(volumeIsPlanning ? '/logo.svg' : heroImage)}>
   <main>
     <section class:list={['home-hero', { 'home-hero--planning': volumeIsPlanning }]}>
       {volumeIsPlanning ? (
         <div class="home-hero__paper"></div>
       ) : (
         <>
-          <img src={assetPath(volume.data.coverImage)} alt={volume.data.coverAlt} />
+          <img src={assetPath(heroImage)} alt={heroAlt} />
           <div class="home-hero__shade"></div>
         </>
       )}
@@ -33,7 +37,7 @@ const secondaryArticles = volumeArticles.filter((article) => article.id !== lead
           {volumeIsPlanning ? '準備状況を見る' : 'Read this volume'}
         </a>
       </div>
-      {!volumeIsPlanning && <VisualCredit mode={volume.data.visual.mode} intent={volume.data.visual.intent} />}
+      {!volumeIsPlanning && <VisualCredit mode={heroVisual.mode} intent={heroVisual.intent} />}
     </section>
 
     <section class="section section--intro">
@@ -62,18 +66,20 @@ const secondaryArticles = volumeArticles.filter((article) => article.id !== lead
           </section>
         )}
 
-        <section class="section">
-          <div class="section__head section__head--row">
-            <div>
-              <p class="eyebrow">LATEST</p>
-              <h2>創刊Vol.の記事</h2>
+        {secondaryArticles.length > 0 && (
+          <section class="section">
+            <div class="section__head section__head--row">
+              <div>
+                <p class="eyebrow">LATEST</p>
+                <h2>創刊Vol.の記事</h2>
+              </div>
+              <a class="text-link" href={assetPath(`/volumes/${volume.slug}/`)}>View all</a>
             </div>
-            <a class="text-link" href={assetPath(`/volumes/${volume.slug}/`)}>View all</a>
-          </div>
-          <div class="article-grid">
-            {secondaryArticles.map((article) => <ArticleCard article={article} />)}
-          </div>
-        </section>
+            <div class="article-grid">
+              {secondaryArticles.map((article) => <ArticleCard article={article} />)}
+            </div>
+          </section>
+        )}
       </>
     )}
 

@@ -35,8 +35,8 @@ All times are Japan Standard Time. The automations run every day, but a single a
 | Day 1 | 18:00 | Visual editor | local | Prepare AI-generated visuals, alt text, prompt summaries, metadata, and placement guidance, then return the GitHub Issue to `kotatsu:review`. |
 | Day 2 | 09:00 | Managing editor | local | Review visual-editor output and route approved work to copy editing. |
 | Day 2 | 11:00 | Copy editor | local | Check tone, readability, banned expressions, factual risk, and reader-facing trust issues, then return the GitHub Issue to `kotatsu:review`. |
-| Day 2 | 12:00 | Managing editor | local | Review copy-editor output and route approved work to publishing preparation. |
-| Day 2 | 13:00 | Publisher | local | Run publishing gates, build checks, screenshot checks, and GitHub Pages publishing preparation. |
+| Day 2 | 12:00 | Managing editor | local | Review copy-editor output, run the scheduling gate on the article branch, and either hold future publications or route due work to publishing. |
+| Day 2 | 13:00 | Publisher | local | Publish only scheduled articles whose `publishAt` is due, then run gates, build checks, screenshots, and GitHub Pages preparation. |
 | Day 2 | 16:00 | Managing editor | local | Review any publishing failures, revisions, or stalled handoffs and schedule the next step. |
 
 The writer group runs at the same time because each writer uses an isolated worktree. Visual editing, copy editing, and publishing do not hand work directly to one another: each role finishes into `kotatsu:review`, and the managing editor decides whether the next role can safely receive `kotatsu:ready` or `kotatsu:publish`. If visual generation, copy editing, or publishing gates need revision, the item moves to the next available day instead of being rushed through.
@@ -52,7 +52,7 @@ The writer group runs at the same time because each writer uses an isolated work
 - The managing editor reviews `kotatsu:review`, assigns the next `agent:*` label, and returns the GitHub Issue to `kotatsu:ready` when the next role can safely continue.
 - A PR alone is not enough for handoff. For article production, the managing editor must record the PR URL and head branch so the next role can continue on the same branch. Article drafts stay out of `main` until the publisher passes the final gate.
 - Visual editing, copy editing, and publishing are separated by managing-editor desk checks; they do not directly pass `kotatsu:ready` to each other.
-- Publishing tasks pass through `kotatsu:publish` and move to `kotatsu:done` only after the publishing gate succeeds.
+- Publishing tasks pass through `kotatsu:publish` only after the managing editor has scheduled the article and its `publishAt` is due. They move to `kotatsu:done` only after the publishing gate succeeds.
 
 ### Weekly Writing Gate
 
@@ -61,13 +61,21 @@ Writer agents run every day at 14:00, but they only draft articles scheduled for
 
 Scheduled agents run every day, but that does not mean articles are published every day. Daily execution is for GitHub Issue cleanup, handoff, unblocking, and pre-publication checks. The publishing cadence remains one to two articles per week and four to eight articles per monthly volume.
 
+The managing editor owns the scheduling step from `draft` to `scheduled` after copy editing has passed. This must use the scripted gate on the article PR branch:
+
+1. `pnpm article:schedule -- --slug=<slug>`
+2. `pnpm article:schedule -- --slug=<slug> --publishAt=<ISO datetime>` when the publication time needs to be adjusted
+
+If `publishAt` is still in the future, the GitHub Issue stays in a waiting state such as `kotatsu:planned` and is not handed to the publisher yet.
+
 The publisher must not manually change an article's `status` to `published`. Publishing must go through the scripted gate:
 
 1. `pnpm publish:check -- --candidate=<slug>`
-2. `pnpm article:publish -- --slug=<slug>`
-3. `pnpm check`
-4. `pnpm build`
-5. `pnpm test:visual` when possible
+2. `pnpm article:publish -- --slug=<slug>`; this also activates a planning volume and uses the first article hero as a temporary volume cover when no cover is set
+3. Confirm the home page and volume page no longer show the planning state once a published article exists
+4. `pnpm check`
+5. `pnpm build`
+6. `pnpm test:visual` when possible
 
 After approved changes reach `main`, the GitHub Pages workflow deploys the site to the project URL.
 
