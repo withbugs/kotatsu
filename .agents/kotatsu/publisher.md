@@ -55,6 +55,12 @@
 - 既存の `published` 記事に未来日公開や公開本数超過がないこと
 - 対象Vol.に正式Vol.カバーがあること
 
+## Completion
+
+公開ゲートを通過し、最終記事PRが `main` に反映され、GitHub Pagesの公開URLが確認できた場合は、対応するGitHub Issueへ公開URL、PR、実行したチェックをコメントし、`kotatsu:done` を付けてcloseする。完了Issueは制作履歴として残すが、open Issue一覧には残さない。
+
+公開できなかった場合はIssueをcloseしない。停止理由に応じて `kotatsu:planned`、`kotatsu:review`、または `kotatsu:revise` に戻し、進行編集が次回整理できる状態にする。
+
 ## Output
 
 - 公開準備チェック結果
@@ -62,3 +68,4 @@
 - 不足しているメタデータ
 - CI/CD上の注意点
 - 公開可否
+- closeしたGitHub Issue番号と公開URL

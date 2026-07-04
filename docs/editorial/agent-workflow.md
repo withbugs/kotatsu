@@ -66,20 +66,35 @@ GitHub Issueを編集タスクとして扱い、labelとmilestoneで状態を管
 正式計画を制作進行へ渡せるのは、計画PRが作られた時点ではなく、`docs/editorial/plans/vol-XXX.md` が `main` に反映され、通常の作業ディレクトリから読める時点とする。進行編集は、承認済み正式計画PRのCI、mergeability、Draft状態、承認根拠を確認し、問題がなければ `main` へ反映する。`main` で正式計画を確認できる場合だけ、正式Vol.カバー、記事、記事ビジュアル、校正、公開準備のGitHub Issueを展開する。進行上の不足がある場合は、理由をGitHub Issueコメントに明記して `kotatsu:revise` と `agent:editor-in-chief` へ戻す。
 
 
+## Vol.ライフサイクル
+
+Vol.の進行状態は、openなVol.設計GitHub Issueの有無だけで判定しない。GitHub Issueは作業チケットであり、Vol.そのものの状態は `src/content/volumes/vol-XXX.md`、`docs/editorial/plans/vol-XXX.md`、milestone、記事Issueの状態を合わせて判断する。
+
+Vol.設計GitHub Issueは、正式計画が `main` に反映され、正式Vol.カバーIssueと記事Issueが展開済みになった時点で `kotatsu:done` にしてcloseしてよい。close済みのVol.設計GitHub Issueは履歴として残すが、次Vol.開始のトリガーにはしない。
+
+公開済み記事、正式Vol.カバー、公開担当の作業Issueは、結果コメント、PR、公開URLを残したうえで `kotatsu:done` にしてcloseする。完了Issueをcloseしても、同じVol.の他の記事や次Vol.計画は自動的には開始しない。
+
+次Vol.の計画Issueを自動作成してよいのは、次のいずれかを満たす場合だけとする。
+
+- ユーザーが明示的に次Vol.開始を依頼した。
+- 最新Vol.が `status: complete` で、未完了の記事Issueを次Vol.候補または取り下げとして整理済みである。
+- 最新Vol.の月の最終7日間に入り、かつ公開済み記事が4本以上あり、進行編集が翌月Vol.の先行計画として必要と判断した。
+
+上記を満たさない場合、openなVol.設計GitHub Issueが存在しなくても新しいVol.設計Issueを作らない。特に、Vol.設計Issueをcloseした直後に同じVol.や次Vol.を作り直さない。
+
 ## 初期ブートストラップ
 
-創刊Vol.をまっさらな状態から始める場合、進行対象は open GitHub Issue だけで判定する。close済みIssue、削除済みIssue、archive配下の文書、過去の失敗作GitHub Issueは、進行対象や存在判定に使わない。
-
-open のVol.設計GitHub Issueが存在しない場合だけ、進行編集が `Vol. 001: 創刊Vol.テーマ検討` を新規作成する。初期GitHub Issueには `type:volume-plan`, `agent:editor-in-chief`, `kotatsu:ready` を付ける。`agent:managing-editor` は付けない。
+リポジトリにVol.コンテンツ、正式計画、milestone、openまたはclosedのVol.設計GitHub Issueが一切存在しない初回だけ、進行編集が `Vol. 001: 創刊Vol.テーマ検討` を新規作成する。初期GitHub Issueには `type:volume-plan`, `agent:editor-in-chief`, `kotatsu:ready` を付ける。`agent:managing-editor` は付けない。
 
 9:00の進行編集は、新規作成したVol.設計GitHub Issueを `kotatsu:running` にせず、10:00の編集長が着手できる状態に留める。
+
 ## 担当自動化の起動
 
 各担当エージェントは、工程ごとに時間帯を分けて実行する。ラベルそのものが常駐プロセスを起動するのではなく、各自動化がGitHub Issueを確認し、自分の `agent:*` label と `kotatsu:ready` が揃ったIssueだけを処理する。
 
 進行編集は、工程間の受け渡し役として1日3回動く。
 
-- Day 1 09:00 進行編集: 前日分整理、当日の対象確認、label/milestone/担当確認、滞留Issue整理。Vol.設計GitHub Issueがなければ作成する
+- Day 1 09:00 進行編集: 前日分整理、当日の対象確認、label/milestone/担当確認、滞留Issue整理。Vol.ライフサイクル条件を満たす場合だけ新しいVol.設計GitHub Issueを作成する
 - Day 1 10:00 編集長: Vol.全体、企画、見出し、公開可否の編集判断
 - Day 1 12:00 進行編集: 編集長が編集承認した正式計画PRを確認し、問題なければ `main` へ反映する。`main` 上で正式計画を確認できる場合だけ、正式Vol.カバーIssueと記事Issueを作成/更新する。不足があれば差し戻す
 - Day 1 14:00 ライター群: STYLE、WEEKEND、LIFE、CULTURE、PEOPLE、SHOPPINGをworktreeで同時実行。ただしJSTの現在週に公開予定の記事だけを執筆する
@@ -202,7 +217,3 @@ Issue監視ジョブは、次の条件を満たすGitHub Issueを対象にする
 5. 可能なら `pnpm test:visual` を通す。
 
 CI/CDでは `pnpm content:check` の中で `scripts/editorial/check-publishing-schedule.mjs` が実行され、未来日公開、週2本超過、月8本超過を検出する。
-
-
-
-

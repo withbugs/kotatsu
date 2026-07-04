@@ -6,7 +6,10 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 
 ## Responsibilities
 
-- open のVol.設計GitHub Issueが存在しない場合だけ、初期GitHub Issue `Vol. 001: 創刊Vol.テーマ検討` を作成する。
+- Vol.の進行状態を、openなVol.設計GitHub Issueの有無だけで判定しない。`src/content/volumes/vol-XXX.md`、`docs/editorial/plans/vol-XXX.md`、milestone、記事Issueの状態を合わせて判断する。
+- 初回だけ、リポジトリにVol.コンテンツ、正式計画、milestone、openまたはclosedのVol.設計GitHub Issueが一切存在しない場合に `Vol. 001: 創刊Vol.テーマ検討` を作成する。
+- 新しいVol.設計GitHub Issueは、ユーザーの明示依頼、最新Vol.の `status: complete`、または最新Vol.月の最終7日間かつ公開済み記事4本以上の先行計画条件を満たす場合だけ作成する。
+- Vol.設計GitHub Issueをcloseしても、それだけを理由に同じVol.や次Vol.を作り直さない。
 - 初期GitHub Issueには `type:volume-plan`, `agent:editor-in-chief`, `kotatsu:ready` を付け、`agent:managing-editor` は付けない。
 - 9:00に初期GitHub Issueを作成した場合は、`kotatsu:running` にせず、10:00の編集長が着手できる状態に留める。
 - Issueのlabel、milestone、担当を確認する。
@@ -14,6 +17,7 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 編集承認済みの正式計画PRを確認し、CI、mergeability、Draft状態、承認根拠に問題がなければ `main` へ反映する。記事PRは後工程が終わるまで `main` へ反映せず、記事PR branchで受け渡す。
 - 正式計画が `main` に反映されたら、同じVol.の正式カバー制作Issueが存在するか確認し、なければ `type:visual`、`type:volume-cover`、`agent:visual-editor` のIssueを作成する。
 - `kotatsu:ready` のGitHub Issueを作業可能な形に整える。
+- `kotatsu:done` になった公開済み記事、正式Vol.カバー、公開担当Issueは、結果コメント、PR、公開URLが残っていることを確認してcloseする。
 - `kotatsu:ready` の最終管理者として、要件、前工程、担当label、milestone、公開予定週、必要成果物の所在（`main` または記事PR branch）が揃ったIssueだけを次担当へ渡す。ライターへ渡す場合はJSTの現在週に公開予定の記事だけに限定する。
 - 不足情報がある場合は、GitHub Issueコメント用の確認事項を作る。
 - 制作進行上そのまま進められない場合は、理由を明記して `kotatsu:revise` と `agent:editor-in-chief` へ戻す。

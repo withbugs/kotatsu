@@ -27,7 +27,7 @@ All times are Japan Standard Time. The automations run every day, but a single a
 
 | Production day | Time | Agent | Environment | Main responsibility |
 | --- | --- | --- | --- | --- |
-| Day 1 | 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, and create the monthly planning GitHub Issue when needed. |
+| Day 1 | 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, close completed work when appropriate, and create a new volume-planning Issue only when lifecycle rules allow it. |
 | Day 1 | 10:00 | Editor-in-chief | local | Decide the monthly editorial direction, article lineup, publishing order, tone, candidate memo, and formal plan. |
 | Day 1 | 12:00 | Managing editor | local | Check approved plan PRs, merge safe plans to `main`, then create/update formal volume-cover and article GitHub Issues. |
 | Day 1 | 14:00 | STYLE / LIFE / WEEKEND / CULTURE / PEOPLE / SHOPPING writers | worktree | Draft only article GitHub Issues scheduled for publication in the current JST week, using isolated worktrees. |
@@ -53,6 +53,20 @@ The writer group runs at the same time because each writer uses an isolated work
 - A PR alone is not enough for handoff. For article production, the managing editor must record the PR URL and head branch so the next role can continue on the same branch. Article drafts stay out of `main` until the publisher passes the final gate.
 - Visual editing, copy editing, and publishing are separated by managing-editor desk checks; they do not directly pass `kotatsu:ready` to each other.
 - Publishing tasks pass through `kotatsu:publish` only after the managing editor has scheduled the article and its `publishAt` is due. They move to `kotatsu:done` only after the publishing gate succeeds.
+
+- Completed article, formal cover, and publishing GitHub Issues should be closed after the result comment, PR, and public URL are recorded. Closed Issues remain production history; they are not active work.
+
+### Volume Lifecycle
+
+A volume does not progress based only on whether a volume-planning GitHub Issue is open. The source of truth is the combination of `src/content/volumes/vol-XXX.md`, the approved plan in `docs/editorial/plans/vol-XXX.md`, the milestone, and the article Issues for that volume.
+
+The volume-planning GitHub Issue may be marked `kotatsu:done` and closed after the approved plan reaches `main` and the formal cover and article Issues have been created. Closing that planning Issue must not create a new volume by itself.
+
+The managing editor may create the next volume-planning Issue only when one of these is true:
+
+- the user explicitly asks to start the next volume
+- the latest volume is `status: complete` and unfinished article Issues have been carried over or withdrawn
+- the latest volume is in its final seven calendar days, at least four articles are already published, and the managing editor intentionally opens next-month planning
 
 ### Formal Volume Covers
 
