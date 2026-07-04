@@ -1,0 +1,19 @@
+{
+  "source": "ai-generated",
+  "usage": "volume-cover",
+  "visualMode": "photorealistic",
+  "editorialIntent": "Vol. 001「週末、自分の温度に戻る服」のテーマを、服と生活の静かな時間として代表する正式カバー。",
+  "promptSummary": "自然光の喫茶店風の窓辺、白シャツ、オリーブのジャケット、革靴、コーヒー、本、木の質感を配したフォトリアルな静物カバー。",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "human faces",
+    "readable book titles",
+    "stock photo look",
+    "official product photo look",
+    "luxury-ad look",
+    "catalog product layout"
+  ],
+  "reviewedBy": "agent:visual-editor"
+}
