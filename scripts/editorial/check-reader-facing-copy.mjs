@@ -16,6 +16,7 @@ const contentDirs = [
 
 const blockedTerms = [
   'Issue planning',
+  'AI-generated visual /',
   'NOW PLANNING',
   'Coming Soon',
   'Comming Soon',

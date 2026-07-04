@@ -4,7 +4,6 @@ interface Props {
   intent: string;
 }
 
-const { mode, intent } = Astro.props;
 ---
-<p class="visual-credit">AI-generated visual / {mode} / {intent}</p>
+<p class="visual-credit" aria-label="このページのビジュアルはAIで生成しています。">AI生成ビジュアル</p>
 
