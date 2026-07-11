@@ -4,6 +4,8 @@ Approved volume plans are created only after the editor-in-chief or user approve
 
 They are the source of truth for article GitHub Issues, visual GitHub Issues, copy-editing GitHub Issues, and publishing GitHub Issues.
 
+Every approved plan must also define the publication month, expected Japanese climate, concrete wardrobe and environment cues, and elements that could make visuals look like the wrong season.
+
 Naming:
 
 - `vol-001.md`

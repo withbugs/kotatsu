@@ -5,7 +5,11 @@ const visualSchema = z.object({
   mode: z.enum(['photorealistic', 'illustration', 'collage', 'still-life']),
   promptSummary: z.string().min(20),
   intent: z.string().min(10),
-  avoid: z.array(z.string()).default([])
+  avoid: z.array(z.string()).default([]),
+  seasonalContext: z.string().min(10).optional(),
+  seasonalCues: z.array(z.string()).min(2).optional(),
+  seasonalAvoid: z.array(z.string()).min(2).optional(),
+  seasonalityReviewedBy: z.string().min(3).optional()
 });
 
 const volumes = defineCollection({

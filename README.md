@@ -27,13 +27,13 @@ All times are Japan Standard Time. The automations run every day, but a single a
 
 | Production day | Time | Agent | Environment | Main responsibility |
 | --- | --- | --- | --- | --- |
-| Day 1 | 09:00 | Managing editor | local | Review the day, check labels, milestones, stalled tasks, close completed work when appropriate, and create a new volume-planning Issue only when lifecycle rules allow it. |
-| Day 1 | 10:00 | Editor-in-chief | local | Decide the monthly editorial direction, article lineup, publishing order, tone, candidate memo, and formal plan. |
+| Day 1 | 09:00 | Managing editor | local | Review labels, milestones, stalled work, and handoffs. On or after the second Monday, open exactly one planning Issue for the next calendar-month volume when it does not already exist. |
+| Day 1 | 10:00 | Editor-in-chief | local | Handle assigned decisions and revisions. Every Monday, also hold an editorial meeting covering the current reader experience, seasonal coherence, and the next volume. |
 | Day 1 | 12:00 | Managing editor | local | Check approved plan PRs, merge safe plans to `main`, then create/update formal volume-cover and article GitHub Issues. |
 | Day 1 | 14:00 | STYLE / LIFE / WEEKEND / CULTURE / PEOPLE / SHOPPING writers | worktree | Draft only article GitHub Issues scheduled for publication in the current JST week, using isolated worktrees. |
 | Day 1 | 16:00 | Managing editor | local | Review writer PRs, record their head branches, and route article production branches to visual editing without merging drafts to `main`. |
-| Day 1 | 18:00 | Visual editor | local | Prepare AI-generated article visuals or formal volume covers, alt text, prompt summaries, metadata, and placement guidance, then return the GitHub Issue to `kotatsu:review`. |
-| Day 2 | 09:00 | Managing editor | local | Review visual-editor output and route approved work to copy editing. |
+| Day 1 | 18:00 | Visual editor | local | Prepare AI-generated visuals and verify the rendered image matches the publication month, climate, clothing layers, materials, light, and weather before returning the GitHub Issue to `kotatsu:review`. |
+| Day 2 | 09:00 | Managing editor | local | Inspect the actual visual, including seasonal plausibility, and route only approved work to copy editing. |
 | Day 2 | 11:00 | Copy editor | local | Check tone, readability, banned expressions, factual risk, and reader-facing trust issues, then return the GitHub Issue to `kotatsu:review`. |
 | Day 2 | 12:00 | Managing editor | local | Review copy-editor output, run the scheduling gate on the article branch, and either hold future publications or route due work to publishing. |
 | Day 2 | 13:00 | Publisher | local | Publish only scheduled articles whose `publishAt` is due, then run gates, build checks, screenshots, and GitHub Pages preparation. |
@@ -62,12 +62,15 @@ A volume does not progress based only on whether a volume-planning GitHub Issue 
 
 The volume-planning GitHub Issue may be marked `kotatsu:done` and closed after the approved plan reaches `main` and the formal cover and article Issues have been created. Closing that planning Issue must not create a new volume by itself.
 
-The managing editor may create the next volume-planning Issue only when one of these is true:
+Planning and publishing use separate gates. Beginning on the second Monday of each month in Japan Standard Time, the managing editor may open exactly one planning Issue for the next calendar-month volume even while the current volume remains active. This gives the editor-in-chief enough lead time to develop the theme, seasonal point of view, lineup, and visual direction without exposing unfinished work to readers.
 
-- the user explicitly asks to start the next volume
-- the latest volume is `status: complete` and unfinished article Issues have been carried over or withdrawn
-- the latest volume is in its final seven calendar days, at least four articles are already published, and the managing editor intentionally opens next-month planning
+Before the second Monday, a new volume-planning Issue is created only for the initial repository bootstrap or when the user explicitly asks to start early. The managing editor must check existing open and closed planning Issues, milestones, approved plans, and volume content before creating anything. Closing a planning Issue never creates a replacement, and only one future volume may be in planning at a time.
 
+### Weekly Editorial Meeting
+
+Every Monday at 10:00 JST, the editor-in-chief performs an editorial meeting even when no assigned `kotatsu:ready` Issue exists. The meeting reviews the current volume as a reader would see it, checks category balance and visual tone, and develops the next volume when its planning Issue is open. From the second Monday onward, the next volume must explicitly define its publication month, expected Japanese climate, wardrobe and material cues, light and weather cues, and visual elements that could make the volume look like the wrong season.
+
+The meeting is an editorial-direction activity, not a publishing gate. Production roles continue through the normal managing-editor handoffs, and unpublished next-volume content never reaches `main`.
 ### Formal Volume Covers
 
 Each monthly volume must have a formal AI-generated cover before the first article is published. The cover is not derived from an article hero and must be tracked as its own GitHub Issue.
@@ -75,7 +78,7 @@ Each monthly volume must have a formal AI-generated cover before the first artic
 - The managing editor creates `[Vol. XXX][VISUAL] Formal cover` after the approved volume plan reaches `main`.
 - The task uses `type:visual`, `type:volume-cover`, and `agent:visual-editor`.
 - The visual editor writes the cover to `public/images/volumes/XXX/cover.png`, adds `cover.json`, and updates `src/content/volumes/vol-XXX.md`.
-- The metadata sidecar must include `source: "ai-generated"` and `usage: "volume-cover"`.
+- The metadata sidecar must include `source: "ai-generated"`, `usage: "volume-cover"`, seasonal context, at least two visible seasonal cues, at least two seasonal-misread risks, and the visual editor review identity.
 - The publisher does not publish the first article in a volume until the formal cover is present.
 
 ### Weekly Writing Gate
@@ -106,7 +109,7 @@ After approved changes reach `main`, the GitHub Pages workflow deploys the site 
 
 ### Visual Policy
 
-KOTATSU does not use photographed assets. Photorealistic images, illustrations, collages, and article visuals are all AI-generated and must follow [docs/editorial/ai-visual-policy.md](docs/editorial/ai-visual-policy.md). Public pages must not make unfinished articles look complete or link to unpublished article pages.
+KOTATSU does not use photographed assets. Photorealistic images, illustrations, collages, and article visuals are all AI-generated and must follow [docs/editorial/ai-visual-policy.md](docs/editorial/ai-visual-policy.md). New visuals must also pass the seasonal-coherence gate: writing a season in metadata is insufficient unless the rendered clothing, materials, light, weather, and props plausibly match the publication date. Public pages must not make unfinished articles look complete or link to unpublished article pages.
 
 ## First Volume
 
