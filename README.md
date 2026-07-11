@@ -66,6 +66,8 @@ Planning and publishing use separate gates. Beginning on the second Monday of ea
 
 Before the second Monday, a new volume-planning Issue is created only for the initial repository bootstrap or when the user explicitly asks to start early. The managing editor must check existing open and closed planning Issues, milestones, approved plans, and volume content before creating anything. Closing a planning Issue never creates a replacement, and only one future volume may be in planning at a time.
 
+For the next volume, the managing editor creates or reuses a milestone named `Vol. XXX YYYY年M月号`, then opens `[Vol. XXX][PLAN] YYYY年M月号テーマ検討` with `type:volume-plan`, `agent:editor-in-chief`, and `kotatsu:ready`. The Issue body records the target month, candidate and approved-plan paths, required editorial decisions, and seasonal-context requirements. It remains ready for the 10:00 editor-in-chief run and is not marked running by the managing editor.
+
 ### Weekly Editorial Meeting
 
 Every Monday at 10:00 JST, the editor-in-chief performs an editorial meeting even when no assigned `kotatsu:ready` Issue exists. The meeting reviews the current volume as a reader would see it, checks category balance and visual tone, and develops the next volume when its planning Issue is open. From the second Monday onward, the next volume must explicitly define its publication month, expected Japanese climate, wardrobe and material cues, light and weather cues, and visual elements that could make the volume look like the wrong season.

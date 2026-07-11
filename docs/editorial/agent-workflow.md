@@ -82,6 +82,16 @@ Vol.の企画と公開は別のゲートで管理する。JSTの毎月第2月曜
 
 Vol.設計Issueのcloseは次Vol.作成のトリガーではない。次Vol.計画が始まっても、制作中の記事を `main` へ入れる条件、週1〜2本の公開頻度、現行Vol.の完了条件は変えない。
 
+## 次Vol.先行計画Issue
+
+進行編集が次Vol.の先行計画を開始する場合は、対象月と番号を曖昧にしない。
+
+- milestoneは `Vol. XXX YYYY年M月号` とし、同じmilestoneがあれば再利用する。
+- GitHub Issueタイトルは `[Vol. XXX][PLAN] YYYY年M月号テーマ検討` とする。
+- `type:volume-plan`、`agent:editor-in-chief`、`kotatsu:ready` を付け、`agent:managing-editor` と `kotatsu:running` は付けない。
+- Issue本文には、対象発行月、候補メモ `docs/editorial/candidates/vol-XXX.md`、正式計画 `docs/editorial/plans/vol-XXX.md`、必要な編集判断、季節感の必須項目、週1〜2本・月4〜8本の公開条件を記す。
+- 9:00に作成したIssueは、10:00の編集長がそのまま着手できる状態にする。
+
 ## 初期ブートストラップ
 
 リポジトリにVol.コンテンツ、正式計画、milestone、openまたはclosedのVol.設計GitHub Issueが一切存在しない初回だけ、進行編集が `Vol. 001: 創刊Vol.テーマ検討` を新規作成する。初期GitHub Issueには `type:volume-plan`, `agent:editor-in-chief`, `kotatsu:ready` を付ける。`agent:managing-editor` は付けない。

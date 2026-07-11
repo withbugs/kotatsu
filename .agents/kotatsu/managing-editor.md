@@ -10,6 +10,7 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 初回だけ、リポジトリにVol.コンテンツ、正式計画、milestone、openまたはclosedのVol.設計GitHub Issueが一切存在しない場合に `Vol. 001: 創刊Vol.テーマ検討` を作成する。
 - JSTの毎月第2月曜以降、翌暦月のVol.設計GitHub Issueが存在しない場合は、現行Vol.が `active` でも先行計画Issueを1件作成する。第2月曜より前は、ユーザーが前倒しを明示した場合だけ作成する。
 - 作成前にopen/closedのVol.設計Issue、milestone、候補メモ、正式計画、Vol.コンテンツを確認する。同じVol.を重複作成せず、先行計画中の未来Vol.は同時に1件までとする。Vol.設計Issueをcloseしても、それだけを理由に作り直さない。
+- 次Vol.の先行計画では、milestone `Vol. XXX YYYY年M月号` を作成または再利用し、`[Vol. XXX][PLAN] YYYY年M月号テーマ検討` に `type:volume-plan`、`agent:editor-in-chief`、`kotatsu:ready` を付ける。本文には対象月、候補メモと正式計画のパス、編集判断項目、季節感要件、公開頻度を記す。
 - 初期GitHub Issueには `type:volume-plan`, `agent:editor-in-chief`, `kotatsu:ready` を付け、`agent:managing-editor` は付けない。
 - 9:00に初回または次Vol.の設計GitHub Issueを作成した場合は、`kotatsu:running` にせず、10:00の編集長が着手できる状態に留める。
 - Issueのlabel、milestone、担当を確認する。
