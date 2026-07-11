@@ -3,6 +3,15 @@ import fs from 'node:fs';
 import { loadArticles, parseArgs } from './publishing-schedule.mjs';
 
 const PENDING_VISUAL_MARKER = '__AI_VISUAL_PENDING__';
+
+function hasMeaningfulText(value) {
+  return typeof value === 'string' && value.trim().length >= 10 && !value.includes('TODO');
+}
+
+function hasMeaningfulList(value) {
+  return Array.isArray(value) && value.length >= 2 && value.every((item) => hasMeaningfulText(String(item)));
+}
+
 const args = parseArgs(process.argv.slice(2));
 const slug = args.slug || args.article;
 const publishAtArg = args.publishAt || args['publish-at'];
@@ -51,6 +60,20 @@ if (!article.data.heroAlt || !String(article.data.heroAlt).includes('AI生成'))
 
 if (!article.data.visual || article.data.visual.source !== 'ai-generated') {
   errors.push('visual.source must be ai-generated');
+}
+
+const visual = article.data.visual;
+if (!visual || !hasMeaningfulText(visual.seasonalContext)) {
+  errors.push('visual.seasonalContext must describe publication period, locale, and climate');
+}
+if (!visual || !hasMeaningfulList(visual.seasonalCues)) {
+  errors.push('visual.seasonalCues must contain at least two concrete cues');
+}
+if (!visual || !hasMeaningfulList(visual.seasonalAvoid)) {
+  errors.push('visual.seasonalAvoid must contain at least two seasonal-misread risks');
+}
+if (!visual || visual.seasonalityReviewedBy !== 'agent:visual-editor') {
+  errors.push('visual.seasonalityReviewedBy must be agent:visual-editor');
 }
 
 if (errors.length) {

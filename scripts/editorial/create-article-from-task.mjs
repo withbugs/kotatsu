@@ -52,6 +52,14 @@ visual:
   mode: photorealistic
   promptSummary: TODO: ビジュアル編集工程で生成プロンプトの要約を書く。
   intent: TODO: 編集意図を書く。
+  seasonalContext: TODO: 公開時期、想定地域、気温や天候を書く。
+  seasonalCues:
+    - TODO: 素材、袖丈、重ね着など服装の季節要素を書く。
+    - TODO: 光、湿度、植物、路面、小物など環境の季節要素を書く。
+  seasonalAvoid:
+    - seasonally implausible layering
+    - TODO: 別の季節に見える色、素材、小物を書く。
+  seasonalityReviewedBy: TODO: ビジュアル編集工程で確認者を書く。
   avoid:
     - real brand logos
     - real store signage
