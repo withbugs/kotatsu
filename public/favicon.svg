@@ -1,7 +1,7 @@
 <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KOTATSU">
-  <line x1="10" y1="30" x2="10" y2="42" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" />
-  <line x1="54" y1="30" x2="54" y2="42" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" />
-  <line x1="32" y1="50" x2="32" y2="60" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" />
-  <polygon points="32,8 56,30 32,52 8,30" fill="#1A1A1A" />
-  <text x="32" y="36" font-family="Georgia,'Times New Roman',serif" font-size="18" fill="#FFFFFF" text-anchor="middle">K</text>
+  <line x1="6" y1="28" x2="6" y2="42" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="58" y1="28" x2="58" y2="42" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" />
+  <line x1="32" y1="44" x2="32" y2="58" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round" />
+  <polygon points="32,12 58,28 32,44 6,28" fill="#1A1A1A" />
+  <text x="32" y="34" font-family="Georgia,'Times New Roman',serif" font-size="17" fill="#FFFFFF" text-anchor="middle">K</text>
 </svg>
