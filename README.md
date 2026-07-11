@@ -29,7 +29,7 @@ All times are Japan Standard Time. The automations run every day, but a single a
 | --- | --- | --- | --- | --- |
 | Day 1 | 09:00 | Managing editor | local | Review labels, milestones, stalled work, and handoffs. On or after the second Monday, open exactly one planning Issue for the next calendar-month volume when it does not already exist. |
 | Day 1 | 10:00 | Editor-in-chief | local | Handle assigned decisions and revisions. Every Monday, also hold an editorial meeting covering the current reader experience, seasonal coherence, and the next volume. |
-| Day 1 | 12:00 | Managing editor | local | Check approved plan PRs, merge safe plans to `main`, then create/update formal volume-cover and article GitHub Issues. |
+| Day 1 | 12:00 | Managing editor | local | Hold research and shortlist work for the next Monday; only merge a finalized approved plan, then create formal cover and article Issues. |
 | Day 1 | 14:00 | STYLE / LIFE / WEEKEND / CULTURE / PEOPLE / SHOPPING writers | worktree | Draft only article GitHub Issues scheduled for publication in the current JST week, using isolated worktrees. |
 | Day 1 | 16:00 | Managing editor | local | Review writer PRs, record their head branches, and route article production branches to visual editing without merging drafts to `main`. |
 | Day 1 | 18:00 | Visual editor | local | Prepare AI-generated visuals and verify the rendered image matches the publication month, climate, clothing layers, materials, light, and weather before returning the GitHub Issue to `kotatsu:review`. |
@@ -66,13 +66,24 @@ Planning and publishing use separate gates. Beginning on the second Monday of ea
 
 Before the second Monday, a new volume-planning Issue is created only for the initial repository bootstrap or when the user explicitly asks to start early. The managing editor must check existing open and closed planning Issues, milestones, approved plans, and volume content before creating anything. Closing a planning Issue never creates a replacement, and only one future volume may be in planning at a time.
 
-For the next volume, the managing editor creates or reuses a milestone named `Vol. XXX YYYY年M月号`, then opens `[Vol. XXX][PLAN] YYYY年M月号テーマ検討` with `type:volume-plan`, `agent:editor-in-chief`, and `kotatsu:ready`. The Issue body records the target month, candidate and approved-plan paths, required editorial decisions, and seasonal-context requirements. It remains ready for the 10:00 editor-in-chief run and is not marked running by the managing editor.
+For the next volume, the managing editor creates or reuses a milestone named `Vol. XXX YYYY年M月号`, then opens `[Vol. XXX][PLAN] YYYY年M月号テーマ検討` with `type:volume-plan`, `agent:editor-in-chief`, `planning:research`, and `kotatsu:ready`. The same Issue and draft planning PR remain open across all three meetings.
 
 ### Weekly Editorial Meeting
 
-Every Monday at 10:00 JST, the editor-in-chief performs an editorial meeting even when no assigned `kotatsu:ready` Issue exists. The meeting reviews the current volume as a reader would see it, checks category balance and visual tone, and develops the next volume when its planning Issue is open. From the second Monday onward, the next volume must explicitly define its publication month, expected Japanese climate, wardrobe and material cues, light and weather cues, and visual elements that could make the volume look like the wrong season.
+Every Monday at 10:00 JST, the editor-in-chief reviews the current reader experience and not-yet-started article briefs. Next-volume planning follows the same three-stage cycle every month:
 
-The meeting is an editorial-direction activity, not a publishing gate. Production roles continue through the normal managing-editor handoffs, and unpublished next-volume content never reaches `main`.
+| Monday | Planning label | Editorial outcome |
+| --- | --- | --- |
+| Second Monday | `planning:research` | Run current web searches, record demand signals and reader hypotheses, and create only the candidate memo on a draft planning PR. |
+| Third Monday | `planning:shortlist` | Refresh the web research, compare candidates, and choose a provisional theme and lineup. The approved plan still does not exist. |
+| Fourth Monday | `planning:finalize` | Refresh research once more, lock the theme, lineup, seasonal direction, and article briefs, then create the approved plan and make the planning PR ready for review. |
+
+Research is mandatory at each stage. Candidate memos for Vol. 002 and later record at least three search queries and four dated web sources across at least three source types. Search and trend signals are treated as evidence of current demand, while the editor-in-chief separately explains how that demand fits KOTATSU and can become useful beyond a short-lived trend. If current web research is unavailable, planning does not advance on invented evidence.
+
+At 12:00 after the second and third meetings, the managing editor holds the Issue in `kotatsu:planned` until the next Monday. Only after the fourth meeting may the managing editor merge the approved plan and create cover and article Issues. A fifth Monday, when present, is a preflight meeting rather than a new planning cycle.
+
+Before writing starts, the editor-in-chief may refresh not-yet-started article briefs with newer web evidence. Once an article is `kotatsu:running` or has a production PR, trend-driven rewrites stop unless a factual, seasonal, safety, or reader-trust problem is found.
+
 ### Formal Volume Covers
 
 Each monthly volume must have a formal AI-generated cover before the first article is published. The cover is not derived from an article hero and must be tracked as its own GitHub Issue.
@@ -86,6 +97,8 @@ Each monthly volume must have a formal AI-generated cover before the first artic
 ### Weekly Writing Gate
 
 Writer agents run every day at 14:00, but they only draft articles scheduled for publication in the current Japan Standard Time week, from Monday 00:00 through Sunday 23:59. The managing editor keeps future-week article GitHub Issues in `kotatsu:planned` or `kotatsu:revise` and only adds `kotatsu:ready` when that publication week arrives. If a future-week or undated article is accidentally marked ready, the writer removes `kotatsu:ready`, returns it to `kotatsu:planned`, and comments why it was skipped.
+
+At the Monday 10:00 editorial meeting, the editor-in-chief reviews article Issues scheduled to start within the next 14 days and may add dated web evidence or refine the brief. The managing editor applies accepted brief changes before the 14:00 writer gate. Started drafts are not repeatedly redirected by new trends.
 
 ### Publishing Cadence
 
