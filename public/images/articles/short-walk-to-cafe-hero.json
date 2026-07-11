@@ -1,0 +1,27 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-001",
+  "article": "short-walk-to-cafe",
+  "githubIssue": 14,
+  "editorialIntent": "喫茶店そのものではなく、家を出てから店へ着くまでの短い散歩で服と持ち物が体になじむ感覚を見せる。",
+  "subject": "白シャツの袖、薄い羽織、ベージュのパンツ、歩きやすい革靴、小さな布バッグ、文庫本",
+  "setting": "初夏の午前、架空の古い喫茶店へ向かう静かな近所の路地",
+  "composition": "横長のhero向け構図。顔を写さず、腰下と手元、足元を中心にして、路地の余白で短い散歩の気配を残す。",
+  "colorMood": "オフホワイト、ベージュ、オリーブ、焦げ茶、 muted street tones を中心にした穏やかな午前の色調。",
+  "promptSummary": "初夏の午前、架空の古い喫茶店へ向かう静かな路地で、白シャツの袖、薄い羽織、歩きやすい革靴、小さな布バッグ、文庫本を自然光で描く。",
+  "caption": "喫茶店へ着くまでの短い散歩に、服と持ち物がなじんでいくAI生成ビジュアル。",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "famous cafe exterior",
+    "readable shop names",
+    "readable typography",
+    "celebrity likeness",
+    "stock photo look",
+    "official product photo look",
+    "staged fashion advertising pose"
+  ],
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-07-06T18:07:07+09:00"
+}
