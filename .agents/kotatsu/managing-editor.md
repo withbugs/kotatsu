@@ -10,12 +10,12 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 初回だけ、リポジトリにVol.コンテンツ、正式計画、milestone、openまたはclosedのVol.設計GitHub Issueが一切存在しない場合に `Vol. 001: 創刊Vol.テーマ検討` を作成する。
 - JSTの毎月第2月曜以降、翌暦月のVol.設計GitHub Issueが存在しない場合は、現行Vol.が `active` でも先行計画Issueを1件作成する。第2月曜より前は、ユーザーが前倒しを明示した場合だけ作成する。
 - 作成前にopen/closedのVol.設計Issue、milestone、候補メモ、正式計画、Vol.コンテンツを確認する。同じVol.を重複作成せず、先行計画中の未来Vol.は同時に1件までとする。Vol.設計Issueをcloseしても、それだけを理由に作り直さない。
-- 次Vol.の先行計画では、milestone `Vol. XXX YYYY年M月号` を作成または再利用し、`[Vol. XXX][PLAN] YYYY年M月号テーマ検討` に `type:volume-plan`、`agent:editor-in-chief`、`kotatsu:ready` を付ける。本文には対象月、候補メモと正式計画のパス、編集判断項目、季節感要件、公開頻度を記す。
-- 初期GitHub Issueには `type:volume-plan`, `agent:editor-in-chief`, `kotatsu:ready` を付け、`agent:managing-editor` は付けない。
+- 次Vol.の先行計画では、milestone `Vol. XXX YYYY年M月号` を作成または再利用し、`[Vol. XXX][PLAN] YYYY年M月号テーマ検討` に `type:volume-plan`、`agent:editor-in-chief`、`planning:research`、`kotatsu:ready` を付ける。本文には対象月、三段階の日程、planning branchとDraft PR、候補メモと正式計画のパス、ウェブ調査要件、季節感要件、公開頻度を記す。
+- 初期GitHub Issueには `type:volume-plan`, `agent:editor-in-chief`, `planning:research`, `kotatsu:ready` を付け、`agent:managing-editor` は付けない。
 - 9:00に初回または次Vol.の設計GitHub Issueを作成した場合は、`kotatsu:running` にせず、10:00の編集長が着手できる状態に留める。
 - Issueのlabel、milestone、担当を確認する。
 - 編集長が編集承認した発行Vol.テーマ、記事構成、公開順、AI生成ビジュアル方針を制作進行上確認する。発行月、日本の想定気候、服装と素材、光と天候、季節を誤認させる要素が具体化されていない計画は差し戻す。
-- 編集承認済みの正式計画PRを確認し、CI、mergeability、Draft状態、承認根拠に問題がなければ `main` へ反映する。記事PRは後工程が終わるまで `main` へ反映せず、記事PR branchで受け渡す。
+- `planning:finalize` で編集承認済みとなった正式計画PRだけを確認し、CI、mergeability、Ready状態、調査根拠に問題がなければ `main` へ反映する。research/shortlist段階のDraft planning PRはmergeしない。記事PRは後工程が終わるまで `main` へ反映しない。
 - 正式計画が `main` に反映されたら、同じVol.の正式カバー制作Issueが存在するか確認し、なければ `type:visual`、`type:volume-cover`、`agent:visual-editor` のIssueを作成する。
 - `kotatsu:ready` のGitHub Issueを作業可能な形に整える。
 - `kotatsu:done` になった公開済み記事、正式Vol.カバー、公開担当Issueは、結果コメント、PR、公開URLが残っていることを確認してcloseする。
@@ -26,6 +26,25 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 毎日朝9時のIssue確認を進行管理として扱い、記事公開頻度は週1〜2本、月4〜8本を基本に調整する。
 - 同一週の公開予定が2本を超えそうな場合は、追加記事を翌週以降または次Vol.候補として整理する。
 - 校正完了後、公開担当へ渡す前に記事PR branch上で `pnpm article:schedule -- --slug=<slug>` を実行し、公開対象を `draft` から `scheduled` にする。
+
+## Planning Stage Gate
+
+- 第2月曜9:00: `planning:research` のIssueをreadyにする。編集長の成果には候補メモ、Draft PR、検索語3件以上、URL4件以上、確認日、情報種別3種類以上が必要。
+- 第2月曜12:00: 調査が十分なら `planning:research` を外して `planning:shortlist` と `kotatsu:planned` を付ける。第3月曜までreadyにしない。不足ならstageを維持して `kotatsu:revise` にする。
+- 第3月曜9:00: shortlist Issueをready化する。10:00の編集長は同じplanning branchとDraft PRを更新する。
+- 第3月曜12:00: 仮テーマと記事構成が根拠付きなら `planning:finalize` と `kotatsu:planned` に進め、第4月曜までreadyにしない。
+- 第4月曜9:00: finalize Issueをready化する。10:00の編集長が最新調査を再実行して正式計画を作り、PRをReadyにする。
+- 第4月曜12:00: 正式計画、対応する候補メモ、`pnpm content:check`、CI、PR、編集承認を確認し、通過時だけmainへ反映して制作Issueを作る。
+- 第5月曜は新しいplanning Issueを作らず、確定済み計画と未着手記事のpreflightにする。
+- 会議段階labelは同時に1つだけ付ける。
+
+## Research And Brief Gate
+
+- ウェブ需要シグナルと編集部の需要仮説が分けて記録されていることを確認する。
+- 検索・トレンド情報は需要の根拠として扱うが、KOTATSUらしさと長期的な有用性の説明がない計画は差し戻す。
+- ウェブ検索が利用できず最新情報を確認できない場合、finalizeを通過させない。
+- 毎週月曜12:00、今後14日以内に執筆開始予定で未着手の記事Issueについて、編集長のbrief更新提案を確認し、採用分を14:00までに反映する。
+- `kotatsu:running` または記事PRがある原稿は、短期トレンドだけを理由に方向転換させない。
 
 ## Seasonal Visual Gate
 
