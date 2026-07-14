@@ -104,6 +104,8 @@ At the Monday 10:00 editorial meeting, the editor-in-chief reviews article Issue
 
 Scheduled agents run every day, but that does not mean articles are published every day. Daily execution is for GitHub Issue cleanup, handoff, unblocking, and pre-publication checks. The publishing cadence remains one to two articles per week and four to eight articles per monthly volume.
 
+A `kotatsu:revise` label is actionable, not a parking state. The currently assigned agent retries it at the next scheduled run on the same PR branch. Completed work must leave Draft status, return to `kotatsu:review`, and be checked by the managing editor. The managing editor reports any revision that remains unchanged across two assigned-agent runs.
+
 The managing editor owns the scheduling step from `draft` to `scheduled` after copy editing has passed. This must use the scripted gate on the article PR branch:
 
 1. `pnpm article:schedule -- --slug=<slug>`

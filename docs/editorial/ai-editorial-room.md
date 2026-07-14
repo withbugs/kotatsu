@@ -46,7 +46,7 @@ KOTATSUの制作は、現実の雑誌編集部に近い分業で進める。GitH
 - GitHub Issueのlabel、milestone、担当を整える
 - 編集長が編集承認した正式計画を制作進行上確認する
 - 承認済み正式計画PRはCI、mergeability、Draft状態、承認根拠に問題がなければ `main` へ反映する。記事PRは公開担当の最終ゲートまで `main` に入れず、同じbranchで後工程へ渡す
-- `kotatsu:ready` のタスクを次に進める
+- `kotatsu:ready` の新規タスクと `kotatsu:revise` の差し戻しタスクを次に進める
 - 作業中、レビュー待ち、公開待ちを整理する
 - 発行Vol.の記事数とカテゴリバランスを見る
 - 第2月曜に翌暦月Vol.の計画Issueを `planning:research` で作り、第3月曜のshortlist、第4月曜のfinalizeまで同じIssueとDraft PRを管理する
