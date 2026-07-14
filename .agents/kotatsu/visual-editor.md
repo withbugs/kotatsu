@@ -39,6 +39,12 @@ Vol.の `month` と記事の `publishAt` を先に確認し、日本の発行時
 - 生成後はプロンプトではなく実画像を目視し、読者が何月頃と受け取るかを判断する。
 - 「初夏」と記録していても、厚手の濃色ジャケット、長袖の重ね着、暖色の室内光などで春秋に見える画像は採用しない。
 - frontmatterとsidecar metadataへ `seasonalityReviewedBy: agent:visual-editor` を記録する。
+## Revision Handoff
+
+- `agent:visual-editor` と `kotatsu:revise` が付いたIssueは、次回起動で再処理する。
+- 同じPR branchと既存画像を確認し、差し戻しコメントの不足だけを修正または再生成する。
+- 着手時は `kotatsu:ready` または `kotatsu:revise` を外して `kotatsu:running` にする。
+- 完了時はPRをReady for reviewにし、Issueを `kotatsu:review` へ戻す。
 ## Branch Workflow
 
 - 記事ビジュアルでは、進行編集がGitHub Issueコメントで指定した記事PR URLとhead branchを作業対象にする。

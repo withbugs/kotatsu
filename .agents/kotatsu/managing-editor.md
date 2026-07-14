@@ -26,6 +26,12 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - 毎日朝9時のIssue確認を進行管理として扱い、記事公開頻度は週1〜2本、月4〜8本を基本に調整する。
 - 同一週の公開予定が2本を超えそうな場合は、追加記事を翌週以降または次Vol.候補として整理する。
 - 校正完了後、公開担当へ渡す前に記事PR branch上で `pnpm article:schedule -- --slug=<slug>` を実行し、公開対象を `draft` から `scheduled` にする。
+## Revision Watchdog
+
+- `kotatsu:revise` は保留ではなく、現在の `agent:*` が次回起動で再処理する状態とする。
+- 差し戻し時は他の状態labelを外し、担当labelを1つにし、修正理由、対象PR、head branch、完了条件をコメントする。
+- 担当エージェントは同じPR branchを更新し、完了時にPRをReady for reviewへ変更して `kotatsu:review` に戻す。Draft PRのまま完了扱いにしない。
+- 毎回、前回の担当起動時刻を過ぎても更新がないrevise Issueを確認する。不足labelやbranch情報を補い、2回の担当起動を越えて動かなければ停止理由を明記して報告する。
 
 ## Planning Stage Gate
 
