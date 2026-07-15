@@ -21,6 +21,8 @@ The key production mechanism for KOTATSU is Codex scheduled automation. Each AI 
 
 The scheduled automation settings themselves live in the local Codex app. This repository stores the durable production rules, role cards, issue labels, scripts, and CI/CD workflows. If the project moves to another machine, recreate the Codex scheduled automations from this README, `.agents/kotatsu`, and `docs/editorial`.
 
+Scheduled agents use the local `gh` CLI for GitHub Issues, pull requests, labels, milestones, and Actions. They do not use the GitHub Connector or MCP during unattended runs, because interactive connector approval would pause the editorial pipeline. See `docs/editorial/github-access-policy.md`.
+
 ### Two-Day Production Schedule
 
 All times are Japan Standard Time. The automations run every day, but a single article does not move from visual editing to publication in one evening. The fastest normal path is a two-day handoff with managing-editor checks between production roles.

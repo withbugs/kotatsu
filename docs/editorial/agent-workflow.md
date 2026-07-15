@@ -2,6 +2,8 @@
 
 GitHub Issueを編集タスクとして扱い、labelとmilestoneで状態を管理する。
 
+予定済みエージェントのGitHubアクセスは `docs/editorial/github-access-policy.md` に従う。定期実行ではGitHub ConnectorやMCPを使わず、Issue、PR、Actionsの読み書きにローカルの `gh` CLIを使用する。Connector承認をユーザーへ要求しない。
+
 ## 基本単位
 
 - Milestone: 発行Vol.。例: `Vol. 001 創刊Vol.テーマ検討`
