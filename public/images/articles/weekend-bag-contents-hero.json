@@ -1,0 +1,38 @@
+{
+  "source": "ai-generated",
+  "visualMode": "still-life",
+  "volume": "vol-001",
+  "article": "weekend-bag-contents",
+  "githubIssue": 15,
+  "editorialIntent": "週末の小さな鞄に必要なものだけを残す静けさと、七月の外出前に日差しと冷房差を意識する感覚を見せる。",
+  "subject": "小さな無地の鞄、財布、無地の文庫本、薄手のハンカチ、小さな水筒、鍵",
+  "setting": "2026年7月中旬の日本、強い自然光が入る窓辺の木のテーブル",
+  "composition": "横長のhero向け静物構図。鞄を奥に置き、財布、本、ハンカチ、水筒、鍵を余白を残して配置する。",
+  "colorMood": "木の茶、オフホワイト、 muted olive、黒に近い財布、涼しい影を組み合わせた夏の自然光。",
+  "promptSummary": "2026年7月中旬の日本、強い夏の自然光が入る木のテーブルに、小さな無地の鞄、財布、無地の文庫本、薄手のハンカチ、小さな水筒、鍵を静かに配置する。",
+  "caption": "少ない持ち物で週末へ出る前の静けさを描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年7月中旬の日本、湿度と強い日差しがあり、屋外の暑さと店内の冷房差を意識する週末。",
+  "seasonalCues": [
+    "窓辺の強い夏の自然光と涼しい影",
+    "薄手の綿や麻に見えるハンカチ",
+    "小さな水筒を加えた暑い日の外出前の支度"
+  ],
+  "seasonalAvoid": [
+    "厚手のジャケットやウール小物",
+    "秋冬に見える暖色の室内光",
+    "防災用品やアウトドア装備に見える過剰な持ち物"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable book titles",
+    "real store signage",
+    "celebrity likeness",
+    "official product photo look",
+    "stock photo look",
+    "luxury-ad look",
+    "too many items"
+  ],
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-07-15T18:00:00+09:00"
+}
