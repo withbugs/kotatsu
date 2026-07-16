@@ -5,23 +5,23 @@
   "article": "weekend-bag-contents",
   "githubIssue": 15,
   "editorialIntent": "持ち物を並べて説明するのではなく、必要なものだけを選んで外へ出る動作と、真夏の涼しい余白を見せる。",
-  "subject": "架空の専属AIモデル K-01 AO と、小さな布鞄、文庫本、薄手のハンカチ、小さな透明の水筒",
+  "subject": "架空の専属AIモデル K-06 FUMI と、小さな布鞄、布に包んだ文庫本、薄手のハンカチ、小さな水筒",
   "setting": "2026年7月中旬の日本、白い真夏の日差しが差す明るい玄関と静かな住宅街",
-  "composition": "横長のhero向け中広角。人物を左寄りに置き、明るい玄関の先へ大きな余白を取り、鞄を持ち上げる途中の動作を捉える。",
+  "composition": "横長のhero向け中広角。人物を左寄りに置き、明るい玄関の先へ大きな余白を取り、布に包んだ本を鞄へ収める途中の動作を捉える。",
   "compositionFamily": "human-environmental-medium-wide",
   "cameraDistance": "medium-wide",
   "visualTemperature": "cool",
   "visualDensity": "airy",
-  "dominantPalette": ["washed white", "cool gray", "pale blue", "soft green"],
-  "modelId": "K-01-AO",
-  "colorMood": "白、青みのあるグレー、淡い緑の反射光を中心にした、明るく涼しい真夏の自然光。",
-  "promptSummary": "架空の専属AIモデル K-01 AO が、白い半袖シャツと薄手のグレーのパンツで、真夏の明るい玄関から小さな布鞄を手に出かける。",
-  "caption": "必要なものだけを小さな鞄に収め、真夏の週末へ出る支度を描いたAI生成ビジュアル。",
+  "dominantPalette": ["pale lavender gray", "deep navy", "blue gray", "soft white", "summer green"],
+  "modelId": "K-06-FUMI",
+  "colorMood": "淡いラベンダーグレー、深いネイビー、青みのある鞄、白い光を中心にした、明るく涼しい真夏の自然光。",
+  "promptSummary": "架空の専属AIモデル K-06 FUMI が、薄手の半袖シャツで、布に包んだ本と小さな水筒を真夏の明るい玄関で布鞄へ収める。",
+  "caption": "布に包んだ本と小さな水筒を鞄に収め、真夏の週末へ出る支度を描いたAI生成ビジュアル。",
   "seasonalContext": "2026年7月中旬の日本、湿度と強い日差しがあり、屋外の暑さと店内の冷房差を意識する週末。",
   "seasonalCues": [
-    "風通しのよい白い半袖リネンシャツと薄手のパンツ",
+    "風通しのよい淡いラベンダーグレーの半袖リネンシャツと薄手のパンツ",
     "白く強い真夏の日差しと玄関内の青みを帯びた反射光",
-    "小さな透明の水筒と薄手のハンカチ"
+    "小さな無地の水筒と薄手のハンカチ"
   ],
   "seasonalAvoid": [
     "長袖の重ね着、厚手のジャケット、革靴",
@@ -45,7 +45,7 @@
     "white-shirt-weekend-life",
     "short-walk-to-cafe"
   ],
-  "visualDifference": "直近2本の木のテーブル静物と後ろ姿の街歩きを避け、顔の見える専属モデル、白い玄関、正面寄りの生活動作、寒色の大きな余白へ切り替えた。",
+  "visualDifference": "直近2本の木のテーブル静物と後ろ姿の街歩きを避け、年配の専属モデル、布で本を包む生活動作、白い玄関、寒色の大きな余白へ切り替えた。",
   "reviewedBy": "agent:visual-editor",
   "generatedAt": "2026-07-16T00:00:00+09:00"
 }
