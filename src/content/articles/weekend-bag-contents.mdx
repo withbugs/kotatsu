@@ -8,29 +8,32 @@ template: feature
 status: draft
 publishAt: "2026-07-18T00:00:00+09:00"
 heroImage: "/images/articles/weekend-bag-contents-hero.png"
-heroAlt: 週末の小さな鞄と財布、文庫本、ハンカチを木のテーブルに静かに置いたAI生成ビジュアル
+heroAlt: 真夏の明るい玄関で、小さな鞄を手に出かける架空のAI生成モデル
 visual:
   source: ai-generated
-  mode: still-life
-  promptSummary: 2026年7月の日本の週末、自然光の入る木のテーブルに、小さな布または革の鞄、財布、文庫本、薄手のハンカチ、無地の水筒、鍵を静かに配置する。
-  intent: 持ち物を増やす提案ではなく、週末の時間に必要なものだけを残す静けさと、日差しや冷房差のある夏の外出前の感覚を見せる。
+  mode: photorealistic
+  promptSummary: 架空の専属AIモデル K-01 AO が、白い半袖シャツと薄手のグレーのパンツで、真夏の明るい玄関から小さな布鞄を手に出かける。
+  intent: 持ち物を並べて説明するのではなく、必要なものだけを選んで外へ出る動作と、真夏の涼しい余白を見せる。
   seasonalContext: 2026年7月中旬の日本、強い日差しと湿度があり、屋外の暑さと店内の冷房差を意識する週末。
   seasonalCues:
-    - 薄手の綿や麻に見えるハンカチ
-    - 強い自然光と涼しい影の差がある木のテーブル
-    - 無地の小さな水筒または透明感のある飲み物
+    - 風通しのよい白い半袖リネンシャツと薄手のパンツ
+    - 白く強い真夏の日差しと、玄関内の青みを帯びた反射光
+    - 小さな透明の水筒と薄手のハンカチ
   seasonalAvoid:
-    - 厚手のマフラーやウール小物
-    - 秋冬に見える暖色の室内光
-    - アウトドア用品や防災用品のような過剰な装備感
+    - 長袖の重ね着、厚手のジャケット、革靴
+    - 茶色い木面や琥珀色の光が画面を占める秋冬の色調
+    - 持ち物を密に並べた物撮りやアウトドア装備のような過剰さ
   seasonalityReviewedBy: agent:visual-editor
   avoid:
     - real brand logos
+    - real person likeness
+    - celebrity likeness
     - readable book titles
     - official product photo look
     - stock photo look
     - luxury-ad look
-    - too many items
+    - top-down still-life
+    - warm wooden tabletop
 tags:
   - 鞄の中身
   - 週末
