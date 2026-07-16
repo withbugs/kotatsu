@@ -1,15 +1,27 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
+import path from 'node:path';
 import { loadArticles, parseArgs } from './publishing-schedule.mjs';
 
 const PENDING_VISUAL_MARKER = '__AI_VISUAL_PENDING__';
+const DIVERSITY_POLICY_EFFECTIVE_AT = Date.parse('2026-07-18T00:00:00+09:00');
+const ALLOWED_TEMPERATURES = new Set(['cool', 'neutral', 'warm', 'mixed']);
+const ALLOWED_DENSITIES = new Set(['airy', 'balanced', 'dense']);
+
+function hasText(value, minLength = 3) {
+  return typeof value === 'string' && value.trim().length >= minLength && !value.includes('TODO');
+}
 
 function hasMeaningfulText(value) {
-  return typeof value === 'string' && value.trim().length >= 10 && !value.includes('TODO');
+  return hasText(value, 10);
 }
 
 function hasMeaningfulList(value) {
   return Array.isArray(value) && value.length >= 2 && value.every((item) => hasMeaningfulText(String(item)));
+}
+
+function hasPalette(value) {
+  return Array.isArray(value) && value.length >= 3 && value.every((item) => hasText(String(item), 2));
 }
 
 const args = parseArgs(process.argv.slice(2));
@@ -50,7 +62,8 @@ if (!publishDate || Number.isNaN(publishDate.getTime())) {
 }
 
 const errors = [];
-if (String(article.data.heroImage) === PENDING_VISUAL_MARKER) {
+const heroImage = String(article.data.heroImage || '');
+if (heroImage === PENDING_VISUAL_MARKER) {
   errors.push('heroImage is still pending');
 }
 
@@ -74,6 +87,66 @@ if (!visual || !hasMeaningfulList(visual.seasonalAvoid)) {
 }
 if (!visual || visual.seasonalityReviewedBy !== 'agent:visual-editor') {
   errors.push('visual.seasonalityReviewedBy must be agent:visual-editor');
+}
+
+if (heroImage && heroImage !== PENDING_VISUAL_MARKER) {
+  if (!heroImage.startsWith('/')) {
+    errors.push('heroImage must be root-relative');
+  } else {
+    const heroPath = path.join(process.cwd(), 'public', heroImage.slice(1));
+    const metadataPath = heroPath.replace(/\.(png|jpe?g|webp|avif)$/i, '.json');
+    if (!fs.existsSync(metadataPath)) {
+      errors.push('heroImage metadata sidecar is missing');
+    } else {
+      try {
+        const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+        if (metadata.source !== 'ai-generated') {
+          errors.push('hero metadata source must be ai-generated');
+        }
+
+        if (publishDate.getTime() >= DIVERSITY_POLICY_EFFECTIVE_AT) {
+          if (!hasText(metadata.compositionFamily)) {
+            errors.push('hero metadata compositionFamily is required');
+          }
+          if (!hasText(metadata.cameraDistance)) {
+            errors.push('hero metadata cameraDistance is required');
+          }
+          if (!ALLOWED_TEMPERATURES.has(metadata.visualTemperature)) {
+            errors.push('hero metadata visualTemperature must be cool, neutral, warm, or mixed');
+          }
+          if (!ALLOWED_DENSITIES.has(metadata.visualDensity)) {
+            errors.push('hero metadata visualDensity must be airy, balanced, or dense');
+          }
+          if (!hasPalette(metadata.dominantPalette)) {
+            errors.push('hero metadata dominantPalette must contain at least three colors');
+          }
+          if (!Array.isArray(metadata.similarityReviewedAgainst) || metadata.similarityReviewedAgainst.length < 2) {
+            errors.push('hero metadata similarityReviewedAgainst must contain at least two recent article slugs');
+          }
+          if (!hasMeaningfulText(metadata.visualDifference)) {
+            errors.push('hero metadata visualDifference must explain the difference from recent heroes');
+          }
+          if (metadata.reviewedBy !== 'agent:visual-editor') {
+            errors.push('hero metadata reviewedBy must be agent:visual-editor');
+          }
+        }
+
+        if (metadata.modelId) {
+          const rosterPath = path.join(process.cwd(), 'docs', 'editorial', 'models', 'roster.json');
+          if (!fs.existsSync(rosterPath)) {
+            errors.push('fictional model roster is missing');
+          } else {
+            const roster = JSON.parse(fs.readFileSync(rosterPath, 'utf8'));
+            if (!roster.models?.some((model) => model.id === metadata.modelId)) {
+              errors.push(`hero metadata modelId is not registered: ${metadata.modelId}`);
+            }
+          }
+        }
+      } catch (error) {
+        errors.push(`hero metadata sidecar is invalid JSON: ${error.message}`);
+      }
+    }
+  }
 }
 
 if (errors.length) {

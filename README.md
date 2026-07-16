@@ -128,7 +128,7 @@ After approved changes reach `main`, the GitHub Pages workflow deploys the site 
 
 ### Visual Policy
 
-KOTATSU does not use photographed assets. Photorealistic images, illustrations, collages, and article visuals are all AI-generated and must follow [docs/editorial/ai-visual-policy.md](docs/editorial/ai-visual-policy.md). New visuals must also pass the seasonal-coherence gate: writing a season in metadata is insufficient unless the rendered clothing, materials, light, weather, and props plausibly match the publication date. Public pages must not make unfinished articles look complete or link to unpublished article pages.
+KOTATSU does not use photographed assets. Photorealistic images, illustrations, collages, and article visuals are all AI-generated and must follow [docs/editorial/ai-visual-policy.md](docs/editorial/ai-visual-policy.md). New visuals must pass both the seasonal-coherence gate and the visual-sequence gate: writing a season in metadata is insufficient unless the rendered clothing, materials, light, weather, and props plausibly match the publication date, and a good standalone image is still rejected when it repeats the recent composition, distance, palette, or model. The visual editor compares at least the two most recent heroes and records the difference in sidecar metadata; the managing editor checks the actual images before handoff. KOTATSU may use the recurring, entirely fictional AI adults in [docs/editorial/models/README.md](docs/editorial/models/README.md), including visible faces and full bodies, but never real-person references or likenesses. Public pages must not make unfinished articles look complete or link to unpublished article pages.
 
 ## First Volume
 
