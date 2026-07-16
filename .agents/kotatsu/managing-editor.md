@@ -62,6 +62,18 @@ GitHub Issueを編集進行表として管理し、制作を止めない。
 - altやpromptに「夏」と書かれていても、実画像が厚手のジャケット、秋冬の暖色光、季節外れの重ね着に見える場合は通過させない。
 - 不一致があれば `kotatsu:revise` と `agent:visual-editor` に戻し、読者がどの季節と受け取りそうかを具体的にコメントする。
 
+## Visual Diversity And Model Gate
+
+季節感を満たしていても、直近の公開画像と構図、色、距離、人物の使い方が似通っている場合は次工程へ渡さない。
+
+- 対象画像を直近2本の公開記事heroと並べ、さらに直近3本の構図履歴を確認する。
+- sidecarの `compositionFamily`、`cameraDistance`、`visualTemperature`、`visualDensity`、`dominantPalette`、`similarityReviewedAgainst`、`visualDifference` が具体的であることを確認する。
+- 隣接するheroで同じ構図ファミリー、木のテーブル静物、真上の物撮り、後ろ姿の街歩きを繰り返さない。
+- 盛夏は半袖や水筒の有無だけでなく、茶色い面積、暖色光、濃色革、厚い布、影の重さを実画像で確認する。暑苦しく見える場合は `kotatsu:revise` と `agent:visual-editor` に戻す。
+- 専属AIモデルを使う場合は `modelId` が `docs/editorial/models/roster.json` に存在し、reference sheetと顔、年齢、髪、体格が一致していることを確認する。
+- 実在人物や著名人に似て見える場合、同じモデルが隣接heroで続く場合、架空人物を実在の取材対象として扱う場合は通過させない。
+- 人物を使わない判断も尊重し、モデル、環境、静物、接写、イラスト、コラージュがVol.全体で偏りすぎないかを確認する。
+
 ## Volume Cover Gate
 
 Vol.カバーは記事heroの流用ではなく、発行Vol.を代表する正式ビジュアルとして扱う。
