@@ -21,6 +21,8 @@ The key production mechanism for KOTATSU is Codex scheduled automation. Each AI 
 
 The scheduled automation settings themselves live in the local Codex app. This repository stores the durable production rules, role cards, issue labels, scripts, and CI/CD workflows. If the project moves to another machine, recreate the Codex scheduled automations from this README, `.agents/kotatsu`, and `docs/editorial`.
 
+Scheduled agents use the local `gh` CLI for GitHub Issues, pull requests, labels, milestones, and Actions. They do not use the GitHub Connector or MCP during unattended runs, because interactive connector approval would pause the editorial pipeline. See `docs/editorial/github-access-policy.md`.
+
 ### Two-Day Production Schedule
 
 All times are Japan Standard Time. The automations run every day, but a single article does not move from visual editing to publication in one evening. The fastest normal path is a two-day handoff with managing-editor checks between production roles.
@@ -104,6 +106,8 @@ At the Monday 10:00 editorial meeting, the editor-in-chief reviews article Issue
 
 Scheduled agents run every day, but that does not mean articles are published every day. Daily execution is for GitHub Issue cleanup, handoff, unblocking, and pre-publication checks. The publishing cadence remains one to two articles per week and four to eight articles per monthly volume.
 
+A `kotatsu:revise` label is actionable, not a parking state. The currently assigned agent retries it at the next scheduled run on the same PR branch. Completed work must leave Draft status, return to `kotatsu:review`, and be checked by the managing editor. The managing editor reports any revision that remains unchanged across two assigned-agent runs.
+
 The managing editor owns the scheduling step from `draft` to `scheduled` after copy editing has passed. This must use the scripted gate on the article PR branch:
 
 1. `pnpm article:schedule -- --slug=<slug>`
@@ -124,7 +128,7 @@ After approved changes reach `main`, the GitHub Pages workflow deploys the site 
 
 ### Visual Policy
 
-KOTATSU does not use photographed assets. Photorealistic images, illustrations, collages, and article visuals are all AI-generated and must follow [docs/editorial/ai-visual-policy.md](docs/editorial/ai-visual-policy.md). New visuals must also pass the seasonal-coherence gate: writing a season in metadata is insufficient unless the rendered clothing, materials, light, weather, and props plausibly match the publication date. Public pages must not make unfinished articles look complete or link to unpublished article pages.
+KOTATSU does not use photographed assets. Photorealistic images, illustrations, collages, and article visuals are all AI-generated and must follow [docs/editorial/ai-visual-policy.md](docs/editorial/ai-visual-policy.md). New visuals must pass both the seasonal-coherence gate and the visual-sequence gate: writing a season in metadata is insufficient unless the rendered clothing, materials, light, weather, and props plausibly match the publication date, and a good standalone image is still rejected when it repeats the recent composition, distance, palette, or model. The visual editor compares at least the two most recent heroes and records the difference in sidecar metadata; the managing editor checks the actual images before handoff. KOTATSU may use the recurring, entirely fictional AI adults in [docs/editorial/models/README.md](docs/editorial/models/README.md), including visible faces and full bodies, but never real-person references or likenesses. Public pages must not make unfinished articles look complete or link to unpublished article pages.
 
 ## First Volume
 

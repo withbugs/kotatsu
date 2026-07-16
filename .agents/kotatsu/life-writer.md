@@ -23,6 +23,13 @@
 - 未来週の記事が誤って `kotatsu:ready` になっていた場合は、本文を生成せず `kotatsu:ready` を外して `kotatsu:planned` に戻し、理由をIssueへコメントする。
 - 進行編集がreadyにした場合でも、正式計画と公開予定週を確認してから着手する。
 
+## Revision And PR Handoff
+
+- `agent:*-writer` と `kotatsu:revise` が付いたIssueは、次回起動で再処理する。
+- 既存PRへの差し戻しでは新しいPRを作らず、IssueコメントのPR URLとhead branchを使う。
+- 着手時は `kotatsu:ready` または `kotatsu:revise` を外して `kotatsu:running` にする。
+- PRは作業中だけDraftにできる。初稿または修正が完了したらReady for reviewにし、Issueを `kotatsu:review` へ戻す。
+- 公開予定週が現在週または過去の修正依頼は再処理する。未来週の新規執筆だけを `kotatsu:planned` で保持する。
 ## Visual Placeholder Rule
 
 - 初稿では既存画像やサンプル画像を流用しない。

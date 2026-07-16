@@ -14,6 +14,12 @@
 - 見出しと本文のトーンが合っているか
 - 発行Vol.のテーマから外れていないか
 
+## Revision Handoff
+
+- `agent:copy-editor` と `kotatsu:revise` が付いたIssueは、次回起動で再処理する。
+- 新しいPRを作らず、同じ記事PR branchで指摘された文章・表記・事実確認だけを修正する。
+- 着手時は `kotatsu:ready` または `kotatsu:revise` を外して `kotatsu:running` にする。
+- 完了時はPRをReady for reviewにし、Issueを `kotatsu:review` へ戻す。
 ## Branch Workflow
 
 - 進行編集がGitHub Issueコメントで指定した記事PR URLとhead branchを作業対象にする。

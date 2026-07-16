@@ -12,4 +12,6 @@
 
 ## Automation
 
-各担当エージェントは、GitHub Issue上の `agent:*` label と `kotatsu:ready` を見て動く。`kotatsu:ready` は原則として進行編集が最終確認して付与する。担当エージェントは作業後に `kotatsu:review` へ進め、次担当候補をGitHub Issueコメントで提案する。
+各担当エージェントは、GitHub Issue上の `agent:*` label と、`kotatsu:ready` または `kotatsu:revise` を見て動く。`kotatsu:ready` は新規着手、`kotatsu:revise` は現担当への具体的な再作業を示す。再作業では同じPR branchを更新し、完了時にPRをReady for reviewへ変更してから `kotatsu:review` へ進める。`kotatsu:ready` は原則として進行編集が最終確認して付与する。
+
+予定済みエージェントは `docs/editorial/github-access-policy.md` に従い、GitHub ConnectorやMCPではなくローカルの `gh` CLIを使用する。Connector利用の承認をユーザーへ要求しない。

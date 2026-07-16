@@ -39,6 +39,40 @@ Vol.の `month` と記事の `publishAt` を先に確認し、日本の発行時
 - 生成後はプロンプトではなく実画像を目視し、読者が何月頃と受け取るかを判断する。
 - 「初夏」と記録していても、厚手の濃色ジャケット、長袖の重ね着、暖色の室内光などで春秋に見える画像は採用しない。
 - frontmatterとsidecar metadataへ `seasonalityReviewedBy: agent:visual-editor` を記録する。
+
+## Visual Sequence And Thermal Comfort
+
+生成前に `src/content/articles/` と対応sidecarを公開日順で確認し、少なくとも直近3本のheroを実画像で見る。新しい画像を単体で良くするだけでなく、トップページで並んだときに変化があるかを設計する。
+
+- 候補生成前に `compositionFamily`、`cameraDistance`、`visualTemperature`、`visualDensity`、`dominantPalette` を決める。
+- 隣接する記事と同じ構図ファミリーを使わない。木のテーブル静物、真上からの物撮り、後ろ姿の街歩きなどを連続させない。
+- 人物、環境の広景、生活動作、手元や素材の接写、静物、イラスト、コラージュを記事内容に合わせてローテーションする。
+- 採用前に直近2本と並べて比較し、sidecarへ `similarityReviewedAgainst` と `visualDifference` を残す。
+- 盛夏では画像面積の大半を占める色と素材で温度を判断する。茶色い木、琥珀色の光、濃色の革、厚い布、深い暖色影が優勢なら、半袖や水筒が写っていても再生成する。
+- 静けさを一色の暗い中間色へ固定しない。季節に応じて白、青みのグレー、淡い緑、雨の反射、乾いた光、広い空間も使う。
+
+2026年7月18日以降の記事とVol. 002以降のカバーでは、必須の多様性metadataがない成果を `kotatsu:review` へ渡さない。
+
+## Fictional Recurring Models
+
+人物が記事の生活感や時間を伝える場合、`docs/editorial/models/roster.json` の完全に架空の専属AIモデルを使ってよい。顔と全身の表示を許可する。
+
+- 実在人物、著名人、公開写真を参照せず、実在人物に似た生成結果は棄却する。
+- 再登場時は登録済みreference sheetをidentity referenceとして使い、顔、見た目年齢、髪、体格、恒常的特徴を保つ。
+- sidecarへ登録済みの `modelId` を記録する。同じモデルを隣接するheroで続けない。
+- 記事ごとに服、場所、動作、カメラ距離を変える。同じ白シャツと無彩色パンツを全員の制服にしない。
+- 架空の勤務先、発言、住所、病歴、購入歴、体験談を事実として作らない。
+- reference sheetを記事heroとして直接使わない。
+- 人物が不要な記事に顔を足さない。専属モデルは静物、環境、イラスト等と組み合わせる選択肢の一つとする。
+
+詳細は `docs/editorial/models/README.md` と `docs/editorial/ai-visual-policy.md` に従う。
+
+## Revision Handoff
+
+- `agent:visual-editor` と `kotatsu:revise` が付いたIssueは、次回起動で再処理する。
+- 同じPR branchと既存画像を確認し、差し戻しコメントの不足だけを修正または再生成する。
+- 着手時は `kotatsu:ready` または `kotatsu:revise` を外して `kotatsu:running` にする。
+- 完了時はPRをReady for reviewにし、Issueを `kotatsu:review` へ戻す。
 ## Branch Workflow
 
 - 記事ビジュアルでは、進行編集がGitHub Issueコメントで指定した記事PR URLとhead branchを作業対象にする。

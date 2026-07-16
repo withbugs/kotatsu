@@ -1,0 +1,74 @@
+{
+  "version": 2,
+  "source": "ai-generated",
+  "realPersonReferencesAllowed": false,
+  "editorialPrinciple": "Care is shown through ordinary habits, not wealth, perfection, or minimalist display.",
+  "models": [
+    {
+      "id": "K-01-NAO",
+      "displayName": "NAO",
+      "apparentAge": 27,
+      "gender": "woman",
+      "build": "compact, sturdy build",
+      "identityNotes": "Short softly wavy black bob, full brows, small gap between the front teeth, open attentive expression.",
+      "editorialPersona": "Mends a cloth tote, buys one seasonal flower, and walks to a neighborhood bakery on quiet mornings.",
+      "editorialRange": ["LIFE", "WEEKEND", "STYLE"],
+      "referenceImage": "docs/editorial/models/references/k-01-nao.png"
+    },
+    {
+      "id": "K-02-RUI",
+      "displayName": "RUI",
+      "apparentAge": 34,
+      "gender": "nonbinary",
+      "build": "soft medium build",
+      "identityNotes": "Short side-parted dark hair, tapered nape, hooded eyes, small mole near the right eyebrow.",
+      "editorialPersona": "Keeps a weather notebook, cooks one seasonal soup well, repairs textiles, and chooses a bicycle when time allows.",
+      "editorialRange": ["LIFE", "WEEKEND", "CULTURE"],
+      "referenceImage": "docs/editorial/models/references/k-02-rui.png"
+    },
+    {
+      "id": "K-03-SOU",
+      "displayName": "SOU",
+      "apparentAge": 42,
+      "gender": "man",
+      "build": "lean average-height build",
+      "identityNotes": "Unruly dark hair with one silver patch, narrow face, round glasses, faint moustache and chin stubble.",
+      "editorialPersona": "Visits secondhand bookshops, repairs shoes, hand-grinds Sunday coffee, and keeps a folded street map.",
+      "editorialRange": ["STYLE", "CULTURE", "WEEKEND", "SHOPPING"],
+      "referenceImage": "docs/editorial/models/references/k-03-sou.png"
+    },
+    {
+      "id": "K-04-MIKI",
+      "displayName": "MIKI",
+      "apparentAge": 49,
+      "gender": "woman",
+      "build": "soft curvy build",
+      "identityNotes": "Loose shoulder-length curls with a broad silver streak, strong cheekbones, birthmark near the left jaw.",
+      "editorialPersona": "Enjoys an old compact car, local ceramics, Saturday markets, and records played from beginning to end.",
+      "editorialRange": ["LIFE", "CULTURE", "PEOPLE", "SHOPPING"],
+      "referenceImage": "docs/editorial/models/references/k-04-miki.png"
+    },
+    {
+      "id": "K-05-KEI",
+      "displayName": "KEI",
+      "apparentAge": 58,
+      "gender": "man",
+      "build": "broad stocky build",
+      "identityNotes": "Close-cropped salt-and-pepper hair, short gray beard, round face, deep laugh lines, capable hands.",
+      "editorialPersona": "Cleans tools after use, grows balcony herbs, listens to jazz without multitasking, and records repairs in a notebook.",
+      "editorialRange": ["LIFE", "CULTURE", "PEOPLE", "SHOPPING"],
+      "referenceImage": "docs/editorial/models/references/k-05-kei.png"
+    },
+    {
+      "id": "K-06-FUMI",
+      "displayName": "FUMI",
+      "apparentAge": 69,
+      "gender": "woman",
+      "build": "tall, naturally slim build",
+      "identityNotes": "Chin-length silver bob, angular face with visible age lines, muted-red round glasses, composed witty expression.",
+      "editorialPersona": "Takes slow train trips, visits museums alone, wraps books in cloth, sends seasonal letters, and repairs hems without seeking perfection.",
+      "editorialRange": ["WEEKEND", "CULTURE", "PEOPLE", "LIFE"],
+      "referenceImage": "docs/editorial/models/references/k-06-fumi.png"
+    }
+  ]
+}

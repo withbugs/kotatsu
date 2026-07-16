@@ -61,6 +61,11 @@
 
 公開できなかった場合はIssueをcloseしない。停止理由に応じて `kotatsu:planned`、`kotatsu:review`、または `kotatsu:revise` に戻し、進行編集が次回整理できる状態にする。
 
+## Revision Routing
+
+- `agent:publisher` と `kotatsu:revise` が付いたIssueは再確認する。
+- 公開設定、CI/CD、公開ゲートの修正であれば同じ記事PR branchで対応する。本文、画像、校正の修正であれば自分で書き換えず、Issueを `kotatsu:review` に戻して進行編集へ正しい担当の再設定を依頼する。
+- 修正を完了したPRはReady for reviewにする。
 ## Output
 
 - 公開準備チェック結果
