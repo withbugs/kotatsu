@@ -53,6 +53,18 @@ Vol.の `month` と記事の `publishAt` を先に確認し、日本の発行時
 
 2026年7月18日以降の記事とVol. 002以降のカバーでは、必須の多様性metadataがない成果を `kotatsu:review` へ渡さない。
 
+## Reader Comfort And Surface Hygiene
+
+生成後の実画像で、読者が不潔、雑、または「丁寧な暮らし」と矛盾すると感じる物の置き方がないか確認する。
+
+- 食品、飲料容器、書籍、衣類、ハンカチ、タオル、財布、鍵、携帯電話、腕時計、アクセサリー、身だしなみ用品を、路面、地面、駅ホーム、玄関土間・たたき、トイレ床、汚れが見える床へ直接置かない。
+- 靴や屋外用の鞄など床置きが自然な物は例外とするが、鞄の中身を床へ並べない。
+- 清潔な室内の床に見せたい場合でも、玄関土間や屋外と誤認しうる構図なら採用しない。棚、ベンチ、テーブル、トレー、敷き布など、用途が明確な清潔な面へ置く。
+- promptやmetadataの説明ではなく実画像を拡大して確認し、物と接地面の関係が曖昧なら再生成する。
+- 2026年7月18日以降の記事とVol. 002以降のカバーでは、sidecarに `readerComfort.reviewedBy`、空配列の `readerComfort.hygieneSensitiveItemsOnFloor`、具体的な `readerComfort.placementNotes` を残す。
+
+この確認を通過していない成果を `kotatsu:review` へ渡さない。
+
 ## Fictional Recurring Models
 
 人物が記事の生活感や時間を伝える場合、`docs/editorial/models/roster.json` の完全に架空の専属AIモデルを使ってよい。顔と全身の表示を許可する。

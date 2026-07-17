@@ -130,6 +130,22 @@ function validateDiversity(record, rel, errors, expectedComparisons = []) {
   }
 }
 
+function validateReaderComfort(record, rel, errors) {
+  const readerComfort = record?.readerComfort;
+
+  if (!readerComfort || readerComfort.reviewedBy !== 'agent:visual-editor') {
+    errors.push(`${rel}: metadata.readerComfort.reviewedBy must be agent:visual-editor`);
+  }
+  if (!readerComfort || !Array.isArray(readerComfort.hygieneSensitiveItemsOnFloor)) {
+    errors.push(`${rel}: metadata.readerComfort.hygieneSensitiveItemsOnFloor must be an array`);
+  } else if (readerComfort.hygieneSensitiveItemsOnFloor.length > 0) {
+    errors.push(`${rel}: hygiene-sensitive personal items must not be placed directly on a floor, ground, pavement, or entrance dirt floor`);
+  }
+  if (!readerComfort || !hasMeaningfulText(readerComfort.placementNotes)) {
+    errors.push(`${rel}: metadata.readerComfort.placementNotes must describe where personal items are placed in the visible image`);
+  }
+}
+
 const errors = [];
 const referencedImages = new Map();
 const articleVisuals = [];
@@ -240,6 +256,7 @@ for (const [image, reference] of referencedImages) {
 
   if (reference.diversityReviewRequired) {
     validateDiversity(metadata, metadataRel, errors, reference.expectedComparisons);
+    validateReaderComfort(metadata, metadataRel, errors);
   }
 
   if (metadata.modelId && !modelById.has(metadata.modelId)) {
