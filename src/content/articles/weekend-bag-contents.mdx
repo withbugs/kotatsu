@@ -8,22 +8,23 @@ template: feature
 status: draft
 publishAt: "2026-07-18T00:00:00+09:00"
 heroImage: "/images/articles/weekend-bag-contents-hero.png"
-heroAlt: "AI生成ビジュアル: 真夏の明るい玄関で、小さな布鞄へ布包みの本を収める手元"
+heroAlt: "AI生成ビジュアル: 真夏の明るい玄関で、床から浮いた青灰色のベンチ上の小さな布鞄へ布包みの本を収める手元"
 visual:
   source: ai-generated
   mode: photorealistic
-  promptSummary: 真夏の明るい玄関で、顔の写らない手元が布に包んだ文庫本を小さな布鞄へ収め、薄手のハンカチと小さな水筒を添える。
-  intent: 持ち物を並べて説明するのではなく、必要なものだけを選んで外へ出る手元の動作と、真夏の涼しい余白を見せる。
+  promptSummary: 真夏の明るい玄関で、顔の写らない手元が、床から明確に浮いた青灰色の金属製ベンチ上の布鞄へ布包みの本を収める。ハンカチ、水筒、財布、鍵は同じベンチ上の布製トレーに置く。
+  intent: 必要なものを清潔な置き面で静かに鞄へ収める生活動作と、真夏の涼しい余白を見せる。鞄の中身を床へ並べない。
   seasonalContext: 2026年7月中旬の日本、強い日差しと湿度があり、屋外の暑さと店内の冷房差を意識する週末。
   seasonalCues:
     - 白く強い真夏の日差しと、玄関内の青みを帯びた反射光
-    - 小さな無地の水筒と薄手のハンカチ
-    - 淡い石床と屋外の緑が作る、湿度のある盛夏の明るさ
+    - 布製トレーに収めた小さな無地の水筒と薄手のハンカチ
+    - 寒色の金属製ベンチと屋外の緑が作る、湿度のある盛夏の明るさ
   seasonalAvoid:
     - 長袖の重ね着、厚手のジャケット、革靴
     - 茶色い木面や琥珀色の光が画面を占める秋冬の色調
     - 持ち物を密に並べた物撮りやアウトドア装備のような過剰さ
     - reference sheetの衣装・ポーズ・場面に近い人物hero
+    - 玄関土間、路面、床へ私物を直接置く構図や、置き面が曖昧な構図
   seasonalityReviewedBy: agent:visual-editor
   avoid:
     - real brand logos
@@ -36,6 +37,8 @@ visual:
     - top-down still-life
     - warm wooden tabletop
     - reference sheet reuse
+    - personal belongings on floor
+    - ambiguous support surface
 tags:
   - 鞄の中身
   - 週末
