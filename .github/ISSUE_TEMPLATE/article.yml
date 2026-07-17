@@ -1,6 +1,6 @@
 name: Article Task
 description: 記事の企画、執筆、編集タスク
-title: "[Article] "
+title: "[Vol. 000][ARTICLE] "
 labels:
   - type:article
   - kotatsu:planned
@@ -9,21 +9,28 @@ body:
     id: category
     attributes:
       label: Category
-      options:
-        - STYLE
-        - LIFE
-        - WEEKEND
-        - CULTURE
-        - PEOPLE
-        - SHOPPING
-        - COLUMN
+      options: [STYLE, LIFE, WEEKEND, CULTURE, PEOPLE, SHOPPING, COLUMN]
     validations:
       required: true
   - type: input
     id: volume
     attributes:
       label: Volume
-      placeholder: "Vol. 001 創刊Vol.テーマ検討"
+      placeholder: "Vol. 001"
+    validations:
+      required: true
+  - type: input
+    id: approved_plan
+    attributes:
+      label: Approved plan on main
+      placeholder: "docs/editorial/plans/vol-001.md"
+    validations:
+      required: true
+  - type: input
+    id: publication_schedule
+    attributes:
+      label: Publication date, week, or publishAt
+      placeholder: "2026-07-20週 / 2026-07-24T13:00:00+09:00"
     validations:
       required: true
   - type: input
@@ -36,24 +43,26 @@ body:
     id: brief
     attributes:
       label: Brief
-      description: 記事の狙い、読後感、扱うものを書く
+      description: 記事の狙い、読後感、扱うもの、確認可能な事実を書く
     validations:
       required: true
   - type: textarea
     id: visual_notes
     attributes:
-      label: Visual notes
-      description: AI生成ビジュアル、余白、hero画像、キャプションの方向性
+      label: AI visual brief
+      description: 場面、発行時期、余白、hero、避ける要素。既存画像は指定しない
     validations:
-      required: false
+      required: true
   - type: checkboxes
     id: checks
     attributes:
       label: Editorial checks
       options:
-        - label: Vol.のテーマに沿っている
-        - label: 商品紹介だけになっていない
-        - label: 読者を煽っていない
-        - label: 服と生活がつながっている
-        - label: 撮影写真ではなくAI生成ビジュアルを使う
+        - label: 承認済み正式計画がmainに存在する
+          required: true
+        - label: Vol.のテーマに沿い、服と生活がつながっている
+          required: true
+        - label: 商品紹介や煽りだけになっていない
+          required: true
+        - label: 撮影写真や既存画像ではなく、記事専用のAI生成ビジュアルを使う
           required: true

@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { diversityPolicyEffectiveAt, seasonalPolicyEffectiveAt } from './visual-policy-dates.mjs';
 
 const root = process.cwd();
 const volumeDir = path.join(root, 'src', 'content', 'volumes');
@@ -9,8 +10,6 @@ const contentDirs = [volumeDir, articleDir];
 const publicDir = path.join(root, 'public');
 const modelRosterPath = path.join(root, 'docs', 'editorial', 'models', 'roster.json');
 const pendingVisualMarker = '__AI_VISUAL_PENDING__';
-const seasonalPolicyEffectiveAt = Date.parse('2026-07-12T00:00:00+09:00');
-const diversityPolicyEffectiveAt = Date.parse('2026-07-18T00:00:00+09:00');
 const allowedTemperatures = new Set(['cool', 'neutral', 'warm', 'mixed']);
 const allowedDensities = new Set(['airy', 'balanced', 'dense']);
 
