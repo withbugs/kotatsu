@@ -1,36 +1,62 @@
 name: Volume Plan
-description: 発行Vol.のテーマと構成を決める
-title: "Vol. 000: "
+description: 三段階会議で発行Vol.のテーマと構成を決める
+title: "[Vol. 000][PLAN] "
 labels:
   - type:volume-plan
   - agent:editor-in-chief
+  - planning:research
   - kotatsu:ready
 body:
   - type: input
     id: volume_number
     attributes:
       label: Volume number
-      placeholder: "001"
+      placeholder: "002"
     validations:
       required: true
   - type: input
-    id: title
+    id: target_month
     attributes:
-      label: Title
-      placeholder: "創刊Vol.テーマ候補"
+      label: Target publication month
+      placeholder: "2026年8月号"
     validations:
       required: true
-  - type: textarea
-    id: concept
+  - type: input
+    id: planning_branch
     attributes:
-      label: Editorial concept
-      description: このVol.で読者に残したい感覚を書く
+      label: Planning branch
+      placeholder: "codex/vol-002-planning"
     validations:
       required: true
-  - type: textarea
-    id: lineup
+  - type: input
+    id: candidate_path
     attributes:
-      label: Article lineup
-      description: カバーストーリー、特集、LIFE、CULTURE、SHOPPINGなど
+      label: Candidate memo path
+      placeholder: "docs/editorial/candidates/vol-002.md"
     validations:
       required: true
+  - type: input
+    id: plan_path
+    attributes:
+      label: Approved plan path
+      placeholder: "docs/editorial/plans/vol-002.md"
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Research creates only the candidate memo. Shortlist updates the same Draft PR.
+        The approved plan is created only at planning:finalize.
+  - type: checkboxes
+    id: research_standard
+    attributes:
+      label: Research standard
+      options:
+        - label: 各段階でウェブ調査を更新する
+          required: true
+        - label: 検索語3件以上、確認日付きURL4件以上、情報種別3種類以上を残す
+          required: true
+        - label: 需要シグナルとKOTATSUの編集仮説を分ける
+          required: true
+        - label: 週1〜2本、月4〜8本の公開頻度で設計する
+          required: true

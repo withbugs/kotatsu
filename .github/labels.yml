@@ -3,22 +3,31 @@
   description: Ready for an editorial agent to process
 - name: kotatsu:planned
   color: "8f8f7a"
-  description: Planned but not ready for agent processing
+  description: Planned or waiting; not actionable
 - name: kotatsu:running
   color: "7a6846"
   description: Currently being processed
 - name: kotatsu:review
   color: "b88a44"
-  description: Waiting for editorial review
+  description: Waiting for managing-editor review
 - name: kotatsu:revise
   color: "b85c44"
-  description: Needs revision
+  description: Actionable revision for the assigned agent's next run
 - name: kotatsu:publish
   color: "3f5f7f"
-  description: Ready for publishing preparation
+  description: Scheduled, due, and ready for the publisher
 - name: kotatsu:done
   color: "6f7d65"
   description: Completed
+- name: planning:research
+  color: "6b7d8d"
+  description: Second-Monday research stage
+- name: planning:shortlist
+  color: "7d718f"
+  description: Third-Monday provisional selection stage
+- name: planning:finalize
+  color: "8c6d70"
+  description: Fourth-Monday approved-plan stage
 - name: type:volume-plan
   color: "111111"
   description: Volume planning
@@ -88,7 +97,3 @@
 - name: agent:publisher
   color: "2f4f5f"
   description: Publishing agent
-
-
-
-

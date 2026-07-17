@@ -8,7 +8,7 @@
     "build": "pnpm content:check && cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview --host 127.0.0.1",
     "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check && pnpm content:check",
-    "content:check": "node scripts/editorial/check-content.mjs && node scripts/editorial/check-editorial-planning.mjs && node scripts/editorial/check-ai-visuals.mjs && node scripts/editorial/check-volume-covers.mjs && node scripts/editorial/check-publishing-schedule.mjs && node scripts/editorial/check-reader-facing-copy.mjs",
+    "content:check": "node scripts/editorial/check-content.mjs && node scripts/editorial/check-editorial-planning.mjs && node scripts/editorial/check-editorial-rules.mjs && node scripts/editorial/check-ai-visuals.mjs && node scripts/editorial/check-visual-captions.mjs && node scripts/editorial/check-volume-covers.mjs && node scripts/editorial/check-publishing-schedule.mjs && node scripts/editorial/check-reader-facing-copy.mjs",
     "article:new": "node scripts/editorial/create-article-from-task.mjs",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
