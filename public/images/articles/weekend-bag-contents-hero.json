@@ -1,0 +1,67 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-001",
+  "article": "weekend-bag-contents",
+  "githubIssue": 15,
+  "editorialIntent": "必要なものを清潔な置き面で静かに鞄へ収める生活動作と、真夏の涼しい余白を見せる。鞄の中身を床へ並べない。",
+  "subject": "床から浮いた淡い青灰色の金属製ベンチ、小さなスレートブルーの布鞄、布包みの本、布製トレーに収めたハンカチ、小さな水筒、財布、鍵、顔の写らない手元",
+  "setting": "2026年7月中旬から下旬の日本、白い真夏の日差しが差す明るい玄関と屋外の緑",
+  "composition": "横長hero向け。脚、天板、床との隙間が見える淡い青灰色の金属製ベンチを左から中央に置き、鞄と布製トレー上の持ち物、右側の白い外光と緑、何も置かれていない床を一画面で確認できるmedium-wideの斜め構図。",
+  "compositionFamily": "hand-action-elevated-entryway-bench-medium-wide",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "slate blue",
+    "pale concrete gray",
+    "soft white",
+    "light gray",
+    "summer green"
+  ],
+  "colorMood": "スレートブルー、淡い石床、白い日差し、薄いグレー、夏の緑を中心にした、涼しく軽い盛夏の自然光。",
+  "promptSummary": "真夏の明るい玄関で、顔の写らない手元が、床から明確に浮いた青灰色の金属製ベンチ上の布鞄へ布包みの本を収める。ハンカチ、水筒、財布、鍵は同じベンチ上の布製トレーに置き、床は空にする。",
+  "caption": "清潔な玄関ベンチの上で、布に包んだ本と夏の持ち物を小さな鞄へ収める支度を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年7月18日前後の日本、湿度と強い日差しがあり、屋外の暑さと店内の冷房差を意識する週末。",
+  "seasonalCues": [
+    "白く強い真夏の日差しと玄関内の青みを帯びた反射光",
+    "布製トレーに収めた小さな無地の水筒と薄手のハンカチ",
+    "寒色の金属製ベンチと屋外の緑が作る、湿度のある盛夏の明るさ"
+  ],
+  "seasonalAvoid": [
+    "長袖の重ね着、厚手のジャケット、革靴",
+    "茶色い木面や琥珀色の光が画面を占める秋冬の色調",
+    "持ち物を密に並べた物撮りやアウトドア装備に見える過剰さ",
+    "reference sheetの衣装・ポーズ・場面に近い人物hero",
+    "玄関土間、路面、床へ私物を直接置く構図や、置き面が曖昧な構図"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real person likeness",
+    "celebrity likeness",
+    "readable book titles",
+    "real store signage",
+    "official product photo look",
+    "stock photo look",
+    "luxury-ad look",
+    "top-down still-life",
+    "warm wooden tabletop",
+    "reference sheet reuse",
+    "personal belongings on floor",
+    "ambiguous support surface"
+  ],
+  "similarityReviewedAgainst": [
+    "white-shirt-weekend-life",
+    "short-walk-to-cafe"
+  ],
+  "visualDifference": "直近2本の木のテーブル静物と後ろ姿の街歩きを避け、顔の写らない手元、床から浮いた寒色の金属製ベンチ、スレートブルーの布鞄、白い夏光の余白へ切り替えた。K-06-FUMI reference sheetの衣装・椅子・ポーズ・場面は使っていない。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-07-17T19:25:12+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "布包みの本は、脚と床との隙間が明確に見える淡い青灰色の金属製ベンチ上の鞄へ収めている。水筒、ハンカチ、財布、鍵は同じベンチ上の布製トレー内にあり、画面に写る玄関床と屋外面には私物が一切置かれていない。"
+  }
+}
