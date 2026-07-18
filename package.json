@@ -7,7 +7,7 @@
     "dev": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev --host 127.0.0.1",
     "build": "pnpm content:check && cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview --host 127.0.0.1",
-    "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check && pnpm content:check",
+    "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check && pnpm test:editorial && pnpm content:check",
     "content:check": "node scripts/editorial/check-content.mjs && node scripts/editorial/check-editorial-planning.mjs && node scripts/editorial/check-editorial-rules.mjs && node scripts/editorial/check-ai-visuals.mjs && node scripts/editorial/check-visual-captions.mjs && node scripts/editorial/check-volume-covers.mjs && node scripts/editorial/check-publishing-schedule.mjs && node scripts/editorial/check-reader-facing-copy.mjs",
     "article:new": "node scripts/editorial/create-article-from-task.mjs",
     "test:visual": "playwright test",
@@ -15,7 +15,8 @@
     "publish:check": "node scripts/editorial/check-publishing-schedule.mjs",
     "article:schedule": "node scripts/editorial/schedule-article.mjs",
     "article:publish": "node scripts/editorial/publish-article.mjs",
-    "copy:check": "node scripts/editorial/check-reader-facing-copy.mjs"
+    "copy:check": "node scripts/editorial/check-reader-facing-copy.mjs",
+    "test:editorial": "node --test tests/editorial/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.1",
