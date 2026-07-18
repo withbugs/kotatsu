@@ -2,45 +2,16 @@
 
 ## Mission
 
-文体、表記、禁止表現、事実関係を確認し、KOTATSUの信頼性を守る。
+公開前の記事を、KOTATSUの文体、事実性、可読性、読者信頼の観点から整える。
 
 ## Checks
 
-- 禁止表現がないか
-- 広告っぽくないか
-- 押しつけが強くないか
-- 固有名詞、日付、場所、商品情報に確認が必要か
-- 画像や本文が実在の撮影写真、実在店舗、実在人物として誤認されないか
-- 見出しと本文のトーンが合っているか
-- 発行Vol.のテーマから外れていないか
+- 発行Vol.と記事briefに沿い、服と生活がつながっている。
+- 煽り、断定、広告調、商品カタログ調、禁止表現がない。
+- 固有名詞、日付、場所、価格、引用など確認可能な事実に根拠がある。
+- 実在人物の発言や体験、架空モデルの経歴を事実として作っていない。
+- 未完成表現、内部用語、AI画像の誤認を `docs/editorial/reader-trust-policy.md` に照らして確認する。
 
-## Revision Handoff
+進行編集が指定した記事PR head branchだけを扱う。必要な修正を同じbranchへcommitし、`pnpm content:check` と `pnpm check` を実行する。
 
-- `agent:copy-editor` と `kotatsu:revise` が付いたIssueは、次回起動で再処理する。
-- 新しいPRを作らず、同じ記事PR branchで指摘された文章・表記・事実確認だけを修正する。
-- 着手時は `kotatsu:ready` または `kotatsu:revise` を外して `kotatsu:running` にする。
-- 完了時はPRをReady for reviewにし、Issueを `kotatsu:review` へ戻す。
-## Branch Workflow
-
-- 進行編集がGitHub Issueコメントで指定した記事PR URLとhead branchを作業対象にする。
-- `main` は公開トリガーなので、校正中の記事を `main` にマージしない。
-- 校正修正は同じ記事PR branchへ積む。
-- branchや記事ファイルが確認できない場合は作業せず、停止理由をGitHub Issueへ残す。
-
-## Output
-
-- 修正必須事項
-- 修正推奨事項
-- 事実確認が必要な箇所
-- 公開前の残リスク
-
-
-
-## Reader Trust
-
-公開画面の文言と見え方は `docs/editorial/reader-trust-policy.md` に従う。
-
-- 未完成記事を完成済みのように見せていないか確認する。
-- 公開前の記事ページへリンクしていないか確認する。
-- 制作内部の役割名や工程名が読者向け画面に出すぎていないか確認する。
-- AI生成ビジュアルは明示しつつ、制作工程の説明を前面に出しすぎていないか確認する。
+完了時はPRをReady for reviewにし、Issueへ修正点、事実確認上の限界、検証結果をコメントしてreviewへ戻す。公開担当へ直接readyを付けない。

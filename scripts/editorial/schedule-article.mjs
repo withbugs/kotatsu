@@ -2,9 +2,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { loadArticles, parseArgs } from './publishing-schedule.mjs';
+import { diversityPolicyEffectiveAt } from './visual-policy-dates.mjs';
 
 const PENDING_VISUAL_MARKER = '__AI_VISUAL_PENDING__';
-const DIVERSITY_POLICY_EFFECTIVE_AT = Date.parse('2026-07-18T00:00:00+09:00');
 const ALLOWED_TEMPERATURES = new Set(['cool', 'neutral', 'warm', 'mixed']);
 const ALLOWED_DENSITIES = new Set(['airy', 'balanced', 'dense']);
 
@@ -104,7 +104,7 @@ if (heroImage && heroImage !== PENDING_VISUAL_MARKER) {
           errors.push('hero metadata source must be ai-generated');
         }
 
-        if (publishDate.getTime() >= DIVERSITY_POLICY_EFFECTIVE_AT) {
+        if (publishDate.getTime() >= diversityPolicyEffectiveAt) {
           if (!hasText(metadata.compositionFamily)) {
             errors.push('hero metadata compositionFamily is required');
           }
