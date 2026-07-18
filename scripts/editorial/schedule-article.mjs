@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadArticles, parseArgs } from './publishing-schedule.mjs';
+import { loadArticles, parseArgs, validatePublishedSchedule } from './publishing-schedule.mjs';
 import { diversityPolicyEffectiveAt } from './visual-policy-dates.mjs';
 
 const PENDING_VISUAL_MARKER = '__AI_VISUAL_PENDING__';
@@ -62,6 +62,17 @@ if (!publishDate || Number.isNaN(publishDate.getTime())) {
 }
 
 const errors = [];
+const scheduleCandidate = {
+  ...article,
+  data: { ...article.data, status: 'scheduled', publishAt: nextPublishAt },
+  publishAt: publishDate,
+  publishAtIsValid: true
+};
+const scheduleValidation = validatePublishedSchedule(
+  articles.map((entry) => (entry.slug === article.slug ? scheduleCandidate : entry))
+);
+errors.push(...scheduleValidation.errors);
+
 const heroImage = String(article.data.heroImage || '');
 if (heroImage === PENDING_VISUAL_MARKER) {
   errors.push('heroImage is still pending');

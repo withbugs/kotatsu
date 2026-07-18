@@ -56,6 +56,7 @@ Production roles never pass work directly to one another. Each returns `kotatsu:
 - Article text and visuals stay on one article PR head branch through writing, visual editing, copy editing, and publishing.
 - Only the publisher merges a completed article PR after the publishing gate.
 - Article state is always `draft -> scheduled -> published`.
+- When two articles share a week, the managing editor assigns exact dates before writing and keeps their `publishAt` values at least 48 hours apart.
 - A formal, AI-generated volume cover must exist before the first article in that volume is published.
 - GitHub Actions CI and Visual Check are mandatory. Local `pnpm test:visual` is optional preflight.
 

@@ -4,7 +4,10 @@ import matter from 'gray-matter';
 
 export const WEEKLY_PUBLISH_LIMIT = 2;
 export const MONTHLY_PUBLISH_LIMIT = 8;
+export const MIN_PUBLISH_INTERVAL_HOURS = 48;
 export const PUBLISH_TIME_ZONE = 'Asia/Tokyo';
+
+const MIN_PUBLISH_INTERVAL_MS = MIN_PUBLISH_INTERVAL_HOURS * 60 * 60 * 1000;
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: PUBLISH_TIME_ZONE,
@@ -110,6 +113,7 @@ export function validatePublishedSchedule(articles, options = {}) {
   const warnings = [];
   const publishedByWeek = new Map();
   const publishedByMonth = new Map();
+  const activeSchedule = [];
 
   for (const article of articles) {
     const { status, title } = article.data;
@@ -133,8 +137,26 @@ export function validatePublishedSchedule(articles, options = {}) {
       addToMap(publishedByMonth, monthKey(article.publishAt), article);
     }
 
+    if (status === 'scheduled' || status === 'published') {
+      activeSchedule.push(article);
+    }
+
     if (status === 'scheduled' && article.publishAt <= now) {
       warnings.push(`${article.relativePath}: scheduled article is due for publication: ${title}`);
+    }
+  }
+
+  activeSchedule.sort((a, b) => a.publishAt - b.publishAt || a.slug.localeCompare(b.slug));
+  for (let index = 1; index < activeSchedule.length; index += 1) {
+    const previous = activeSchedule[index - 1];
+    const current = activeSchedule[index];
+    const interval = current.publishAt.getTime() - previous.publishAt.getTime();
+
+    if (interval < MIN_PUBLISH_INTERVAL_MS) {
+      errors.push(
+        `${current.relativePath}: publishAt must be at least ${MIN_PUBLISH_INTERVAL_HOURS} hours after ` +
+          `${previous.relativePath}; received ${previous.data.publishAt} and ${current.data.publishAt}`
+      );
     }
   }
 
