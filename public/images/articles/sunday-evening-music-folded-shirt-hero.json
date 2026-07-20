@@ -1,0 +1,62 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-001",
+  "article": "sunday-evening-music-folded-shirt",
+  "githubIssue": 16,
+  "editorialIntent": "音楽そのものを商品として見せず、週末の終わりに服を畳みながら自分の温度へ戻る余韻を表現する。",
+  "subject": "窓辺の清潔なテーブル、畳まれた薄手の白いシャツ、小さな無地のスピーカー、結露した冷たい水のグラス、薄いハンカチ",
+  "setting": "2026年7月下旬の日本、夕立後の湿度と冷房の効いた室内の温度差が残る日曜夕方",
+  "composition": "横長hero向け。中央から右に畳まれた白いシャツ、奥に小さな無地スピーカー、左に結露したグラスを置くmedium-wideの斜め構図。窓の雨粒と外の緑で夕立後の湿度を見せ、床は写さない。",
+  "compositionFamily": "tabletop-textile-music-window-medium-wide",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "cool",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "white cotton",
+    "pale blue gray",
+    "cool green",
+    "clear glass",
+    "restrained warm beige"
+  ],
+  "colorMood": "白い綿、青みのある室内影、雨上がりの緑、透明な水滴を中心にした、盛夏の日曜夕方の涼しい余韻。",
+  "promptSummary": "夕立後の夏の日曜夕方、雨粒の残る窓辺で、畳まれた薄手の白いシャツ、無地の小さなスピーカー、結露した水のグラス、薄いハンカチを清潔なテーブルに置く。",
+  "caption": "夕立後の窓辺で、畳まれた白いシャツと小さなスピーカーを静かに置いたAI生成ビジュアル。",
+  "seasonalContext": "2026年7月22日の日本、夕立後の湿度と冷房の効いた室内の温度差が残る日曜夕方。",
+  "seasonalCues": [
+    "雨粒の残る窓と外の濃い夏の緑",
+    "薄手の白い綿シャツと軽いハンカチ",
+    "結露した冷たい水のグラスと青みのある室内影"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウールコート、秋冬色の重い照明",
+    "直射日光の強い昼間や冬の朝に見える青白い光",
+    "洗濯物や私物を床へ直接置く構図"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real album covers",
+    "readable record sleeves",
+    "famous musician likeness",
+    "celebrity likeness",
+    "real brand logos",
+    "real store signage",
+    "product recommendation look",
+    "official product photo look",
+    "stock photo look",
+    "personal belongings on floor"
+  ],
+  "similarityReviewedAgainst": [
+    "short-walk-to-cafe",
+    "weekend-bag-contents"
+  ],
+  "visualDifference": "直近の街歩きheroと鞄支度heroを避け、人物の動作ではなく窓辺のテーブル上の布、音、結露へ焦点を移した。アルバムや人物を出さず、音楽は無地スピーカーで気配だけにした。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-07-20T20:26:43+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "シャツ、ハンカチ、グラス、スピーカーは清潔な窓辺のテーブル上にあり、床へ直接触れている私物はない。"
+  }
+}
