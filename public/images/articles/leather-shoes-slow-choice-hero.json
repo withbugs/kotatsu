@@ -1,0 +1,62 @@
+{
+  "source": "ai-generated",
+  "visualMode": "still-life",
+  "volume": "vol-001",
+  "article": "leather-shoes-slow-choice",
+  "githubIssue": 17,
+  "editorialIntent": "買う高揚よりも、雨や湿気のあとに革靴を休ませながら長く履く生活の速度を見せる。",
+  "subject": "床から浮いた淡い石調の棚、ロゴのない黒い革靴、薄い生成りの布、小さな無地のブラシ、窓辺の夏の緑",
+  "setting": "2026年7月下旬の日本、雨上がりの湿度が残る明るい玄関脇の室内",
+  "composition": "横長hero向け。左から中央に棚上の革靴と薄い布を置き、右側に雨上がりの窓と緑を残すmedium-wideの斜め構図。棚の脚と床との距離が見え、床には私物を置かない。",
+  "compositionFamily": "still-life-elevated-entryway-shelf-medium-wide",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "cool gray",
+    "soft white",
+    "slate blue",
+    "deep black leather",
+    "summer green"
+  ],
+  "colorMood": "青みのある自然光、淡い石調の棚、白いカーテン、夏の緑で、盛夏でも重く見せない涼しい余白を作る。",
+  "promptSummary": "雨上がりの真夏の玄関脇で、ロゴのない黒い革靴、薄い布、小さなブラシを、床から明確に浮いた淡い棚の上に置く。右側に濡れた窓と緑を残し、床は空にする。",
+  "caption": "湿気の残る盛夏の玄関脇で、革靴を休ませる余白を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年7月25日の日本、湿気、にわか雨、強い暑さがあり、革靴を毎日続けて履かず乾かす意識が必要な週末。",
+  "seasonalCues": [
+    "雨上がりの窓と屋外の夏の緑",
+    "白いカーテンと青みのある自然光",
+    "薄い生成りの布と、靴を詰めずに休ませる余白"
+  ],
+  "seasonalAvoid": [
+    "厚手のコート、ウール、深い暖色照明など秋冬に見える要素",
+    "高級品カタログ風の強い艶、濃い木面、革小物を密に並べる重い構図",
+    "玄関土間、路面、床へ私物や手入れ道具を直接置く構図"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable labels",
+    "official product photo look",
+    "affiliate catalog composition",
+    "luxury advertising mood",
+    "wet pavement product shot",
+    "top-down still-life",
+    "warm wooden tabletop dominance",
+    "personal belongings on entrance dirt floor",
+    "ambiguous support surface"
+  ],
+  "similarityReviewedAgainst": [
+    "short-walk-to-cafe",
+    "weekend-bag-contents"
+  ],
+  "visualDifference": "直近の街歩きheroと鞄支度heroを避け、人物を出さない棚上の革靴still-lifeへ切り替えた。鞄記事の青灰色ベンチと近くなりすぎないよう、主役を黒い革靴と雨上がりの窓辺に置いた。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-07-20T20:26:43+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "革靴、薄い布、ブラシは床から明確に浮いた淡い棚の上にあり、画面に見える床面へ私物や手入れ道具は直接置かれていない。"
+  }
+}
