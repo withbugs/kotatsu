@@ -48,9 +48,10 @@
   ],
   "similarityReviewedAgainst": [
     "short-walk-to-cafe",
-    "weekend-bag-contents"
+    "weekend-bag-contents",
+    "sunday-evening-music-folded-shirt"
   ],
-  "visualDifference": "直近の街歩きheroと鞄支度heroを避け、人物を出さない棚上の革靴still-lifeへ切り替えた。鞄記事の青灰色ベンチと近くなりすぎないよう、主役を黒い革靴と雨上がりの窓辺に置いた。",
+  "visualDifference": "直近の街歩きhero、鞄支度hero、日曜夕方の窓辺テーブル静物を確認した。人物の動作、青灰色ベンチ上の鞄支度、白シャツとスピーカーのテーブル構図を避け、床から浮いた玄関脇の棚上で黒い革靴、薄い布、ブラシ、雨上がりの窓辺を主役にした。",
   "referenceSheetUse": "none; no roster model used in the final public hero",
   "reviewedBy": "agent:visual-editor",
   "generatedAt": "2026-07-20T20:26:43+09:00",
