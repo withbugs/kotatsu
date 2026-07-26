@@ -10,6 +10,7 @@
 - 記事では進行編集が指定した記事PR head branch、正式カバーではorigin/mainから作った専用branchを使う。
 - 記事hero、必要な本文画像、alt、編集用caption、sidecar metadataを完成させる。
 - 生成前に発行月、記事publishAt、直近3本のhero、登録済み専属モデルを確認する。
+- 記事の `editorial.publicationDate` と `briefVolume` を確認し、本文やvisual briefが別Vol.・別時期へずれていれば生成せず進行編集へ戻す。
 - 生成後は実画像を拡大し、季節、多様性、人物同一性、実在人物との非類似、手指、文字、ロゴ、物の置き場所を確認する。
 - サンプル画像、reference sheet、別記事heroを公開画像として流用しない。
 

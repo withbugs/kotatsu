@@ -27,6 +27,14 @@ body:
     validations:
       required: true
   - type: input
+    id: brief_target_volume
+    attributes:
+      label: Brief target volume
+      description: このbriefが制作する対象Vol.。他Vol.の調査対象ではなく、記事が属するVol.を書く
+      placeholder: "vol-001"
+    validations:
+      required: true
+  - type: input
     id: publication_schedule
     attributes:
       label: Publication date, week, or publishAt
@@ -37,6 +45,14 @@ body:
     id: working_title
     attributes:
       label: Working title
+    validations:
+      required: true
+  - type: textarea
+    id: source_volumes
+    attributes:
+      label: Editorial source volumes
+      description: 対象Vol.を必ず含める。別Vol.の調査を参照する場合は、採用範囲、公開日に適用できる理由、持ち込まない季節・生活イベントを明記する
+      placeholder: "vol-001 only / cross-volume reference and its limited scope"
     validations:
       required: true
   - type: textarea
@@ -59,6 +75,12 @@ body:
       label: Editorial checks
       options:
         - label: 承認済み正式計画がmainに存在する
+          required: true
+        - label: briefの対象Vol.、正式計画、記事milestoneが一致している
+          required: true
+        - label: 公開日と季節・生活イベントが一致している
+          required: true
+        - label: 別Vol.の調査は適用範囲と除外範囲を明記している、または参照していない
           required: true
         - label: Vol.のテーマに沿い、服と生活がつながっている
           required: true

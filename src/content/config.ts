@@ -12,6 +12,25 @@ const visualSchema = z.object({
   seasonalityReviewedBy: z.string().min(3).optional()
 });
 
+const editorialIntegritySchema = z.object({
+  issueNumber: z.number().int().positive(),
+  approvedPlan: z.string(),
+  planEntryTitle: z.string(),
+  briefVolume: z.string(),
+  publicationDate: z.string(),
+  briefReviewedAt: z.string(),
+  sourceVolumes: z.array(z.string()).min(1),
+  crossVolumeRationale: z.string().optional(),
+  integrityReview: z.object({
+    status: z.enum(['pending', 'passed']),
+    reviewedBy: z.string().optional(),
+    reviewedAt: z.string().optional(),
+    planAlignment: z.string().optional(),
+    timingAlignment: z.string().optional(),
+    crossVolumeDecision: z.enum(['pending', 'not-applicable', 'accepted', 'removed'])
+  })
+});
+
 const volumes = defineCollection({
   type: 'content',
   schema: z.object({
@@ -40,6 +59,7 @@ const articles = defineCollection({
     publishAt: z.string(),
     heroImage: z.string(),
     heroAlt: z.string(),
+    editorial: editorialIntegritySchema.optional(),
     visual: visualSchema,
     tags: z.array(z.string()).default([])
   })

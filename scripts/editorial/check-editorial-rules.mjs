@@ -31,7 +31,12 @@ requireText('docs/editorial/agent-workflow.md', 'draft -> scheduled -> published
 requireText('docs/editorial/agent-workflow.md', '制作担当同士は直接');
 requireText('docs/editorial/agent-workflow.md', '未来週のライター修正');
 requireText('docs/editorial/agent-workflow.md', '未生成のままreviewへ進めない');
+requireText('docs/editorial/agent-workflow.md', 'editorial.integrityReview.status: passed');
+requireText('.agents/kotatsu/editor-in-chief.md', '持ち込まない季節・生活イベント');
+requireText('.agents/kotatsu/managing-editor.md', '別Vol.参照の適用範囲と除外範囲');
+requireText('.agents/kotatsu/copy-editor.md', 'editorial.integrityReview');
 requireText('.github/ISSUE_TEMPLATE/article.yml', 'id: publication_schedule');
+requireText('.github/ISSUE_TEMPLATE/article.yml', 'id: brief_target_volume');
 requireText('.github/ISSUE_TEMPLATE/volume-plan.yml', 'planning:research');
 requireText('.github/ISSUE_TEMPLATE/visual.yml', '画像生成または実画像確認ができなければ完成扱いにしない');
 
