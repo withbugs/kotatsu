@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import { validateEditorialIntegrity } from './editorial-integrity.mjs';
 import {
   evaluatePublishCandidate,
   loadArticles,
@@ -149,6 +150,7 @@ const articles = loadArticles();
 const result = evaluatePublishCandidate(articles, String(slug), { now });
 
 if (result.candidate) {
+  result.errors.push(...validateEditorialIntegrity(result.candidate, { requireReview: true }));
   result.errors.push(...validateFormalVolumeCover(result.candidate));
 }
 

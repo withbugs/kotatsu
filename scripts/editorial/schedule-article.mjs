@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { validateEditorialIntegrity } from './editorial-integrity.mjs';
 import { loadArticles, parseArgs, validatePublishedSchedule } from './publishing-schedule.mjs';
 import { diversityPolicyEffectiveAt } from './visual-policy-dates.mjs';
 
@@ -72,6 +73,7 @@ const scheduleValidation = validatePublishedSchedule(
   articles.map((entry) => (entry.slug === article.slug ? scheduleCandidate : entry))
 );
 errors.push(...scheduleValidation.errors);
+errors.push(...validateEditorialIntegrity(scheduleCandidate, { requireReview: true }));
 
 const heroImage = String(article.data.heroImage || '');
 if (heroImage === PENDING_VISUAL_MARKER) {

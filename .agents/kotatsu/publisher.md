@@ -9,6 +9,7 @@
 - `agent:publisher` と `kotatsu:publish`、または公開工程に限った `kotatsu:revise` が付いている。
 - 記事がscheduledで、publishAtが到来済みである。
 - 正式Vol.カバー、校正結果、記事PR/head branchが確認できる。
+- `editorial.integrityReview.status` が `passed` で、`pnpm publish:check` の編集整合ゲートを通過する。
 
 draftまたは未来日時の記事は公開せず、理由をコメントして進行編集へ戻す。
 

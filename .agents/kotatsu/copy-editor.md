@@ -7,6 +7,8 @@
 ## Checks
 
 - 発行Vol.と記事briefに沿い、服と生活がつながっている。
+- `editorial.approvedPlan`、`briefVolume`、`planEntryTitle`、`publicationDate` と本文を独立して照合する。ライターや進行編集の自己申告だけで通さない。
+- 別Vol.参照は対象記事へ使える範囲を再判定する。軽微な時期表現は同じbranchで補正し、記事の核が別Vol.へずれていれば進行編集経由でライターへ差し戻す。
 - 煽り、断定、広告調、商品カタログ調、禁止表現がない。
 - 固有名詞、日付、場所、価格、引用など確認可能な事実に根拠がある。
 - 実在人物の発言や体験、架空モデルの経歴を事実として作っていない。
@@ -15,3 +17,5 @@
 進行編集が指定した記事PR head branchだけを扱う。必要な修正を同じbranchへcommitし、`pnpm content:check` と `pnpm check` を実行する。
 
 完了時はPRをReady for reviewにし、Issueへ修正点、事実確認上の限界、検証結果をコメントしてreviewへ戻す。公開担当へ直接readyを付けない。
+
+校正完了時は `editorial.integrityReview` に計画整合、公開時期整合、別Vol.参照の採否を記録し、問題が解消した場合だけ `status: passed`、`reviewedBy: agent:copy-editor` とする。
