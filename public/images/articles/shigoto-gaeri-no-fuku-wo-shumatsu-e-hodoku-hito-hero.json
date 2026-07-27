@@ -1,0 +1,61 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-001",
+  "article": "shigoto-gaeri-no-fuku-wo-shumatsu-e-hodoku-hito",
+  "githubIssue": 18,
+  "editorialIntent": "仕事帰りの服を脱ぎ捨てるのではなく、白いシャツをゆるめ、鞄の中身をトレーへ戻す手つきで週末へ移る静かな時間を見せる。",
+  "subject": "顔を主役にしない人物の肩越しと手元、白いシャツ、薄手の羽織、清潔な白いトレー上の文庫本、ハンカチ、財布、鍵、冷たい水",
+  "setting": "2026年7月末の日本、蒸し暑い仕事帰りの夕方、冷房の効いた部屋と窓外の夏の緑が見える室内",
+  "composition": "横長hero向け。左側に人物の肩越しとボタンを外す手元、中央から右にトレー上の持ち物と薄手の羽織を置くmedium-wide構図。顔は画面外に近く、床は写さない。",
+  "compositionFamily": "human-shoulder-tabletop-transition-medium-wide",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "cool",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "white cotton",
+    "pale blue gray",
+    "soft mint green",
+    "cool glass",
+    "muted navy"
+  ],
+  "colorMood": "白い綿、青みのある室内光、窓外の夏の緑、冷たい水の透明感で、七月末の蒸し暑さと冷房の涼しさを同時に見せる。",
+  "promptSummary": "七月末の日本の仕事帰りの部屋で、顔を主役にしない人物が白いシャツをゆるめ、薄手の羽織、文庫本、ハンカチ、財布、鍵、冷たい水を清潔なトレー上に置く。",
+  "caption": "仕事帰りの服を少しゆるめ、週末へ戻る手つきを描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年7月31日の日本。蒸し暑い夕方から冷房の効いた室内へ戻り、薄手の綿シャツ、軽い羽織、冷たい水で平日と週末の温度差を受け止める。",
+  "seasonalCues": [
+    "薄手の白い綿シャツと淡い色の軽い羽織",
+    "窓外の夏の緑と青みのある冷房の室内光",
+    "トレー上のハンカチ、文庫本、冷たい水"
+  ],
+  "seasonalAvoid": [
+    "厚手のジャケット、ウール、重いブーツなど秋冬に見える服装",
+    "深い暖色照明、濃い木面、こたつや湯気の強い飲み物で季節を誤読させる構図",
+    "旅行広告風、実在職場紹介、顔を主役にした取材写真風の見せ方"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable book titles",
+    "real store signage",
+    "celebrity likeness",
+    "identifiable workplace",
+    "interview portrait composition",
+    "stock photo look",
+    "fashion advertising mood",
+    "items placed directly on the floor"
+  ],
+  "similarityReviewedAgainst": [
+    "sunday-evening-music-folded-shirt",
+    "leather-shoes-slow-choice"
+  ],
+  "visualDifference": "直近の窓辺テーブル静物と玄関脇の革靴静物を確認した。今回は人物の肩越しとボタンを外す手元を入れ、清潔な白いトレー上の持ち物と冷房の青みで、静物だけに寄らない週末への切り替えを作った。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-07-27T18:06:06+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "文庫本、ハンカチ、財布、鍵、冷たい水、薄手の羽織は清潔なテーブルまたは白いトレー上にあり、床や玄関土間へ直接置かれている私物はない。"
+  }
+}
