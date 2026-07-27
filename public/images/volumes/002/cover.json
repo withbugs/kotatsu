@@ -1,0 +1,62 @@
+{
+  "source": "ai-generated",
+  "usage": "volume-cover",
+  "visualMode": "photorealistic",
+  "volume": "vol-002",
+  "githubIssue": 56,
+  "editorialIntent": "Vol.002『真夏の身軽さを、暮らしに残す』を、強い夏の光、冷房の影、淡色の布、軽い鞄、冷たい水、薄い本で代表する正式カバーとして見せる。",
+  "subject": "窓辺の清潔なテーブル、淡い青の薄手シャツ、無地の生成り布鞄、結露した冷たい水、薄い本、淡いハンカチ、白いトレー",
+  "setting": "2026年8月の日本、強い昼光が入る窓辺と冷房の効いた室内の境目",
+  "composition": "横長カバー向け。右側に軽い布鞄、中央に冷たい水と白いトレー、左に淡い青の薄手シャツと夏の緑を置くmedium-wideの斜めstill-life。すべて床から明確に浮いたテーブル上に置く。",
+  "compositionFamily": "volume-cover-summer-threshold-still-life-medium-wide",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "white daylight",
+    "pale blue cotton",
+    "soft summer green",
+    "cool gray shadow",
+    "natural canvas beige"
+  ],
+  "colorMood": "白い強い昼光、淡い青の布、夏の緑、冷たい水の透明感を中心にし、深い暖色や重い革の印象を避ける。",
+  "promptSummary": "2026年8月の日本の窓辺で、淡い青の薄手シャツ、生成りの軽い布鞄、結露した冷たい水、薄い本、ハンカチを白いテーブルとトレー上に置いた正式Vol.カバー。",
+  "caption": "真夏の光と冷房の影のあいだに、軽い鞄と薄手の布を置いたVol.002正式カバーのAI生成ビジュアル。",
+  "seasonalContext": "2026年8月の日本。東日本・西日本・沖縄奄美は高温傾向を前提に、強い昼光、日陰、冷房の効いた室内、薄手素材、冷たい飲み物で盛夏の身軽さを表す。",
+  "seasonalCues": [
+    "強い白い昼光と窓外の夏の緑",
+    "淡い青の薄手シャツと生成りの軽い布鞄",
+    "結露した冷たい水と白いトレーの涼感"
+  ],
+  "seasonalAvoid": [
+    "厚手のジャケット、ウール、濃い秋冬コート、重いブーツを主役にしない",
+    "紅葉、こたつ、湯気の強い温かい飲み物、深い暖色照明で秋冬に見せない",
+    "旅行広告、海辺のリゾート、派手な夏イベント写真風へ寄せない"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable book titles",
+    "real store signage",
+    "celebrity likeness",
+    "human faces",
+    "stock photo look",
+    "official product photo look",
+    "beach resort advertising",
+    "warm wooden tabletop dominance",
+    "items placed directly on the floor"
+  ],
+  "similarityReviewedAgainst": [
+    "sunday-evening-music-folded-shirt",
+    "leather-shoes-slow-choice"
+  ],
+  "visualDifference": "直近記事heroの窓辺テーブル静物、玄関脇の革靴静物を確認した。Vol.カバーでは人物や革靴を使わず、白いテーブル、淡い青のシャツ、生成りの布鞄、冷たい水、夏の緑を大きく使い、8月号全体の軽さを代表する構図にした。",
+  "referenceSheetUse": "none; no roster model used in the volume cover",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-07-27T18:13:01+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "薄手シャツ、布鞄、本、ハンカチ、冷たい水は清潔な白いテーブルまたはトレー上にあり、床や玄関土間、路面へ直接触れていない。"
+  }
+}
