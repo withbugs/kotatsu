@@ -51,7 +51,7 @@ body:
     id: source_volumes
     attributes:
       label: Editorial source volumes
-      description: 対象Vol.を必ず含める。別Vol.の調査を参照する場合は、採用範囲、公開日に適用できる理由、持ち込まない季節・生活イベントを明記する
+      description: 対象Vol.を必ず含める。別Vol.を参照する場合は、参照先の計画見出し、使用可能な話題、持ち込まない話題、公開日に適用できる理由を明記する
       placeholder: "vol-001 only / cross-volume reference and its limited scope"
     validations:
       required: true
@@ -80,7 +80,7 @@ body:
           required: true
         - label: 公開日と季節・生活イベントが一致している
           required: true
-        - label: 別Vol.の調査は適用範囲と除外範囲を明記している、または参照していない
+        - label: 別Vol.参照は参照先の計画見出し、使用可能な話題、持ち込まない話題を明記している、または参照していない
           required: true
         - label: Vol.のテーマに沿い、服と生活がつながっている
           required: true

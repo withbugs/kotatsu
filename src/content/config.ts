@@ -12,6 +12,21 @@ const visualSchema = z.object({
   seasonalityReviewedBy: z.string().min(3).optional()
 });
 
+const crossVolumeReviewSchema = z.object({
+  references: z.array(z.object({
+    volume: z.string().regex(/^vol-\d{3}$/),
+    planEntryTitle: z.string().min(4)
+  })).min(1),
+  allowedTopics: z.array(z.string().min(3)).min(1),
+  excludedTopics: z.array(z.string().min(3)).min(1),
+  managingEditorApproval: z.object({
+    status: z.enum(['pending', 'approved', 'rejected']),
+    reviewedBy: z.string().optional(),
+    reviewedAt: z.string().optional(),
+    rationale: z.string().optional()
+  })
+});
+
 const editorialIntegritySchema = z.object({
   issueNumber: z.number().int().positive(),
   approvedPlan: z.string(),
@@ -21,6 +36,7 @@ const editorialIntegritySchema = z.object({
   briefReviewedAt: z.string(),
   sourceVolumes: z.array(z.string()).min(1),
   crossVolumeRationale: z.string().optional(),
+  crossVolumeReview: crossVolumeReviewSchema.optional(),
   integrityReview: z.object({
     status: z.enum(['pending', 'passed']),
     reviewedBy: z.string().optional(),
