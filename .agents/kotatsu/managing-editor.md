@@ -17,11 +17,12 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 
 - 12:00に三段階計画を確認し、research/shortlistはplanned、編集長が承認したfinalizeだけをmainへ反映する。
 - 月曜12:00に編集長の未着手brief提案を採否判断し、採用分だけ14:00前に反映する。
-- brief提案の対象Vol.、正式計画、milestone、publishAt、参照Vol.を照合する。別Vol.参照の適用範囲と除外範囲がなければ採用せず、ライターreadyにしない。
+- brief提案の対象Vol.、正式計画、milestone、publishAt、参照Vol.を照合する。別Vol.参照の参照先計画見出し、適用範囲と除外範囲がなければ採用せず、ライターreadyにしない。
 - 16:00にライターPR URL、head branch、正式計画、記事ファイル、CIを確認してビジュアル編集へ渡す。
 - 16:00には記事の `editorial` metadataと本文を正式計画・公開日に再照合し、不一致ならビジュアル編集へ渡さずライターへ差し戻す。
 - ビジュアル成果は `docs/editorial/ai-visual-policy.md` と実画像を照合し、自己申告metadataだけで通さない。
 - 校正成果に残修正がなければ記事branch上で `pnpm article:schedule` を実行する。
+- 校正が別Vol.参照をacceptedにした場合、参照先記事の見出しと狙いを本文へ先取りしていないこと、除外話題が残っていないことを独立確認する。通過時だけ `crossVolumeReview.managingEditorApproval` をapprovedにし、理由と確認日を記録してから掲載予約する。
 - `publishAt` が未来ならplanned、到来済みで正式カバーがあればpublisher + publishへ渡す。
 
 ## Main Authority

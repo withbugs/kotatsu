@@ -33,8 +33,10 @@ requireText('docs/editorial/agent-workflow.md', '未来週のライター修正'
 requireText('docs/editorial/agent-workflow.md', '未生成のままreviewへ進めない');
 requireText('docs/editorial/agent-workflow.md', 'editorial.integrityReview.status: passed');
 requireText('.agents/kotatsu/editor-in-chief.md', '持ち込まない季節・生活イベント');
-requireText('.agents/kotatsu/managing-editor.md', '別Vol.参照の適用範囲と除外範囲');
+requireText('.agents/kotatsu/managing-editor.md', 'crossVolumeReview.managingEditorApproval');
 requireText('.agents/kotatsu/copy-editor.md', 'editorial.integrityReview');
+requireText('.agents/kotatsu/copy-editor.md', 'managingEditorApproval');
+requireText('docs/editorial/agent-workflow.md', 'crossVolumeReview.managingEditorApproval');
 requireText('.github/ISSUE_TEMPLATE/article.yml', 'id: publication_schedule');
 requireText('.github/ISSUE_TEMPLATE/article.yml', 'id: brief_target_volume');
 requireText('.github/ISSUE_TEMPLATE/volume-plan.yml', 'planning:research');

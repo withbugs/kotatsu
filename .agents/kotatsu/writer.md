@@ -14,7 +14,7 @@
 
 - Issue briefと正式計画を根拠にし、事実と創作を混同しない。
 - `pnpm article:new` へIssue番号、publishAt、brief確認日、参照Vol.を渡し、`editorial` metadataを作る。対象Vol.と正式計画が一致しない場合は執筆しない。
-- 別Vol.の調査がbriefにある場合、適用範囲と除外範囲が明記されているときだけ使い、`sourceVolumes` と `crossVolumeRationale` に残す。
+- 別Vol.の調査がbriefにある場合、参照先の計画見出し、使用可能な話題、持ち込まない話題が明記されているときだけ使い、`sourceVolumes`、`crossVolumeRationale`、`crossVolumeReview` に残す。参照先の記事見出しの中心表現を本文へ流用しない。
 - 撮影写真や既存画像を流用しない。
 - 初稿の `heroImage` は `__AI_VISUAL_PENDING__` とし、必要な場面、季節、余韻、避ける要素をビジュアルブリーフへ残す。
 - 実在店舗、人物、商品を扱う場合は、確認できない体験や発言を作らない。
