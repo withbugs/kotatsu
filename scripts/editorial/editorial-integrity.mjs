@@ -5,6 +5,8 @@ export const EDITORIAL_INTEGRITY_POLICY_EFFECTIVE_AT = Date.parse('2026-07-27T00
 
 const REVIEW_STATUSES = new Set(['pending', 'passed']);
 const CROSS_VOLUME_DECISIONS = new Set(['pending', 'not-applicable', 'accepted', 'removed']);
+const MANAGING_EDITOR_DECISIONS = new Set(['pending', 'approved', 'rejected']);
+const MIN_SHARED_TITLE_PHRASE_LENGTH = 8;
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: 'Asia/Tokyo',
   year: 'numeric',
@@ -32,6 +34,56 @@ function dateKey(date) {
 function publishDateFor(article) {
   if (article.publishAt instanceof Date) return article.publishAt;
   return article.data.publishAt ? new Date(article.data.publishAt) : null;
+}
+
+function normalizeForComparison(value) {
+  return String(value ?? '')
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/[\p{P}\p{S}\s]/gu, '');
+}
+
+function longestSharedPhrase(left, right, minLength = MIN_SHARED_TITLE_PHRASE_LENGTH) {
+  const source = normalizeForComparison(left);
+  const target = normalizeForComparison(right);
+  const maxLength = Math.min(source.length, target.length);
+
+  for (let length = maxLength; length >= minLength; length -= 1) {
+    for (let start = 0; start <= source.length - length; start += 1) {
+      const phrase = source.slice(start, start + length);
+      if (target.includes(phrase)) return phrase;
+    }
+  }
+
+  return '';
+}
+
+function articleBody(article) {
+  return article.parsed?.content ?? article.body ?? '';
+}
+
+function validateTopicList(errors, rel, field, topics) {
+  if (!Array.isArray(topics) || topics.length < 1) {
+    errors.push(`${rel}: ${field} must list at least one topic`);
+    return [];
+  }
+
+  const validTopics = [];
+  const normalized = new Set();
+  for (const topic of topics) {
+    if (!hasText(topic, 3)) {
+      errors.push(`${rel}: ${field} entries must contain at least 3 characters`);
+      continue;
+    }
+    const key = normalizeForComparison(topic);
+    if (normalized.has(key)) {
+      errors.push(`${rel}: ${field} must not contain duplicate topics`);
+      continue;
+    }
+    normalized.add(key);
+    validTopics.push(topic);
+  }
+  return validTopics;
 }
 
 export function requiresEditorialIntegrity(article) {
@@ -122,6 +174,80 @@ export function validateEditorialIntegrity(article, options = {}) {
     errors.push(`${rel}: cross-volume sources require editorial.crossVolumeRationale`);
   }
 
+  const boundary = editorial.crossVolumeReview;
+  let managingEditorApproval;
+  if (crossVolumeSources.length) {
+    if (!boundary || typeof boundary !== 'object') {
+      errors.push(`${rel}: cross-volume sources require editorial.crossVolumeReview`);
+    } else {
+      const references = Array.isArray(boundary.references) ? boundary.references : [];
+      const referenceVolumes = references.map((reference) => reference?.volume);
+      const uniqueReferenceVolumes = new Set(referenceVolumes);
+      if (references.length !== crossVolumeSources.length || uniqueReferenceVolumes.size !== references.length ||
+          crossVolumeSources.some((volume) => !uniqueReferenceVolumes.has(volume))) {
+        errors.push(`${rel}: crossVolumeReview.references must identify one plan entry for every cross-volume source`);
+      }
+
+      for (const reference of references) {
+        if (!reference || !crossVolumeSources.includes(reference.volume) || !hasText(reference.planEntryTitle, 4)) {
+          errors.push(`${rel}: each cross-volume reference requires a source volume and plan entry title`);
+          continue;
+        }
+
+        const sourcePlanPath = `docs/editorial/plans/${reference.volume}.md`;
+        let sourcePlanContent = options.sourcePlanContents?.[reference.volume];
+        if (sourcePlanContent === undefined) {
+          const fullPath = path.join(root, sourcePlanPath);
+          if (fs.existsSync(fullPath)) sourcePlanContent = fs.readFileSync(fullPath, 'utf8');
+        }
+        if (typeof sourcePlanContent !== 'string') {
+          errors.push(`${rel}: cross-volume source plan does not exist: ${sourcePlanPath}`);
+        } else if (!sourcePlanContent.includes(reference.planEntryTitle)) {
+          errors.push(`${rel}: cross-volume plan entry is not present in ${sourcePlanPath}`);
+        }
+
+        const sharedPhrase = longestSharedPhrase(reference.planEntryTitle, articleBody(article));
+        if (sharedPhrase) {
+          errors.push(
+            `${rel}: article body overlaps the reserved cross-volume plan entry ` +
+            `${JSON.stringify(reference.planEntryTitle)} through phrase ${JSON.stringify(sharedPhrase)}`
+          );
+        }
+      }
+
+      const allowedTopics = validateTopicList(
+        errors,
+        rel,
+        'editorial.crossVolumeReview.allowedTopics',
+        boundary.allowedTopics
+      );
+      const excludedTopics = validateTopicList(
+        errors,
+        rel,
+        'editorial.crossVolumeReview.excludedTopics',
+        boundary.excludedTopics
+      );
+      const allowedKeys = new Set(allowedTopics.map(normalizeForComparison));
+      const normalizedBody = normalizeForComparison(articleBody(article));
+      for (const topic of excludedTopics) {
+        const normalizedTopic = normalizeForComparison(topic);
+        if (allowedKeys.has(normalizedTopic)) {
+          errors.push(`${rel}: a cross-volume topic cannot be both allowed and excluded: ${topic}`);
+        }
+        if (normalizedBody.includes(normalizedTopic)) {
+          errors.push(`${rel}: article body contains excluded cross-volume topic: ${topic}`);
+        }
+      }
+
+      managingEditorApproval = boundary.managingEditorApproval;
+      if (!managingEditorApproval || !MANAGING_EDITOR_DECISIONS.has(managingEditorApproval.status)) {
+        errors.push(`${rel}: crossVolumeReview.managingEditorApproval.status must be pending, approved, or rejected`);
+      }
+    }
+  } else if (boundary !== undefined) {
+    errors.push(`${rel}: editorial.crossVolumeReview must be omitted when no other volume is referenced`);
+  }
+
   const review = editorial.integrityReview;
   if (!review || typeof review !== 'object' || !REVIEW_STATUSES.has(review.status)) {
     errors.push(`${rel}: editorial.integrityReview.status must be pending or passed`);
@@ -156,11 +282,37 @@ export function validateEditorialIntegrity(article, options = {}) {
     if (!hasText(review.timingAlignment, 20)) {
       errors.push(`${rel}: integrity review must explain timingAlignment`);
     }
-    if (crossVolumeSources.length && !['accepted', 'removed'].includes(review.crossVolumeDecision)) {
-      errors.push(`${rel}: cross-volume sources must be explicitly accepted or removed`);
+    if (crossVolumeSources.length && review.crossVolumeDecision !== 'accepted') {
+      errors.push(`${rel}: retained cross-volume sources must be explicitly accepted by the copy editor`);
     }
     if (!crossVolumeSources.length && review.crossVolumeDecision !== 'not-applicable') {
       errors.push(`${rel}: crossVolumeDecision must be not-applicable when no other volume is referenced`);
+    }
+
+    if (crossVolumeSources.length && requireReview) {
+      if (managingEditorApproval?.status !== 'approved') {
+        errors.push(`${rel}: managing editor must approve accepted cross-volume use before scheduling`);
+      } else {
+        if (managingEditorApproval.reviewedBy !== 'agent:managing-editor') {
+          errors.push(`${rel}: cross-volume approval reviewedBy must be agent:managing-editor`);
+        }
+        if (!isDateKey(managingEditorApproval.reviewedAt)) {
+          errors.push(`${rel}: cross-volume approval reviewedAt must be YYYY-MM-DD`);
+        } else {
+          if (isDateKey(review.reviewedAt) && managingEditorApproval.reviewedAt < review.reviewedAt) {
+            errors.push(`${rel}: managing editor cross-volume approval cannot predate copy review`);
+          }
+          if (isDateKey(editorial.publicationDate) &&
+              managingEditorApproval.reviewedAt > editorial.publicationDate) {
+            errors.push(`${rel}: managing editor cross-volume approval cannot be after publicationDate`);
+          }
+        }
+        if (!hasText(managingEditorApproval.rationale, 20)) {
+          errors.push(
+            `${rel}: managing editor cross-volume approval must explain why the future article remains distinct`
+          );
+        }
+      }
     }
   }
 

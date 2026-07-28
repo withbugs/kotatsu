@@ -16,6 +16,10 @@ function slugify(input) {
     .replace(/\s+/g, '-')
     .toLowerCase();
 }
+function splitBoundaryList(value) {
+  return String(value || '').split('||').map((entry) => entry.trim()).filter(Boolean);
+}
+
 
 const title = args.title || process.env.KOTATSU_ARTICLE_TITLE;
 if (!title) {
@@ -35,6 +39,18 @@ const sourceVolumes = String(args.sourceVolumes || args['source-volumes'] || vol
   .map((entry) => entry.trim())
   .filter(Boolean);
 const crossVolumeRationale = String(args.crossVolumeRationale || args['cross-volume-rationale'] || '');
+const crossVolumeReferences = splitBoundaryList(
+  args.crossVolumePlanEntries || args['cross-volume-plan-entries']
+).map((entry) => {
+  const [referenceVolume, ...titleParts] = entry.split('::');
+  return { volume: referenceVolume.trim(), planEntryTitle: titleParts.join('::').trim() };
+});
+const crossVolumeAllowedTopics = splitBoundaryList(
+  args.crossVolumeAllowedTopics || args['cross-volume-allowed-topics']
+);
+const crossVolumeExcludedTopics = splitBoundaryList(
+  args.crossVolumeExcludedTopics || args['cross-volume-excluded-topics']
+);
 const slug = args.slug || slugify(title);
 const outDir = path.join(process.cwd(), 'src', 'content', 'articles');
 const outPath = path.join(outDir, `${slug}.mdx`);
@@ -85,6 +101,36 @@ if (crossVolumeSources.length && crossVolumeRationale.trim().length < 20) {
   process.exit(1);
 }
 
+if (crossVolumeSources.length) {
+  const referenceVolumes = new Set(crossVolumeReferences.map((reference) => reference.volume));
+  if (crossVolumeReferences.length !== crossVolumeSources.length ||
+      referenceVolumes.size !== crossVolumeReferences.length ||
+      crossVolumeSources.some((entry) => !referenceVolumes.has(entry)) ||
+      crossVolumeReferences.some((reference) => reference.planEntryTitle.length < 4)) {
+    console.error('--cross-volume-plan-entries must map every source as vol-XXX::plan entry title');
+    process.exit(1);
+  }
+  if (!crossVolumeAllowedTopics.length || crossVolumeAllowedTopics.some((topic) => topic.length < 3)) {
+    console.error('--cross-volume-allowed-topics must list concrete topics separated by ||');
+    process.exit(1);
+  }
+  if (!crossVolumeExcludedTopics.length || crossVolumeExcludedTopics.some((topic) => topic.length < 3)) {
+    console.error('--cross-volume-excluded-topics must list reserved topics separated by ||');
+    process.exit(1);
+  }
+  for (const reference of crossVolumeReferences) {
+    const sourcePlanPath = path.join(process.cwd(), 'docs', 'editorial', 'plans', `${reference.volume}.md`);
+    if (!fs.existsSync(sourcePlanPath) ||
+        !fs.readFileSync(sourcePlanPath, 'utf8').includes(reference.planEntryTitle)) {
+      console.error(`Cross-volume plan entry is not present in docs/editorial/plans/${reference.volume}.md`);
+      process.exit(1);
+    }
+  }
+} else if (crossVolumeReferences.length || crossVolumeAllowedTopics.length || crossVolumeExcludedTopics.length) {
+  console.error('Cross-volume boundary arguments require another entry in --source-volumes');
+  process.exit(1);
+}
+
 if (fs.existsSync(outPath)) {
   console.error(`Article already exists: ${path.relative(process.cwd(), outPath)}`);
   process.exit(1);
@@ -95,6 +141,18 @@ fs.mkdirSync(outDir, { recursive: true });
 const sourceVolumeYaml = sourceVolumes.map((entry) => `    - ${JSON.stringify(entry)}`).join('\n');
 const crossVolumeYaml = crossVolumeSources.length
   ? `  crossVolumeRationale: ${JSON.stringify(crossVolumeRationale)}\n`
+  : '';
+const crossVolumeReferenceYaml = crossVolumeReferences
+  .map((reference) => `      - volume: ${JSON.stringify(reference.volume)}\n        planEntryTitle: ${JSON.stringify(reference.planEntryTitle)}`)
+  .join('\n');
+const crossVolumeAllowedYaml = crossVolumeAllowedTopics
+  .map((topic) => `      - ${JSON.stringify(topic)}`)
+  .join('\n');
+const crossVolumeExcludedYaml = crossVolumeExcludedTopics
+  .map((topic) => `      - ${JSON.stringify(topic)}`)
+  .join('\n');
+const crossVolumeReviewYaml = crossVolumeSources.length
+  ? `  crossVolumeReview:\n    references:\n${crossVolumeReferenceYaml}\n    allowedTopics:\n${crossVolumeAllowedYaml}\n    excludedTopics:\n${crossVolumeExcludedYaml}\n    managingEditorApproval:\n      status: pending\n`
   : '';
 const crossVolumeDecision = crossVolumeSources.length ? 'pending' : 'not-applicable';
 
@@ -118,7 +176,7 @@ editorial:
   briefReviewedAt: ${JSON.stringify(briefReviewedAt)}
   sourceVolumes:
 ${sourceVolumeYaml}
-${crossVolumeYaml}  integrityReview:
+${crossVolumeYaml}${crossVolumeReviewYaml}  integrityReview:
     status: pending
     crossVolumeDecision: ${crossVolumeDecision}
 visual:

@@ -103,11 +103,11 @@ Article Issueには公開予定日、公開予定週、または `publishAt` を
 
 ## Editorial Integrity Gate
 
-未公開記事はfrontmatterの `editorial` に、GitHub Issue番号、対象Vol.、承認済み計画、計画上の見出し、公開日、brief確認日、参照Vol.を保持する。`pnpm content:check` は対象Vol.と計画path、計画上の見出し、publishAtと公開日の一致を検査する。別Vol.を参照する場合は `crossVolumeRationale` を必須とする。
+未公開記事はfrontmatterの `editorial` に、GitHub Issue番号、対象Vol.、承認済み計画、計画上の見出し、公開日、brief確認日、参照Vol.を保持する。`pnpm content:check` は対象Vol.と計画path、計画上の見出し、publishAtと公開日の一致を検査する。別Vol.を参照する場合は `crossVolumeRationale` に加え、`crossVolumeReview` へ参照先の計画見出し、使用可能な話題、持ち込まない話題、進行編集承認を構造化して記録する。
 
-ライター完了後、進行編集は本文と `editorial` metadataを照合し、不一致ならビジュアル編集へ渡さない。見逃した場合も、校正が正式計画、公開時期、別Vol.参照を独立確認し、軽微な不一致を同じ記事branchで補正する。記事の核がずれている場合は進行編集経由でライターへ差し戻す。
+ライター完了後、進行編集は本文と `editorial` metadataを照合し、不一致ならビジュアル編集へ渡さない。別Vol.参照では、参照先の記事見出しと本文の中心表現が重なる場合や、除外話題が本文にある場合も差し戻す。見逃した場合も、校正が正式計画、公開時期、別Vol.参照を独立確認し、軽微な不一致を同じ記事branchで補正する。記事の核がずれている場合は進行編集経由でライターへ差し戻す。
 
-校正は問題解消後だけ `editorial.integrityReview.status: passed` と `reviewedBy: agent:copy-editor` を記録する。`pnpm article:schedule`、`pnpm publish:check`、`pnpm article:publish` はこの独立レビューが未完了なら失敗する。
+校正は問題解消後だけ `editorial.integrityReview.status: passed` と `reviewedBy: agent:copy-editor` を記録する。別Vol.参照をacceptedで残す場合は、その後に進行編集が参照先記事の独立性を再確認し、`crossVolumeReview.managingEditorApproval` をapprovedにする。`pnpm article:schedule`、`pnpm publish:check`、`pnpm article:publish` は校正または必要な進行編集承認が未完了なら失敗する。
 
 ## Formal Volume Cover
 
@@ -120,8 +120,8 @@ Article Issueには公開予定日、公開予定週、または `publishAt` を
 1. ライターは `editorial` metadataを作り、既存画像を流用せず、`heroImage: __AI_VISUAL_PENDING__` とビジュアルブリーフを残す。
 2. ビジュアル編集は同じ記事PR branchでAI画像、alt、caption、sidecarを完成させる。画像生成ツールが使えない場合はブリーフを残し、`agent:visual-editor` + `kotatsu:revise` にする。未生成のままreviewへ進めない。
 3. 進行編集は本文と `editorial` metadataを正式計画・公開日に照合し、実画像を拡大して季節、多様性、モデル同一性、床置き防止をポリシーと照合する。通過分だけcopy-editorへreadyで渡す。
-4. 校正は同じbranchで文体、事実、禁止表現、読者信頼に加えて計画・公開時期・別Vol.参照を独立確認し、`integrityReview` を記録してreviewへ戻す。
-5. 進行編集は残修正がなく `integrityReview` がpassedの場合だけ `pnpm article:schedule -- --slug=<slug>` を実行する。未来時刻ならplanned、到来済みならpublisher + publishへ進める。
+4. 校正は同じbranchで文体、事実、禁止表現、読者信頼に加えて計画・公開時期・別Vol.参照を独立確認し、`integrityReview` を記録してreviewへ戻す。別Vol.参照を残す場合はacceptedとしても進行編集承認待ちにする。
+5. 進行編集は残修正がなく `integrityReview` がpassedで、別Vol.参照がある場合は `managingEditorApproval` もapprovedの場合だけ `pnpm article:schedule -- --slug=<slug>` を実行する。未来時刻ならplanned、到来済みならpublisher + publishへ進める。
 6. 公開担当は `pnpm publish:check -- --candidate=<slug>`、`pnpm article:publish -- --slug=<slug>`、`pnpm check`、`pnpm build` を順に通し、最終記事PRをmainへmergeする。
 
 記事状態は必ず `draft -> scheduled -> published` とする。公開担当はfrontmatterを手作業でpublishedにしない。
