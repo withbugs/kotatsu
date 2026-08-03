@@ -1,0 +1,59 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-002",
+  "article": "summer-shirt-airy-room",
+  "githubIssue": 50,
+  "editorialIntent": "リネンや綿を流行素材ではなく、汗、皺、洗濯、冷房差を受け止める生活着として見せる。",
+  "subject": "窓辺の白い昼光を受ける、洗いざらしの白と淡い青の薄手シャツ、透ける布、袖口、皺",
+  "setting": "2026年8月の日本、強い夏の日差しと冷房の青みが混ざる明るい室内",
+  "composition": "横長hero向け。左から中央に薄手のシャツの袖口と透ける布を寄せ、右に窓辺の白い余白と夏の緑を残すmaterial close-to-medium構図。床やテーブル上の静物を主役にしない。",
+  "compositionFamily": "material-textile-window-close-medium",
+  "cameraDistance": "close",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "soft white cotton",
+    "pale summer blue",
+    "cool gray shadow",
+    "fresh summer green"
+  ],
+  "colorMood": "白い綿、淡いブルー、青みのある室内影、窓外の夏の緑で、盛夏の軽さと冷房差を同時に見せる。",
+  "promptSummary": "八月の日本の明るい室内で、洗いざらしの白と淡い青の薄手シャツを風の通る窓辺に掛け、袖口、皺、透ける布を主役にする。",
+  "caption": "八月の白い昼光の中で、洗いざらしのシャツが風を含むAI生成ビジュアル。",
+  "seasonalContext": "2026年8月の日本。強い日差しと湿度があり、屋外の暑さと冷房の部屋を行き来する盛夏。",
+  "seasonalCues": [
+    "薄手の白い綿と淡いブルーのリネン風シャツ、透ける布、洗いざらしの皺",
+    "白い夏の昼光、青みのある室内影、開いた窓と外の緑"
+  ],
+  "seasonalAvoid": [
+    "厚手のジャケット、ウール、濃い秋冬色、重い重ね着で秋冬に見せること",
+    "深い暖色照明、濃い木面、南国リゾート広告風、商品カタログ風の構図"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable labels",
+    "real store signage",
+    "celebrity likeness",
+    "official product photo look",
+    "stock photo look",
+    "top-down still-life",
+    "dominant warm wooden tabletop",
+    "personal belongings on floor"
+  ],
+  "similarityReviewedAgainst": [
+    "sunday-evening-music-folded-shirt",
+    "leather-shoes-slow-choice",
+    "shigoto-gaeri-no-fuku-wo-shumatsu-e-hodoku-hito"
+  ],
+  "visualDifference": "直近の窓辺テーブル静物、玄関脇の革靴静物、仕事帰り人物の手元heroを確認した。今回は人物や持ち物を出さず、窓辺の布そのものを近い距離で主役にし、白と淡い青の冷たい昼光へ切り替えた。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-08-03T18:00:00+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "画像内に食品、飲料容器、書籍、ハンカチ、財布、鍵、携帯電話などの衛生配慮が必要な私物はなく、床置きされた対象もない。"
+  }
+}
