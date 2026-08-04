@@ -6,13 +6,26 @@ import VisualCredit from '../components/VisualCredit.astro';
 import { assetPath, categories, visibleArticles } from '../lib/kotatsu';
 
 const volumes = await getCollection('volumes');
-const volume = volumes.find((entry) => entry.slug === 'vol-001') ?? volumes[0];
 const allArticles = visibleArticles(await getCollection('articles'));
+const publishedVolumeSlugs = new Set(
+  allArticles
+    .filter((article) => article.data.status === 'published')
+    .map((article) => article.data.volume)
+);
+const volume = [...volumes]
+  .filter((entry) => publishedVolumeSlugs.has(entry.slug))
+  .sort((a, b) => b.data.number - a.data.number)[0]
+  ?? [...volumes].sort((a, b) => b.data.number - a.data.number)[0];
 const volumeArticles = allArticles.filter((article) => article.data.volume === volume.slug);
 const hasPublishedVolumeArticles = volumeArticles.some((article) => article.data.status === 'published');
 const volumeIsPlanning = volume.data.status === 'planning' && !hasPublishedVolumeArticles;
-const leadArticle = volumeArticles.find((article) => article.data.kind === 'cover-story') ?? volumeArticles[0];
+const publishedVolumeArticles = volumeArticles.filter((article) => article.data.status === 'published');
+const leadArticle = publishedVolumeArticles.find((article) => article.data.kind === 'cover-story')
+  ?? publishedVolumeArticles[0]
+  ?? volumeArticles[0];
 const secondaryArticles = volumeArticles.filter((article) => article.id !== leadArticle?.id);
+const volumeNumber = String(volume.data.number).padStart(3, '0');
+const articleSectionTitle = volume.data.number === 1 ? '創刊Vol.の記事' : `Vol. ${volumeNumber}の記事`;
 const heroImage = volume.data.coverImage || leadArticle?.data.heroImage || '/logo.svg';
 const heroAlt = volume.data.coverAlt || leadArticle?.data.heroAlt || 'KOTATSU';
 const heroVisual = volume.data.coverImage ? volume.data.visual : (leadArticle?.data.visual ?? volume.data.visual);
@@ -29,7 +42,7 @@ const heroVisual = volume.data.coverImage ? volume.data.visual : (leadArticle?.d
         </>
       )}
       <div class="home-hero__copy">
-        <p class="volume-label">Vol. {String(volume.data.number).padStart(3, '0')}</p>
+        <p class="volume-label">Vol. {volumeNumber}</p>
         <img class="home-hero__logo" src={assetPath('/logo.svg')} alt="KOTATSU" />
         <p class="home-hero__volume">{volume.data.title}</p>
         <p class="home-hero__lead">{volume.data.subtitle}</p>
@@ -71,7 +84,7 @@ const heroVisual = volume.data.coverImage ? volume.data.visual : (leadArticle?.d
             <div class="section__head section__head--row">
               <div>
                 <p class="eyebrow">LATEST</p>
-                <h2>創刊Vol.の記事</h2>
+                <h2>{articleSectionTitle}</h2>
               </div>
               <a class="text-link" href={assetPath(`/volumes/${volume.slug}/`)}>View all</a>
             </div>
