@@ -7,7 +7,8 @@ const nav = [
   ['WEEKEND', '/weekend/'],
   ['CULTURE', '/culture/'],
   ['PEOPLE', '/people/'],
-  ['SHOPPING', '/shopping/']
+  ['SHOPPING', '/shopping/'],
+  ['VOLUMES', '/volumes/', 'VOL.']
 ];
 ---
 <header class="site-header">
@@ -15,7 +16,9 @@ const nav = [
     <img src={assetPath('/logo.svg')} alt="KOTATSU" />
   </a>
   <nav class="site-nav" aria-label="Primary navigation">
-    {nav.map(([label, path]) => <a href={assetPath(path)}>{label}</a>)}
+    {nav.map(([label, path, mobileLabel]) => (
+      <a href={assetPath(path)} data-mobile-label={mobileLabel}>{label}</a>
+    ))}
   </nav>
 </header>
 

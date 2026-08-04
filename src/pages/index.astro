@@ -46,9 +46,14 @@ const heroVisual = volume.data.coverImage ? volume.data.visual : (leadArticle?.d
         <img class="home-hero__logo" src={assetPath('/logo.svg')} alt="KOTATSU" />
         <p class="home-hero__volume">{volume.data.title}</p>
         <p class="home-hero__lead">{volume.data.subtitle}</p>
-        <a class:list={['text-link', { 'text-link--light': !volumeIsPlanning }]} href={assetPath(`/volumes/${volume.slug}/`)}>
-          {volumeIsPlanning ? '準備状況を見る' : 'Read this volume'}
-        </a>
+        <div class="home-hero__links">
+          <a class:list={['text-link', { 'text-link--light': !volumeIsPlanning }]} href={assetPath(`/volumes/${volume.slug}/`)}>
+            {volumeIsPlanning ? '準備状況を見る' : 'Read this volume'}
+          </a>
+          <a class:list={['text-link', { 'text-link--light': !volumeIsPlanning }]} href={assetPath('/volumes/')}>
+            Volume archive
+          </a>
+        </div>
       </div>
       {!volumeIsPlanning && <VisualCredit mode={heroVisual.mode} intent={heroVisual.intent} />}
     </section>
