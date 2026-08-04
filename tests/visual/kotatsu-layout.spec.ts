@@ -1,6 +1,38 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
+import matter from 'gray-matter';
 
-const paths = ['/kotatsu/', '/kotatsu/volumes/vol-001/'];
+function loadContent(directory: string) {
+  return fs.readdirSync(directory)
+    .filter((file) => /\.(md|mdx)$/.test(file))
+    .map((file) => ({
+      slug: path.basename(file, path.extname(file)),
+      data: matter(fs.readFileSync(path.join(directory, file), 'utf8')).data
+    }));
+}
+
+const volumes = loadContent(path.resolve('src/content/volumes'));
+const articles = loadContent(path.resolve('src/content/articles'));
+const publishedVolumeSlugs = new Set(
+  articles.filter((article) => article.data.status === 'published').map((article) => article.data.volume)
+);
+const currentVolume = volumes
+  .filter((volume) => publishedVolumeSlugs.has(volume.slug))
+  .sort((a, b) => b.data.number - a.data.number)[0];
+
+if (!currentVolume) throw new Error('A published volume is required for visual tests.');
+
+const currentPublishedArticles = articles
+  .filter((article) => article.data.volume === currentVolume.slug && article.data.status === 'published')
+  .sort((a, b) => new Date(b.data.publishAt).getTime() - new Date(a.data.publishAt).getTime());
+const currentLeadArticle = currentPublishedArticles.find((article) => article.data.kind === 'cover-story')
+  ?? currentPublishedArticles[0];
+const paths = [...new Set([
+  '/kotatsu/',
+  '/kotatsu/volumes/vol-001/',
+  `/kotatsu/volumes/${currentVolume.slug}/`
+])];
 
 for (const targetPath of paths) {
   test(`KOTATSU layout renders without overflow: ${targetPath}`, async ({ page }, testInfo) => {
@@ -54,12 +86,15 @@ for (const targetPath of paths) {
   });
 }
 
-test('published volume shows cover image and published article link', async ({ page }) => {
+test('home shows the latest volume with a published article', async ({ page }) => {
   await page.goto('/kotatsu/');
 
-  await expect(page.locator('img[src*="/images/volumes/001/cover.png"]').first()).toBeVisible();
-  await expect(page.getByRole('heading', { name: '白シャツを、週末の生活着としてもう一度', exact: true })).toBeVisible();
-  await expect(page.locator('a[href="/kotatsu/articles/white-shirt-weekend-life/"]').first()).toBeVisible();
+  await expect(page.locator('.home-hero .volume-label')).toHaveText(
+    `Vol. ${String(currentVolume.data.number).padStart(3, '0')}`
+  );
+  await expect(page.locator(`img[src*="${currentVolume.data.coverImage}"]`).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: currentLeadArticle.data.title, exact: true })).toBeVisible();
+  await expect(page.locator(`a[href="/kotatsu/articles/${currentLeadArticle.slug}/"]`).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: '準備中', exact: true })).toHaveCount(0);
   await expect(page.getByText('Coming Soon')).toHaveCount(0);
   await expect(page.getByText('Comming Soon')).toHaveCount(0);
