@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { assetPath } from '../../lib/kotatsu';
+
+const volumes = await getCollection('volumes');
+const articles = await getCollection('articles');
+const publishedArticleCounts = new Map<string, number>();
+
+for (const article of articles) {
+  if (article.data.status !== 'published') continue;
+  publishedArticleCounts.set(
+    article.data.volume,
+    (publishedArticleCounts.get(article.data.volume) ?? 0) + 1
+  );
+}
+
+const publishedVolumes = volumes
+  .filter((volume) => publishedArticleCounts.has(volume.slug))
+  .sort((a, b) => b.data.number - a.data.number);
+const latestCover = publishedVolumes[0]?.data.coverImage;
+---
+<BaseLayout
+  title="VOLUME ARCHIVE"
+  description="KOTATSUのこれまでのVol.を、新しい号から振り返るアーカイブ。"
+  image={latestCover ? assetPath(latestCover) : undefined}
+>
+  <main>
+    <header class="section volume-archive__header">
+      <div class="section__head">
+        <p class="eyebrow">BACK ISSUES</p>
+        <h1>VOLUME ARCHIVE</h1>
+      </div>
+      <p class="intro-copy">これまでに発行したKOTATSUを、新しい号から順にまとめています。</p>
+    </header>
+
+    <section class="section volume-archive__list" aria-label="Published volumes">
+      {publishedVolumes.map((volume, index) => (
+        <a class="volume-archive__item" href={assetPath(`/volumes/${volume.slug}/`)}>
+          <div class="volume-archive__image">
+            <img src={assetPath(volume.data.coverImage)} alt={volume.data.coverAlt} loading={index === 0 ? 'eager' : 'lazy'} />
+          </div>
+          <div class="volume-archive__copy">
+            <p class="volume-label">Vol. {String(volume.data.number).padStart(3, '0')}</p>
+            <h2>{volume.data.title}</h2>
+            <p>{volume.data.subtitle}</p>
+            <p class="volume-archive__meta">
+              {volume.data.month.replace('-', '.')} / {publishedArticleCounts.get(volume.slug)}本の記事
+            </p>
+          </div>
+        </a>
+      ))}
+    </section>
+  </main>
+</BaseLayout>

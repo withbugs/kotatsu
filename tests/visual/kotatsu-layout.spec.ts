@@ -30,6 +30,7 @@ const currentLeadArticle = currentPublishedArticles.find((article) => article.da
   ?? currentPublishedArticles[0];
 const paths = [...new Set([
   '/kotatsu/',
+  '/kotatsu/volumes/',
   '/kotatsu/volumes/vol-001/',
   `/kotatsu/volumes/${currentVolume.slug}/`
 ])];
@@ -115,5 +116,16 @@ test('home shows the latest volume with a published article', async ({ page }) =
 
   for (const title of articleTitles) {
     await expect(page.getByText(title)).toHaveCount(0);
+  }
+});
+test('volume archive links to the published back issues', async ({ page }) => {
+  await page.goto('/kotatsu/volumes/');
+
+  const publishedVolumes = volumes
+    .filter((volume) => publishedVolumeSlugs.has(volume.slug))
+    .sort((a, b) => a.data.number - b.data.number);
+
+  for (const volume of publishedVolumes) {
+    await expect(page.locator(`a[href="/kotatsu/volumes/${volume.slug}/"]`)).toBeVisible();
   }
 });
