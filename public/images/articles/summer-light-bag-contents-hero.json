@@ -1,0 +1,61 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-002",
+  "article": "summer-light-bag-contents",
+  "githubIssue": 51,
+  "editorialIntent": "暑い日に持ち物を増やすのではなく、短い移動に必要なものだけを清潔な置き面で選び、鞄の中に余白を残す感覚を見せる。",
+  "subject": "清潔な屋内ベンチ上の淡い布鞄、細い日傘、乾いたハンカチ、小さな無地の水筒、薄い本、白い防水ポーチ、トレー上の財布と鍵、顔を写さない手元",
+  "setting": "2026年8月上旬の日本、強い日差しの外から冷房の効いた室内へ戻る前の明るいベンチ",
+  "composition": "横長hero向け。右側に顔を写さない手元と布鞄、中央から左に水筒、本、防水ポーチ、トレーを置くmedium-closeのベンチ高構図。床ではなく清潔な raised surface を明確に見せ、トップダウンの在庫並べにしない。",
+  "compositionFamily": "human-hands-bench-bag-medium-close",
+  "cameraDistance": "medium",
+  "visualTemperature": "cool",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "pale gray bench",
+    "soft white cotton",
+    "light mint blue",
+    "natural canvas beige",
+    "summer green"
+  ],
+  "colorMood": "白い夏の昼光、淡いグレーのベンチ、ミントブルーの小物、生成りの布鞄で、盛夏でも軽く清潔に見せる。",
+  "promptSummary": "八月上旬の日本、明るい屋内ベンチで、顔を写さない手元が淡い布鞄へ日傘、乾いたハンカチ、小さな無地水筒、薄い本を少なく収める。",
+  "caption": "真夏の屋内ベンチで、軽い鞄へ必要なものだけを収める手元を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年8月上旬の日本。高温と強い昼光、湿度、冷房差があり、短い外出や屋内へ戻る時間を前提にする。",
+  "seasonalCues": [
+    "薄手の白い半袖、淡い布鞄、乾いたハンカチ、細い日傘、小さな水筒",
+    "白く強い夏の昼光、冷房を感じる青みの室内影、窓外の夏の緑"
+  ],
+  "seasonalAvoid": [
+    "厚手のジャケット、ウール、秋冬の重い革鞄で季節を誤読させること",
+    "紅葉、湯気の強い温かい飲み物、深い暖色照明だけの室内、旅行広告風の演出"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable book titles",
+    "real store signage",
+    "celebrity likeness",
+    "official product photo look",
+    "stock photo look",
+    "luxury advertising mood",
+    "top-down inventory layout",
+    "personal belongings on floor",
+    "food or drink containers on pavement"
+  ],
+  "similarityReviewedAgainst": [
+    "leather-shoes-slow-choice",
+    "shigoto-gaeri-no-fuku-wo-shumatsu-e-hodoku-hito",
+    "summer-shirt-airy-room"
+  ],
+  "visualDifference": "直近の革靴静物、仕事帰りの肩越し手元、同週STYLEの布接写heroを確認した。今回は顔を写さない手元は残しつつ、ベンチ高の横構図で鞄へ収める動作と清潔な置き面を主役にし、布だけの接写やテーブル静物を避けた。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-08-03T18:00:00+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "水筒、薄い本、防水ポーチ、財布、鍵、ハンカチ、日傘、布鞄は清潔な屋内ベンチ、布トレー、または鞄内にあり、路面、地面、玄関土間、床へ直接触れていない。"
+  }
+}
