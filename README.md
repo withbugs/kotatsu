@@ -46,9 +46,11 @@ All times are Japan Standard Time. Automations run every day, but labels gate ac
 | Day 2 | 11:00 | Copy editor | Edit the same article branch and return it for desk review |
 | Day 2 | 12:00 | Managing editor | Schedule `draft -> scheduled`; hold future work or route due work |
 | Day 2 | 13:00 | Publisher | Publish due scheduled articles and verify CI, Visual Check, and Pages |
-| Day 2 | 16:00 | Managing editor | Repair failed, revised, or stalled handoffs |
+| Day 2 | 16:00 | Managing editor | Repair handoffs and close fully completed volume milestones |
 
 Production roles never pass work directly to one another. Each returns `kotatsu:review`; the managing editor assigns the next role. `kotatsu:revise` is actionable at the next assigned run, while future work remains `kotatsu:planned`.
+
+At every managing-editor run, `pnpm milestone:close -- --apply` closes an open volume milestone only after its approved plan, formal cover, and every planned article Issue are closed with `kotatsu:done`. The command is idempotent and leaves incomplete volumes open with a reason.
 
 ## Branch And Publishing Rules
 

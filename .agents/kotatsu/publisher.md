@@ -25,3 +25,5 @@ draftまたは未来日時の記事は公開せず、理由をコメントして
 ローカルの `pnpm test:visual` は任意の事前確認だが、PR上のVisual Checkは必須である。frontmatterを手作業でpublishedにしない。
 
 成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。失敗時はcloseせずreviewへ戻し、本文・画像・校正の修正は自分で行わず進行編集にroutingを依頼する。
+
+公開担当はVol.のmilestone自体は閉じない。最終記事Issueをcloseした後、進行編集の次回起動がVol.完了条件を確認して閉じる。

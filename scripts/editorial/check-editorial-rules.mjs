@@ -34,9 +34,14 @@ requireText('docs/editorial/agent-workflow.md', '未生成のままreviewへ進�
 requireText('docs/editorial/agent-workflow.md', 'editorial.integrityReview.status: passed');
 requireText('.agents/kotatsu/editor-in-chief.md', '持ち込まない季節・生活イベント');
 requireText('.agents/kotatsu/managing-editor.md', 'crossVolumeReview.managingEditorApproval');
+requireText('.agents/kotatsu/managing-editor.md', 'pnpm milestone:close -- --apply');
 requireText('.agents/kotatsu/copy-editor.md', 'editorial.integrityReview');
 requireText('.agents/kotatsu/copy-editor.md', 'managingEditorApproval');
 requireText('docs/editorial/agent-workflow.md', 'crossVolumeReview.managingEditorApproval');
+requireText('docs/editorial/agent-workflow.md', '## Volume Closeout');
+requireText('docs/editorial/agent-workflow.md', 'pnpm milestone:close -- --apply');
+requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
+requireText('package.json', '"milestone:close"');
 requireText('.github/ISSUE_TEMPLATE/article.yml', 'id: publication_schedule');
 requireText('.github/ISSUE_TEMPLATE/article.yml', 'id: brief_target_volume');
 requireText('.github/ISSUE_TEMPLATE/volume-plan.yml', 'planning:research');
