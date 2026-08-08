@@ -12,6 +12,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 同一週に2本公開する場合は、ライターへ渡す前に各Issueへ具体的な公開日を割り当て、`publishAt`を48時間以上離す。
 - reviseが2回の担当起動を越えて動かない場合は、停止理由と必要な人手をIssueへ記録する。
 - 計画Issueのcloseだけを理由に次Vol.を作らない。未来Vol.は同時に1件までとする。
+- 各起動で `pnpm milestone:close -- --apply` を実行し、正式計画、正式カバー、全記事Issueがdoneで揃ったVol.のmilestoneを閉じる。
 
 ## Desk Gates
 
@@ -24,6 +25,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 校正成果に残修正がなければ記事branch上で `pnpm article:schedule` を実行する。
 - 校正が別Vol.参照をacceptedにした場合、参照先記事の見出しと狙いを本文へ先取りしていないこと、除外話題が残っていないことを独立確認する。通過時だけ `crossVolumeReview.managingEditorApproval` をapprovedにし、理由と確認日を記録してから掲載予約する。
 - `publishAt` が未来ならplanned、到来済みで正式カバーがあればpublisher + publishへ渡す。
+- milestoneは月末や計画Issueのcloseだけで閉じず、機械判定がeligibleになった場合だけ閉じる。
 
 ## Main Authority
 

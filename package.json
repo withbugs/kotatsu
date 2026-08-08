@@ -15,6 +15,7 @@
     "publish:check": "node scripts/editorial/check-publishing-schedule.mjs",
     "article:schedule": "node scripts/editorial/schedule-article.mjs",
     "article:publish": "node scripts/editorial/publish-article.mjs",
+    "milestone:close": "node scripts/editorial/close-complete-milestones.mjs",
     "copy:check": "node scripts/editorial/check-reader-facing-copy.mjs",
     "test:editorial": "node --test tests/editorial/*.test.mjs"
   },

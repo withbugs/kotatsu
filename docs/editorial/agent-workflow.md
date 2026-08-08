@@ -85,6 +85,19 @@
 
 正式計画が `main` に入り、正式カバーIssueと記事Issueを展開したら、計画Issueはdoneでcloseできる。closeは次Vol.開始のトリガーではない。
 
+## Volume Closeout
+
+Vol.のmilestoneを閉じる責任者は進行編集である。公開担当は各記事Issueをdoneでcloseするが、milestone自体は操作しない。
+
+進行編集は9:00、12:00、16:00の各起動で、`git fetch origin main` の成功後に `pnpm milestone:close -- --apply` を実行する。このコマンドはopenな `Vol. XXX` milestoneごとに、次をすべて満たす場合だけcloseする。
+
+- `origin/main` に承認済み `docs/editorial/plans/vol-XXX.md` が存在する。
+- milestoneに完了済みの `type:volume-plan` が1件、`type:volume-cover` が1件ある。
+- 正式計画の記事行と `type:article` Issueが件数、カテゴリ、見出しまで一致する。
+- milestone内のIssueがすべてclosedで、すべて `kotatsu:done` を持つ。
+
+月末到来、計画Issueのclose、最新記事の公開、open Issueが一時的に0件になったことだけではcloseしない。条件不足は理由を出力してopenのまま残す。処理対象はopen milestoneだけなので、再実行しても完了済みmilestoneを二重処理しない。
+
 ## Brief And Weekly Writing Gate
 
 毎週月曜10:00、編集長は今後14日以内に執筆開始予定で、まだrunningでも記事PR作成済みでもないIssueをウェブ需要、季節、生活イベントに照らして確認する。進行編集は採用した変更だけを14:00前にIssueへ反映する。執筆開始後は、事実、季節、安全、読者信頼の問題以外で短期トレンドによる方向転換をしない。
