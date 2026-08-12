@@ -143,6 +143,86 @@ test('a complete independent review passes the scheduling gate', () => {
   assert.deepEqual(validateEditorialIntegrity(scheduled, { planContent, requireReview: true }), []);
 });
 
+test('valid schedule recovery metadata preserves the original date and matches the new date', () => {
+  const scheduled = article({
+    publishAt: '2026-08-03T00:00:00+09:00',
+    data: {
+      status: 'scheduled',
+      editorial: {
+        ...article().data.editorial,
+        publicationDate: '2026-08-03',
+        scheduleRecovery: {
+          originalPublishAt: '2026-07-31T00:00:00+09:00',
+          previousPublishAt: '2026-07-31T00:00:00+09:00',
+          rescheduledPublishAt: '2026-08-03T00:00:00+09:00',
+          rescheduledAt: '2026-08-01T03:00:00.000Z',
+          reason: 'The scheduled Codex run was unavailable.',
+          approvedBy: 'agent:managing-editor',
+          attempt: 1,
+          editorialRevalidatedAt: '2026-08-01',
+          visualRecheckRequired: false
+        },
+        integrityReview: {
+          ...passedCopyReview('not-applicable'),
+          reviewedAt: '2026-08-02',
+          timingAlignment: '再予約後の2026年8月3日の日本の盛夏と公開時点に表現が合っている。'
+        }
+      }
+    }
+  });
+  assert.deepEqual(validateEditorialIntegrity(scheduled, { planContent, requireReview: true }), []);
+});
+
+test('schedule recovery metadata must match the current publishAt', () => {
+  const draft = article({
+    data: {
+      editorial: {
+        ...article().data.editorial,
+        scheduleRecovery: {
+          originalPublishAt: '2026-07-30T00:00:00+09:00',
+          previousPublishAt: '2026-07-30T00:00:00+09:00',
+          rescheduledPublishAt: '2026-08-01T00:00:00+09:00',
+          rescheduledAt: '2026-07-31T03:00:00.000Z',
+          reason: 'The scheduled Codex run was unavailable.',
+          approvedBy: 'agent:managing-editor',
+          attempt: 1,
+          visualRecheckRequired: false
+        }
+      }
+    }
+  });
+  assert.match(
+    validateEditorialIntegrity(draft, { planContent }).join('\n'),
+    /rescheduledPublishAt must match publishAt/
+  );
+});
+
+test('a required visual recovery review blocks scheduling until it is recorded', () => {
+  const scheduled = article({
+    data: {
+      status: 'scheduled',
+      editorial: {
+        ...article().data.editorial,
+        scheduleRecovery: {
+          originalPublishAt: '2026-07-30T00:00:00+09:00',
+          previousPublishAt: '2026-07-30T00:00:00+09:00',
+          rescheduledPublishAt: '2026-07-31T00:00:00+09:00',
+          rescheduledAt: '2026-07-30T08:00:00.000Z',
+          reason: 'The visual metadata retained the original date.',
+          approvedBy: 'agent:managing-editor',
+          attempt: 1,
+          visualRecheckRequired: true
+        },
+        integrityReview: passedCopyReview('not-applicable')
+      }
+    }
+  });
+  assert.match(
+    validateEditorialIntegrity(scheduled, { planContent, requireReview: true }).join('\n'),
+    /visual revalidation/
+  );
+});
+
 test('copy review must decide whether a cross-volume source is accepted or removed', () => {
   const scheduled = article({
     data: {

@@ -37,6 +37,18 @@ const editorialIntegritySchema = z.object({
   sourceVolumes: z.array(z.string()).min(1),
   crossVolumeRationale: z.string().optional(),
   crossVolumeReview: crossVolumeReviewSchema.optional(),
+  scheduleRecovery: z.object({
+    originalPublishAt: z.string(),
+    previousPublishAt: z.string(),
+    rescheduledPublishAt: z.string(),
+    rescheduledAt: z.string(),
+    reason: z.string().min(10),
+    approvedBy: z.literal('agent:managing-editor'),
+    attempt: z.number().int().positive(),
+    editorialRevalidatedAt: z.string().optional(),
+    visualRecheckRequired: z.boolean(),
+    visualRevalidatedAt: z.string().optional()
+  }).optional(),
   integrityReview: z.object({
     status: z.enum(['pending', 'passed']),
     reviewedBy: z.string().optional(),
