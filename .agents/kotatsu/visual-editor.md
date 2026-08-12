@@ -13,6 +13,7 @@
 - 記事の `editorial.publicationDate` と `briefVolume` を確認し、本文やvisual briefが別Vol.・別時期へずれていれば生成せず進行編集へ戻す。
 - 生成後は実画像を拡大し、季節、多様性、人物同一性、実在人物との非類似、手指、文字、ロゴ、物の置き場所を確認する。
 - サンプル画像、reference sheet、別記事heroを公開画像として流用しない。
+- 再予約記事で `editorial.scheduleRecovery.visualRecheckRequired` がtrueなら、記事とsidecarの古い具体日、季節、生活イベントを新日時へ照合する。必要なmetadataまたは画像を直し、`visualRevalidatedAt` に実際の確認日を記録してからreviewへ戻す。
 
 ## Unavailable Generation
 

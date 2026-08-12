@@ -19,3 +19,5 @@
 完了時はPRをReady for reviewにし、Issueへ修正点、事実確認上の限界、検証結果をコメントしてreviewへ戻す。公開担当へ直接readyを付けない。
 
 校正完了時は `editorial.integrityReview` に計画整合、公開時期整合、別Vol.参照の採否を記録し、問題が解消した場合だけ `status: passed`、`reviewedBy: agent:copy-editor` とする。別Vol.参照をacceptedで残しても掲載予約を承認せず、進行編集の `managingEditorApproval` 待ちとしてreviewへ戻す。
+
+実際の校正日が `editorial.publicationDate` を過ぎている場合、過去日を記録して通過させない。元日時とblockerをIssueへ記録してreviewへ戻し、進行編集が `article:rebook` で未来の有効枠へ再予約した後、`revise` の次回起動で実日付を記録して校正を完了する。

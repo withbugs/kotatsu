@@ -57,6 +57,11 @@ const rawPublishAt = article.raw.match(/^publishAt:\s*(["']?)(.+?)\1\s*$/m)?.[2]
 const nextPublishAt = publishAtArg ? String(publishAtArg) : rawPublishAt;
 const publishDate = nextPublishAt ? new Date(nextPublishAt) : null;
 
+if (publishAtArg && rawPublishAt && nextPublishAt !== rawPublishAt) {
+  console.error(`${article.relativePath}: use pnpm article:rebook before scheduling when publishAt changes`);
+  process.exit(1);
+}
+
 if (!publishDate || Number.isNaN(publishDate.getTime())) {
   console.error(`${article.relativePath}: publishAt must be a valid date string before scheduling`);
   process.exit(1);
