@@ -85,7 +85,7 @@ PCまたはCodexアプリが停止して予定済みタスクが起動しなく�
 
 記事PR branchを最新の `origin/main` と同期したうえで、進行編集は `pnpm article:rebook -- --slug=<slug> --publishAt=<ISO日時>` を実行する。このコマンドはfrontmatterの `publishAt` と `editorial.publicationDate` を同時に更新し、元日時、直前日時、再予約日時、理由、回数を `editorial.scheduleRecovery` に保存する。進行編集は同じ変更をIssue本文の現在の公開予定へ反映し、元日時と再予約理由をIssueコメントに残す。正式計画の当初予定は履歴として書き換えない。
 
-再予約が元日時から7日以内かつ同じ暦月なら、本文の季節・生活イベントが新日時にも成立することを進行編集が確認して工程を再開する。記事、visual metadata、sidecarに元の具体日や祝日が含まれる場合はビジュアル編集へ `revise` で再確認を渡してから校正へ進める。7日を超える、翌月へ跨ぐ、季節・生活イベントが変わる場合は編集長へ `revise` でbrief再確認を渡し、必要に応じてビジュアル編集も再実施する。編集長確認日を `--editorial-revalidated-at=YYYY-MM-DD` へ渡すまで再予約しない。
+再予約が元日時から7日以内かつ同じ暦月なら、本文の季節・生活イベントが新日時にも成立することを進行編集が確認して工程を再開する。記事、visual metadata、sidecarに元の具体日や祝日が含まれる場合はビジュアル編集へ `revise` で再確認を渡してから校正へ進める。具体日はISO形式だけでなく、`2026年8月11日` のような日本語表記も機械判定の対象とする。7日を超える、翌月へ跨ぐ、季節・生活イベントが変わる場合は編集長へ `revise` でbrief再確認を渡し、必要に応じてビジュアル編集も再実施する。編集長確認日を `--editorial-revalidated-at=YYYY-MM-DD` へ渡すまで再予約しない。
 
 校正済みで古い日時のscheduled記事も、進行編集が次枠へ再予約してから公開担当へ渡す。公開担当はJSTの現在日より前の `publishAt` を持つ記事を公開せず、`review` と進行編集へ戻す。回復でも `draft -> scheduled -> published` と全公開ゲートを省略しない。
 

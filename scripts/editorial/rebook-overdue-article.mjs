@@ -4,7 +4,11 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import { validateEditorialIntegrity } from './editorial-integrity.mjs';
 import { loadArticles, parseArgs, validatePublishedSchedule } from './publishing-schedule.mjs';
-import { jstDateKey, validateRecoveryTarget } from './schedule-recovery.mjs';
+import {
+  containsLocalDateReference,
+  jstDateKey,
+  validateRecoveryTarget
+} from './schedule-recovery.mjs';
 
 const args = parseArgs(process.argv.slice(2));
 const slug = String(args.slug || args.article || '');
@@ -56,15 +60,18 @@ if (validation.errors.length) {
 }
 
 const nextDate = new Date(nextPublishAt);
-const previousDateKey = jstDateKey(new Date(article.data.publishAt));
+const previousPublishDate = new Date(article.data.publishAt);
+const previousDateKey = jstDateKey(previousPublishDate);
 const heroImage = String(article.data.heroImage || '');
-let sidecarIncludesPreviousDate = false;
+let sidecarContent = '';
 if (heroImage.startsWith('/')) {
   const sidecar = path.join(process.cwd(), 'public', heroImage.slice(1)).replace(/\.(png|jpe?g|webp|avif)$/i, '.json');
-  sidecarIncludesPreviousDate = fs.existsSync(sidecar) && fs.readFileSync(sidecar, 'utf8').includes(previousDateKey);
+  sidecarContent = fs.existsSync(sidecar) ? fs.readFileSync(sidecar, 'utf8') : '';
 }
 const visualRecheckRequired =
-  JSON.stringify(article.data.visual || {}).includes(previousDateKey) || sidecarIncludesPreviousDate;
+  containsLocalDateReference(article.parsed.content, previousPublishDate) ||
+  containsLocalDateReference(article.data.visual || {}, previousPublishDate) ||
+  containsLocalDateReference(sidecarContent, previousPublishDate);
 const nextEditorial = {
   ...article.data.editorial,
   publicationDate: jstDateKey(nextDate),
@@ -114,5 +121,5 @@ if (errors.length) {
 fs.writeFileSync(article.file, matter.stringify(article.parsed.content, nextData), 'utf8');
 console.log(`Rebooked ${article.relativePath} from ${article.data.publishAt} to ${nextPublishAt}`);
 if (visualRecheckRequired) {
-  console.log(`Visual recheck required: article visual metadata or sidecar still refers to ${previousDateKey}`);
+  console.log(`Visual recheck required: article content, visual metadata, or sidecar still refers to ${previousDateKey}`);
 }
