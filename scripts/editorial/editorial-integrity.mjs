@@ -132,6 +132,43 @@ export function validateEditorialIntegrity(article, options = {}) {
     errors.push(`${rel}: editorial.briefReviewedAt cannot be after editorial.publicationDate`);
   }
 
+  const recovery = editorial.scheduleRecovery;
+  if (recovery !== undefined) {
+    if (!recovery || typeof recovery !== 'object') {
+      errors.push(`${rel}: editorial.scheduleRecovery must be an object`);
+    } else {
+      for (const field of ['originalPublishAt', 'previousPublishAt', 'rescheduledPublishAt', 'rescheduledAt']) {
+        if (Number.isNaN(new Date(String(recovery[field] || '')).getTime())) {
+          errors.push(`${rel}: editorial.scheduleRecovery.${field} must be a valid date`);
+        }
+      }
+      if (recovery.rescheduledPublishAt !== article.data.publishAt) {
+        errors.push(`${rel}: editorial.scheduleRecovery.rescheduledPublishAt must match publishAt`);
+      }
+      if (!hasText(recovery.reason, 10)) {
+        errors.push(`${rel}: editorial.scheduleRecovery.reason must explain the delay`);
+      }
+      if (recovery.approvedBy !== 'agent:managing-editor') {
+        errors.push(`${rel}: editorial.scheduleRecovery.approvedBy must be agent:managing-editor`);
+      }
+      if (!Number.isInteger(recovery.attempt) || recovery.attempt < 1) {
+        errors.push(`${rel}: editorial.scheduleRecovery.attempt must be a positive integer`);
+      }
+      if (recovery.editorialRevalidatedAt !== undefined && !isDateKey(recovery.editorialRevalidatedAt)) {
+        errors.push(`${rel}: editorial.scheduleRecovery.editorialRevalidatedAt must be YYYY-MM-DD`);
+      }
+      if (typeof recovery.visualRecheckRequired !== 'boolean') {
+        errors.push(`${rel}: editorial.scheduleRecovery.visualRecheckRequired must be boolean`);
+      }
+      if (recovery.visualRevalidatedAt !== undefined && !isDateKey(recovery.visualRevalidatedAt)) {
+        errors.push(`${rel}: editorial.scheduleRecovery.visualRevalidatedAt must be YYYY-MM-DD`);
+      }
+      if (requireReview && recovery.visualRecheckRequired && !isDateKey(recovery.visualRevalidatedAt)) {
+        errors.push(`${rel}: recovery date references require visual revalidation before scheduling`);
+      }
+    }
+  }
+
   if (!hasText(editorial.planEntryTitle, 4)) {
     errors.push(`${rel}: editorial.planEntryTitle is required`);
   }

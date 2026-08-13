@@ -13,6 +13,8 @@
 
 draftまたは未来日時の記事は公開せず、理由をコメントして進行編集へ戻す。
 
+`publishAt` のJST日付が現在日より前なら、予定実行の取りこぼしとして古い日付のまま公開しない。Issueをreviewへ戻し、進行編集が次の有効枠へ `article:rebook` してから再度publishを受け取る。同日0:00のpublishAtは当日13:00の通常公開対象として扱う。
+
 ## Publishing
 
 1. `pnpm publish:check -- --candidate=<slug>`

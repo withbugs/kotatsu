@@ -52,6 +52,8 @@ Production roles never pass work directly to one another. Each returns `kotatsu:
 
 At every managing-editor run, `pnpm milestone:close -- --apply` closes an open volume milestone only after its approved plan, formal cover, and every planned article Issue are closed with `kotatsu:done`. The command is idempotent and leaves incomplete volumes open with a reason.
 
+If the PC or Codex app misses a scheduled run, GitHub remains the durable queue. The managing editor scans every overdue open article at 09:00, 12:00, and 16:00, chooses the earliest conflict-free slot that leaves enough normal runs for the remaining roles, and uses `pnpm article:rebook` to move both public and editorial dates together. Original dates and reasons remain in recovery metadata and the Issue history. Delays over seven days or into another month return to the editor-in-chief for seasonal and editorial revalidation; no stage is skipped and no past review date is invented.
+
 ## Branch And Publishing Rules
 
 - Approved plans and formal covers may reach `main` before an article without exposing unfinished article pages.
