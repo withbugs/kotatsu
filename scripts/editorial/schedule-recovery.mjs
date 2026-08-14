@@ -21,6 +21,29 @@ export function jstDateKey(date) {
   return `${value.year}-${value.month}-${value.day}`;
 }
 
+export function localDateReferenceVariants(date) {
+  const dateKey = jstDateKey(date);
+  const [year, paddedMonth, paddedDay] = dateKey.split('-');
+  const month = String(Number(paddedMonth));
+  const day = String(Number(paddedDay));
+
+  return [
+    dateKey,
+    `${year}-${month}-${day}`,
+    `${year}/${paddedMonth}/${paddedDay}`,
+    `${year}/${month}/${day}`,
+    `${year}.${paddedMonth}.${paddedDay}`,
+    `${year}.${month}.${day}`,
+    `${year}年${paddedMonth}月${paddedDay}日`,
+    `${year}年${month}月${day}日`
+  ];
+}
+
+export function containsLocalDateReference(value, date) {
+  const content = typeof value === 'string' ? value : JSON.stringify(value ?? '');
+  return localDateReferenceVariants(date).some((variant) => content.includes(variant));
+}
+
 function dateKeyAsUtc(dateKey) {
   const [year, month, day] = dateKey.split('-').map(Number);
   return Date.UTC(year, month - 1, day);
