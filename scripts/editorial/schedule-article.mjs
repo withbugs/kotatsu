@@ -2,7 +2,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { validateEditorialIntegrity } from './editorial-integrity.mjs';
-import { loadArticles, parseArgs, validatePublishedSchedule } from './publishing-schedule.mjs';
+import { determinePublicationHandoff } from './publication-handoff.mjs';
+import { loadArticles, parseArgs, parseNow, validatePublishedSchedule } from './publishing-schedule.mjs';
 import { diversityPolicyEffectiveAt } from './visual-policy-dates.mjs';
 
 const PENDING_VISUAL_MARKER = '__AI_VISUAL_PENDING__';
@@ -28,6 +29,7 @@ function hasPalette(value) {
 const args = parseArgs(process.argv.slice(2));
 const slug = args.slug || args.article;
 const publishAtArg = args.publishAt || args['publish-at'];
+const now = parseNow(args.now || process.env.KOTATSU_NOW);
 
 if (!slug) {
   console.error('Usage: pnpm article:schedule -- --slug="article-slug" [--publishAt="2026-07-04T00:00:00+09:00"]');
@@ -75,7 +77,8 @@ const scheduleCandidate = {
   publishAtIsValid: true
 };
 const scheduleValidation = validatePublishedSchedule(
-  articles.map((entry) => (entry.slug === article.slug ? scheduleCandidate : entry))
+  articles.map((entry) => (entry.slug === article.slug ? scheduleCandidate : entry)),
+  { now }
 );
 errors.push(...scheduleValidation.errors);
 errors.push(...validateEditorialIntegrity(scheduleCandidate, { requireReview: true }));
@@ -172,6 +175,16 @@ if (errors.length) {
   process.exit(1);
 }
 
+const handoff = determinePublicationHandoff({
+  status: 'scheduled',
+  publishAt: nextPublishAt,
+  now
+});
+
+function reportHandoff() {
+  console.log(`Required GitHub labels: ${handoff.stateLabel} + ${handoff.agentLabel}`);
+}
+
 let nextRaw = article.raw;
 
 if (!/^status:\s*[^\r\n]+$/m.test(nextRaw)) {
@@ -191,8 +204,10 @@ if (publishAtArg) {
 
 if (nextRaw === article.raw) {
   console.log(`Already scheduled ${article.relativePath} for ${nextPublishAt}`);
+  reportHandoff();
   process.exit(0);
 }
 
 fs.writeFileSync(article.file, nextRaw, 'utf8');
 console.log(`Scheduled ${article.relativePath} for ${nextPublishAt}`);
+reportHandoff();

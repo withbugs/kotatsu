@@ -42,17 +42,20 @@ All times are Japan Standard Time. Automations run every day, but labels gate ac
 | Day 1 | 14:00 | Six writers | Draft only articles scheduled for the current JST week in isolated worktrees |
 | Day 1 | 16:00 | Managing editor | Verify writer PRs and route the same article branches to visual editing |
 | Day 1 | 18:00 | Visual editor | Generate and inspect AI visuals, metadata, and formal covers |
+| Day 1 | 21:00 | Visual editor | Retry only unfinished eligible visual work |
 | Day 2 | 09:00 | Managing editor | Inspect the rendered visual and route accepted work to copy editing |
 | Day 2 | 11:00 | Copy editor | Edit the same article branch and return it for desk review |
 | Day 2 | 12:00 | Managing editor | Schedule `draft -> scheduled`; hold future work or route due work |
 | Day 2 | 13:00 | Publisher | Publish due scheduled articles and verify CI, Visual Check, and Pages |
-| Day 2 | 16:00 | Managing editor | Repair handoffs and close fully completed volume milestones |
+| Day 2 | 15:00 | Copy editor | Retry only unfinished eligible copy work |
+| Day 2 | 16:00 | Managing editor | Repair missed handoffs and prepare the 17:00 recovery queue |
+| Day 2 | 17:00 | Publisher | Retry due articles explicitly released by the managing editor |
 
 Production roles never pass work directly to one another. Each returns `kotatsu:review`; the managing editor assigns the next role. `kotatsu:revise` is actionable at the next assigned run, while future work remains `kotatsu:planned`.
 
 At every managing-editor run, `pnpm milestone:close -- --apply` closes an open volume milestone only after its approved plan, formal cover, and every planned article Issue are closed with `kotatsu:done`. The command is idempotent and leaves incomplete volumes open with a reason.
 
-If the PC or Codex app misses a scheduled run, GitHub remains the durable queue. The managing editor scans every overdue open article at 09:00, 12:00, and 16:00, chooses the earliest conflict-free slot that leaves enough normal runs for the remaining roles, and uses `pnpm article:rebook` to move both public and editorial dates together. Original dates and reasons remain in recovery metadata and the Issue history. Delays over seven days or into another month return to the editor-in-chief for seasonal and editorial revalidation; no stage is skipped and no past review date is invented.
+If the PC or Codex app misses a scheduled run, GitHub remains the durable queue. Recovery stays scheduled: copy editing retries at 15:00, the managing editor repairs handoffs at 16:00, and the publisher retries at 17:00; visual work has a 21:00 retry. The managing editor runs `pnpm article:handoff` for every scheduled article and applies its exact state and role labels, preventing a due article from remaining `planned`. Only after the final same-day recovery slot is missed does `pnpm article:rebook` move both public and editorial dates together. Original dates and reasons remain in recovery metadata and the Issue history. Delays over seven days or into another month return to the editor-in-chief for seasonal and editorial revalidation; no stage is skipped, no past review date is invented, and no agent publishes outside its scheduled run.
 
 ## Branch And Publishing Rules
 

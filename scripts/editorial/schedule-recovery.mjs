@@ -1,6 +1,6 @@
 const PUBLISH_TIME_ZONE = 'Asia/Tokyo';
 const MAX_ROUTINE_DELAY_DAYS = 7;
-const PUBLISHER_HOUR_JST = 13;
+const FINAL_PUBLISHER_HOUR_JST = 17;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 const formatter = new Intl.DateTimeFormat('en-US', {
@@ -61,7 +61,7 @@ function validDate(value) {
 export function earliestRecoveryDateKey(now = new Date()) {
   const value = parts(now);
   const today = `${value.year}-${value.month}-${value.day}`;
-  return Number(value.hour) >= PUBLISHER_HOUR_JST ? addDays(today, 1) : today;
+  return Number(value.hour) >= FINAL_PUBLISHER_HOUR_JST ? addDays(today, 1) : today;
 }
 
 export function validateRecoveryTarget({

@@ -6,6 +6,8 @@
 
 ## Eligibility
 
+13:00を通常枠、17:00を回復枠とする。17:00も同じ公開ゲートを一切省略せず、16:00の進行編集が `kotatsu:publish + agent:publisher` へ明示した記事だけを扱う。`kotatsu:planned` は対象にしない。
+
 - `agent:publisher` と `kotatsu:publish`、または公開工程に限った `kotatsu:revise` が付いている。
 - 記事がscheduledで、publishAtが到来済みである。
 - 正式Vol.カバー、校正結果、記事PR/head branchが確認できる。
@@ -13,7 +15,7 @@
 
 draftまたは未来日時の記事は公開せず、理由をコメントして進行編集へ戻す。
 
-`publishAt` のJST日付が現在日より前なら、予定実行の取りこぼしとして古い日付のまま公開しない。Issueをreviewへ戻し、進行編集が次の有効枠へ `article:rebook` してから再度publishを受け取る。同日0:00のpublishAtは当日13:00の通常公開対象として扱う。
+`publishAt` のJST日付が現在日より前なら、予定実行の取りこぼしとして古い日付のまま公開しない。Issueをreviewへ戻し、進行編集が次の有効枠へ `article:rebook` してから再度publishを受け取る。同日0:00のpublishAtは当日13:00または17:00の公開対象として扱う。
 
 ## Publishing
 
