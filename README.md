@@ -50,12 +50,14 @@ All times are Japan Standard Time. Automations run every day, but labels gate ac
 | Day 2 | 15:00 | Copy editor | Retry only unfinished eligible copy work |
 | Day 2 | 16:00 | Managing editor | Repair missed handoffs and prepare the 17:00 recovery queue |
 | Day 2 | 17:00 | Publisher | Retry due articles explicitly released by the managing editor |
+| Day 2 | 20:00 | Managing editor | Recover interrupted post-publish verification and prepare the final queue |
+| Day 2 | 22:00 | Publisher | Resume only the technically interrupted publication released at 20:00 |
 
 Production roles never pass work directly to one another. Each returns `kotatsu:review`; the managing editor assigns the next role. `kotatsu:revise` is actionable at the next assigned run, while future work remains `kotatsu:planned`.
 
 At every managing-editor run, `pnpm milestone:close -- --apply` closes an open volume milestone only after its approved plan, formal cover, and every planned article Issue are closed with `kotatsu:done`. The command is idempotent and leaves incomplete volumes open with a reason.
 
-If the PC or Codex app misses a scheduled run, GitHub remains the durable queue. Recovery stays scheduled: copy editing retries at 15:00, the managing editor repairs handoffs at 16:00, and the publisher retries at 17:00; visual work has a 21:00 retry. The managing editor runs `pnpm article:handoff` for every scheduled article and applies its exact state and role labels, preventing a due article from remaining `planned`. Only after the final same-day recovery slot is missed does `pnpm article:rebook` move both public and editorial dates together. Original dates and reasons remain in recovery metadata and the Issue history. Delays over seven days or into another month return to the editor-in-chief for seasonal and editorial revalidation; no stage is skipped, no past review date is invented, and no agent publishes outside its scheduled run.
+If the PC or Codex app misses a scheduled run, GitHub remains the durable queue. Recovery stays scheduled: copy editing retries at 15:00, the managing editor repairs handoffs at 16:00 and interrupted publication verification at 20:00, and the publisher retries at 17:00 and 22:00; visual work has a 21:00 retry. `pnpm visual:artifact` waits for the complete Actions download, validates desktop/mobile files, and prints the images that must be inspected. Only after the final same-day recovery slot is missed does `pnpm article:rebook` move both public and editorial dates together. An unmerged PR already advanced to `published` is explicitly reset to `scheduled` when rebooking, so the displayed date remains truthful. No agent publishes outside its scheduled run.
 
 ## Branch And Publishing Rules
 

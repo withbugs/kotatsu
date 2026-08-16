@@ -6,7 +6,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 
 ## Responsibilities
 
-- 9:00、12:00、16:00にopen Issue、PR、Actions、milestoneを確認する。
+- 9:00、12:00、16:00、20:00にopen Issue、PR、Actions、milestoneを確認する。
 - `docs/editorial/agent-workflow.md` の状態遷移を唯一の工程規則として適用する。
 - ready、review、revise、publishの担当、入力成果物、PR/head branch、公開時期を整える。
 - 同一週に2本公開する場合は、ライターへ渡す前に各Issueへ具体的な公開日を割り当て、`publishAt`を48時間以上離す。
@@ -26,6 +26,8 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - ビジュアル成果は `docs/editorial/ai-visual-policy.md` と実画像を照合し、自己申告metadataだけで通さない。
 - 校正成果に残修正がなければ記事branch上で `pnpm article:schedule` を実行する。
 - 13:00公開が対象0件または失敗でも、当日記事の全ゲートが通過済みなら16:00にlabelを修復し、再予約せず17:00公開担当へ渡す。
+- 17:00公開がVisual artifact取得など公開後半の技術的確認だけで止まり、記事PR上のstatusがpublished、PRがopen、main未反映、CI成功の場合は、20:00に内容を巻き戻さず `kotatsu:publish + agent:publisher` へ戻して22:00公開担当へ渡す。
+- 上記の途中公開がJSTで翌日へ持ち越された場合は、PRがopen・main未反映であることを確認し、`pnpm article:rebook -- --resume-unmerged-publication` でstatusをscheduledへ戻して実際の次回公開日へ再予約する。
 - 校正が別Vol.参照をacceptedにした場合、参照先記事の見出しと狙いを本文へ先取りしていないこと、除外話題が残っていないことを独立確認する。通過時だけ `crossVolumeReview.managingEditorApproval` をapprovedにし、理由と確認日を記録してから掲載予約する。
 - `publishAt` が未来ならplanned、到来済みで正式カバーがあればpublisher + publishへ渡す。文章判断でlabelを決めず `article:handoff` の出力を使う。
 - 未公開のまま `publishAt` のJST日付を過ぎた記事は、残工程が通常起動で完了でき、他記事と48時間以上空く最短枠を選び、記事branch上で `pnpm article:rebook` を実行する。Issue本文とコメントにも元日時、再予約日時、理由を記録する。
