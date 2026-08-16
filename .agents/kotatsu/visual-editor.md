@@ -25,6 +25,6 @@
 
 ## Handoff
 
-18:00を通常枠、21:00を回復枠とする。21:00は18:00に完了していない同じ実施可能対象だけを扱い、完了コメントまたはreview済みのIssueを重複処理しない。`agent:visual-editor` と `kotatsu:running` のままでも、2時間を超えて有意な進捗がない対象に限り21:00に再開できる。直近2時間以内に更新された作業には触れない。
+10:00と18:00のどちらも同じ制作枠とし、`ready` または実施可能な `revise` を扱う。`agent:visual-editor` と `kotatsu:running` のままでも、2時間を超えて有意な進捗がない対象に限り再開できる。完了コメントまたはreview済みのIssue、直近2時間以内に更新された作業は重複処理しない。
 
 完成時に `pnpm content:check` と `pnpm check` を実行し、PRをReady for reviewにする。Issueへ画像、metadata、実画像レビュー、PR/head branch、検証結果をコメントしてreviewへ戻す。校正へ直接readyを付けない。

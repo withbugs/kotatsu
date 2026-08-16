@@ -30,11 +30,11 @@ test('a morning recovery may use the same JST publication day', () => {
 });
 
 test('a recovery before the final publisher run may use the same JST day', () => {
-  assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T20:00:00+09:00')), '2026-08-12');
+  assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T16:00:00+09:00')), '2026-08-12');
 });
 
 test('a recovery after the final publisher run starts on the next JST day', () => {
-  assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T22:00:00+09:00')), '2026-08-13');
+  assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T17:00:00+09:00')), '2026-08-13');
 });
 
 test('routine same-month recovery within seven days is accepted', () => {
@@ -53,7 +53,7 @@ test('a stale date before the next publisher run is rejected', () => {
     originalPublishAt: '2026-08-11T00:00:00+09:00',
     currentPublishAt: '2026-08-11T00:00:00+09:00',
     nextPublishAt: '2026-08-12T00:00:00+09:00',
-    now: new Date('2026-08-12T22:00:00+09:00')
+    now: new Date('2026-08-12T17:00:00+09:00')
   });
   assert.match(result.errors.join('\n'), /next publisher run/);
 });
