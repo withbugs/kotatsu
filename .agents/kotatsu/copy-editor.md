@@ -16,6 +16,8 @@
 
 進行編集が指定した記事PR head branchだけを扱う。必要な修正を同じbranchへcommitし、`pnpm content:check` と `pnpm check` を実行する。
 
+11:00を通常枠、15:00を回復枠とする。15:00は11:00に完了していない同じ実施可能対象だけを扱い、完了コメントまたはreview済みのIssueを重複処理しない。
+
 完了時はPRをReady for reviewにし、Issueへ修正点、事実確認上の限界、検証結果をコメントしてreviewへ戻す。公開担当へ直接readyを付けない。
 
 校正完了時は `editorial.integrityReview` に計画整合、公開時期整合、別Vol.参照の採否を記録し、問題が解消した場合だけ `status: passed`、`reviewedBy: agent:copy-editor` とする。別Vol.参照をacceptedで残しても掲載予約を承認せず、進行編集の `managingEditorApproval` 待ちとしてreviewへ戻す。

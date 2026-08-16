@@ -62,32 +62,41 @@
 | 1 | 14:00 | ライター群 | 現在週に公開予定の記事だけをworktreeで執筆 |
 | 1 | 16:00 | 進行編集 | ライターPRを確認し、ビジュアル編集へ渡す |
 | 1 | 18:00 | ビジュアル編集 | AI画像を生成・配置し、実画像とmetadataを確認 |
+| 1 | 21:00 | ビジュアル編集 | 18:00に完了しなかった実施可能な対象だけを再試行 |
 | 2 | 09:00 | 進行編集 | 実画像を確認し、通過分だけ校正へ渡す |
 | 2 | 11:00 | 校正 | 同じ記事branchで校正し、reviewへ戻す |
 | 2 | 12:00 | 進行編集 | 校正確認、`draft -> scheduled`、公開時刻判定 |
 | 2 | 13:00 | 公開担当 | 到来済みのscheduled記事だけを公開 |
-| 2 | 16:00 | 進行編集 | 公開失敗、修正、滞留を整理 |
+| 2 | 15:00 | 校正 | 11:00に完了しなかった実施可能な対象だけを再試行 |
+| 2 | 16:00 | 進行編集 | 公開失敗とlabel不一致を修復し、17:00回復枠へ渡す |
+| 2 | 17:00 | 公開担当 | 進行編集が回復枠へ明示した到来済み記事だけを再試行 |
 
 最短でもビジュアル編集から公開まではDay 1 18:00からDay 2 13:00を使う。
+
+15:00、17:00、21:00は通常工程を省略する特急処理ではなく、同じ成果物、label、検査を使う回復枠である。直前の起動が完了済みなら何もせず、同じ担当が重複作業をしない。公開担当を手動で直接起動せず、必ず16:00の進行編集と17:00の公開担当を別の予定済みタスクとして通す。
+
+21:00のビジュアル編集は、`agent:visual-editor` と `kotatsu:running` のままでも、2時間を超えて有意な進捗がない対象に限り再開できる。直近2時間以内に更新された作業は、二重作業を避けるためそのままにする。
 
 ## Missed Run Recovery
 
 PCまたはCodexアプリが停止して予定済みタスクが起動しなくても、欠けた実行を過去時刻として再現しない。GitHub Issue、記事PR、Actionsを永続キューとして扱い、次の通常起動が未完了状態から再開する。公開予定日を過ぎた記事を古い日付のまま強行公開せず、実際の校正日や確認日を過去日に偽装しない。
 
-進行編集は9:00、12:00、16:00の各起動で、状態labelにかかわらずopenな `type:article` の公開予定を確認する。`publishAt` がJSTの現在日以前で未公開ならoverdue recovery対象とし、PR/head branch、現在工程、最後の成果、残りの担当起動を確認する。実行中の担当が直近2時間以内に進捗を記録している場合は重複して操作しない。明示済みblockerがmain上の新ルールで解消できる場合、または予定起動を越えて担当処理が存在しない場合は、`running` を適切な担当の `revise` へ正規化できる。
+進行編集は9:00、12:00、16:00の各起動で、状態labelにかかわらずopenな `type:article` の公開予定を確認する。scheduled記事には毎回 `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをIssueへ完全一致で反映する。未来日時は `kotatsu:planned + agent:publisher`、到来済みの当日記事は `kotatsu:publish + agent:publisher`、JSTで前日以前なら `kotatsu:review + agent:managing-editor` として再予約判断へ戻す。更新後にIssueを再取得し、両labelが一致しなければその起動を完了扱いにしない。
+
+`publishAt` がJSTの現在日以前で未公開なら、PR/head branch、現在工程、最後の成果、残りの担当起動を確認する。13:00の公開担当が対象0件または失敗でも、全公開ゲートが通過済みで17:00枠が残る当日scheduled記事は再予約しない。16:00の進行編集が `article:handoff` の結果へlabelを正規化し、17:00の公開担当へ渡す。17:00枠も完了しなかった記事は、次の進行編集が古い日付のまま公開せず再予約する。実行中の担当が直近2時間以内に進捗を記録している場合は重複して操作しない。明示済みblockerがmain上の新ルールで解消できる場合、または予定起動を越えて担当処理が存在しない場合は、`running` を適切な担当の `revise` へ正規化できる。
 
 再予約は次をすべて満たす最も早い公開枠を選ぶ。
 
 - 残っているビジュアル編集、校正、進行編集、公開担当が通常の起動時刻で各1回以上動ける。
 - 同日公開を避け、scheduledまたはpublished記事と48時間以上空ける。
 - 週1〜2本、月4〜8本を維持し、未来のArticle Issueに記録済みの公開枠とも衝突しない。
-- 公開担当の13:00起動をすでに過ぎている場合、翌日以降を選ぶ。
+- 公開担当の17:00回復起動をすでに過ぎている場合、翌日以降を選ぶ。
 
 記事PR branchを最新の `origin/main` と同期したうえで、進行編集は `pnpm article:rebook -- --slug=<slug> --publishAt=<ISO日時>` を実行する。このコマンドはfrontmatterの `publishAt` と `editorial.publicationDate` を同時に更新し、元日時、直前日時、再予約日時、理由、回数を `editorial.scheduleRecovery` に保存する。進行編集は同じ変更をIssue本文の現在の公開予定へ反映し、元日時と再予約理由をIssueコメントに残す。正式計画の当初予定は履歴として書き換えない。
 
 再予約が元日時から7日以内かつ同じ暦月なら、本文の季節・生活イベントが新日時にも成立することを進行編集が確認して工程を再開する。記事、visual metadata、sidecarに元の具体日や祝日が含まれる場合はビジュアル編集へ `revise` で再確認を渡してから校正へ進める。具体日はISO形式だけでなく、`2026年8月11日` のような日本語表記も機械判定の対象とする。7日を超える、翌月へ跨ぐ、季節・生活イベントが変わる場合は編集長へ `revise` でbrief再確認を渡し、必要に応じてビジュアル編集も再実施する。編集長確認日を `--editorial-revalidated-at=YYYY-MM-DD` へ渡すまで再予約しない。
 
-校正済みで古い日時のscheduled記事も、進行編集が次枠へ再予約してから公開担当へ渡す。公開担当はJSTの現在日より前の `publishAt` を持つ記事を公開せず、`review` と進行編集へ戻す。回復でも `draft -> scheduled -> published` と全公開ゲートを省略しない。
+校正済みで古い日時のscheduled記事も、進行編集が次枠へ再予約してから公開担当へ渡す。当日scheduled記事は17:00回復枠まで同じ日付を維持できる。公開担当はJSTの現在日より前の `publishAt` を持つ記事を公開せず、`review` と進行編集へ戻す。回復でも `draft -> scheduled -> published` と全公開ゲートを省略しない。
 
 ## Monthly Planning
 
@@ -153,7 +162,7 @@ Article Issueには公開予定日、公開予定週、または `publishAt` を
 2. ビジュアル編集は同じ記事PR branchでAI画像、alt、caption、sidecarを完成させる。画像生成ツールが使えない場合はブリーフを残し、`agent:visual-editor` + `kotatsu:revise` にする。未生成のままreviewへ進めない。
 3. 進行編集は本文と `editorial` metadataを正式計画・公開日に照合し、実画像を拡大して季節、多様性、モデル同一性、床置き防止をポリシーと照合する。通過分だけcopy-editorへreadyで渡す。
 4. 校正は同じbranchで文体、事実、禁止表現、読者信頼に加えて計画・公開時期・別Vol.参照を独立確認し、`integrityReview` を記録してreviewへ戻す。別Vol.参照を残す場合はacceptedとしても進行編集承認待ちにする。
-5. 進行編集は残修正がなく `integrityReview` がpassedで、別Vol.参照がある場合は `managingEditorApproval` もapprovedの場合だけ `pnpm article:schedule -- --slug=<slug>` を実行する。未来時刻ならplanned、到来済みならpublisher + publishへ進める。
+5. 進行編集は残修正がなく `integrityReview` がpassedで、別Vol.参照がある場合は `managingEditorApproval` もapprovedの場合だけ `pnpm article:schedule -- --slug=<slug>` を実行する。続けて `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをそのままIssueへ反映する。未来時刻ならplanned、到来済みならpublisher + publishへ進め、更新後のIssueを再取得して一致を確認する。
 6. 公開担当は `pnpm publish:check -- --candidate=<slug>`、`pnpm article:publish -- --slug=<slug>`、`pnpm check`、`pnpm build` を順に通し、最終記事PRをmainへmergeする。
 
 記事状態は必ず `draft -> scheduled -> published` とする。公開担当はfrontmatterを手作業でpublishedにしない。
