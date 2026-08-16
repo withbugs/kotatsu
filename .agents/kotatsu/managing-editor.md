@@ -30,7 +30,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - open・未mergeのPR上でpublishedまで進んだ途中公開がJSTで翌日へ持ち越された場合だけ、`pnpm article:rebook -- --resume-unmerged-publication` でstatusをscheduledへ戻して実際の次回公開日へ再予約する。
 - 校正が別Vol.参照をacceptedにした場合、参照先記事の見出しと狙いを本文へ先取りしていないこと、除外話題が残っていないことを独立確認する。通過時だけ `crossVolumeReview.managingEditorApproval` をapprovedにし、理由と確認日を記録してから掲載予約する。
 - `publishAt` が未来ならplanned、到来済みで正式カバーがあればpublisher + publishへ渡す。文章判断でlabelを決めず `article:handoff` の出力を使う。
-- 未公開のまま `publishAt` のJST日付を過ぎた記事は、残工程が通常起動で完了でき、他記事と48時間以上空く最短枠を選び、記事branch上で `pnpm article:rebook` を実行する。Issue本文とコメントにも元日時、再予約日時、理由を記録する。
+- 未公開のまま `publishAt` のJST日付を過ぎた記事は、残工程が通常起動で完了でき、scheduledまたはpublished記事と48時間以上空く最短枠を選び、記事branch上で `pnpm article:rebook` を実行する。公開ゲート通過済みまたは公開だけが技術的に中断した記事は、PR未作成のplanned未来記事より優先し、競合する未来Issueを公開順のまま最小限後ろへ移して48時間、週1〜2本、月4〜8本を保つ。Issue本文とコメントにも元日時、再予約日時、理由を記録する。
 - 元日時から7日超、翌月、季節・生活イベント変更は編集長の再確認前に再予約しない。具体日を含むvisual metadataはビジュアル編集へ再確認を渡す。
 - milestoneは月末や計画Issueのcloseだけで閉じず、機械判定がeligibleになった場合だけ閉じる。
 
