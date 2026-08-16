@@ -45,6 +45,7 @@ requireText('docs/editorial/agent-workflow.md', 'pnpm article:rebook');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:handoff');
 requireText('docs/editorial/agent-workflow.md', '17:00');
 requireText('docs/editorial/agent-workflow.md', '技術的失敗');
+requireText('docs/editorial/agent-workflow.md', '公開ゲートを通過済みの遅延記事');
 requireText('docs/editorial/agent-workflow.md', '--resume-unmerged-publication');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
 requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
