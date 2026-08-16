@@ -6,7 +6,7 @@
 
 ## Eligibility
 
-13:00を通常枠、17:00と22:00を回復枠とする。回復枠も同じ公開ゲートを一切省略せず、直前の進行編集が `kotatsu:publish + agent:publisher` へ明示した記事だけを扱う。`kotatsu:planned` は対象にしない。
+13:00と17:00のどちらも同じ公開枠とし、同じ対象判定、公開ゲート、再開規則を使う。`kotatsu:planned` は対象にしない。
 
 - `agent:publisher` と `kotatsu:publish`、または公開工程に限った `kotatsu:revise` が付いている。
 - 記事がscheduledでpublishAtが到来済み、または公開担当の前回起動でpublishedまで進んだopen・未mergeの同じ記事PRを技術的に再開する状態である。
@@ -15,7 +15,7 @@
 
 draftまたは未来日時の記事は公開せず、理由をコメントして進行編集へ戻す。
 
-`publishAt` のJST日付が現在日より前なら、予定実行の取りこぼしとして古い日付のまま公開しない。Issueをreviewへ戻し、進行編集が次の有効枠へ `article:rebook` してから再度publishを受け取る。open・未mergeのPR上ですでにpublishedへ進んだ途中公開は、進行編集が `--resume-unmerged-publication` でscheduledへ戻してから再度受け取る。同日0:00のpublishAtは当日13:00、17:00、22:00の公開対象として扱う。
+`publishAt` のJST日付が現在日より前なら、予定実行の取りこぼしとして古い日付のまま公開しない。Issueをreviewへ戻し、進行編集が次の有効枠へ `article:rebook` してから再度publishを受け取る。open・未mergeのPR上ですでにpublishedへ進んだ途中公開は、進行編集が `--resume-unmerged-publication` でscheduledへ戻してから再度受け取る。同日0:00のpublishAtは当日13:00または17:00の公開対象として扱う。
 
 ## Publishing
 
@@ -30,6 +30,6 @@ draftまたは未来日時の記事は公開せず、理由をコメントして
 
 `visual:artifact` は長時間無出力でも終了するまで待ち、途中の保存先を空と判定しない。失敗時は自動再試行後の終了コードとエラーを使う。公開前半でpublishedのcommitをpush済みなら、再実行時の `article:publish` はidempotentな確認として扱い、同じ変更を重複commitしない。
 
-成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。失敗時はcloseせずreviewへ戻し、本文・画像・校正の修正は自分で行わず進行編集にroutingを依頼する。
+成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、具体的な再開地点をコメントして `kotatsu:revise + agent:publisher` に残す。本文、画像、校正、公開日の判断が必要な失敗だけ `kotatsu:review + agent:managing-editor` へ戻す。
 
 公開担当はVol.のmilestone自体は閉じない。最終記事Issueをcloseした後、進行編集の次回起動がVol.完了条件を確認して閉じる。

@@ -29,6 +29,7 @@
 | --- | --- | --- | --- |
 | `planned` | 進行編集 | `ready` | 着手時期、担当、milestone、入力成果物が揃う |
 | `ready` / `revise` | 担当エージェント | `running` | 作業開始時 |
+| `running` | 同じ担当エージェント | `revise` | 技術的失敗の再開地点を記録し、次の同担当起動を待つ |
 | `running` | 担当エージェント | `review` | 成果、PR/head branch、検証結果をコメント済み |
 | `review` | 進行編集 | `ready` | 次担当へ渡せる |
 | `review` | 進行編集 | `revise` | 現担当へ具体的な修正が必要 |
@@ -39,7 +40,7 @@
 
 `kotatsu:ready` の最終管理者は進行編集である。制作担当同士は直接次担当labelや `ready` / `publish` を付けず、必ず `review` へ戻す。
 
-`kotatsu:revise` は待機labelではない。付与時は他の状態labelを外し、担当labelを1つにし、修正理由、PR URL、head branch、完了条件をコメントする。次回起動で処理させない修正は `planned` に置く。
+`kotatsu:revise` は待機labelではない。付与時は他の状態labelを外し、担当labelを1つにし、修正理由または技術的な再開地点、PR URL、head branch、完了条件をコメントする。次回の同担当起動で処理させない修正は `planned` に置く。
 
 ## Branch And Handoff
 
@@ -58,51 +59,49 @@
 | --- | --- | --- | --- |
 | 1 | 09:00 | 進行編集 | label、milestone、滞留、当日着手、計画段階を整理 |
 | 1 | 10:00 | 編集長 | 編集会議、担当計画、未着手briefを判断 |
+| 1 | 10:00 | ビジュアル編集 | 実施可能な新規・再試行対象のAI画像とmetadataを制作 |
 | 1 | 12:00 | 進行編集 | 計画成果と校正成果を確認し、次工程または待機へ整理 |
 | 1 | 14:00 | ライター群 | 現在週に公開予定の記事だけをworktreeで執筆 |
 | 1 | 16:00 | 進行編集 | ライターPRを確認し、ビジュアル編集へ渡す |
 | 1 | 18:00 | ビジュアル編集 | AI画像を生成・配置し、実画像とmetadataを確認 |
-| 1 | 21:00 | ビジュアル編集 | 18:00に完了しなかった実施可能な対象だけを再試行 |
 | 2 | 09:00 | 進行編集 | 実画像を確認し、通過分だけ校正へ渡す |
 | 2 | 11:00 | 校正 | 同じ記事branchで校正し、reviewへ戻す |
 | 2 | 12:00 | 進行編集 | 校正確認、`draft -> scheduled`、公開時刻判定 |
 | 2 | 13:00 | 公開担当 | 到来済みのscheduled記事だけを公開 |
-| 2 | 15:00 | 校正 | 11:00に完了しなかった実施可能な対象だけを再試行 |
-| 2 | 16:00 | 進行編集 | 公開失敗とlabel不一致を修復し、17:00回復枠へ渡す |
-| 2 | 17:00 | 公開担当 | 進行編集が回復枠へ明示した到来済み記事だけを再試行 |
-| 2 | 20:00 | 進行編集 | 公開後半の技術的中断を確認し、22:00最終回復枠へ渡す |
-| 2 | 22:00 | 公開担当 | 20:00に明示された途中公開だけを同じPRで再開 |
+| 2 | 15:00 | 校正 | 実施可能な新規・再試行対象を11:00と同じ条件で校正 |
+| 2 | 16:00 | 進行編集 | review、日付、labelの不一致を整理し、次工程へ渡す |
+| 2 | 17:00 | 公開担当 | 到来済みのscheduled記事と技術的に中断した公開を処理 |
 
 最短でもビジュアル編集から公開まではDay 1 18:00からDay 2 13:00を使う。
 
-15:00、17:00、21:00、22:00は通常工程を省略する特急処理ではなく、同じ成果物、label、検査を使う回復枠である。直前の起動が完了済みなら何もせず、同じ担当が重複作業をしない。公開担当を手動で直接起動せず、16:00から17:00、または20:00から22:00の進行編集と公開担当を別の予定済みタスクとして通す。
+同じ担当に複数の起動時刻がある場合、すべて同じ対象判定、成果物、検査、完了条件を使う。通常用と回復用の別ルールは作らない。前の起動で完了済みなら何もせず、`ready`、実施可能な `revise`、または2時間を超えて有意な進捗がない同担当の `running` だけを処理する。直近2時間以内に更新された作業は重複処理しない。
 
-21:00のビジュアル編集は、`agent:visual-editor` と `kotatsu:running` のままでも、2時間を超えて有意な進捗がない対象に限り再開できる。直近2時間以内に更新された作業は、二重作業を避けるためそのままにする。
+通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、失敗した担当が再開地点をコメントし、同じ担当の `kotatsu:revise` に残す。次の同担当起動が進行編集を介さず再開する。本文、画像、校正、公開日など編集判断が必要な失敗だけ `kotatsu:review + agent:managing-editor` へ戻す。これは同じ担当内の再試行であり、制作担当間の直接受け渡しではない。
 
 ## Missed Run Recovery
 
-PCまたはCodexアプリが停止して予定済みタスクが起動しなくても、欠けた実行を過去時刻として再現しない。GitHub Issue、記事PR、Actionsを永続キューとして扱い、次の通常起動が未完了状態から再開する。公開予定日を過ぎた記事を古い日付のまま強行公開せず、実際の校正日や確認日を過去日に偽装しない。
+PCまたはCodexアプリが停止して予定済みタスクが起動しなくても、欠けた実行を過去時刻として再現しない。GitHub Issue、記事PR、Actionsを永続キューとして扱い、次の同担当起動が未完了状態から再開する。公開予定日を過ぎた記事を古い日付のまま強行公開せず、実際の校正日や確認日を過去日に偽装しない。
 
-進行編集は9:00、12:00、16:00、20:00の各起動で、状態labelにかかわらずopenな `type:article` の公開予定を確認する。scheduled記事には毎回 `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをIssueへ完全一致で反映する。未来日時は `kotatsu:planned + agent:publisher`、到来済みの当日記事は `kotatsu:publish + agent:publisher`、JSTで前日以前なら `kotatsu:review + agent:managing-editor` として再予約判断へ戻す。更新後にIssueを再取得し、両labelが一致しなければその起動を完了扱いにしない。
+進行編集は9:00、12:00、16:00の各起動で、状態labelにかかわらずopenな `type:article` の公開予定を確認する。scheduled記事には毎回 `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをIssueへ完全一致で反映する。未来日時は `kotatsu:planned + agent:publisher`、到来済みの当日記事は `kotatsu:publish + agent:publisher`、JSTで前日以前なら `kotatsu:review + agent:managing-editor` として再予約判断へ戻す。更新後にIssueを再取得し、両labelが一致しなければその起動を完了扱いにしない。
 
-`publishAt` がJSTの現在日以前で未公開なら、PR/head branch、現在工程、最後の成果、残りの担当起動を確認する。13:00の公開担当が対象0件または失敗でも、全公開ゲートが通過済みで17:00枠が残る当日scheduled記事は再予約しない。16:00の進行編集が `article:handoff` の結果へlabelを正規化し、17:00の公開担当へ渡す。
+各担当は、技術的失敗を `kotatsu:revise + 同じagent label` に残して次の同担当起動で再開する。例えば13:00公開担当が通信やartifact取得で止まっても、編集判断が不要なら17:00公開担当が同じPRの残りから再開し、16:00進行編集の受け渡しを待たない。進行編集は状態、公開日、成果物、編集判断の不整合だけを扱う。
 
-17:00公開担当が記事をpublishedへ進めた後、Visual artifact取得やPages確認など公開後半の技術的確認だけで止まった場合、20:00の進行編集はPRがopen・未merge、main未反映、CI成功、本文・画像・校正の追加修正なしであることを確認する。同じJST日ならstatusやpublishAtを巻き戻さず `kotatsu:publish + agent:publisher` として22:00へ渡す。22:00公開担当は `article:publish` をidempotentに再実行し、残った確認から再開する。実行中の担当が直近2時間以内に進捗を記録している場合は重複して操作しない。
+公開担当の13:00と17:00は同じ公開枠である。`pnpm article:publish` と `pnpm visual:artifact` は再実行可能にし、完了済みの変更や取得物を重複させず、未完了の確認から続ける。実行中の担当が直近2時間以内に進捗を記録している場合は重複して操作しない。
 
-22:00枠も完了せず日付をまたいだ途中公開は、古い日付のままmainへ入れない。次の進行編集がopen・未mergeのPRを確認し、`pnpm article:rebook -- --slug=<slug> --publishAt=<ISO日時> --resume-unmerged-publication` を実行してstatusをscheduledへ戻し、実際の次回公開日へ再予約する。通常の再予約と同様に具体日を含む本文・visual metadata・sidecarは再確認へ戻す。明示済みblockerがmain上の新ルールで解消できる場合、または予定起動を越えて担当処理が存在しない場合は、`running` を適切な担当の `revise` へ正規化できる。
+17:00枠でも完了せず日付をまたいだ途中公開は、古い日付のままmainへ入れない。次の進行編集がopen・未mergeのPRを確認し、`pnpm article:rebook -- --slug=<slug> --publishAt=<ISO日時> --resume-unmerged-publication` を実行してstatusをscheduledへ戻し、実際の次回公開日へ再予約する。通常の再予約と同様に具体日を含む本文・visual metadata・sidecarは再確認へ戻す。明示済みblockerがmain上の新ルールで解消できる場合、または予定起動を越えて担当処理が存在しない場合は、`running` を適切な担当の `revise` へ正規化できる。
 
 再予約は次をすべて満たす最も早い公開枠を選ぶ。
 
-- 残っているビジュアル編集、校正、進行編集、公開担当が通常の起動時刻で各1回以上動ける。
+- 未完了の工程だけが通常の起動時刻で動ける。完了済みゲートは、日付整合性に影響がない限り繰り返さない。
 - 同日公開を避け、scheduledまたはpublished記事と48時間以上空ける。
 - 週1〜2本、月4〜8本を維持し、未来のArticle Issueに記録済みの公開枠とも衝突しない。
-- 公開担当の22:00最終回復起動をすでに過ぎている場合、翌日以降を選ぶ。
+- 公開担当の17:00起動をすでに過ぎている場合、翌日以降を選ぶ。
 
 記事PR branchを最新の `origin/main` と同期したうえで、進行編集は `pnpm article:rebook -- --slug=<slug> --publishAt=<ISO日時>` を実行する。このコマンドはfrontmatterの `publishAt` と `editorial.publicationDate` を同時に更新し、元日時、直前日時、再予約日時、理由、回数を `editorial.scheduleRecovery` に保存する。進行編集は同じ変更をIssue本文の現在の公開予定へ反映し、元日時と再予約理由をIssueコメントに残す。正式計画の当初予定は履歴として書き換えない。
 
 再予約が元日時から7日以内かつ同じ暦月なら、本文の季節・生活イベントが新日時にも成立することを進行編集が確認して工程を再開する。記事、visual metadata、sidecarに元の具体日や祝日が含まれる場合はビジュアル編集へ `revise` で再確認を渡してから校正へ進める。具体日はISO形式だけでなく、`2026年8月11日` のような日本語表記も機械判定の対象とする。7日を超える、翌月へ跨ぐ、季節・生活イベントが変わる場合は編集長へ `revise` でbrief再確認を渡し、必要に応じてビジュアル編集も再実施する。編集長確認日を `--editorial-revalidated-at=YYYY-MM-DD` へ渡すまで再予約しない。
 
-校正済みで古い日時のscheduled記事も、進行編集が次枠へ再予約してから公開担当へ渡す。当日scheduled記事と当日開始した途中公開は22:00回復枠まで同じ日付を維持できる。公開担当はJSTの現在日より前の `publishAt` を持つ記事をそのままmainへ入れず、`review` と進行編集へ戻す。回復でも `draft -> scheduled -> published` と全公開ゲートを省略しない。
+校正済みで古い日時のscheduled記事も、進行編集が次枠へ再予約してから公開担当へ渡す。当日scheduled記事と当日開始した途中公開は17:00枠まで同じ日付を維持できる。公開担当はJSTの現在日より前の `publishAt` を持つ記事をそのままmainへ入れず、`review` と進行編集へ戻す。回復でも `draft -> scheduled -> published` と全公開ゲートを省略しない。
 
 ## Monthly Planning
 
@@ -123,7 +122,7 @@ PCまたはCodexアプリが停止して予定済みタスクが起動しなく�
 
 Vol.のmilestoneを閉じる責任者は進行編集である。公開担当は各記事Issueをdoneでcloseするが、milestone自体は操作しない。
 
-進行編集は9:00、12:00、16:00、20:00の各起動で、`git fetch origin main` の成功後に `pnpm milestone:close -- --apply` を実行する。このコマンドはopenな `Vol. XXX` milestoneごとに、次をすべて満たす場合だけcloseする。
+進行編集は9:00、12:00、16:00の各起動で、`git fetch origin main` の成功後に `pnpm milestone:close -- --apply` を実行する。このコマンドはopenな `Vol. XXX` milestoneごとに、次をすべて満たす場合だけcloseする。
 
 - `origin/main` に承認済み `docs/editorial/plans/vol-XXX.md` が存在する。
 - milestoneに完了済みの `type:volume-plan` が1件、`type:volume-cover` が1件ある。

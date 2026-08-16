@@ -44,12 +44,15 @@ requireText('docs/editorial/agent-workflow.md', '## Missed Run Recovery');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:rebook');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:handoff');
 requireText('docs/editorial/agent-workflow.md', '17:00');
-requireText('docs/editorial/agent-workflow.md', '22:00');
+requireText('docs/editorial/agent-workflow.md', '技術的失敗');
 requireText('docs/editorial/agent-workflow.md', '--resume-unmerged-publication');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
-requireText('.agents/kotatsu/publisher.md', '17:00と22:00を回復枠');
+requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
 requireText('.agents/kotatsu/publisher.md', 'pnpm visual:artifact');
+requireText('.agents/kotatsu/visual-editor.md', '10:00と18:00のどちらも同じ制作枠');
 requireText('.agents/kotatsu/visual-editor.md', '2時間を超えて有意な進捗がない');
+requireText('.agents/kotatsu/copy-editor.md', '11:00と15:00のどちらも同じ校正枠');
+requireText('.agents/kotatsu/managing-editor.md', '9:00、12:00、16:00');
 requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:rebook');
 requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:handoff');
 requireText('.agents/kotatsu/copy-editor.md', '過去日を記録して通過させない');
@@ -77,6 +80,23 @@ rejectPattern(
   /current monthly issue/i,
   'monthly issue terminology'
 );
+rejectPattern(
+  'docs/editorial/agent-workflow.md',
+  /(?:20:00|21:00|22:00)/,
+  'late recovery window'
+);
+rejectPattern(
+  'README.md',
+  /(?:20:00|21:00|22:00)/,
+  'late recovery window'
+);
+for (const role of ['managing-editor', 'publisher', 'visual-editor', 'copy-editor']) {
+  rejectPattern(
+    `.agents/kotatsu/${role}.md`,
+    /(?:20:00|21:00|22:00)/,
+    'late recovery window'
+  );
+}
 
 for (const category of ['style', 'life', 'weekend', 'culture', 'people', 'shopping']) {
   const role = `.agents/kotatsu/${category}-writer.md`;

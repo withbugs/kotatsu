@@ -38,26 +38,24 @@ All times are Japan Standard Time. Automations run every day, but labels gate ac
 | --- | --- | --- | --- |
 | Day 1 | 09:00 | Managing editor | Triage states, milestones, stalled work, publication weeks, and planning stages |
 | Day 1 | 10:00 | Editor-in-chief | Hold the Monday editorial meeting or process the assigned planning stage |
+| Day 1 | 10:00 | Visual editor | Process eligible new or retry work with the same production gate |
 | Day 1 | 12:00 | Managing editor | Review planning or copy results and route only complete work |
 | Day 1 | 14:00 | Six writers | Draft only articles scheduled for the current JST week in isolated worktrees |
 | Day 1 | 16:00 | Managing editor | Verify writer PRs and route the same article branches to visual editing |
 | Day 1 | 18:00 | Visual editor | Generate and inspect AI visuals, metadata, and formal covers |
-| Day 1 | 21:00 | Visual editor | Retry only unfinished eligible visual work |
 | Day 2 | 09:00 | Managing editor | Inspect the rendered visual and route accepted work to copy editing |
 | Day 2 | 11:00 | Copy editor | Edit the same article branch and return it for desk review |
 | Day 2 | 12:00 | Managing editor | Schedule `draft -> scheduled`; hold future work or route due work |
 | Day 2 | 13:00 | Publisher | Publish due scheduled articles and verify CI, Visual Check, and Pages |
-| Day 2 | 15:00 | Copy editor | Retry only unfinished eligible copy work |
-| Day 2 | 16:00 | Managing editor | Repair missed handoffs and prepare the 17:00 recovery queue |
-| Day 2 | 17:00 | Publisher | Retry due articles explicitly released by the managing editor |
-| Day 2 | 20:00 | Managing editor | Recover interrupted post-publish verification and prepare the final queue |
-| Day 2 | 22:00 | Publisher | Resume only the technically interrupted publication released at 20:00 |
+| Day 2 | 15:00 | Copy editor | Process eligible new or retry work with the same copy gate |
+| Day 2 | 16:00 | Managing editor | Resolve review, date, or label mismatches and route the next step |
+| Day 2 | 17:00 | Publisher | Process due scheduled articles or resume interrupted technical publication |
 
 Production roles never pass work directly to one another. Each returns `kotatsu:review`; the managing editor assigns the next role. `kotatsu:revise` is actionable at the next assigned run, while future work remains `kotatsu:planned`.
 
 At every managing-editor run, `pnpm milestone:close -- --apply` closes an open volume milestone only after its approved plan, formal cover, and every planned article Issue are closed with `kotatsu:done`. The command is idempotent and leaves incomplete volumes open with a reason.
 
-If the PC or Codex app misses a scheduled run, GitHub remains the durable queue. Recovery stays scheduled: copy editing retries at 15:00, the managing editor repairs handoffs at 16:00 and interrupted publication verification at 20:00, and the publisher retries at 17:00 and 22:00; visual work has a 21:00 retry. `pnpm visual:artifact` waits for the complete Actions download, validates desktop/mobile files, and prints the images that must be inspected. Only after the final same-day recovery slot is missed does `pnpm article:rebook` move both public and editorial dates together. An unmerged PR already advanced to `published` is explicitly reset to `scheduled` when rebooking, so the displayed date remains truthful. No agent publishes outside its scheduled run.
+Every listed window for the same role uses the same eligibility and quality gates; there are no special late-night recovery rules. If the PC or Codex app misses a run, GitHub Issues and article PRs remain the durable queue. A technical failure stays as `kotatsu:revise` with the same role and resumes at that role's next window without a managing-editor round trip. Only a content, date, or editorial decision returns to the managing editor. `pnpm visual:artifact` waits for a complete Actions download and validates every desktop/mobile file, while idempotent publishing resumes an interrupted PR without duplicating finished work. If publication crosses the date boundary, `pnpm article:rebook -- --resume-unmerged-publication` moves the public and editorial dates together before the next scheduled publishing window. No agent publishes outside its scheduled run.
 
 ## Branch And Publishing Rules
 
