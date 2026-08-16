@@ -25,7 +25,9 @@ jobs:
         with:
           name: kotatsu-visual-check
           path: |
-            test-results/
-            playwright-report/
+            test-results/**/screenshots/*.png
+            test-results/**/screenshots/*.jpg
+          if-no-files-found: error
+          retention-days: 14
 
 

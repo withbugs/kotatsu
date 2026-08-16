@@ -78,11 +78,12 @@ for (const targetPath of paths) {
     expect(metrics.imageCount).toBeGreaterThan(0);
     expect(metrics.brokenImages).toBe(0);
 
-    const screenshotPath = testInfo.outputPath('screenshots', `${targetPath.replace(/\W+/g, '-') || 'home'}.png`);
-    const screenshot = await page.screenshot({ path: screenshotPath, fullPage: true });
-    await testInfo.attach(`screenshot-${targetPath.replace(/\W+/g, '-') || 'home'}.png`, {
+    const screenshotName = `${targetPath.replace(/\W+/g, '-') || 'home'}.jpg`;
+    const screenshotPath = testInfo.outputPath('screenshots', screenshotName);
+    const screenshot = await page.screenshot({ path: screenshotPath, fullPage: true, type: 'jpeg', quality: 85 });
+    await testInfo.attach(`screenshot-${screenshotName}`, {
       body: screenshot,
-      contentType: 'image/png'
+      contentType: 'image/jpeg'
     });
   });
 }

@@ -1,6 +1,6 @@
 const PUBLISH_TIME_ZONE = 'Asia/Tokyo';
 const MAX_ROUTINE_DELAY_DAYS = 7;
-const FINAL_PUBLISHER_HOUR_JST = 17;
+const FINAL_PUBLISHER_HOUR_JST = 22;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 const formatter = new Intl.DateTimeFormat('en-US', {

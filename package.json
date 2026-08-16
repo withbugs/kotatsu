@@ -12,6 +12,7 @@
     "article:new": "node scripts/editorial/create-article-from-task.mjs",
     "article:rebook": "node scripts/editorial/rebook-overdue-article.mjs",
     "article:handoff": "node scripts/editorial/check-publication-handoff.mjs",
+    "visual:artifact": "node scripts/editorial/download-visual-artifact.mjs",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "publish:check": "node scripts/editorial/check-publishing-schedule.mjs",
