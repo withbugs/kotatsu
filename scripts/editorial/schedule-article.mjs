@@ -4,6 +4,7 @@ import path from 'node:path';
 import { validateEditorialIntegrity } from './editorial-integrity.mjs';
 import { determinePublicationHandoff } from './publication-handoff.mjs';
 import { loadArticles, parseArgs, parseNow, validatePublishedSchedule } from './publishing-schedule.mjs';
+import { containsLocalDateReference, jstDateKey } from './schedule-recovery.mjs';
 import { diversityPolicyEffectiveAt } from './visual-policy-dates.mjs';
 
 const PENDING_VISUAL_MARKER = '__AI_VISUAL_PENDING__';
@@ -120,7 +121,8 @@ if (heroImage && heroImage !== PENDING_VISUAL_MARKER) {
       errors.push('heroImage metadata sidecar is missing');
     } else {
       try {
-        const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+        const metadataRaw = fs.readFileSync(metadataPath, 'utf8');
+        const metadata = JSON.parse(metadataRaw);
         if (metadata.source !== 'ai-generated') {
           errors.push('hero metadata source must be ai-generated');
         }
@@ -160,6 +162,29 @@ if (heroImage && heroImage !== PENDING_VISUAL_MARKER) {
             const roster = JSON.parse(fs.readFileSync(rosterPath, 'utf8'));
             if (!roster.models?.some((model) => model.id === metadata.modelId)) {
               errors.push(`hero metadata modelId is not registered: ${metadata.modelId}`);
+            }
+          }
+        }
+
+        const recovery = article.data.editorial?.scheduleRecovery;
+        if (recovery?.visualRecheckRequired) {
+          const previousPublishDate = new Date(String(recovery.previousPublishAt || ''));
+          if (!Number.isNaN(previousPublishDate.getTime())) {
+            const staleLocations = [];
+            if (containsLocalDateReference(article.parsed.content, previousPublishDate)) {
+              staleLocations.push('article body');
+            }
+            if (containsLocalDateReference(article.data.visual || {}, previousPublishDate)) {
+              staleLocations.push('visual metadata');
+            }
+            if (containsLocalDateReference(metadataRaw, previousPublishDate)) {
+              staleLocations.push('hero sidecar');
+            }
+            if (staleLocations.length) {
+              errors.push(
+                `visual revalidation is incomplete: ${staleLocations.join(', ')} still refers to ` +
+                `${jstDateKey(previousPublishDate)}`
+              );
             }
           }
         }
