@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { validateEditorialIntegrity } from './editorial-integrity.mjs';
+import { determinePublicationHandoff } from './publication-handoff.mjs';
 import { loadArticles, parseArgs, validatePublishedSchedule } from './publishing-schedule.mjs';
 import {
   containsLocalDateReference,
@@ -83,9 +84,22 @@ const visualRecheckRequired =
   containsLocalDateReference(article.parsed.content, previousPublishDate) ||
   containsLocalDateReference(article.data.visual || {}, previousPublishDate) ||
   containsLocalDateReference(sidecarContent, previousPublishDate);
+const previousIntegrityReview = article.data.editorial.integrityReview;
+const nextIntegrityReview = visualRecheckRequired
+  ? {
+      status: 'pending',
+      crossVolumeDecision: previousIntegrityReview?.crossVolumeDecision || 'pending'
+    }
+  : previousIntegrityReview;
+const nextStatus = visualRecheckRequired
+  ? 'draft'
+  : resumeUnmergedPublication
+    ? 'scheduled'
+    : article.data.status;
 const nextEditorial = {
   ...article.data.editorial,
   publicationDate: jstDateKey(nextDate),
+  integrityReview: nextIntegrityReview,
   scheduleRecovery: {
     originalPublishAt,
     previousPublishAt: article.data.publishAt,
@@ -103,7 +117,7 @@ const nextEditorial = {
 };
 const nextData = {
   ...article.parsed.data,
-  ...(resumeUnmergedPublication ? { status: 'scheduled' } : {}),
+  status: nextStatus,
   publishAt: nextPublishAt,
   editorial: nextEditorial
 };
@@ -124,7 +138,7 @@ const scheduleResult = validatePublishedSchedule(
 const errors = [
   ...scheduleResult.errors,
   ...validateEditorialIntegrity(candidate, {
-    requireReview: article.data.status === 'scheduled' || resumeUnmergedPublication
+    requireReview: nextStatus === 'scheduled'
   })
 ];
 
@@ -136,8 +150,19 @@ if (errors.length) {
 fs.writeFileSync(article.file, matter.stringify(article.parsed.content, nextData), 'utf8');
 console.log(`Rebooked ${article.relativePath} from ${article.data.publishAt} to ${nextPublishAt}`);
 if (resumeUnmergedPublication) {
-  console.log('Reset interrupted unmerged publication from published to scheduled for a truthful new publication date.');
+  console.log(`Reset interrupted unmerged publication from published to ${nextStatus} for a truthful new publication date.`);
 }
 if (visualRecheckRequired) {
   console.log(`Visual recheck required: article content, visual metadata, or sidecar still refers to ${previousDateKey}`);
+  console.log('Copy review was reset because the publication context must be checked again after visual revalidation.');
+  console.log('Required GitHub labels: kotatsu:revise + agent:visual-editor');
+} else if (nextStatus === 'scheduled') {
+  const handoff = determinePublicationHandoff({
+    status: nextStatus,
+    publishAt: nextPublishAt,
+    now
+  });
+  if (!handoff.errors.length) {
+    console.log(`Required GitHub labels: ${handoff.stateLabel} + ${handoff.agentLabel}`);
+  }
 }

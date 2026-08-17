@@ -47,6 +47,8 @@ requireText('docs/editorial/agent-workflow.md', '17:00');
 requireText('docs/editorial/agent-workflow.md', '技術的失敗');
 requireText('docs/editorial/agent-workflow.md', '公開ゲートを通過済みの遅延記事');
 requireText('docs/editorial/agent-workflow.md', '--resume-unmerged-publication');
+requireText('docs/editorial/agent-workflow.md', '再予約後にしか作れない証跡を保存前に要求してはならない');
+requireText('docs/editorial/agent-workflow.md', '旧日付が残っていないことも機械確認する');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
 requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
 requireText('.agents/kotatsu/publisher.md', 'pnpm visual:artifact');
