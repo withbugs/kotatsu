@@ -21,7 +21,7 @@
 
 ## Handoff
 
-- 分離worktreeと専用branchを使う。既存PRへの修正は同じhead branchで行い、PRを重複作成しない。
+- 分離worktreeと専用branchを使う。既存PRへの修正はclean確認、fetch、detached switch、`origin/main` の通常mergeを通して同じhead branchで行い、PRを重複作成しない。
 - 着手時にreadyまたはreviseをrunningへ変更する。
 - 完了時にPRをReady for reviewにし、Issueへ成果、PR URL、head branch、残課題、次担当候補をコメントしてreviewへ戻す。
 - ビジュアル編集へ直接readyを付けない。
