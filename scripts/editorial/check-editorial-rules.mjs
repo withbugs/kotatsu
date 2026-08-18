@@ -43,6 +43,7 @@ requireText('docs/editorial/agent-workflow.md', 'pnpm milestone:close -- --apply
 requireText('docs/editorial/agent-workflow.md', '## Missed Run Recovery');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:rebook');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:handoff');
+requireText('docs/editorial/agent-workflow.md', '分離worktreeでclean確認');
 requireText('docs/editorial/agent-workflow.md', '17:00');
 requireText('docs/editorial/agent-workflow.md', '技術的失敗');
 requireText('docs/editorial/agent-workflow.md', '公開ゲートを通過済みの遅延記事');
@@ -58,6 +59,11 @@ requireText('.agents/kotatsu/copy-editor.md', '11:00と15:00のどちらも同�
 requireText('.agents/kotatsu/managing-editor.md', '9:00、12:00、16:00');
 requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:rebook');
 requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:handoff');
+requireText('.agents/kotatsu/managing-editor.md', '対象branchへのdetached switch');
+requireText('.agents/kotatsu/writer.md', 'detached switch');
+requireText('docs/editorial/github-access-policy.md', 'git status --porcelain');
+requireText('docs/editorial/github-access-policy.md', 'git switch --detach');
+requireText('docs/editorial/github-access-policy.md', 'rebaseを使用しない');
 requireText('.agents/kotatsu/copy-editor.md', '過去日を記録して通過させない');
 requireText('.agents/kotatsu/publisher.md', '古い日付のまま公開しない');
 requireText('package.json', '"milestone:close"');

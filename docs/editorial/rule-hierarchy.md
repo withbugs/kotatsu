@@ -30,6 +30,8 @@ KOTATSUの編集ルールは、内容ごとに次のファイルを正本とす�
 
 ルールを読む目的だけで、制作branchを `main` へmergeまたはrebaseしない。
 
+成果物を変更する場合は、`docs/editorial/github-access-policy.md` の分離worktree手順を使う。既存PR branchはclean確認、fetch、detached switch、通常mergeがすべて成功した後だけ編集し、予定済みタスクではrebaseを使用しない。
+
 ## Automation Memory
 
 automationの `memory.md` は直近作業の補助であり、正本ではない。GitHub、PR、`origin/main` の現在状態が常に優先する。

@@ -15,6 +15,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 各起動で `pnpm milestone:close -- --apply` を実行し、正式計画、正式カバー、全記事Issueがdoneで揃ったVol.のmilestoneを閉じる。
 - 各起動で全open Article Issueの期限超過を状態labelにかかわらず確認し、欠けた予定実行を再現せず次の有効な公開枠へ再予約する。
 - 各起動でscheduled記事に `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをIssueへ完全一致で反映してから再取得確認する。
+- 記事branchを変更する前に分離worktreeでclean確認、fetch、対象branchへのdetached switch、`origin/main` の通常mergeを順に通す。成功前にIssueをrunningへ変更せず、rebaseを使用しない。
 
 ## Desk Gates
 
