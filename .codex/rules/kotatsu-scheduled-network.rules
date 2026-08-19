@@ -1,0 +1,39 @@
+prefix_rule(
+    pattern = ["node", "scripts/editorial/kotatsu-github.mjs"],
+    decision = "allow",
+    justification = "The wrapper restricts unattended GitHub operations to withbugs/kotatsu and an explicit operation allowlist.",
+    match = [
+        "node scripts/editorial/kotatsu-github.mjs issue list --repo withbugs/kotatsu --state open",
+        "node scripts/editorial/kotatsu-github.mjs pr view 65 --repo withbugs/kotatsu",
+    ],
+    not_match = [
+        "gh issue list --repo withbugs/kotatsu",
+        "node scripts/editorial/another-script.mjs issue list --repo withbugs/kotatsu",
+    ],
+)
+
+prefix_rule(
+    pattern = ["node", "scripts/editorial/kotatsu-git-remote.mjs"],
+    decision = "allow",
+    justification = "The wrapper permits only origin fetches and HEAD pushes to approved non-main branch families.",
+    match = [
+        "node scripts/editorial/kotatsu-git-remote.mjs fetch origin main",
+        "node scripts/editorial/kotatsu-git-remote.mjs push origin HEAD:article/issue-52-weekend-small-summer-outing",
+    ],
+    not_match = [
+        "git push origin main",
+        "node scripts/editorial/another-script.mjs fetch origin main",
+    ],
+)
+
+prefix_rule(
+    pattern = ["node", "scripts/editorial/close-complete-milestones.mjs"],
+    decision = "allow",
+    justification = "The KOTATSU closeout script is repository-locked and closes only mechanically eligible volume milestones.",
+    match = [
+        "node scripts/editorial/close-complete-milestones.mjs --apply",
+    ],
+    not_match = [
+        "node scripts/editorial/another-script.mjs --apply",
+    ],
+)

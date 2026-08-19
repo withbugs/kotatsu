@@ -34,12 +34,12 @@ requireText('docs/editorial/agent-workflow.md', '未生成のままreviewへ進�
 requireText('docs/editorial/agent-workflow.md', 'editorial.integrityReview.status: passed');
 requireText('.agents/kotatsu/editor-in-chief.md', '持ち込まない季節・生活イベント');
 requireText('.agents/kotatsu/managing-editor.md', 'crossVolumeReview.managingEditorApproval');
-requireText('.agents/kotatsu/managing-editor.md', 'pnpm milestone:close -- --apply');
+requireText('.agents/kotatsu/managing-editor.md', 'node scripts/editorial/close-complete-milestones.mjs --apply');
 requireText('.agents/kotatsu/copy-editor.md', 'editorial.integrityReview');
 requireText('.agents/kotatsu/copy-editor.md', 'managingEditorApproval');
 requireText('docs/editorial/agent-workflow.md', 'crossVolumeReview.managingEditorApproval');
 requireText('docs/editorial/agent-workflow.md', '## Volume Closeout');
-requireText('docs/editorial/agent-workflow.md', 'pnpm milestone:close -- --apply');
+requireText('docs/editorial/agent-workflow.md', 'node scripts/editorial/close-complete-milestones.mjs --apply');
 requireText('docs/editorial/agent-workflow.md', '## Missed Run Recovery');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:rebook');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:handoff');
@@ -64,6 +64,12 @@ requireText('.agents/kotatsu/writer.md', 'detached switch');
 requireText('docs/editorial/github-access-policy.md', 'git status --porcelain');
 requireText('docs/editorial/github-access-policy.md', 'git switch --detach');
 requireText('docs/editorial/github-access-policy.md', 'rebaseを使用しない');
+requireText('docs/editorial/github-access-policy.md', 'kotatsu-github.mjs');
+requireText('docs/editorial/github-access-policy.md', 'kotatsu-git-remote.mjs');
+requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/kotatsu-github.mjs');
+requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/kotatsu-git-remote.mjs');
+requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/close-complete-milestones.mjs');
+requireText('tests/editorial/scheduled-network-brokers.test.mjs', 'rejects main pushes');
 requireText('.agents/kotatsu/copy-editor.md', '過去日を記録して通過させない');
 requireText('.agents/kotatsu/publisher.md', '古い日付のまま公開しない');
 requireText('package.json', '"milestone:close"');
@@ -98,6 +104,11 @@ rejectPattern(
   'README.md',
   /(?:20:00|21:00|22:00)/,
   'late recovery window'
+);
+rejectPattern(
+  '.codex/rules/kotatsu-scheduled-network.rules',
+  /pattern\s*=\s*\["(?:gh|git)"/,
+  'direct network command permission'
 );
 for (const role of ['managing-editor', 'publisher', 'visual-editor', 'copy-editor']) {
   rejectPattern(

@@ -12,7 +12,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 同一週に2本公開する場合は、ライターへ渡す前に各Issueへ具体的な公開日を割り当て、`publishAt`を48時間以上離す。
 - reviseが2回の担当起動を越えて動かない場合は、停止理由と必要な人手をIssueへ記録する。
 - 計画Issueのcloseだけを理由に次Vol.を作らない。未来Vol.は同時に1件までとする。
-- 各起動で `pnpm milestone:close -- --apply` を実行し、正式計画、正式カバー、全記事Issueがdoneで揃ったVol.のmilestoneを閉じる。
+- 各起動で `node scripts/editorial/close-complete-milestones.mjs --apply` を実行し、正式計画、正式カバー、全記事Issueがdoneで揃ったVol.のmilestoneを閉じる。
 - 各起動で全open Article Issueの期限超過を状態labelにかかわらず確認し、欠けた予定実行を再現せず次の有効な公開枠へ再予約する。
 - 各起動でscheduled記事に `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをIssueへ完全一致で反映してから再取得確認する。
 - 記事branchを変更する前に分離worktreeでclean確認、fetch、対象branchへのdetached switch、`origin/main` の通常mergeを順に通す。成功前にIssueをrunningへ変更せず、rebaseを使用しない。
