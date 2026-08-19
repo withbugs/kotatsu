@@ -26,7 +26,8 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 ## Authentication And Retry
 
 - `.codex/rules/kotatsu-scheduled-network.rules` は上記2つのbrokerとrepository固定のmilestone closeoutだけを外部実行へ許可する。任意の `gh`、`git`、shellコマンドにはネットワーク権限を与えない。
-- GitHub/Git通信は最初からbrokerを実行する。通常サンドボックス内で直接コマンドを失敗させてから再試行しない。
+- GitHub/Git通信のbroker、milestone closeout、`pnpm install --offline --frozen-lockfile --ignore-scripts` は、最初の `exec_command` から `sandbox_permissions: "require_escalated"` を指定する。command ruleが許可するprefixだけを無人承認させ、通常サンドボックス内でproxy失敗またはpnpmストア参照失敗させてから再試行しない。
+- offline installはグローバルpnpmストアの参照だけに昇格を使う。`--offline`、`--frozen-lockfile`、`--ignore-scripts`を外したinstallや外部取得への切り替えは禁止する。
 - broker、command rule、keyring、network、permission由来の失敗が出た場合は、許可範囲を広げたりユーザー承認を待ったりしない。同じ担当の次回起動で再試行できる状態を保つ。
 - 失敗した場合は、コマンド、エラー、未完了操作を報告し、GitHub状態を先へ進めず停止する。
 - `gh auth status`、`gh auth refresh`、`gh auth logout`、token再発行、資格情報削除は自動実行しない。

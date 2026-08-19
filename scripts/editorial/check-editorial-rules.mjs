@@ -66,6 +66,8 @@ requireText('docs/editorial/github-access-policy.md', 'git switch --detach');
 requireText('docs/editorial/github-access-policy.md', 'rebaseを使用しない');
 requireText('docs/editorial/github-access-policy.md', 'kotatsu-github.mjs');
 requireText('docs/editorial/github-access-policy.md', 'kotatsu-git-remote.mjs');
+requireText('docs/editorial/github-access-policy.md', 'sandbox_permissions: "require_escalated"');
+requireText('docs/editorial/github-access-policy.md', 'pnpm install --offline --frozen-lockfile --ignore-scripts');
 requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/kotatsu-github.mjs');
 requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/kotatsu-git-remote.mjs');
 requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/close-complete-milestones.mjs');
