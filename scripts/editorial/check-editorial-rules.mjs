@@ -69,6 +69,7 @@ requireText('docs/editorial/github-access-policy.md', 'kotatsu-git-remote.mjs');
 requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/kotatsu-github.mjs');
 requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/kotatsu-git-remote.mjs');
 requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/close-complete-milestones.mjs');
+requireText('.codex/rules/kotatsu-scheduled-network.rules', 'pnpm", "install", "--offline", "--frozen-lockfile", "--ignore-scripts');
 requireText('tests/editorial/scheduled-network-brokers.test.mjs', 'rejects main pushes');
 requireText('.agents/kotatsu/copy-editor.md', '過去日を記録して通過させない');
 requireText('.agents/kotatsu/publisher.md', '古い日付のまま公開しない');

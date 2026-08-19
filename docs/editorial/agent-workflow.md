@@ -44,6 +44,7 @@
 
 ## Branch And Handoff
 
+- 予定実行の分離worktreeは、remote brokerで`origin/main`を取得した直後に `pnpm install --offline --frozen-lockfile --ignore-scripts` を実行する。lockfileとローカルpnpmストアだけで依存を復元し、不足時は外部取得へ切り替えずその起動を停止する。
 - 承認済み正式計画は `origin/main` に存在する場合だけ制作へ使える。
 - 記事制作は、ライター、ビジュアル編集、校正、公開担当が同じ記事PR head branchへ変更を積む。
 - Draft PRは担当の作業中だけ許可する。担当完了時はReady for reviewにする。
