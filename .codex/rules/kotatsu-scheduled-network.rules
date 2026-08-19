@@ -37,3 +37,17 @@ prefix_rule(
         "node scripts/editorial/another-script.mjs --apply",
     ],
 )
+
+prefix_rule(
+    pattern = ["pnpm", "install", "--offline", "--frozen-lockfile", "--ignore-scripts"],
+    decision = "allow",
+    justification = "Scheduled worktrees restore the frozen dependency set from the local pnpm store without network access or lifecycle scripts.",
+    match = [
+        "pnpm install --offline --frozen-lockfile --ignore-scripts",
+    ],
+    not_match = [
+        "pnpm install",
+        "pnpm install --frozen-lockfile",
+        "pnpm install --offline",
+    ],
+)
