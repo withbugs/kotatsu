@@ -59,6 +59,8 @@ Every listed window for the same role uses the same eligibility and quality gate
 
 Scheduled agents that change repository files run in disposable worktrees. They verify a clean worktree, fetch and detach at the existing PR branch, and merge `origin/main` without rebasing before changing GitHub state. A failed preparation is discarded with its worktree, so a later scheduled run restarts from the remote branch instead of repairing a partially changed shared checkout.
 
+Two repository-scoped brokers validate unattended network operations before invoking `gh` or remote Git. `.codex/rules/kotatsu-scheduled-network.rules` permits only those brokers and the repository-locked milestone closeout command, so scheduled worktrees can reach the durable Issue/PR queue without granting arbitrary shell network access, main pushes, or force pushes.
+
 ## Branch And Publishing Rules
 
 - Approved plans and formal covers may reach `main` before an article without exposing unfinished article pages.

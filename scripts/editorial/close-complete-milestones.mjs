@@ -19,7 +19,10 @@ function ghJson(commandArgs) {
   return JSON.parse(run('gh', commandArgs).stdout);
 }
 
-const repository = String(args.repo || ghJson(['repo', 'view', '--json', 'nameWithOwner']).nameWithOwner);
+const repository = 'withbugs/kotatsu';
+if (args.repo && args.repo !== repository) {
+  throw new Error(`milestone closeout is restricted to ${repository}`);
+}
 const planRef = String(args['plan-ref'] || 'origin/main');
 const apply = args.apply === true || args.apply === 'true';
 const milestones = ghJson(['api', `repos/${repository}/milestones?state=open&per_page=100`])

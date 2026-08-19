@@ -124,7 +124,7 @@ PCまたはCodexアプリが停止して予定済みタスクが起動しなく�
 
 Vol.のmilestoneを閉じる責任者は進行編集である。公開担当は各記事Issueをdoneでcloseするが、milestone自体は操作しない。
 
-進行編集は9:00、12:00、16:00の各起動で、`git fetch origin main` の成功後に `pnpm milestone:close -- --apply` を実行する。このコマンドはopenな `Vol. XXX` milestoneごとに、次をすべて満たす場合だけcloseする。
+進行編集は9:00、12:00、16:00の各起動で、remote brokerによるorigin/main取得の成功後に `node scripts/editorial/close-complete-milestones.mjs --apply` を実行する。このコマンドはopenな `Vol. XXX` milestoneごとに、次をすべて満たす場合だけcloseする。
 
 - `origin/main` に承認済み `docs/editorial/plans/vol-XXX.md` が存在する。
 - milestoneに完了済みの `type:volume-plan` が1件、`type:volume-cover` が1件ある。
