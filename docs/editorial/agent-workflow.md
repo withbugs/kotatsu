@@ -38,7 +38,7 @@
 | `publish` / publisherの`revise` | 公開担当 | `running` | 公開作業開始時 |
 | `running` | 公開担当 | `done` | `main`反映と公開URL確認が完了 |
 
-`kotatsu:ready` の最終管理者は進行編集である。制作担当同士は直接次担当labelや `ready` / `publish` を付けず、必ず `review` へ戻す。
+`kotatsu:ready` の最終管理者は進行編集である。制作担当同士は直接次担当labelや `ready` / `publish` を付けず、必ず `review` へ戻す。迅速復旧でも制作workerの後に別の進行編集workerがdesk gateを実施するため、この権限分離は変わらない。
 
 `kotatsu:revise` は待機labelではない。付与時は他の状態labelを外し、担当labelを1つにし、修正理由または技術的な再開地点、PR URL、head branch、完了条件をコメントする。次回の同担当起動で処理させない修正は `planned` に置く。
 
@@ -73,7 +73,7 @@
 | 2 | 16:00 | 進行編集 | review、日付、labelの不一致を整理し、次工程へ渡す |
 | 2 | 17:00 | 公開担当 | 到来済みのscheduled記事と技術的に中断した公開を処理 |
 
-最短でもビジュアル編集から公開まではDay 1 18:00からDay 2 13:00を使う。
+通常制作では、最短でもビジュアル編集から公開まではDay 1 18:00からDay 2 13:00を使う。遅延記事は迅速復旧コーディネーターが同じ品質ゲートを逐次dispatchでき、担当間の定期時刻だけを待たずに進める。
 
 同じ担当に複数の起動時刻がある場合、すべて同じ成果物、検査、完了条件を使う。前の起動で完了済みなら何もせず、`ready`、実施可能な `revise`、または2時間を超えて有意な進捗がない同担当の `running` だけを処理する。直近2時間以内に更新された作業は重複処理しない。予定実行の欠損、技術障害、期限超過は `docs/editorial/recovery-workflow.md` で分類し、通常工程の品質基準を上書きしない。
 
@@ -83,7 +83,7 @@
 
 予定実行の欠損、技術的失敗、公開予定日の超過は `docs/editorial/recovery-workflow.md` を正本とする。通常工程は成果物と品質ゲートを定義し、復旧工程は完了済みゲートを保持する条件、未完了の再開地点、protected公開日を動かさない最短空き枠だけを定義する。
 
-進行編集は9:00、12:00、16:00の各起動で、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。技術的なDelivery recoveryは公開担当が次の13:00または17:00に `pnpm recovery:slot` と `pnpm article:recover-publication` を同じ起動内で実行する。進行編集はProduction recoveryを再割当し、読者向け内容の再確認が必要なEditorial recoveryに `pnpm article:rebook` を使う。
+09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot` と `pnpm article:recover-publication` を同じsession内で実行する。読者向け内容の再確認が必要なEditorial recoveryは担当workerが `pnpm article:rebook` を使う。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
 
 復旧でも記事状態は `draft -> scheduled -> published` とし、公開担当だけが最終記事PRをmainへmergeする。未来記事の日付を連鎖的に変更せず、制作中または期限内のprotected日付を維持する。
 
