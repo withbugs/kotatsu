@@ -43,7 +43,7 @@ const editorialIntegritySchema = z.object({
     rescheduledPublishAt: z.string(),
     rescheduledAt: z.string(),
     reason: z.string().min(10),
-    approvedBy: z.literal('agent:managing-editor'),
+    approvedBy: z.enum(['agent:managing-editor', 'agent:publisher']),
     attempt: z.number().int().positive(),
     mode: z.enum(['editorial', 'delivery']).optional(),
     resumedFromUnmergedPublication: z.boolean().optional(),

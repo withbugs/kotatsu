@@ -48,8 +48,12 @@ test('a recovery before the final publisher run may use the same JST day', () =>
   assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T16:00:00+09:00')), '2026-08-12');
 });
 
-test('a recovery after the final publisher run starts on the next JST day', () => {
-  assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T17:00:00+09:00')), '2026-08-13');
+test('the 17:00 publisher run may recover on the same JST day', () => {
+  assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T17:00:00+09:00')), '2026-08-12');
+});
+
+test('a recovery after the final publisher hour starts on the next JST day', () => {
+  assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T18:00:00+09:00')), '2026-08-13');
 });
 
 test('recovery slot selection preserves occupied dates and uses the earliest open gap', () => {
@@ -89,14 +93,14 @@ test('routine same-month recovery within seven days is accepted', () => {
   assert.equal(result.requiresEditorialRevalidation, false);
 });
 
-test('a stale date before the next publisher run is rejected', () => {
+test('the final publisher run accepts a same-day recovery date', () => {
   const result = validateRecoveryTarget({
     originalPublishAt: '2026-08-11T00:00:00+09:00',
     currentPublishAt: '2026-08-11T00:00:00+09:00',
     nextPublishAt: '2026-08-12T00:00:00+09:00',
     now: new Date('2026-08-12T17:00:00+09:00')
   });
-  assert.match(result.errors.join('\n'), /next publisher run/);
+  assert.deepEqual(result.errors, []);
 });
 
 test('a delay over seven days requires editorial revalidation', () => {

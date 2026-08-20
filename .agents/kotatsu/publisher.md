@@ -10,12 +10,13 @@
 
 - `agent:publisher` と `kotatsu:publish`、または公開工程に限った `kotatsu:revise` が付いている。
 - 記事がscheduledでpublishAtが到来済み、または公開担当の前回起動でpublishedまで進んだopen・未mergeの同じ記事PRを技術的に再開する状態である。
+- 公開予定日を過ぎていても、校正、画像、CI、掲載予約が完了し、同じ記事PRの技術的な公開だけが未完了ならDelivery recoveryの対象に含める。
 - 正式Vol.カバー、校正結果、記事PR/head branchが確認できる。
 - `editorial.integrityReview.status` が `passed` で、`pnpm publish:check` の編集整合ゲートを通過する。
 
 draftまたは未来日時の記事は公開せず、理由をコメントして進行編集へ戻す。
 
-`publishAt` のJST日付が現在日より前なら古い日付のまま公開しない。Issueをreviewへ戻し、進行編集が `docs/editorial/recovery-workflow.md` に従ってDeliveryまたはEditorial recoveryを行ってから再度publishを受け取る。同日0:00のpublishAtは当日13:00または17:00の公開対象として扱う。
+`publishAt` のJST日付が現在日より前なら古い日付のまま公開しない。Delivery条件を満たす場合は、`docs/editorial/recovery-workflow.md` に従い、保護日を集めて `pnpm recovery:slot` と `pnpm article:recover-publication -- --handled-by=agent:publisher` を実行する。記事branchとIssue本文の日付を同期し、`article:handoff` のlabelを再取得確認してから、同じ起動内で公開ゲートへ進む。コマンドが編集判断を要求して拒否した場合だけ進行編集へ戻す。同日0:00のpublishAtは当日13:00または17:00の公開対象として扱う。
 
 ## Publishing
 
@@ -30,6 +31,6 @@ draftまたは未来日時の記事は公開せず、理由をコメントして
 
 `visual:artifact` は長時間無出力でも終了するまで待ち、途中の保存先を空と判定しない。失敗時は自動再試行後の終了コードとエラーを使う。公開前半でpublishedのcommitをpush済みなら、再実行時の `article:publish` はidempotentな確認として扱い、同じ変更を重複commitしない。
 
-成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。通信、Actions、artifact取得、Pages確認など制作内容を変えない当日中の技術的失敗は、具体的な再開地点をコメントして `kotatsu:revise + agent:publisher` に残す。日付をまたいだ場合は `kotatsu:review + agent:managing-editor` へ戻し、Delivery recoveryで完了済みゲートを保持する。本文、画像、校正の判断が必要な失敗はEditorialまたはProduction recoveryへ戻す。
+成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、具体的な再開地点をコメントして `kotatsu:revise + agent:publisher` に残す。日付をまたいでも次の公開枠でDelivery recoveryを自己完結し、完了済みゲートを保持する。本文、画像、校正の判断が必要な失敗だけEditorialまたはProduction recoveryへ戻す。
 
 公開担当はVol.のmilestone自体は閉じない。最終記事Issueをcloseした後、進行編集の次回起動がVol.完了条件を確認して閉じる。

@@ -55,6 +55,8 @@ requireText('docs/editorial/recovery-workflow.md', '読者向け本文');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
 requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
 requireText('.agents/kotatsu/publisher.md', 'pnpm visual:artifact');
+requireText('.agents/kotatsu/publisher.md', 'pnpm article:recover-publication');
+requireText('.agents/kotatsu/publisher.md', '--handled-by=agent:publisher');
 requireText('.agents/kotatsu/visual-editor.md', '10:00と18:00のどちらも同じ制作枠');
 requireText('.agents/kotatsu/visual-editor.md', '2時間を超えて有意な進捗がない');
 requireText('.agents/kotatsu/copy-editor.md', '11:00と15:00のどちらも同じ校正枠');
