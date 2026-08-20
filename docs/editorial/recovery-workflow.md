@@ -9,6 +9,7 @@
 - 復旧作業も予定済み担当エージェントの起動内で行い、この文書を根拠に人手で直接公開しない。
 - GitHub Issue、記事PR、Actionsを永続キューとする。予定時刻を過去時刻として再現しない。
 - 復旧の速さと公開カレンダーを分離する。制作上の未完了工程は速やかに完了させ、公開は読者向けの間隔を守る最短空き枠で行う。
+- Delivery recoveryの7日判定は、記事の現在の `publishAt`、つまり最後に承認された掲載予約日から数える。`scheduleRecovery.originalPublishAt` は監査履歴であり、この判定には使わない。
 
 ## Recovery Classes
 
@@ -26,11 +27,11 @@
 
 当日中の技術的中断は `kotatsu:revise + agent:publisher` のまま、次の13:00または17:00公開担当が同じPRの未完了地点から再開する。`article:publish` と `visual:artifact` は再実行可能として扱い、commit、artifact、mergeを重複させない。
 
-日付をまたいだscheduled記事、またはopen・未mergeのPR内でpublishedまで進んだ記事も、`agent:publisher` を維持し、次の13:00または17:00公開担当が次の順で扱う。技術的な再予約に進行編集の中継を必須としない。
+日付をまたいだscheduled記事、またはopen・未mergeのPR内でpublishedまで進んだ記事も、次の13:00または17:00公開担当が次の順で扱う。技術的な再予約に進行編集の中継を必須としない。Issue labelが誤って他担当を指していても、open・未mergeの記事PR内でpublished、校正passed、正式画像確認済みなら孤立したDelivery案件として公開担当が回収する。PRと記事metadataをDelivery状態の発見元とし、古いlabelだけを理由に対象外にしない。
 
 1. 保護された公開日を集め、`pnpm recovery:slot -- --occupied=<comma-separated ISO dates>` で最短空き枠を得る。
    対象記事自身の期限超過した旧枠は `occupied` に含めない。
-2. 同じ月で直前の掲載予約日から7日以内なら、記事branch上で `pnpm article:recover-publication -- --slug=<slug> --publishAt=<ISO date> --handled-by=agent:publisher` を実行する。PR内でpublishedなら `--resume-unmerged-publication` も付ける。
+2. 同じ月で現在の `publishAt` から7日以内なら、記事branch上で `pnpm article:recover-publication -- --slug=<slug> --publishAt=<ISO date>` を実行する。PR内でpublishedなら `--resume-unmerged-publication` も付ける。日数を手計算して事前分類せず、コマンドの終了結果を使う。
 3. コマンドが読者向け本文、title、description、heroAlt、tagsに旧具体日を検出した場合は変更せずEditorial recoveryへ移す。
 4. 成功時は内部のeditorial、visual、sidecarの日付だけを更新し、passedの校正と確認済み画像を保持したscheduledへ戻す。
 5. 記事branchの `publishAt` と `editorial.publicationDate` をIssue本文の現在公開予定へ同期し、class、元日時、新日時、保持したゲートをコメントする。
@@ -38,7 +39,7 @@
 
 Delivery recoveryは画像、本文、校正の内容を変更しない。内部日付以外の差分が生じた場合は使用せず、ProductionまたはEditorial recoveryへ移す。
 
-公開担当がDelivery recoveryコマンドから読者向け旧具体日、7日超、月跨ぎなどの拒否を受けた場合だけ、変更をpushせず `kotatsu:review + agent:managing-editor` へ送る。進行編集はProductionとEditorial recoveryを調整し、過去の規則で別担当に残ったDelivery案件だけ `--handled-by=agent:managing-editor` で回収できる。新しいDelivery案件は公開担当のキューに保持する。
+公開担当がDelivery recoveryコマンドから読者向け旧具体日、現在の `publishAt` から7日超、月跨ぎなどの拒否を受けた場合だけ、変更をpushせず `kotatsu:review + agent:managing-editor` へ送る。進行編集はProductionとEditorial recoveryだけを調整し、Delivery案件の日付を独自判断で再分類しない。
 
 ## Protected Publication Calendar
 

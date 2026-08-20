@@ -92,26 +92,6 @@ test('delivery recovery preserves passed gates and updates internal dates', () =
   }
 });
 
-test('managing editor may reclaim a legacy delivery recovery assignment', () => {
-  const fixture = createFixture();
-  try {
-    const result = spawnSync(process.execPath, [
-      script,
-      '--slug=summer-outing',
-      '--publishAt=2026-08-20T00:00:00+09:00',
-      '--now=2026-08-20T16:00:00+09:00',
-      '--resume-unmerged-publication',
-      '--handled-by=agent:managing-editor'
-    ], { cwd: fixture.root, encoding: 'utf8' });
-
-    assert.equal(result.status, 0, result.stderr || result.stdout);
-    const parsed = matter(fs.readFileSync(fixture.articlePath, 'utf8'));
-    assert.equal(parsed.data.editorial.scheduleRecovery.approvedBy, 'agent:managing-editor');
-  } finally {
-    fs.rmSync(fixture.root, { recursive: true, force: true });
-  }
-});
-
 test('delivery recovery rejects an unauthorized handler', () => {
   const fixture = createFixture();
   try {
@@ -124,6 +104,40 @@ test('delivery recovery rejects an unauthorized handler', () => {
 
     assert.equal(result.status, 1);
     assert.match(result.stderr, /--handled-by/);
+  } finally {
+    fs.rmSync(fixture.root, { recursive: true, force: true });
+  }
+});
+
+test('delivery recovery uses the current booking rather than the audit origin for its seven-day limit', () => {
+  const fixture = createFixture();
+  try {
+    const parsed = matter(fs.readFileSync(fixture.articlePath, 'utf8'));
+    parsed.data.editorial.scheduleRecovery = {
+      originalPublishAt: '2026-08-11T00:00:00+09:00',
+      previousPublishAt: '2026-08-11T00:00:00+09:00',
+      rescheduledPublishAt: '2026-08-16T00:00:00+09:00',
+      rescheduledAt: '2026-08-14T00:05:12.764Z',
+      reason: 'The original slot was rebooked after production recovery.',
+      approvedBy: 'agent:managing-editor',
+      attempt: 1,
+      visualRecheckRequired: false
+    };
+    fs.writeFileSync(fixture.articlePath, matter.stringify(parsed.content, parsed.data), 'utf8');
+
+    const result = spawnSync(process.execPath, [
+      script,
+      '--slug=summer-outing',
+      '--publishAt=2026-08-20T00:00:00+09:00',
+      '--now=2026-08-20T17:00:00+09:00',
+      '--resume-unmerged-publication'
+    ], { cwd: fixture.root, encoding: 'utf8' });
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const recovered = matter(fs.readFileSync(fixture.articlePath, 'utf8'));
+    assert.equal(recovered.data.editorial.scheduleRecovery.originalPublishAt, '2026-08-11T00:00:00+09:00');
+    assert.equal(recovered.data.editorial.scheduleRecovery.previousPublishAt, '2026-08-16T00:00:00+09:00');
+    assert.equal(recovered.data.editorial.scheduleRecovery.approvedBy, 'agent:publisher');
   } finally {
     fs.rmSync(fixture.root, { recursive: true, force: true });
   }

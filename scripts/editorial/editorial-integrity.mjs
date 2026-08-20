@@ -149,7 +149,7 @@ export function validateEditorialIntegrity(article, options = {}) {
         errors.push(`${rel}: editorial.scheduleRecovery.reason must explain the delay`);
       }
       const allowedRecoveryApprovers = recovery.mode === 'delivery'
-        ? ['agent:managing-editor', 'agent:publisher']
+        ? ['agent:publisher']
         : ['agent:managing-editor'];
       if (!allowedRecoveryApprovers.includes(recovery.approvedBy)) {
         errors.push(`${rel}: editorial.scheduleRecovery.approvedBy is invalid for ${recovery.mode || 'legacy editorial'} recovery`);

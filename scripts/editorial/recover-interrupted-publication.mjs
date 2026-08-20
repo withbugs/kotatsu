@@ -17,23 +17,20 @@ const args = parseArgs(process.argv.slice(2));
 const slug = String(args.slug || args.article || '');
 const nextPublishAt = String(args.publishAt || args['publish-at'] || '');
 const reason = String(args.reason || 'publication delivery was interrupted after editorial approval');
-const handledBy = String(args['handled-by'] || 'agent:publisher');
 const now = args.now ? new Date(String(args.now)) : new Date();
-const allowedHandlers = new Set(['agent:publisher', 'agent:managing-editor']);
 
 if (!slug || !nextPublishAt) {
-  console.error('Usage: pnpm article:recover-publication -- --slug="article-slug" --publishAt="2026-08-20T00:00:00+09:00" [--resume-unmerged-publication] [--handled-by=agent:publisher]');
+  console.error('Usage: pnpm article:recover-publication -- --slug="article-slug" --publishAt="2026-08-20T00:00:00+09:00" [--resume-unmerged-publication]');
   process.exit(1);
 }
 if (Number.isNaN(now.getTime())) {
   console.error('--now must be a valid date when provided');
   process.exit(1);
 }
-if (!allowedHandlers.has(handledBy)) {
-  console.error('--handled-by must be agent:publisher or agent:managing-editor');
+if (args['handled-by'] && args['handled-by'] !== 'agent:publisher') {
+  console.error('--handled-by may only be agent:publisher for delivery recovery');
   process.exit(1);
 }
-
 const articles = loadArticles();
 const article = articles.find((entry) => entry.slug === slug);
 if (!article) {
@@ -122,7 +119,7 @@ nextEditorial.scheduleRecovery = {
   rescheduledPublishAt: nextPublishAt,
   rescheduledAt: now.toISOString(),
   reason,
-  approvedBy: handledBy,
+  approvedBy: 'agent:publisher',
   attempt: Number(previousRecovery?.attempt || 0) + 1,
   mode: 'delivery',
   resumedFromUnmergedPublication: previousStatus === 'published',

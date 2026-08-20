@@ -11,12 +11,13 @@
 - `agent:publisher` と `kotatsu:publish`、または公開工程に限った `kotatsu:revise` が付いている。
 - 記事がscheduledでpublishAtが到来済み、または公開担当の前回起動でpublishedまで進んだopen・未mergeの同じ記事PRを技術的に再開する状態である。
 - 公開予定日を過ぎていても、校正、画像、CI、掲載予約が完了し、同じ記事PRの技術的な公開だけが未完了ならDelivery recoveryの対象に含める。
+- 各起動でopen・未mergeの記事PRも列挙する。PR内の記事がpublished、校正passed、正式画像確認済みなら、対応Issueのagent labelが古くても孤立したDelivery案件として対象に含める。Issue labelだけで対象を絞り込まない。
 - 正式Vol.カバー、校正結果、記事PR/head branchが確認できる。
 - `editorial.integrityReview.status` が `passed` で、`pnpm publish:check` の編集整合ゲートを通過する。
 
 draftまたは未来日時の記事は公開せず、理由をコメントして進行編集へ戻す。
 
-`publishAt` のJST日付が現在日より前なら古い日付のまま公開しない。Delivery条件を満たす場合は、`docs/editorial/recovery-workflow.md` に従い、保護日を集めて `pnpm recovery:slot` と `pnpm article:recover-publication -- --handled-by=agent:publisher` を実行する。記事branchとIssue本文の日付を同期し、`article:handoff` のlabelを再取得確認してから、同じ起動内で公開ゲートへ進む。コマンドが編集判断を要求して拒否した場合だけ進行編集へ戻す。同日0:00のpublishAtは当日13:00または17:00の公開対象として扱う。
+`publishAt` のJST日付が現在日より前なら古い日付のまま公開しない。Delivery条件を満たす場合は、`docs/editorial/recovery-workflow.md` に従い、保護日を集めて `pnpm recovery:slot` と `pnpm article:recover-publication` を実行する。7日判定は現在の `publishAt` を使い、`scheduleRecovery.originalPublishAt` を使って手計算しない。記事branchとIssue本文の日付を同期し、`article:handoff` のlabelを再取得確認してから、同じ起動内で公開ゲートへ進む。コマンドが編集判断を要求して拒否した場合だけ進行編集へ戻す。同日0:00のpublishAtは当日13:00または17:00の公開対象として扱う。
 
 ## Publishing
 
