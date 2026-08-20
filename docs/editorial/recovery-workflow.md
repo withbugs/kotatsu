@@ -33,7 +33,8 @@
 2. 同じ月で直前の掲載予約日から7日以内なら、記事branch上で `pnpm article:recover-publication -- --slug=<slug> --publishAt=<ISO date>` を実行する。PR内でpublishedなら `--resume-unmerged-publication` も付ける。
 3. コマンドが読者向け本文、title、description、heroAlt、tagsに旧具体日を検出した場合は変更せずEditorial recoveryへ移す。
 4. 成功時は内部のeditorial、visual、sidecarの日付だけを更新し、passedの校正と確認済み画像を保持したscheduledへ戻す。
-5. `article:handoff` の結果をIssueへ反映し、到来済みなら17:00までの次の公開担当が通常の公開ゲートから再開する。
+5. 記事branchの `publishAt` と `editorial.publicationDate` をIssue本文の現在公開予定へ同期し、class、元日時、新日時、保持したゲートをコメントする。
+6. `article:handoff` の結果をIssueへ完全一致で反映し、Issueを再取得して確認する。到来済みなら17:00までの次の公開担当が通常の公開ゲートから再開する。
 
 Delivery recoveryは画像、本文、校正の内容を変更しない。内部日付以外の差分が生じた場合は使用せず、ProductionまたはEditorial recoveryへ移す。
 

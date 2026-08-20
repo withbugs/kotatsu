@@ -30,6 +30,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 13:00公開後も状態、公開日、成果物に不整合がある場合だけ16:00に判断する。技術的失敗で `agent:publisher` の `revise` に残った記事は引き取らず、17:00公開担当の再試行に任せる。
 - 制作内容の判断を伴わない通信、Actions、artifact取得、Pages確認の失敗は進行編集へ引き取らず、同じ担当の `kotatsu:revise` で次の同担当起動へ残す。
 - 校正、画像、CI、掲載予約を通過したscheduled記事、またはopen・未mergeのPR上でpublishedまで進んだ途中公開が翌日へ持ち越された場合はDelivery recoveryとする。`pnpm recovery:slot` でprotected日付を動かさない最短枠を選び、`pnpm article:recover-publication` で完了済みゲートを保持したままscheduledへ戻す。
+- Delivery recovery成功後は、記事branchとIssue本文の現在公開予定を同期し、`article:handoff` のstate labelとagent labelを完全一致で反映して再取得確認する。
 - 校正が別Vol.参照をacceptedにした場合、参照先記事の見出しと狙いを本文へ先取りしていないこと、除外話題が残っていないことを独立確認する。通過時だけ `crossVolumeReview.managingEditorApproval` をapprovedにし、理由と確認日を記録してから掲載予約する。
 - `publishAt` が未来ならplanned、到来済みで正式カバーがあればpublisher + publishへ渡す。文章判断でlabelを決めず `article:handoff` の出力を使う。
 - 復旧のために未来Issueを連鎖的に移動しない。published、scheduled、記事PR作成済み、または公開48時間前より前のplanned記事をprotectedとして維持する。期限までにPRがないplanned枠だけを解放し、その記事自身を復旧待ちへ移す。
