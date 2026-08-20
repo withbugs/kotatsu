@@ -27,6 +27,7 @@ function rejectPattern(relativePath, pattern, description) {
 }
 
 requireText('docs/editorial/rule-hierarchy.md', 'docs/editorial/agent-workflow.md');
+requireText('docs/editorial/rule-hierarchy.md', 'docs/editorial/recovery-workflow.md');
 requireText('docs/editorial/agent-workflow.md', 'draft -> scheduled -> published');
 requireText('docs/editorial/agent-workflow.md', '制作担当同士は直接');
 requireText('docs/editorial/agent-workflow.md', '未来週のライター修正');
@@ -40,16 +41,17 @@ requireText('.agents/kotatsu/copy-editor.md', 'managingEditorApproval');
 requireText('docs/editorial/agent-workflow.md', 'crossVolumeReview.managingEditorApproval');
 requireText('docs/editorial/agent-workflow.md', '## Volume Closeout');
 requireText('docs/editorial/agent-workflow.md', 'node scripts/editorial/close-complete-milestones.mjs --apply');
-requireText('docs/editorial/agent-workflow.md', '## Missed Run Recovery');
+requireText('docs/editorial/agent-workflow.md', '## Recovery');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:rebook');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:handoff');
-requireText('docs/editorial/agent-workflow.md', '分離worktreeでclean確認');
 requireText('docs/editorial/agent-workflow.md', '17:00');
 requireText('docs/editorial/agent-workflow.md', '技術的失敗');
-requireText('docs/editorial/agent-workflow.md', '公開ゲートを通過済みの遅延記事');
-requireText('docs/editorial/agent-workflow.md', '--resume-unmerged-publication');
-requireText('docs/editorial/agent-workflow.md', '再予約後にしか作れない証跡を保存前に要求してはならない');
-requireText('docs/editorial/agent-workflow.md', '旧日付が残っていないことも機械確認する');
+requireText('docs/editorial/recovery-workflow.md', '## Recovery Classes');
+requireText('docs/editorial/recovery-workflow.md', 'pnpm recovery:slot');
+requireText('docs/editorial/recovery-workflow.md', 'pnpm article:recover-publication');
+requireText('docs/editorial/recovery-workflow.md', 'protected');
+requireText('docs/editorial/recovery-workflow.md', '連鎖的に動かさない');
+requireText('docs/editorial/recovery-workflow.md', '読者向け本文');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
 requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
 requireText('.agents/kotatsu/publisher.md', 'pnpm visual:artifact');
@@ -57,7 +59,7 @@ requireText('.agents/kotatsu/visual-editor.md', '10:00と18:00のどちらも同
 requireText('.agents/kotatsu/visual-editor.md', '2時間を超えて有意な進捗がない');
 requireText('.agents/kotatsu/copy-editor.md', '11:00と15:00のどちらも同じ校正枠');
 requireText('.agents/kotatsu/managing-editor.md', '9:00、12:00、16:00');
-requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:rebook');
+requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:recover-publication');
 requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:handoff');
 requireText('.agents/kotatsu/managing-editor.md', '対象branchへのdetached switch');
 requireText('.agents/kotatsu/writer.md', 'detached switch');
@@ -77,6 +79,8 @@ requireText('.agents/kotatsu/copy-editor.md', '過去日を記録して通過さ
 requireText('.agents/kotatsu/publisher.md', '古い日付のまま公開しない');
 requireText('package.json', '"milestone:close"');
 requireText('package.json', '"article:rebook"');
+requireText('package.json', '"article:recover-publication"');
+requireText('package.json', '"recovery:slot"');
 requireText('package.json', '"article:handoff"');
 requireText('package.json', '"visual:artifact"');
 requireText('.github/ISSUE_TEMPLATE/article.yml', 'id: publication_schedule');
@@ -103,6 +107,12 @@ rejectPattern(
   /(?:20:00|21:00|22:00)/,
   'late recovery window'
 );
+rejectPattern(
+  'docs/editorial/agent-workflow.md',
+  /article:rebook[^\n]*resume-unmerged-publication/,
+  'delivery recovery mixed into editorial rebooking'
+);
+requireText('.agents/kotatsu/writer-desk.md', '1回の起動で複数記事');
 rejectPattern(
   'README.md',
   /(?:20:00|21:00|22:00)/,

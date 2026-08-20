@@ -154,6 +154,20 @@ export function validateEditorialIntegrity(article, options = {}) {
       if (!Number.isInteger(recovery.attempt) || recovery.attempt < 1) {
         errors.push(`${rel}: editorial.scheduleRecovery.attempt must be a positive integer`);
       }
+      if (recovery.mode !== undefined && !['editorial', 'delivery'].includes(recovery.mode)) {
+        errors.push(`${rel}: editorial.scheduleRecovery.mode must be editorial or delivery`);
+      }
+      if (recovery.mode === 'delivery') {
+        if (recovery.qualityGatesPreserved !== true) {
+          errors.push(`${rel}: delivery recovery must preserve completed quality gates`);
+        }
+        if (recovery.automatedDateFieldsUpdated !== true) {
+          errors.push(`${rel}: delivery recovery must record automated internal date updates`);
+        }
+        if (recovery.visualRecheckRequired !== false) {
+          errors.push(`${rel}: delivery recovery cannot require an editorial visual recheck`);
+        }
+      }
       if (recovery.editorialRevalidatedAt !== undefined && !isDateKey(recovery.editorialRevalidatedAt)) {
         errors.push(`${rel}: editorial.scheduleRecovery.editorialRevalidatedAt must be YYYY-MM-DD`);
       }

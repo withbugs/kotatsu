@@ -16,10 +16,9 @@ const slug = String(args.slug || args.article || '');
 const nextPublishAt = String(args.publishAt || args['publish-at'] || '');
 const reason = String(args.reason || 'scheduled Codex run was unavailable or the editorial handoff was delayed');
 const now = args.now ? new Date(String(args.now)) : new Date();
-const resumeUnmergedPublication = Boolean(args['resume-unmerged-publication']);
 
 if (!slug || !nextPublishAt) {
-  console.error('Usage: pnpm article:rebook -- --slug="article-slug" --publishAt="2026-08-14T00:00:00+09:00" [--resume-unmerged-publication]');
+  console.error('Usage: pnpm article:rebook -- --slug="article-slug" --publishAt="2026-08-14T00:00:00+09:00"');
   process.exit(1);
 }
 
@@ -36,18 +35,13 @@ if (!article) {
   process.exit(1);
 }
 
-if (article.data.status === 'published' && !resumeUnmergedPublication) {
-  console.error(`${article.relativePath}: published articles require --resume-unmerged-publication and an open, unmerged article PR`);
+if (article.data.status === 'published') {
+  console.error(`${article.relativePath}: published articles use article:recover-publication, not editorial rebooking`);
   process.exit(1);
 }
 
-if (resumeUnmergedPublication && article.data.status !== 'published') {
-  console.error(`${article.relativePath}: --resume-unmerged-publication requires status published on an open, unmerged article PR`);
-  process.exit(1);
-}
-
-if (!['draft', 'scheduled', 'published'].includes(article.data.status)) {
-  console.error(`${article.relativePath}: only draft, scheduled, or explicitly resumed unmerged published articles can be rebooked`);
+if (!['draft', 'scheduled'].includes(article.data.status)) {
+  console.error(`${article.relativePath}: only draft or scheduled articles can be editorially rebooked`);
   process.exit(1);
 }
 
@@ -93,9 +87,7 @@ const nextIntegrityReview = visualRecheckRequired
   : previousIntegrityReview;
 const nextStatus = visualRecheckRequired
   ? 'draft'
-  : resumeUnmergedPublication
-    ? 'scheduled'
-    : article.data.status;
+  : article.data.status;
 const nextEditorial = {
   ...article.data.editorial,
   publicationDate: jstDateKey(nextDate),
@@ -108,8 +100,8 @@ const nextEditorial = {
     reason,
     approvedBy: 'agent:managing-editor',
     attempt: Number(previousRecovery?.attempt || 0) + 1,
+    mode: 'editorial',
     visualRecheckRequired,
-    ...(resumeUnmergedPublication ? { resumedFromUnmergedPublication: true } : {}),
     ...(args['editorial-revalidated-at']
       ? { editorialRevalidatedAt: String(args['editorial-revalidated-at']) }
       : {})
@@ -149,9 +141,6 @@ if (errors.length) {
 
 fs.writeFileSync(article.file, matter.stringify(article.parsed.content, nextData), 'utf8');
 console.log(`Rebooked ${article.relativePath} from ${article.data.publishAt} to ${nextPublishAt}`);
-if (resumeUnmergedPublication) {
-  console.log(`Reset interrupted unmerged publication from published to ${nextStatus} for a truthful new publication date.`);
-}
 if (visualRecheckRequired) {
   console.log(`Visual recheck required: article content, visual metadata, or sidecar still refers to ${previousDateKey}`);
   console.log('Copy review was reset because the publication context must be checked again after visual revalidation.');

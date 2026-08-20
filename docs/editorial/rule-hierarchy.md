@@ -5,6 +5,7 @@ KOTATSUの編集ルールは、内容ごとに次のファイルを正本とす�
 | Topic | Source of truth |
 | --- | --- |
 | 状態label、工程、時刻、branch、受け渡し、公開頻度 | `docs/editorial/agent-workflow.md` |
+| 予定実行の欠損、技術障害、期限超過、復旧公開枠 | `docs/editorial/recovery-workflow.md` |
 | 予定済みタスクからのGitHubアクセス | `docs/editorial/github-access-policy.md` |
 | AI生成ビジュアル、季節感、人物、metadata | `docs/editorial/ai-visual-policy.md` |
 | 読者向け表示、未完成記事、表現 | `docs/editorial/reader-trust-policy.md` |
