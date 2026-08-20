@@ -47,7 +47,7 @@ editorial:
     reviewedBy: agent:copy-editor
     reviewedAt: "2026-08-15"
     planAlignment: 正式計画の見出しと狙いに沿い、夏の短い外出と服装の距離感を扱っている。
-    timingAlignment: 再予約後の2026年8月16日の盛夏と公開時点に表現が合っている。
+    timingAlignment: 再予約後の2026年8月16日の盛夏と公開時点に表現が合い、Issue #52本文と一致する。後続の確認文も保持する。
     crossVolumeDecision: not-applicable
 visual:
   source: ai-generated
@@ -86,6 +86,7 @@ test('delivery recovery preserves passed gates and updates internal dates', () =
     assert.equal(parsed.data.editorial.scheduleRecovery.approvedBy, 'agent:publisher');
     assert.equal(parsed.data.editorial.scheduleRecovery.qualityGatesPreserved, true);
     assert.match(parsed.data.editorial.integrityReview.timingAlignment, /2026年8月20日/);
+    assert.match(fs.readFileSync(fixture.articlePath, 'utf8'), /Issue #52本文と一致する。後続の確認文も保持する。/);
     assert.match(fs.readFileSync(fixture.sidecarPath, 'utf8'), /2026年8月20日/);
   } finally {
     fs.rmSync(fixture.root, { recursive: true, force: true });

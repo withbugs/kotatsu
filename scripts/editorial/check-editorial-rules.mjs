@@ -52,6 +52,7 @@ requireText('docs/editorial/recovery-workflow.md', 'pnpm article:recover-publica
 requireText('docs/editorial/recovery-workflow.md', 'protected');
 requireText('docs/editorial/recovery-workflow.md', '連鎖的に動かさない');
 requireText('docs/editorial/recovery-workflow.md', '読者向け本文');
+requireText('docs/editorial/recovery-workflow.md', 'frontmatter全体を再シリアライズせず');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
 requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
 requireText('.agents/kotatsu/publisher.md', 'pnpm visual:artifact');

@@ -33,7 +33,7 @@
    対象記事自身の期限超過した旧枠は `occupied` に含めない。
 2. 同じ月で現在の `publishAt` から7日以内なら、記事branch上で `pnpm article:recover-publication -- --slug=<slug> --publishAt=<ISO date>` を実行する。PR内でpublishedなら `--resume-unmerged-publication` も付ける。日数を手計算して事前分類せず、コマンドの終了結果を使う。
 3. コマンドが読者向け本文、title、description、heroAlt、tagsに旧具体日を検出した場合は変更せずEditorial recoveryへ移す。
-4. 成功時は内部のeditorial、visual、sidecarの日付だけを更新し、passedの校正と確認済み画像を保持したscheduledへ戻す。
+4. 成功時はfrontmatter全体を再シリアライズせず、元の表記を保持したまま内部のeditorial、visual、sidecarの日付、status、scheduleRecoveryだけを更新し、passedの校正と確認済み画像を保持したscheduledへ戻す。
 5. 記事branchの `publishAt` と `editorial.publicationDate` をIssue本文の現在公開予定へ同期し、class、元日時、新日時、保持したゲートをコメントする。
 6. `article:handoff` の結果をIssueへ完全一致で反映し、Issueを再取得して確認する。到来済みなら同じ起動内で通常の公開ゲートを再開する。13:00と17:00の起動中は同日の回復枠を使用できる。
 

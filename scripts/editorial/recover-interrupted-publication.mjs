@@ -13,6 +13,92 @@ import {
 } from './schedule-recovery.mjs';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
+
+function splitFrontmatter(source) {
+  const newline = source.startsWith('---\r\n') ? '\r\n' : source.startsWith('---\n') ? '\n' : null;
+  if (!newline) throw new Error('article must start with YAML frontmatter');
+
+  const contentStart = 3 + newline.length;
+  const closingStart = source.indexOf(`${newline}---`, contentStart);
+  if (closingStart < 0) throw new Error('article frontmatter closing marker was not found');
+
+  return {
+    prefix: source.slice(0, contentStart),
+    frontmatter: source.slice(contentStart, closingStart),
+    suffix: source.slice(closingStart),
+    newline
+  };
+}
+
+function yamlScalar(value) {
+  if (typeof value === 'boolean' || typeof value === 'number') return String(value);
+  return JSON.stringify(String(value));
+}
+
+function scheduleRecoveryBlock(recovery) {
+  const keys = [
+    'originalPublishAt',
+    'previousPublishAt',
+    'rescheduledPublishAt',
+    'rescheduledAt',
+    'reason',
+    'approvedBy',
+    'attempt',
+    'mode',
+    'resumedFromUnmergedPublication',
+    'qualityGatesPreserved',
+    'visualRecheckRequired',
+    'automatedDateFieldsUpdated',
+    'editorialRevalidatedAt',
+    'visualRevalidatedAt'
+  ];
+
+  return [
+    '  scheduleRecovery:',
+    ...keys
+      .filter((key) => recovery[key] !== undefined)
+      .map((key) => `    ${key}: ${yamlScalar(recovery[key])}`)
+  ];
+}
+
+function replaceScheduleRecoveryBlock(frontmatter, newline, recovery) {
+  const lines = frontmatter.split(newline);
+  const start = lines.findIndex((line) => /^  scheduleRecovery:\s*(?:#.*)?$/.test(line));
+  const replacement = scheduleRecoveryBlock(recovery);
+
+  if (start >= 0) {
+    let end = start + 1;
+    while (end < lines.length) {
+      if (lines[end].trim() === '') {
+        end += 1;
+        continue;
+      }
+      const indentation = lines[end].match(/^ */)?.[0].length || 0;
+      if (indentation <= 2) break;
+      end += 1;
+    }
+    lines.splice(start, end - start, ...replacement);
+  } else {
+    const visualStart = lines.findIndex((line) => /^visual:\s*(?:#.*)?$/.test(line));
+    if (visualStart < 0) throw new Error('visual frontmatter section was not found');
+    lines.splice(visualStart, 0, ...replacement);
+  }
+
+  return lines.join(newline);
+}
+
+function buildRecoveredArticleSource(source, fromDate, toDate, recovery, nextPublishAt) {
+  const parts = splitFrontmatter(source);
+  let frontmatter = replaceLocalDateReferences(parts.frontmatter, fromDate, toDate);
+  if (!/^status:\s*.+$/m.test(frontmatter) || !/^publishAt:\s*.+$/m.test(frontmatter)) {
+    throw new Error('status and publishAt must exist as top-level frontmatter fields');
+  }
+  frontmatter = frontmatter.replace(/^status:\s*.+$/m, 'status: scheduled');
+  frontmatter = frontmatter.replace(/^publishAt:\s*.+$/m, `publishAt: ${yamlScalar(nextPublishAt)}`);
+  frontmatter = replaceScheduleRecoveryBlock(frontmatter, parts.newline, recovery);
+  return `${parts.prefix}${frontmatter}${parts.suffix}`;
+}
+
 const args = parseArgs(process.argv.slice(2));
 const slug = String(args.slug || args.article || '');
 const nextPublishAt = String(args.publishAt || args['publish-at'] || '');
@@ -111,7 +197,6 @@ if (heroImage.startsWith('/')) {
 
 const previousRecovery = article.data.editorial.scheduleRecovery;
 const nextEditorial = replaceLocalDateReferences(article.data.editorial, previousPublishAt, nextDate);
-const nextVisual = replaceLocalDateReferences(article.data.visual, previousPublishAt, nextDate);
 nextEditorial.publicationDate = nextDateKey;
 nextEditorial.scheduleRecovery = {
   originalPublishAt: previousRecovery?.originalPublishAt || article.data.publishAt,
@@ -134,16 +219,30 @@ nextEditorial.scheduleRecovery = {
     : {})
 };
 
-const nextData = {
-  ...article.parsed.data,
-  status: 'scheduled',
-  publishAt: nextPublishAt,
-  editorial: nextEditorial,
-  visual: nextVisual
-};
+let nextSource;
+let persisted;
+try {
+  nextSource = buildRecoveredArticleSource(
+    article.raw,
+    previousPublishAt,
+    nextDate,
+    nextEditorial.scheduleRecovery,
+    nextPublishAt
+  );
+  persisted = matter(nextSource);
+} catch (error) {
+  console.error(`${article.relativePath}: failed to prepare a lossless frontmatter update: ${error.message}`);
+  process.exit(1);
+}
+if (persisted.content !== article.parsed.content) {
+  console.error(`${article.relativePath}: delivery recovery cannot change article body content`);
+  process.exit(1);
+}
 const candidate = {
   ...article,
-  data: nextData,
+  raw: nextSource,
+  parsed: persisted,
+  data: persisted.data,
   publishAt: nextDate,
   publishAtIsValid: true
 };
@@ -160,7 +259,7 @@ if (errors.length) {
   process.exit(1);
 }
 
-fs.writeFileSync(article.file, matter.stringify(article.parsed.content, nextData), 'utf8');
+fs.writeFileSync(article.file, nextSource, 'utf8');
 if (sidecarPath && nextSidecar) {
   fs.writeFileSync(sidecarPath, `${JSON.stringify(nextSidecar, null, 2)}\n`, 'utf8');
 }
