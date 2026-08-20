@@ -11,6 +11,22 @@
 - 復旧の速さと公開カレンダーを分離する。制作上の未完了工程は速やかに完了させ、公開は読者向けの間隔を守る最短空き枠で行う。
 - Delivery recoveryの7日判定は、記事の現在の `publishAt`、つまり最後に承認された掲載予約日から数える。`scheduleRecovery.originalPublishAt` は監査履歴であり、この判定には使わない。
 
+## Rapid Recovery Dispatch
+
+通常の時刻表は制作開始と障害時のfallbackであり、復旧工程間の待ち時間ではない。09:00から18:00までの予定済みタスクが遅延を発見した場合、そのroot実行が迅速復旧コーディネーターとなり、同じ実行内に役割別サブエージェントを逐次dispatchする。新しい高頻度automationや夜間枠は追加しない。10:00は編集長の予定済みタスクだけが全体復旧を開始し、同時刻のビジュアル編集は通常担当だけを扱う。
+
+ProductionまたはEditorial recoveryでは、制作担当workerの後に必ず別の進行編集workerが成果を確認し、通常と同じdesk gateで次担当を決める。制作担当同士の直接受け渡しは行わない。Delivery recoveryは既にdesk gateを通過しているため、公開担当workerへ直接委任できる。
+
+rapid recovery sessionは次の手順で行う。
+
+1. 工程が最も進み、元の公開予定が最も早い遅延記事を1件だけ選ぶ。
+2. Issueへ `<!-- kotatsu:rapid-recovery -->`、session id、owner run、class、停止地点、PR head SHA、開始時刻、90分後の期限をコメントし、現在担当1つと `kotatsu:running` を反映して再取得する。有効期限内の別sessionがある場合は開始しない。
+3. 現在工程のrole cardを指定してworkerを1件だけ起動する。workerには指定IssueとPR branchだけを扱い、別agentを起動せず、成果、検査、再開地点をGitHubへ残すよう明記する。
+4. worker完了を待ってIssue、PR、Actionsとhead SHAを再取得する。ProductionまたはEditorialの制作workerがreviewへ戻した場合は進行編集workerを起動し、その判断後だけ次担当workerを起動する。workerを並列実行しない。
+5. 公開完了、品質上の差し戻し、人手判断、回復不能な外部障害、予期しないhead SHA変更、90分経過、worker 6件完了、19:00 JSTのいずれかで終了する。19:00以降に新しいworkerを起動しない。
+
+rootコーディネーター自身は本文、画像、校正、編集承認、公開を代行せず、最終記事PRをmainへmergeできるのは公開担当workerだけである。同じ障害fingerprintの再試行はsession内で1回までとし、再失敗時は現在工程、保持済みゲート、再開地点を `kotatsu:revise` に残す。multi-agent tools、利用上限、PC、Codexアプリ、認証などの外部条件で続行できない場合もGitHubを永続checkpointとし、次の通常起動が同じ地点から再開する。
+
 ## Recovery Classes
 
 進行編集は、予定済み担当の起動が1回欠けた、予定工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を次の3種類に分類する。複数に当てはまる場合は、より下の編集判断を要する分類を使う。
@@ -21,7 +37,7 @@
 | Production | ライター、ビジュアル、校正など通常工程の一部が未完了 | 完了済み工程を保ち、未完了の担当へ戻す |
 | Editorial | 読者向け本文に旧具体日が残る、7日超、月跨ぎ、季節・生活イベントが変わる | 編集長または必要な制作担当から再確認する |
 
-利用上限、PC停止、Codexアプリ停止などで予定済みタスク自体がGitHubへ結果を残せなかった場合も、次の進行編集はIssueとPRの最終更新時刻から同じ分類を行う。失敗した実行の再現を待たない。
+利用上限、PC停止、Codexアプリ停止などで予定済みタスク自体がGitHubへ結果を残せなかった場合も、次に起動した迅速復旧コーディネーターまたは進行編集はIssueとPRの最終更新時刻から同じ分類を行う。失敗した実行の再現を待たない。
 
 ## Delivery Recovery
 
