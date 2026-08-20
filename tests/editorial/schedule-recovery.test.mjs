@@ -3,7 +3,9 @@ import test from 'node:test';
 import {
   containsLocalDateReference,
   earliestRecoveryDateKey,
+  findEarliestRecoverySlot,
   localDateReferenceVariants,
+  replaceLocalDateReferences,
   validateRecoveryTarget
 } from '../../scripts/editorial/schedule-recovery.mjs';
 
@@ -25,6 +27,19 @@ test('localized recovery date references are detected without matching another d
   assert.equal(containsLocalDateReference('2026年8月12日の予定', date), false);
 });
 
+test('internal recovery date references can be updated recursively', () => {
+  const from = new Date('2026-08-16T00:00:00+09:00');
+  const to = new Date('2026-08-20T00:00:00+09:00');
+  const updated = replaceLocalDateReferences({
+    seasonalContext: '2026年8月16日の盛夏',
+    notes: ['planned 2026-08-16', 'month only 2026年8月']
+  }, from, to);
+
+  assert.equal(updated.seasonalContext, '2026年8月20日の盛夏');
+  assert.equal(updated.notes[0], 'planned 2026-08-20');
+  assert.equal(updated.notes[1], 'month only 2026年8月');
+});
+
 test('a morning recovery may use the same JST publication day', () => {
   assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T09:00:00+09:00')), '2026-08-12');
 });
@@ -35,6 +50,32 @@ test('a recovery before the final publisher run may use the same JST day', () =>
 
 test('a recovery after the final publisher run starts on the next JST day', () => {
   assert.equal(earliestRecoveryDateKey(new Date('2026-08-12T17:00:00+09:00')), '2026-08-13');
+});
+
+test('recovery slot selection preserves occupied dates and uses the earliest open gap', () => {
+  const result = findEarliestRecoverySlot({
+    now: new Date('2026-08-20T13:00:00+09:00'),
+    occupiedPublishAt: [
+      '2026-08-18T00:00:00+09:00',
+      '2026-08-25T00:00:00+09:00'
+    ]
+  });
+
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.publishAt, '2026-08-20T00:00:00+09:00');
+});
+
+test('recovery slot selection does not cascade a protected future date', () => {
+  const result = findEarliestRecoverySlot({
+    now: new Date('2026-08-20T17:30:00+09:00'),
+    occupiedPublishAt: [
+      '2026-08-21T00:00:00+09:00',
+      '2026-08-25T00:00:00+09:00'
+    ]
+  });
+
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.publishAt, '2026-08-23T00:00:00+09:00');
 });
 
 test('routine same-month recovery within seven days is accepted', () => {

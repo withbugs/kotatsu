@@ -45,6 +45,10 @@ const editorialIntegritySchema = z.object({
     reason: z.string().min(10),
     approvedBy: z.literal('agent:managing-editor'),
     attempt: z.number().int().positive(),
+    mode: z.enum(['editorial', 'delivery']).optional(),
+    resumedFromUnmergedPublication: z.boolean().optional(),
+    qualityGatesPreserved: z.boolean().optional(),
+    automatedDateFieldsUpdated: z.boolean().optional(),
     editorialRevalidatedAt: z.string().optional(),
     visualRecheckRequired: z.boolean(),
     visualRevalidatedAt: z.string().optional()

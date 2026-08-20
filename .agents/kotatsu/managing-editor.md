@@ -14,6 +14,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 計画Issueのcloseだけを理由に次Vol.を作らない。未来Vol.は同時に1件までとする。
 - 各起動で `node scripts/editorial/close-complete-milestones.mjs --apply` を実行し、正式計画、正式カバー、全記事Issueがdoneで揃ったVol.のmilestoneを閉じる。
 - 各起動で全open Article Issueの期限超過を状態labelにかかわらず確認し、欠けた予定実行を再現せず次の有効な公開枠へ再予約する。
+- 予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を `docs/editorial/recovery-workflow.md` でDelivery、Production、Editorialへ分類する。
 - 各起動でscheduled記事に `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをIssueへ完全一致で反映してから再取得確認する。
 - 記事branchを変更する前に分離worktreeでclean確認、fetch、対象branchへのdetached switch、`origin/main` の通常mergeを順に通す。成功前にIssueをrunningへ変更せず、rebaseを使用しない。
 
@@ -28,11 +29,11 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 校正成果に残修正がなければ記事branch上で `pnpm article:schedule` を実行する。
 - 13:00公開後も状態、公開日、成果物に不整合がある場合だけ16:00に判断する。技術的失敗で `agent:publisher` の `revise` に残った記事は引き取らず、17:00公開担当の再試行に任せる。
 - 制作内容の判断を伴わない通信、Actions、artifact取得、Pages確認の失敗は進行編集へ引き取らず、同じ担当の `kotatsu:revise` で次の同担当起動へ残す。
-- open・未mergeのPR上でpublishedまで進んだ途中公開がJSTで翌日へ持ち越された場合だけ、`pnpm article:rebook -- --resume-unmerged-publication` で実際の次回公開日へ再予約する。旧日付参照がなければscheduled、残っていればdraftとpending校正へ戻るので、コマンドが出力する担当labelをそのままIssueへ反映する。
+- 校正、画像、CI、掲載予約を通過したscheduled記事、またはopen・未mergeのPR上でpublishedまで進んだ途中公開が翌日へ持ち越された場合はDelivery recoveryとする。`pnpm recovery:slot` でprotected日付を動かさない最短枠を選び、`pnpm article:recover-publication` で完了済みゲートを保持したままscheduledへ戻す。
 - 校正が別Vol.参照をacceptedにした場合、参照先記事の見出しと狙いを本文へ先取りしていないこと、除外話題が残っていないことを独立確認する。通過時だけ `crossVolumeReview.managingEditorApproval` をapprovedにし、理由と確認日を記録してから掲載予約する。
 - `publishAt` が未来ならplanned、到来済みで正式カバーがあればpublisher + publishへ渡す。文章判断でlabelを決めず `article:handoff` の出力を使う。
-- 未公開のまま `publishAt` のJST日付を過ぎた記事は、残工程が通常起動で完了でき、scheduledまたはpublished記事と48時間以上空く最短枠を選び、記事branch上で `pnpm article:rebook` を実行する。公開ゲート通過済みまたは公開だけが技術的に中断した記事は、PR未作成のplanned未来記事より優先し、競合する未来Issueを公開順のまま最小限後ろへ移して48時間、週1〜2本、月4〜8本を保つ。Issue本文とコメントにも元日時、再予約日時、理由を記録する。
-- 元日時から7日超、翌月、季節・生活イベント変更は編集長の再確認前に再予約しない。具体日を含むvisual metadataはビジュアル編集へ再確認を渡し、旧日付の解消とvisualRevalidatedAtの記録後に校正を再実施する。
+- 復旧のために未来Issueを連鎖的に移動しない。published、scheduled、記事PR作成済み、または公開48時間前より前のplanned記事をprotectedとして維持する。期限までにPRがないplanned枠だけを解放し、その記事自身を復旧待ちへ移す。
+- Delivery recoveryが読者向け旧具体日、直前の掲載予約日から7日超、月跨ぎを検出した場合だけEditorial recoveryへ切り替える。必要な本文、画像、校正だけを再確認し、変更不要な工程を巻き戻さない。
 - milestoneは月末や計画Issueのcloseだけで閉じず、機械判定がeligibleになった場合だけ閉じる。
 
 ## Main Authority
