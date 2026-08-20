@@ -148,8 +148,11 @@ export function validateEditorialIntegrity(article, options = {}) {
       if (!hasText(recovery.reason, 10)) {
         errors.push(`${rel}: editorial.scheduleRecovery.reason must explain the delay`);
       }
-      if (recovery.approvedBy !== 'agent:managing-editor') {
-        errors.push(`${rel}: editorial.scheduleRecovery.approvedBy must be agent:managing-editor`);
+      const allowedRecoveryApprovers = recovery.mode === 'delivery'
+        ? ['agent:managing-editor', 'agent:publisher']
+        : ['agent:managing-editor'];
+      if (!allowedRecoveryApprovers.includes(recovery.approvedBy)) {
+        errors.push(`${rel}: editorial.scheduleRecovery.approvedBy is invalid for ${recovery.mode || 'legacy editorial'} recovery`);
       }
       if (!Number.isInteger(recovery.attempt) || recovery.attempt < 1) {
         errors.push(`${rel}: editorial.scheduleRecovery.attempt must be a positive integer`);

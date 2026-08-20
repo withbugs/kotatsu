@@ -83,7 +83,7 @@
 
 予定実行の欠損、技術的失敗、公開予定日の超過は `docs/editorial/recovery-workflow.md` を正本とする。通常工程は成果物と品質ゲートを定義し、復旧工程は完了済みゲートを保持する条件、未完了の再開地点、protected公開日を動かさない最短空き枠だけを定義する。
 
-進行編集は9:00、12:00、16:00の各起動で、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。Delivery recoveryは `pnpm recovery:slot` と `pnpm article:recover-publication`、読者向け内容の再確認が必要なEditorial recoveryは `pnpm article:rebook` を使い分ける。
+進行編集は9:00、12:00、16:00の各起動で、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。技術的なDelivery recoveryは公開担当が次の13:00または17:00に `pnpm recovery:slot` と `pnpm article:recover-publication` を同じ起動内で実行する。進行編集はProduction recoveryを再割当し、読者向け内容の再確認が必要なEditorial recoveryに `pnpm article:rebook` を使う。
 
 復旧でも記事状態は `draft -> scheduled -> published` とし、公開担当だけが最終記事PRをmainへmergeする。未来記事の日付を連鎖的に変更せず、制作中または期限内のprotected日付を維持する。
 

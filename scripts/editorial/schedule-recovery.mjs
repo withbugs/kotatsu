@@ -88,7 +88,7 @@ function validDate(value) {
 export function earliestRecoveryDateKey(now = new Date()) {
   const value = parts(now);
   const today = `${value.year}-${value.month}-${value.day}`;
-  return Number(value.hour) >= LAST_PUBLISHER_HOUR_JST ? addDays(today, 1) : today;
+  return Number(value.hour) > LAST_PUBLISHER_HOUR_JST ? addDays(today, 1) : today;
 }
 
 export function findEarliestRecoverySlot({

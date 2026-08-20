@@ -83,9 +83,47 @@ test('delivery recovery preserves passed gates and updates internal dates', () =
     assert.equal(parsed.data.editorial.publicationDate, '2026-08-20');
     assert.equal(parsed.data.editorial.integrityReview.status, 'passed');
     assert.equal(parsed.data.editorial.scheduleRecovery.mode, 'delivery');
+    assert.equal(parsed.data.editorial.scheduleRecovery.approvedBy, 'agent:publisher');
     assert.equal(parsed.data.editorial.scheduleRecovery.qualityGatesPreserved, true);
     assert.match(parsed.data.editorial.integrityReview.timingAlignment, /2026年8月20日/);
     assert.match(fs.readFileSync(fixture.sidecarPath, 'utf8'), /2026年8月20日/);
+  } finally {
+    fs.rmSync(fixture.root, { recursive: true, force: true });
+  }
+});
+
+test('managing editor may reclaim a legacy delivery recovery assignment', () => {
+  const fixture = createFixture();
+  try {
+    const result = spawnSync(process.execPath, [
+      script,
+      '--slug=summer-outing',
+      '--publishAt=2026-08-20T00:00:00+09:00',
+      '--now=2026-08-20T16:00:00+09:00',
+      '--resume-unmerged-publication',
+      '--handled-by=agent:managing-editor'
+    ], { cwd: fixture.root, encoding: 'utf8' });
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const parsed = matter(fs.readFileSync(fixture.articlePath, 'utf8'));
+    assert.equal(parsed.data.editorial.scheduleRecovery.approvedBy, 'agent:managing-editor');
+  } finally {
+    fs.rmSync(fixture.root, { recursive: true, force: true });
+  }
+});
+
+test('delivery recovery rejects an unauthorized handler', () => {
+  const fixture = createFixture();
+  try {
+    const result = spawnSync(process.execPath, [
+      script,
+      '--slug=summer-outing',
+      '--publishAt=2026-08-20T00:00:00+09:00',
+      '--handled-by=agent:editor-in-chief'
+    ], { cwd: fixture.root, encoding: 'utf8' });
+
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /--handled-by/);
   } finally {
     fs.rmSync(fixture.root, { recursive: true, force: true });
   }

@@ -16,7 +16,7 @@
 
 | Class | Condition | Resume point |
 | --- | --- | --- |
-| Delivery | 校正、画像、CI、掲載予約を通過し、通信、Actions、artifact、Pages確認、mergeだけが未完了 | 進行編集が実日付へ復旧予約し、公開担当へ戻す |
+| Delivery | 校正、画像、CI、掲載予約を通過し、通信、Actions、artifact、Pages確認、mergeだけが未完了 | 公開担当が次の公開枠で再予約し、同じ起動内で公開を再開する |
 | Production | ライター、ビジュアル、校正など通常工程の一部が未完了 | 完了済み工程を保ち、未完了の担当へ戻す |
 | Editorial | 読者向け本文に旧具体日が残る、7日超、月跨ぎ、季節・生活イベントが変わる | 編集長または必要な制作担当から再確認する |
 
@@ -26,17 +26,19 @@
 
 当日中の技術的中断は `kotatsu:revise + agent:publisher` のまま、次の13:00または17:00公開担当が同じPRの未完了地点から再開する。`article:publish` と `visual:artifact` は再実行可能として扱い、commit、artifact、mergeを重複させない。
 
-日付をまたいだscheduled記事、またはopen・未mergeのPR内でpublishedまで進んだ記事は、進行編集が次の順で扱う。
+日付をまたいだscheduled記事、またはopen・未mergeのPR内でpublishedまで進んだ記事も、`agent:publisher` を維持し、次の13:00または17:00公開担当が次の順で扱う。技術的な再予約に進行編集の中継を必須としない。
 
 1. 保護された公開日を集め、`pnpm recovery:slot -- --occupied=<comma-separated ISO dates>` で最短空き枠を得る。
    対象記事自身の期限超過した旧枠は `occupied` に含めない。
-2. 同じ月で直前の掲載予約日から7日以内なら、記事branch上で `pnpm article:recover-publication -- --slug=<slug> --publishAt=<ISO date>` を実行する。PR内でpublishedなら `--resume-unmerged-publication` も付ける。
+2. 同じ月で直前の掲載予約日から7日以内なら、記事branch上で `pnpm article:recover-publication -- --slug=<slug> --publishAt=<ISO date> --handled-by=agent:publisher` を実行する。PR内でpublishedなら `--resume-unmerged-publication` も付ける。
 3. コマンドが読者向け本文、title、description、heroAlt、tagsに旧具体日を検出した場合は変更せずEditorial recoveryへ移す。
 4. 成功時は内部のeditorial、visual、sidecarの日付だけを更新し、passedの校正と確認済み画像を保持したscheduledへ戻す。
 5. 記事branchの `publishAt` と `editorial.publicationDate` をIssue本文の現在公開予定へ同期し、class、元日時、新日時、保持したゲートをコメントする。
-6. `article:handoff` の結果をIssueへ完全一致で反映し、Issueを再取得して確認する。到来済みなら17:00までの次の公開担当が通常の公開ゲートから再開する。
+6. `article:handoff` の結果をIssueへ完全一致で反映し、Issueを再取得して確認する。到来済みなら同じ起動内で通常の公開ゲートを再開する。13:00と17:00の起動中は同日の回復枠を使用できる。
 
 Delivery recoveryは画像、本文、校正の内容を変更しない。内部日付以外の差分が生じた場合は使用せず、ProductionまたはEditorial recoveryへ移す。
+
+公開担当がDelivery recoveryコマンドから読者向け旧具体日、7日超、月跨ぎなどの拒否を受けた場合だけ、変更をpushせず `kotatsu:review + agent:managing-editor` へ送る。進行編集はProductionとEditorial recoveryを調整し、過去の規則で別担当に残ったDelivery案件だけ `--handled-by=agent:managing-editor` で回収できる。新しいDelivery案件は公開担当のキューに保持する。
 
 ## Protected Publication Calendar
 
