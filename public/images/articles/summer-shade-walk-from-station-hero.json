@@ -1,0 +1,62 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-002",
+  "article": "summer-shade-walk-from-station",
+  "githubIssue": 52,
+  "editorialIntent": "観光地や目的地を見せるのではなく、真夏の街で日陰を選び、短い距離を自分の速度で歩く余白を残す。",
+  "subject": "架空の駅前から街路樹と建物の影が続く道へ入る、顔を主役にしない人物。薄手の淡い青灰色シャツ、軽いパンツ、歩き慣れた靴、無地の小さな布鞄を身につける。",
+  "setting": "2026年8月21日の日本、8月後半の強い白い昼光が差す架空の駅前広場と、街路樹の影が続く静かな街路の境目",
+  "composition": "横長hero向け。画面左に白く強い日差しの駅前空間、右から中央に街路樹の深い影と歩く人物を置くstreet-observationのmedium-wide構図。人物は三分の一後方から写し、環境と日向・日陰の境界を主役にする。",
+  "compositionFamily": "street-observation-shade-route-medium-wide",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "mixed",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "chalk white sunlight",
+    "cool asphalt gray",
+    "deep summer green",
+    "pale blue-gray cotton",
+    "natural canvas beige"
+  ],
+  "colorMood": "白い盛夏の日差し、青灰色の薄手シャツ、涼しい舗道の影、夏の緑で、暑さと日陰の落ち着きを同じ画面に置く。",
+  "promptSummary": "2026年8月21日の日本の架空の駅前で、顔を主役にしない人物が8月後半の強い白い昼光を避け、街路樹と建物の影が続く道へゆっくり入る。",
+  "caption": "真夏の駅前から、街路樹の影が続く道へ歩き出す場面を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年8月21日の日本。8月後半も強い白い昼光と湿度が残る盛夏に、駅前の日向と街路樹の深い日陰をつないで短く歩く外出を想定する。",
+  "seasonalCues": [
+    "薄手の淡い青灰色の半袖シャツ、軽いパンツ、布製の小さな肩鞄",
+    "白く強い夏の昼光、輪郭の明確な木陰、濃い夏の緑"
+  ],
+  "seasonalAvoid": [
+    "厚手のジャケット、ウール、重いブーツ、秋冬色の重ね着で季節を誤読させること",
+    "紅葉、深い暖色照明、南国リゾート、観光地広告風の演出"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable station names",
+    "readable store signage",
+    "famous landmarks",
+    "celebrity likeness",
+    "stock photo look",
+    "travel-ad look",
+    "fashion campaign posing",
+    "thick autumn or winter clothing",
+    "personal belongings on pavement",
+    "distorted hands or anatomy"
+  ],
+  "similarityReviewedAgainst": [
+    "summer-shirt-airy-room",
+    "summer-light-bag-contents",
+    "shigoto-gaeri-no-fuku-wo-shumatsu-e-hodoku-hito"
+  ],
+  "visualDifference": "直近の人物の肩越しと室内トレー、窓辺の布接写、ベンチ上の鞄と手元を確認した。今回は屋外の街路を広く見せ、人物を環境の中へ小さく置き、白い日向と深い木陰の境界を主役にして、接写・室内・持ち物中心の構図を避けた。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-08-10T18:06:17+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "人物の小さな布鞄は肩に掛けられており、飲料、書籍、衣類、ハンカチ、財布、鍵、携帯電話などの私物は路面、地面、床へ直接置かれていない。"
+  }
+}
