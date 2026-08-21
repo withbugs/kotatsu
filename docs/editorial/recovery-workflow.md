@@ -15,17 +15,19 @@
 
 通常の時刻表は制作開始と障害時のfallbackであり、復旧工程間の待ち時間ではない。09:00から18:00までの予定済みタスクが遅延を発見した場合、そのroot実行が迅速復旧コーディネーターとなり、同じ実行内に役割別サブエージェントを逐次dispatchする。新しい高頻度automationや夜間枠は追加しない。10:00は編集長の予定済みタスクだけが全体復旧を開始し、同時刻のビジュアル編集は通常担当だけを扱う。
 
+迅速復旧のゴールは「現在工程を終えること」ではなく、対象記事を安全に公開し、公開URLを確認してIssueをcloseすることである。root実行と後続の予定済みタスクは、Issueのactive goalを通常担当より優先し、役割ごとの修正、desk gate、公開ゲートを必要な順番で継続する。実施可能な `revise` は停止理由ではなく次workerへの入力として扱う。
+
 ProductionまたはEditorial recoveryでは、制作担当workerの後に必ず別の進行編集workerが成果を確認し、通常と同じdesk gateで次担当を決める。制作担当同士の直接受け渡しは行わない。Delivery recoveryは既にdesk gateを通過しているため、公開担当workerへ直接委任できる。
 
 rapid recovery sessionは次の手順で行う。
 
 1. 工程が最も進み、元の公開予定が最も早い遅延記事を1件だけ選ぶ。
-2. Issueへ `<!-- kotatsu:rapid-recovery -->`、session id、owner run、class、停止地点、PR head SHA、開始時刻、90分後の期限をコメントし、現在担当1つと `kotatsu:running` を反映して再取得する。有効期限内の別sessionがある場合は開始しない。
+2. Issueへ `<!-- kotatsu:rapid-recovery -->`、session id、owner run、goal、class、現在工程、PR head SHA、開始時刻、120分後の期限、`active` 状態をコメントし、現在担当1つと `kotatsu:running` を反映して再取得する。有効期限内の別sessionがある場合は開始しない。
 3. 現在工程のrole cardを指定してworkerを1件だけ起動する。workerには指定IssueとPR branchだけを扱い、別agentを起動せず、成果、検査、再開地点をGitHubへ残すよう明記する。
-4. worker完了を待ってIssue、PR、Actionsとhead SHAを再取得する。ProductionまたはEditorialの制作workerがreviewへ戻した場合は進行編集workerを起動し、その判断後だけ次担当workerを起動する。workerを並列実行しない。
-5. 公開完了、品質上の差し戻し、人手判断、回復不能な外部障害、予期しないhead SHA変更、90分経過、worker 6件完了、19:00 JSTのいずれかで終了する。19:00以降に新しいworkerを起動しない。
+4. worker完了を待ってIssue、PR、Actionsとhead SHAを再取得する。ProductionまたはEditorialの制作workerがreviewへ戻した場合は進行編集workerを起動し、その判断後に必要な修正担当または次担当workerを起動する。実施可能な差し戻しは同じsessionで続け、workerを並列実行しない。
+5. 公開完了でgoalを `completed` にする。人手でしか決められない編集判断、正本と実装の未解消矛盾、回復不能な外部障害、予期しないhead SHA変更、120分経過、worker 8件完了、19:00 JSTでは、現在工程と次actionを記録してgoalを `checkpoint` にする。19:00以降に新しいworkerを起動しない。
 
-rootコーディネーター自身は本文、画像、校正、編集承認、公開を代行せず、最終記事PRをmainへmergeできるのは公開担当workerだけである。同じ障害fingerprintの再試行はsession内で1回までとし、再失敗時は現在工程、保持済みゲート、再開地点を `kotatsu:revise` に残す。multi-agent tools、利用上限、PC、Codexアプリ、認証などの外部条件で続行できない場合もGitHubを永続checkpointとし、次の通常起動が同じ地点から再開する。
+rootコーディネーター自身は本文、画像、校正、編集承認、公開を代行せず、最終記事PRをmainへmergeできるのは公開担当workerだけである。同じ障害fingerprintの再試行はsession内で1回までとし、再失敗時は現在工程、保持済みゲート、次actionを `kotatsu:revise` に残す。multi-agent tools、利用上限、PC、Codexアプリ、認証などの外部条件で続行できない場合もGitHubを永続checkpointとする。次に起動した日中の予定済みタスクは、新規session idとleaseを取得してcheckpointのgoalを通常作業より先に再開し、固定された担当時刻を待たない。
 
 ## Recovery Classes
 
@@ -81,6 +83,8 @@ Editorial recoveryは、次のいずれかで開始する。
 - 季節、祝日、生活イベント、需要前提が変わる。
 
 編集長はbriefの有効範囲だけを再確認し、変更不要な本文や画像を差し戻さない。具体日を含む画像文脈の変更が必要な場合だけビジュアル編集、読者向け表現が変わる場合だけ校正を再実施する。通常の `article:rebook` はこの経路で使い、必要なゲートを機械出力どおりに戻す。
+
+記事PRがopen・未mergeのまま記事statusだけ `published` まで進んだ後にEditorial recoveryが必要になった場合、進行編集はPR状態とhead SHAを再取得し、`pnpm article:rebook -- --slug=<slug> --publishAt=<ISO date> --resume-unmerged-publication --editorial-revalidated-at=<YYYY-MM-DD>` を使う。この経路は記事を `draft` へ戻し、校正を必ずpendingにする。旧具体日が本文、visual metadata、sidecarにあればビジュアル再確認も必須にし、機械出力の担当labelから再開する。frontmatter全体を再シリアライズせず、本文と変更対象外のYAML表現を保持する。`--resume-unmerged-publication` はopen・未mergeのpublished記事PRと編集長の再確認日が揃ったEditorial recoveryだけに使い、Delivery recoveryの代用にはしない。
 
 ## Completion
 
