@@ -35,6 +35,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - `publishAt` が未来ならplanned、到来済みで正式カバーがあればpublisher + publishへ渡す。文章判断でlabelを決めず `article:handoff` の出力を使う。
 - 復旧のために未来Issueを連鎖的に移動しない。published、scheduled、記事PR作成済み、または公開48時間前より前のplanned記事をprotectedとして維持する。期限までにPRがないplanned枠だけを解放し、その記事自身を復旧待ちへ移す。
 - Delivery recoveryが読者向け旧具体日、直前の掲載予約日から7日超、月跨ぎを検出した場合だけEditorial recoveryへ切り替える。必要な本文、画像、校正だけを再確認し、変更不要な工程を巻き戻さない。
+- open・未mergeのpublished記事PRをEditorial recoveryへ戻す場合は、編集長再確認日を得てから `pnpm article:rebook` の `--resume-unmerged-publication` を使う。機械出力どおりにdraftへ戻し、ビジュアル再確認または校正へ渡す。
 - milestoneは月末や計画Issueのcloseだけで閉じず、機械判定がeligibleになった場合だけ閉じる。
 
 ## Main Authority

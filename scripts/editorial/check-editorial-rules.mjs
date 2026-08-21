@@ -58,6 +58,8 @@ requireText('docs/editorial/recovery-workflow.md', 'workerを並列実行しな�
 requireText('docs/editorial/recovery-workflow.md', '別agentを起動せず');
 requireText('docs/editorial/recovery-workflow.md', '19:00以降に新しいworkerを起動しない');
 requireText('docs/editorial/recovery-workflow.md', '公開担当workerだけである');
+requireText('docs/editorial/recovery-workflow.md', 'goalを `checkpoint`');
+requireText('docs/editorial/recovery-workflow.md', '--resume-unmerged-publication --editorial-revalidated-at');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
 requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
 requireText('.agents/kotatsu/publisher.md', 'pnpm visual:artifact');
@@ -114,11 +116,8 @@ rejectPattern(
   /(?:20:00|21:00|22:00)/,
   'late recovery window'
 );
-rejectPattern(
-  'docs/editorial/agent-workflow.md',
-  /article:rebook[^\n]*resume-unmerged-publication/,
-  'delivery recovery mixed into editorial rebooking'
-);
+requireText('docs/editorial/agent-workflow.md', 'open・未mergeのpublished記事PR');
+requireText('.agents/kotatsu/managing-editor.md', '--resume-unmerged-publication');
 requireText('.agents/kotatsu/writer-desk.md', '1回の起動で複数記事');
 rejectPattern(
   'README.md',

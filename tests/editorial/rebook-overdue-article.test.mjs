@@ -41,11 +41,12 @@ editorial:
   briefVolume: vol-002
   publicationDate: "2026-08-11"
   briefReviewedAt: "2026-08-03"
+  recoveryContext: 記事PRはIssue #52本文と一致する。後続の確認文も保持する。
   sourceVolumes:
     - vol-002
   integrityReview:
     status: ${status === 'published' ? 'passed' : 'pending'}
-    ${status === 'published' ? 'reviewedBy: agent:copy-editor\n    reviewedAt: "2026-08-10"\n    planAlignment: 正式計画に沿っている。\n    timingAlignment: 盛夏の公開時期に沿っている。' : ''}
+    ${status === 'published' ? 'reviewedBy: agent:copy-editor\n    reviewedAt: "2026-08-10"\n    planAlignment: 正式計画に沿っている。\n    timingAlignment: 盛夏の公開時期に沿い、Issue #52本文と一致する。後続の確認文も保持する。' : ''}
     crossVolumeDecision: not-applicable
 visual:
   source: ai-generated
@@ -103,7 +104,7 @@ test('editorial rebooking requires visual review for an old sidecar date', () =>
   }
 });
 
-test('published articles are routed to the separate delivery recovery command', () => {
+test('published articles require an explicit unmerged editorial recovery flag', () => {
   const fixture = createFixture({ status: 'published' });
   try {
     const before = fs.readFileSync(fixture.articlePath, 'utf8');
@@ -115,8 +116,39 @@ test('published articles are routed to the separate delivery recovery command', 
     ], { cwd: fixture.root, encoding: 'utf8' });
 
     assert.equal(result.status, 1);
-    assert.match(result.stderr, /article:recover-publication/);
+    assert.match(result.stderr, /--resume-unmerged-publication/);
     assert.equal(fs.readFileSync(fixture.articlePath, 'utf8'), before);
+  } finally {
+    fs.rmSync(fixture.root, { recursive: true, force: true });
+  }
+});
+
+test('editorial recovery reopens an unmerged published article without reserializing unrelated YAML', () => {
+  const fixture = createFixture({ status: 'published', sidecarDate: '2026年8月11日' });
+  try {
+    const result = spawnSync(process.execPath, [
+      script,
+      '--slug=summer-outing',
+      '--publishAt=2026-08-21T00:00:00+09:00',
+      '--now=2026-08-21T09:00:00+09:00',
+      '--resume-unmerged-publication',
+      '--editorial-revalidated-at=2026-08-21'
+    ], { cwd: fixture.root, encoding: 'utf8' });
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    assert.match(result.stdout, /kotatsu:revise \+ agent:visual-editor/);
+    const source = fs.readFileSync(fixture.articlePath, 'utf8');
+    const parsed = matter(source);
+    assert.equal(parsed.data.status, 'draft');
+    assert.equal(parsed.data.publishAt, '2026-08-21T00:00:00+09:00');
+    assert.equal(parsed.data.editorial.publicationDate, '2026-08-21');
+    assert.equal(parsed.data.editorial.integrityReview.status, 'pending');
+    assert.equal(parsed.data.editorial.scheduleRecovery.mode, 'editorial');
+    assert.equal(parsed.data.editorial.scheduleRecovery.resumedFromUnmergedPublication, true);
+    assert.equal(parsed.data.editorial.scheduleRecovery.visualRecheckRequired, true);
+    assert.equal(parsed.data.editorial.scheduleRecovery.copyRecheckRequired, true);
+    assert.equal(parsed.data.editorial.scheduleRecovery.editorialRevalidatedAt, '2026-08-21');
+    assert.match(source, /recoveryContext: 記事PRはIssue #52本文と一致する。後続の確認文も保持する。/);
   } finally {
     fs.rmSync(fixture.root, { recursive: true, force: true });
   }
