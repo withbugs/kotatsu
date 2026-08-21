@@ -29,6 +29,7 @@
 | --- | --- | --- | --- |
 | `planned` | 進行編集 | `ready` | 着手時期、担当、milestone、入力成果物が揃う |
 | `ready` / `revise` | 担当エージェント | `running` | 作業開始時 |
+| `running` | 同じ担当エージェント | `revise` | 技術的失敗の再開地点を記録し、次の同担当起動を待つ |
 | `running` | 担当エージェント | `review` | 成果、PR/head branch、検証結果をコメント済み |
 | `review` | 進行編集 | `ready` | 次担当へ渡せる |
 | `review` | 進行編集 | `revise` | 現担当へ具体的な修正が必要 |
@@ -37,12 +38,13 @@
 | `publish` / publisherの`revise` | 公開担当 | `running` | 公開作業開始時 |
 | `running` | 公開担当 | `done` | `main`反映と公開URL確認が完了 |
 
-`kotatsu:ready` の最終管理者は進行編集である。制作担当同士は直接次担当labelや `ready` / `publish` を付けず、必ず `review` へ戻す。
+`kotatsu:ready` の最終管理者は進行編集である。制作担当同士は直接次担当labelや `ready` / `publish` を付けず、必ず `review` へ戻す。迅速復旧でも制作workerの後に別の進行編集workerがdesk gateを実施するため、この権限分離は変わらない。
 
-`kotatsu:revise` は待機labelではない。付与時は他の状態labelを外し、担当labelを1つにし、修正理由、PR URL、head branch、完了条件をコメントする。次回起動で処理させない修正は `planned` に置く。
+`kotatsu:revise` は待機labelではない。付与時は他の状態labelを外し、担当labelを1つにし、修正理由または技術的な再開地点、PR URL、head branch、完了条件をコメントする。次回の同担当起動で処理させない修正は `planned` に置く。
 
 ## Branch And Handoff
 
+- 予定実行の分離worktreeは、remote brokerで`origin/main`を取得した直後に `pnpm install --offline --frozen-lockfile --ignore-scripts` を実行する。lockfileとローカルpnpmストアだけで依存を復元し、不足時は外部取得へ切り替えずその起動を停止する。
 - 承認済み正式計画は `origin/main` に存在する場合だけ制作へ使える。
 - 記事制作は、ライター、ビジュアル編集、校正、公開担当が同じ記事PR head branchへ変更を積む。
 - Draft PRは担当の作業中だけ許可する。担当完了時はReady for reviewにする。
@@ -58,36 +60,32 @@
 | --- | --- | --- | --- |
 | 1 | 09:00 | 進行編集 | label、milestone、滞留、当日着手、計画段階を整理 |
 | 1 | 10:00 | 編集長 | 編集会議、担当計画、未着手briefを判断 |
+| 1 | 10:00 | ビジュアル編集 | 実施可能な新規・再試行対象のAI画像とmetadataを制作 |
 | 1 | 12:00 | 進行編集 | 計画成果と校正成果を確認し、次工程または待機へ整理 |
-| 1 | 14:00 | ライター群 | 現在週に公開予定の記事だけをworktreeで執筆 |
+| 1 | 14:00 | ライターデスク | 最も早い実施可能な1記事を、担当カテゴリのrole cardでworktree執筆 |
 | 1 | 16:00 | 進行編集 | ライターPRを確認し、ビジュアル編集へ渡す |
 | 1 | 18:00 | ビジュアル編集 | AI画像を生成・配置し、実画像とmetadataを確認 |
 | 2 | 09:00 | 進行編集 | 実画像を確認し、通過分だけ校正へ渡す |
 | 2 | 11:00 | 校正 | 同じ記事branchで校正し、reviewへ戻す |
 | 2 | 12:00 | 進行編集 | 校正確認、`draft -> scheduled`、公開時刻判定 |
 | 2 | 13:00 | 公開担当 | 到来済みのscheduled記事だけを公開 |
-| 2 | 16:00 | 進行編集 | 公開失敗、修正、滞留を整理 |
+| 2 | 15:00 | 校正 | 実施可能な新規・再試行対象を11:00と同じ条件で校正 |
+| 2 | 16:00 | 進行編集 | review、日付、labelの不一致を整理し、次工程へ渡す |
+| 2 | 17:00 | 公開担当 | 到来済みのscheduled記事と技術的に中断した公開を処理 |
 
-最短でもビジュアル編集から公開まではDay 1 18:00からDay 2 13:00を使う。
+通常制作では、最短でもビジュアル編集から公開まではDay 1 18:00からDay 2 13:00を使う。遅延記事は迅速復旧コーディネーターが同じ品質ゲートを逐次dispatchでき、担当間の定期時刻だけを待たずに進める。
 
-## Missed Run Recovery
+同じ担当に複数の起動時刻がある場合、すべて同じ成果物、検査、完了条件を使う。前の起動で完了済みなら何もせず、`ready`、実施可能な `revise`、または2時間を超えて有意な進捗がない同担当の `running` だけを処理する。直近2時間以内に更新された作業は重複処理しない。予定実行の欠損、技術障害、期限超過は `docs/editorial/recovery-workflow.md` で分類し、通常工程の品質基準を上書きしない。
 
-PCまたはCodexアプリが停止して予定済みタスクが起動しなくても、欠けた実行を過去時刻として再現しない。GitHub Issue、記事PR、Actionsを永続キューとして扱い、次の通常起動が未完了状態から再開する。公開予定日を過ぎた記事を古い日付のまま強行公開せず、実際の校正日や確認日を過去日に偽装しない。
+通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、失敗した担当が再開地点をコメントし、同じ担当の `kotatsu:revise` に残す。次の同担当起動が進行編集を介さず再開する。本文、画像、校正、公開日など編集判断が必要な失敗だけ `kotatsu:review + agent:managing-editor` へ戻す。これは同じ担当内の再試行であり、制作担当間の直接受け渡しではない。
 
-進行編集は9:00、12:00、16:00の各起動で、状態labelにかかわらずopenな `type:article` の公開予定を確認する。`publishAt` がJSTの現在日以前で未公開ならoverdue recovery対象とし、PR/head branch、現在工程、最後の成果、残りの担当起動を確認する。実行中の担当が直近2時間以内に進捗を記録している場合は重複して操作しない。明示済みblockerがmain上の新ルールで解消できる場合、または予定起動を越えて担当処理が存在しない場合は、`running` を適切な担当の `revise` へ正規化できる。
+## Recovery
 
-再予約は次をすべて満たす最も早い公開枠を選ぶ。
+予定実行の欠損、技術的失敗、公開予定日の超過は `docs/editorial/recovery-workflow.md` を正本とする。通常工程は成果物と品質ゲートを定義し、復旧工程は完了済みゲートを保持する条件、未完了の再開地点、protected公開日を動かさない最短空き枠だけを定義する。
 
-- 残っているビジュアル編集、校正、進行編集、公開担当が通常の起動時刻で各1回以上動ける。
-- 同日公開を避け、scheduledまたはpublished記事と48時間以上空ける。
-- 週1〜2本、月4〜8本を維持し、未来のArticle Issueに記録済みの公開枠とも衝突しない。
-- 公開担当の13:00起動をすでに過ぎている場合、翌日以降を選ぶ。
+09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。activeまたはcheckpointの復旧goalは通常担当より先に再開し、実施可能なreviseを理由に固定時刻まで待たない。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot` と `pnpm article:recover-publication` を同じsession内で実行する。読者向け内容の再確認が必要なEditorial recoveryは進行編集workerが `pnpm article:rebook` を使い、open・未mergeのpublished記事PRでは編集長再確認後に `--resume-unmerged-publication` を付けてdraftへ戻す。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
 
-記事PR branchを最新の `origin/main` と同期したうえで、進行編集は `pnpm article:rebook -- --slug=<slug> --publishAt=<ISO日時>` を実行する。このコマンドはfrontmatterの `publishAt` と `editorial.publicationDate` を同時に更新し、元日時、直前日時、再予約日時、理由、回数を `editorial.scheduleRecovery` に保存する。進行編集は同じ変更をIssue本文の現在の公開予定へ反映し、元日時と再予約理由をIssueコメントに残す。正式計画の当初予定は履歴として書き換えない。
-
-再予約が元日時から7日以内かつ同じ暦月なら、本文の季節・生活イベントが新日時にも成立することを進行編集が確認して工程を再開する。記事、visual metadata、sidecarに元の具体日や祝日が含まれる場合はビジュアル編集へ `revise` で再確認を渡してから校正へ進める。具体日はISO形式だけでなく、`2026年8月11日` のような日本語表記も機械判定の対象とする。7日を超える、翌月へ跨ぐ、季節・生活イベントが変わる場合は編集長へ `revise` でbrief再確認を渡し、必要に応じてビジュアル編集も再実施する。編集長確認日を `--editorial-revalidated-at=YYYY-MM-DD` へ渡すまで再予約しない。
-
-校正済みで古い日時のscheduled記事も、進行編集が次枠へ再予約してから公開担当へ渡す。公開担当はJSTの現在日より前の `publishAt` を持つ記事を公開せず、`review` と進行編集へ戻す。回復でも `draft -> scheduled -> published` と全公開ゲートを省略しない。
+復旧でも記事状態は `draft -> scheduled -> published` とし、公開担当だけが最終記事PRをmainへmergeする。未来記事の日付を連鎖的に変更せず、制作中または期限内のprotected日付を維持する。
 
 ## Monthly Planning
 
@@ -108,7 +106,7 @@ PCまたはCodexアプリが停止して予定済みタスクが起動しなく�
 
 Vol.のmilestoneを閉じる責任者は進行編集である。公開担当は各記事Issueをdoneでcloseするが、milestone自体は操作しない。
 
-進行編集は9:00、12:00、16:00の各起動で、`git fetch origin main` の成功後に `pnpm milestone:close -- --apply` を実行する。このコマンドはopenな `Vol. XXX` milestoneごとに、次をすべて満たす場合だけcloseする。
+進行編集は9:00、12:00、16:00の各起動で、remote brokerによるorigin/main取得の成功後に `node scripts/editorial/close-complete-milestones.mjs --apply` を実行する。このコマンドはopenな `Vol. XXX` milestoneごとに、次をすべて満たす場合だけcloseする。
 
 - `origin/main` に承認済み `docs/editorial/plans/vol-XXX.md` が存在する。
 - milestoneに完了済みの `type:volume-plan` が1件、`type:volume-cover` が1件ある。
@@ -153,11 +151,11 @@ Article Issueには公開予定日、公開予定週、または `publishAt` を
 2. ビジュアル編集は同じ記事PR branchでAI画像、alt、caption、sidecarを完成させる。画像生成ツールが使えない場合はブリーフを残し、`agent:visual-editor` + `kotatsu:revise` にする。未生成のままreviewへ進めない。
 3. 進行編集は本文と `editorial` metadataを正式計画・公開日に照合し、実画像を拡大して季節、多様性、モデル同一性、床置き防止をポリシーと照合する。通過分だけcopy-editorへreadyで渡す。
 4. 校正は同じbranchで文体、事実、禁止表現、読者信頼に加えて計画・公開時期・別Vol.参照を独立確認し、`integrityReview` を記録してreviewへ戻す。別Vol.参照を残す場合はacceptedとしても進行編集承認待ちにする。
-5. 進行編集は残修正がなく `integrityReview` がpassedで、別Vol.参照がある場合は `managingEditorApproval` もapprovedの場合だけ `pnpm article:schedule -- --slug=<slug>` を実行する。未来時刻ならplanned、到来済みならpublisher + publishへ進める。
-6. 公開担当は `pnpm publish:check -- --candidate=<slug>`、`pnpm article:publish -- --slug=<slug>`、`pnpm check`、`pnpm build` を順に通し、最終記事PRをmainへmergeする。
+5. 進行編集は残修正がなく `integrityReview` がpassedで、別Vol.参照がある場合は `managingEditorApproval` もapprovedの場合だけ `pnpm article:schedule -- --slug=<slug>` を実行する。続けて `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをそのままIssueへ反映する。未来時刻ならplanned、到来済みならpublisher + publishへ進め、更新後のIssueを再取得して一致を確認する。
+6. 公開担当は `pnpm publish:check -- --candidate=<slug>`、`pnpm article:publish -- --slug=<slug>`、`pnpm check`、`pnpm build` を順に通す。PRのVisual Check成功後に `pnpm visual:artifact -- --run-id=<run id> --repo=withbugs/kotatsu` を終了まで待ち、列挙されたdesktop/mobile画像をすべて開いてから最終記事PRをmainへmergeする。
 
 記事状態は必ず `draft -> scheduled -> published` とする。公開担当はfrontmatterを手作業でpublishedにしない。
 
-GitHub ActionsのCIとVisual Checkは必須である。ローカルの `pnpm test:visual` は任意の事前確認だが、PR上のVisual Check成功とdesktop/mobile screenshot artifactの確認なしにmergeしない。
+GitHub ActionsのCIとVisual Checkは必須である。ローカルの `pnpm test:visual` は任意の事前確認だが、PR上のVisual Check成功とdesktop/mobile screenshot artifactの確認なしにmergeしない。artifact取得は数分無出力でもコマンド終了まで待ち、途中のdirectoryを空と判定しない。
 
 公開後も週1〜2本、月4〜8本を守る。公開URL、PR、実行したチェックをIssueへコメントし、doneにしてcloseする。失敗時はcloseせず、進行編集が次に判断できる状態へ戻す。

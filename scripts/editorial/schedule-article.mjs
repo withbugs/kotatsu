@@ -2,7 +2,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { validateEditorialIntegrity } from './editorial-integrity.mjs';
-import { loadArticles, parseArgs, validatePublishedSchedule } from './publishing-schedule.mjs';
+import { determinePublicationHandoff } from './publication-handoff.mjs';
+import { loadArticles, parseArgs, parseNow, validatePublishedSchedule } from './publishing-schedule.mjs';
+import { containsLocalDateReference, jstDateKey } from './schedule-recovery.mjs';
 import { diversityPolicyEffectiveAt } from './visual-policy-dates.mjs';
 
 const PENDING_VISUAL_MARKER = '__AI_VISUAL_PENDING__';
@@ -28,6 +30,7 @@ function hasPalette(value) {
 const args = parseArgs(process.argv.slice(2));
 const slug = args.slug || args.article;
 const publishAtArg = args.publishAt || args['publish-at'];
+const now = parseNow(args.now || process.env.KOTATSU_NOW);
 
 if (!slug) {
   console.error('Usage: pnpm article:schedule -- --slug="article-slug" [--publishAt="2026-07-04T00:00:00+09:00"]');
@@ -75,7 +78,8 @@ const scheduleCandidate = {
   publishAtIsValid: true
 };
 const scheduleValidation = validatePublishedSchedule(
-  articles.map((entry) => (entry.slug === article.slug ? scheduleCandidate : entry))
+  articles.map((entry) => (entry.slug === article.slug ? scheduleCandidate : entry)),
+  { now }
 );
 errors.push(...scheduleValidation.errors);
 errors.push(...validateEditorialIntegrity(scheduleCandidate, { requireReview: true }));
@@ -117,7 +121,8 @@ if (heroImage && heroImage !== PENDING_VISUAL_MARKER) {
       errors.push('heroImage metadata sidecar is missing');
     } else {
       try {
-        const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+        const metadataRaw = fs.readFileSync(metadataPath, 'utf8');
+        const metadata = JSON.parse(metadataRaw);
         if (metadata.source !== 'ai-generated') {
           errors.push('hero metadata source must be ai-generated');
         }
@@ -160,6 +165,29 @@ if (heroImage && heroImage !== PENDING_VISUAL_MARKER) {
             }
           }
         }
+
+        const recovery = article.data.editorial?.scheduleRecovery;
+        if (recovery?.visualRecheckRequired) {
+          const previousPublishDate = new Date(String(recovery.previousPublishAt || ''));
+          if (!Number.isNaN(previousPublishDate.getTime())) {
+            const staleLocations = [];
+            if (containsLocalDateReference(article.parsed.content, previousPublishDate)) {
+              staleLocations.push('article body');
+            }
+            if (containsLocalDateReference(article.data.visual || {}, previousPublishDate)) {
+              staleLocations.push('visual metadata');
+            }
+            if (containsLocalDateReference(metadataRaw, previousPublishDate)) {
+              staleLocations.push('hero sidecar');
+            }
+            if (staleLocations.length) {
+              errors.push(
+                `visual revalidation is incomplete: ${staleLocations.join(', ')} still refers to ` +
+                `${jstDateKey(previousPublishDate)}`
+              );
+            }
+          }
+        }
       } catch (error) {
         errors.push(`hero metadata sidecar is invalid JSON: ${error.message}`);
       }
@@ -170,6 +198,16 @@ if (heroImage && heroImage !== PENDING_VISUAL_MARKER) {
 if (errors.length) {
   console.error(`${article.relativePath}: cannot schedule article:\n- ${errors.join('\n- ')}`);
   process.exit(1);
+}
+
+const handoff = determinePublicationHandoff({
+  status: 'scheduled',
+  publishAt: nextPublishAt,
+  now
+});
+
+function reportHandoff() {
+  console.log(`Required GitHub labels: ${handoff.stateLabel} + ${handoff.agentLabel}`);
 }
 
 let nextRaw = article.raw;
@@ -191,8 +229,10 @@ if (publishAtArg) {
 
 if (nextRaw === article.raw) {
   console.log(`Already scheduled ${article.relativePath} for ${nextPublishAt}`);
+  reportHandoff();
   process.exit(0);
 }
 
 fs.writeFileSync(article.file, nextRaw, 'utf8');
 console.log(`Scheduled ${article.relativePath} for ${nextPublishAt}`);
+reportHandoff();

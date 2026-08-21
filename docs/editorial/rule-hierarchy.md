@@ -5,6 +5,7 @@ KOTATSUの編集ルールは、内容ごとに次のファイルを正本とす�
 | Topic | Source of truth |
 | --- | --- |
 | 状態label、工程、時刻、branch、受け渡し、公開頻度 | `docs/editorial/agent-workflow.md` |
+| 予定実行の欠損、技術障害、期限超過、復旧公開枠 | `docs/editorial/recovery-workflow.md` |
 | 予定済みタスクからのGitHubアクセス | `docs/editorial/github-access-policy.md` |
 | AI生成ビジュアル、季節感、人物、metadata | `docs/editorial/ai-visual-policy.md` |
 | 読者向け表示、未完成記事、表現 | `docs/editorial/reader-trust-policy.md` |
@@ -29,6 +30,8 @@ KOTATSUの編集ルールは、内容ごとに次のファイルを正本とす�
 4. `origin/main` を更新できない場合は、利用できるrevisionと失敗理由を報告し、古いルールを推測で補わない。
 
 ルールを読む目的だけで、制作branchを `main` へmergeまたはrebaseしない。
+
+成果物を変更する場合は、`docs/editorial/github-access-policy.md` の分離worktree手順を使う。既存PR branchはclean確認、fetch、detached switch、通常mergeがすべて成功した後だけ編集し、予定済みタスクではrebaseを使用しない。
 
 ## Automation Memory
 

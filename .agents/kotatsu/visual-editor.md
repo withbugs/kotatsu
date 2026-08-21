@@ -25,4 +25,6 @@
 
 ## Handoff
 
+10:00と18:00のどちらも同じ制作枠とし、`ready` または実施可能な `revise` を扱う。`agent:visual-editor` と `kotatsu:running` のままでも、2時間を超えて有意な進捗がない対象に限り再開できる。完了コメントまたはreview済みのIssue、直近2時間以内に更新された作業は重複処理しない。
+
 完成時に `pnpm content:check` と `pnpm check` を実行し、PRをReady for reviewにする。Issueへ画像、metadata、実画像レビュー、PR/head branch、検証結果をコメントしてreviewへ戻す。校正へ直接readyを付けない。
