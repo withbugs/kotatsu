@@ -1,0 +1,66 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-002",
+  "article": "sandals-leather-shoes-in-between",
+  "githubIssue": 54,
+  "editorialIntent": "サンダルか革靴かという商品二択ではなく、歩く距離とその日の過ごし方に合わせて足元を選び、帰宅後に休ませる生活の余白を見せる。",
+  "subject": "顔を写さない架空の人物の膝下と手元、薄手の淡いグレーのパンツ、短い靴下、ロゴのない通気孔付きの革の短靴、小さな無地のブラシ、薄い手入れ布",
+  "setting": "2026年8月下旬の日本、低い夏光と木陰が乾いた路面へ落ちる午後、冷房のある明るい玄関と屋外の境目",
+  "composition": "横長hero向け。人物が床から浮いたベンチへ腰掛け、片足に靴を履いたまま、もう一足を手に持ってブラシを掛けるmedium-closeの斜め構図。右奥の開口部から乾いた路面と木陰を見せ、商品だけを正面に並べない。",
+  "compositionFamily": "human-hands-entry-threshold-footwear-care-medium-close",
+  "cameraDistance": "medium-close",
+  "visualTemperature": "mixed",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "pale stone gray",
+    "faded blue gray",
+    "off-white",
+    "muted taupe leather",
+    "asphalt gray",
+    "deep summer green"
+  ],
+  "colorMood": "冷房のある玄関の青みと、八月下旬の白い午後光、乾いた路面の濃い木陰をつなぎ、革を重く見せない穏やかな盛夏の色調。",
+  "promptSummary": "2026年8月下旬の日本、夏の木陰が路面へ落ちる玄関の境目で、顔を写さない人物が片足に通気のよい革の短靴を履き、もう一足を手に持って小さなブラシで整える。手入れ道具は床から浮いた清潔なベンチ上の布トレーに置く。",
+  "caption": "夏の路面から戻った玄関で、一足を急がず整える手元を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年8月27日の日本。8月下旬も暑さと湿度が残り、屋外の路面と冷房のある室内を行き来する時期。",
+  "seasonalCues": [
+    "薄手の淡いグレーのパンツ、軽い短い靴下、足首まわりに余白のある通気のよい革の短靴",
+    "夏の低い白い光、乾いた路面へ落ちる濃い木陰、冷房を感じる青みの玄関"
+  ],
+  "seasonalAvoid": [
+    "厚手のウール、重いブーツ、深い暖色照明など秋冬に見える要素",
+    "南国リゾートや旅行広告に見える演出",
+    "商品を真正面に並べたEC写真、高級革製品の広告、玄関土間へ手入れ道具を直置きする構図"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable person",
+    "readable product labels",
+    "official product photo look",
+    "affiliate catalog composition",
+    "luxury advertising mood",
+    "fashion campaign posing",
+    "medical foot-care imagery",
+    "personal belongings on pavement",
+    "care tools on entrance floor",
+    "distorted hands or anatomy"
+  ],
+  "similarityReviewedAgainst": [
+    "summer-shade-walk-from-station",
+    "summer-light-bag-contents",
+    "summer-shirt-airy-room",
+    "leather-shoes-slow-choice"
+  ],
+  "visualDifference": "直近の屋外を歩く後ろ姿、ベンチ上の鞄と手元、窓辺の布接写に加え、Vol.001の棚上の革靴静物を確認した。今回は玄関の内外を一画面につなぎ、人物の膝下と実際にブラシを掛ける手元を主役にして、街路の中遠景、持ち物支度、布だけの接写、靴を並べた静物を避けた。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "片足の革靴は人物が着用し、もう一足は手に持っている。ブラシと薄い布は手または床から浮いた清潔なベンチ上の布トレーにあり、私物や手入れ道具を路面、玄関土間、床へ直接置いていない。"
+  }
+}
