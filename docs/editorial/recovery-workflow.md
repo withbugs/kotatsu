@@ -22,12 +22,14 @@ ProductionまたはEditorial recoveryでは、制作担当workerの後に必ず�
 rapid recovery sessionは次の手順で行う。
 
 1. 工程が最も進み、元の公開予定が最も早い遅延記事を1件だけ選ぶ。
-2. Issueへ `<!-- kotatsu:rapid-recovery -->`、session id、owner run、goal、class、現在工程、PR head SHA、開始時刻、120分後の期限、`active` 状態をコメントし、現在担当1つと `kotatsu:running` を反映して再取得する。有効期限内の別sessionがある場合は開始しない。
+2. Issueへ `<!-- kotatsu:rapid-recovery -->`、session id、owner run、goal、class、現在工程、PR head SHA、開始時刻、120分後の期限、`active` 状態をコメントし、現在担当1つと `kotatsu:running` を反映して再取得する。最新のsession記録が `state: active` で期限内の場合だけ有効な別leaseとして扱い、開始しない。後続の `checkpoint`、`waiting-publishAt`、`completed` 記録があるsessionは、元のexpiresAtが未来でも排他leaseを持たない。
 3. 現在工程のrole cardを指定してworkerを1件だけ起動する。workerには指定IssueとPR branchだけを扱い、別agentを起動せず、成果、検査、再開地点をGitHubへ残すよう明記する。
 4. worker完了を待ってIssue、PR、Actionsとhead SHAを再取得する。ProductionまたはEditorialの制作workerがreviewへ戻した場合は進行編集workerを起動し、その判断後に必要な修正担当または次担当workerを起動する。実施可能な差し戻しは同じsessionで続け、workerを並列実行しない。
-5. 公開完了でgoalを `completed` にする。人手でしか決められない編集判断、正本と実装の未解消矛盾、回復不能な外部障害、予期しないhead SHA変更、120分経過、worker 8件完了、19:00 JSTでは、現在工程と次actionを記録してgoalを `checkpoint` にする。19:00以降に新しいworkerを起動しない。
+5. 公開完了でgoalを `completed` にする。人手でしか決められない編集判断、正本と実装の未解消矛盾、回復不能な外部障害、予期しないhead SHA変更、120分経過、worker 8件完了、19:00 JSTでは、現在工程、次action、`endedAt`を記録してgoalを `checkpoint` にし、その時点でleaseを解放する。19:00以降に新しいworkerを起動しない。
 
 rootコーディネーター自身は本文、画像、校正、編集承認、公開を代行せず、最終記事PRをmainへmergeできるのは公開担当workerだけである。同じ障害fingerprintの再試行はsession内で1回までとし、再失敗時は現在工程、保持済みゲート、次actionを `kotatsu:revise` に残す。multi-agent tools、利用上限、PC、Codexアプリ、認証などの外部条件で続行できない場合もGitHubを永続checkpointとする。次に起動した日中の予定済みタスクは、新規session idとleaseを取得してcheckpointのgoalを通常作業より先に再開し、固定された担当時刻を待たない。
+
+制作と品質ゲートが回復し、機械出力が未来の `publishAt` に対する `kotatsu:planned + agent:publisher` を返した場合は、goalを `waiting-publishAt` としてleaseを解放する。これは遅延中のactive/checkpointではなく正常な掲載待機であり、到来前の予定済みタスクは復旧優先対象にせず、ほかの記事制作を進める。公開日時が到来した公開担当が同じgoalを再開し、公開URL確認とIssue closeで `completed` にする。
 
 ## Recovery Classes
 
@@ -67,7 +69,9 @@ Delivery recoveryは画像、本文、校正の内容を変更しない。内部
 - 記事PRが存在する `ready`、`running`、`review`、`publish` の記事
 - 公開48時間前より前で、まだ制作開始前のplanned記事
 
-plannedかつ記事PRのない記事が公開48時間前までに制作開始できなかった場合、その枠は保護を解除し、その記事自身を復旧待ちへ移す。空いた枠は、工程が最も進んだ遅延記事が使える。優先順は、open・未mergeのpublished、校正済みscheduled、review、running、未着手plannedとし、同じ工程なら元の公開予定が早い記事を先にする。
+plannedかつ記事PRのない記事は、公開72時間前に入った時点で次週分でもライターreadyへ進める。これは毎日14:00のライターデスクを48時間前のProduction cutoffより前に最低1回確保する先行窓であり、公開枠の移動には使わない。
+
+公開48時間前までに制作開始できなかった場合、その枠は保護を解除し、その記事自身を復旧待ちへ移す。空いた枠は、工程が最も進んだ遅延記事が使える。優先順は、open・未mergeのpublished、校正済みscheduled、review、running、未着手plannedとし、同じ工程なら元の公開予定が早い記事を先にする。
 
 `recovery:slot` はprotected日付を変更せず、48時間以上、同日公開なし、週2本以内、月8本以内の最短日を返す。空きがなければ対象の遅延記事だけを次の空きまで待機させる。後続のprotected日付、制作中PR、公開順を自動変更しない。順序変更が読者体験やVol.構成を損なう場合だけ進行編集がeditorial reviewへ戻す。
 

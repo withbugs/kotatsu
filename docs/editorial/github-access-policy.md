@@ -18,6 +18,7 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 
 - リポジトリを変更する予定済みエージェントは、Codexの分離worktree実行を使う。共有チェックアウトを制作場所にしない。
 - 既存PR branchへ着手する前にIssueのhead branchを確認する。`git status --porcelain` が空であることを確認し、remote brokerによるfetch、`git switch --detach origin/<head branch>`、`git merge --no-edit origin/main` を順に実行する。
+- 分離worktreeの `.git` は共有repositoryの管理領域を参照する。`git switch --detach`、`git merge --no-edit`、`git add -- <paths>`、`git commit -m <message>` のようにindex、HEAD、worktree metadataへ書くコマンドは、最初の `exec_command` から `sandbox_permissions: "require_escalated"` を指定する。通常サンドボックスでpermission failureを起こしてから再試行しない。`git status`、`git diff`、`git show`など読取りだけの操作は通常権限でよい。
 - 上記の3操作がすべて成功する前にIssueをrunningへ変更しない。rebaseを使用しない。
 - 同期失敗時はreset、restore、clean、force checkoutで復元を試みない。分離worktreeを破棄し、GitHub上の状態を変更せず、次の予定実行が新しいworktreeで再試行できるようにする。
 - 完了したcommitはremote brokerの `push origin HEAD:<head branch>` で送る。brokerはmain、未許可のbranch family、force形式を拒否する。non-fast-forwardなら停止し、Issueを元の担当・状態に保ったまま次の予定実行で最新branchからやり直す。

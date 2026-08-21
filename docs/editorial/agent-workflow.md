@@ -83,7 +83,7 @@
 
 予定実行の欠損、技術的失敗、公開予定日の超過は `docs/editorial/recovery-workflow.md` を正本とする。通常工程は成果物と品質ゲートを定義し、復旧工程は完了済みゲートを保持する条件、未完了の再開地点、protected公開日を動かさない最短空き枠だけを定義する。
 
-09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。activeまたはcheckpointの復旧goalは通常担当より先に再開し、実施可能なreviseを理由に固定時刻まで待たない。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot` と `pnpm article:recover-publication` を同じsession内で実行する。読者向け内容の再確認が必要なEditorial recoveryは進行編集workerが `pnpm article:rebook` を使い、open・未mergeのpublished記事PRでは編集長再確認後に `--resume-unmerged-publication` を付けてdraftへ戻す。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
+09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。activeまたはcheckpointの復旧goalは通常担当より先に再開し、実施可能なreviseを理由に固定時刻まで待たない。排他leaseを持つのは最新記録が期限内の `state: active` であるsessionだけで、checkpointは即時再開できる。未来日時まで正常に掲載待機する `waiting-publishAt` は復旧優先対象にせず、ほかの記事を進める。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot` と `pnpm article:recover-publication` を同じsession内で実行する。読者向け内容の再確認が必要なEditorial recoveryは進行編集workerが `pnpm article:rebook` を使い、open・未mergeのpublished記事PRでは編集長再確認後に `--resume-unmerged-publication` を付けてdraftへ戻す。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
 
 復旧でも記事状態は `draft -> scheduled -> published` とし、公開担当だけが最終記事PRをmainへmergeする。未来記事の日付を連鎖的に変更せず、制作中または期限内のprotected日付を維持する。
 
@@ -123,13 +123,13 @@ brief修正提案は記事ごとに対象Vol.、Article Issue、承認済み計�
 
 進行編集は、対象Vol.、正式計画、milestone、公開日が一致しない提案をIssue本文へ反映せず、ライターreadyにしない。別Vol.参照に適用範囲と除外範囲がない場合も同様とする。
 
-Article Issueには公開予定日、公開予定週、または `publishAt` を必須とする。ライターへreadyを付けられるのは、JSTの現在週に公開予定の記事だけで、同一週2本までとする。
+Article Issueには公開予定日、公開予定週、または `publishAt` を必須とする。ライターへreadyを付けられるのは、JSTの現在週に公開予定の記事、または公開72時間前に入った次週の記事で、公開週ごとに2本までとする。72時間の先行窓は、毎日14:00のライターデスクを48時間前のProduction cutoffより前に最低1回確保するためだけに使い、公開日や公開間隔は変更しない。
 
 同一週に2本公開する場合、進行編集はライターへreadyを付ける前に各Issueへ具体的な公開日を割り当てる。同日公開は禁止し、記事間の `publishAt` は48時間以上空ける。公開間隔は `pnpm content:check` と `pnpm article:schedule` でも検証する。
 
-- 未来週または日付不明の記事は `planned` にする。
-- 未来週のライター修正も、実施週までは `planned` にする。`revise` を付けたまま待機させない。
-- 現在週または過去の既存記事PRに具体的な修正がある場合だけ、担当ライターの `revise` にする。
+- 公開72時間前より先の未来週、または日付不明の記事は `planned` にする。
+- 未来週のライター修正も、公開72時間前に入るまでは `planned` にする。`revise` を付けたまま待機させない。
+- 現在週、過去、または公開72時間前に入った既存記事PRに具体的な修正がある場合だけ、担当ライターの `revise` にする。
 
 ## Editorial Integrity Gate
 
