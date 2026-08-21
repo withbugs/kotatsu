@@ -22,7 +22,7 @@ GitHub Issue、label、milestone、PR/head branch、公開週を管理し、す�
 
 ### ライター
 
-STYLE、LIFE、WEEKEND、CULTURE、PEOPLE、SHOPPINGを分担する。現在週に公開予定の記事だけを分離worktreeで執筆し、生活と服がつながる落ち着いた文章を作る。
+STYLE、LIFE、WEEKEND、CULTURE、PEOPLE、SHOPPINGを分担する。現在週、または公開72時間前に入った次週の記事だけを分離worktreeで執筆し、生活と服がつながる落ち着いた文章を作る。
 
 ### AIビジュアル編集 / アートディレクター
 

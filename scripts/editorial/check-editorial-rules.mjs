@@ -31,10 +31,13 @@ requireText('docs/editorial/rule-hierarchy.md', 'docs/editorial/recovery-workflo
 requireText('docs/editorial/agent-workflow.md', 'draft -> scheduled -> published');
 requireText('docs/editorial/agent-workflow.md', '制作担当同士は直接');
 requireText('docs/editorial/agent-workflow.md', '未来週のライター修正');
+requireText('docs/editorial/agent-workflow.md', '公開72時間前');
 requireText('docs/editorial/agent-workflow.md', '未生成のままreviewへ進めない');
 requireText('docs/editorial/agent-workflow.md', 'editorial.integrityReview.status: passed');
 requireText('.agents/kotatsu/editor-in-chief.md', '持ち込まない季節・生活イベント');
 requireText('.agents/kotatsu/managing-editor.md', 'crossVolumeReview.managingEditorApproval');
+requireText('.agents/kotatsu/managing-editor.md', '公開72時間前');
+requireText('.agents/kotatsu/writer.md', '公開72時間前');
 requireText('.agents/kotatsu/managing-editor.md', 'node scripts/editorial/close-complete-milestones.mjs --apply');
 requireText('.agents/kotatsu/copy-editor.md', 'editorial.integrityReview');
 requireText('.agents/kotatsu/copy-editor.md', 'managingEditorApproval');
