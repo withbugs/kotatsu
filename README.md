@@ -73,6 +73,7 @@ After the broker refreshes `origin/main`, each scheduled worktree runs `pnpm ins
 - Only the publisher merges a completed article PR after the publishing gate.
 - Article state is always `draft -> scheduled -> published`.
 - When two articles share a week, the managing editor assigns exact dates before writing and keeps their `publishAt` values at least 48 hours apart.
+- A next-week article enters the Writer desk up to 72 hours before `publishAt`, ensuring one daily writing run before the 48-hour production cutoff without moving its publication date.
 - Recovery does not automatically shift later protected dates. A planned article without a PR releases its slot only when it misses the 48-hour production cutoff.
 - A formal, AI-generated volume cover must exist before the first article in that volume is published.
 - GitHub Actions CI and Visual Check are mandatory. Local `pnpm test:visual` is optional preflight.
