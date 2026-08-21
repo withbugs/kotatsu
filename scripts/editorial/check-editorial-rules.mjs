@@ -59,6 +59,8 @@ requireText('docs/editorial/recovery-workflow.md', '別agentを起動せず');
 requireText('docs/editorial/recovery-workflow.md', '19:00以降に新しいworkerを起動しない');
 requireText('docs/editorial/recovery-workflow.md', '公開担当workerだけである');
 requireText('docs/editorial/recovery-workflow.md', 'goalを `checkpoint`');
+requireText('docs/editorial/recovery-workflow.md', '最新のsession記録が `state: active`');
+requireText('docs/editorial/recovery-workflow.md', 'goalを `waiting-publishAt`');
 requireText('docs/editorial/recovery-workflow.md', '--resume-unmerged-publication --editorial-revalidated-at');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
 requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
@@ -78,6 +80,7 @@ requireText('docs/editorial/github-access-policy.md', 'rebaseを使用しない'
 requireText('docs/editorial/github-access-policy.md', 'kotatsu-github.mjs');
 requireText('docs/editorial/github-access-policy.md', 'kotatsu-git-remote.mjs');
 requireText('docs/editorial/github-access-policy.md', 'sandbox_permissions: "require_escalated"');
+requireText('docs/editorial/github-access-policy.md', 'index、HEAD、worktree metadataへ書くコマンド');
 requireText('docs/editorial/github-access-policy.md', 'pnpm install --offline --frozen-lockfile --ignore-scripts');
 requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/kotatsu-github.mjs');
 requireText('.codex/rules/kotatsu-scheduled-network.rules', 'scripts/editorial/kotatsu-git-remote.mjs');
