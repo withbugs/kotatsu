@@ -1,0 +1,64 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-002",
+  "article": "summer-return-to-work-clothes",
+  "githubIssue": 55,
+  "editorialIntent": "実在人物の取材写真に見せず、夏休み明けの温度差に合わせて服の状態を調整する人物像を、固有プロフィールのない生活動作として表す。",
+  "subject": "顔を見せない架空人物の後ろ姿、薄手の淡いセラドングレーの羽織、淡いラベンダーグレーの軽い無地布鞄、袖を整える自然な手元",
+  "setting": "2026年8月30日の日本、八月末の強い白い日差しと冷房の白い光が分かれる、看板のない清潔で架空の屋内通路",
+  "composition": "横長hero向け。人物を上腿から頭までの三分の一後方で捉え、静止して袖を整える動作と、屋外の強い日差しから涼しい通路へ切り替わる建築的な境界を同じ画面に置くmedium構図。",
+  "compositionFamily": "human-environmental-sleeve-adjustment-three-quarter-back-medium",
+  "cameraDistance": "medium",
+  "visualTemperature": "mixed",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "pale celadon gray",
+    "muted lavender gray",
+    "chalk white",
+    "cool light gray",
+    "deep blue gray"
+  ],
+  "colorMood": "八月末の白く強い昼光、冷房を感じる青みの影、淡いセラドンとラベンダーグレーで、仕事の日にも残る真夏の軽さを見せる。",
+  "promptSummary": "2026年8月末の日本、強い白い日差しと冷房の白い光が分かれる清潔な通路で、顔を見せない架空人物が薄手の淡いセラドングレーの羽織の袖を整え、淡いラベンダーグレーの軽い布鞄を肩に掛ける。",
+  "caption": "八月末の日差しと冷房の境目で、薄手の羽織を静かに整える人物を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年8月30日の日本。八月末も強い日差しと湿度が残り、屋外と冷房のある室内の温度差を薄手の羽織で調整する時期。",
+  "seasonalCues": [
+    "半袖の上に重ねた薄手の淡い羽織と、肩に掛けた軽い布鞄",
+    "強い白い夏の昼光、輪郭のくっきりした影、冷房を感じる青みの通路"
+  ],
+  "seasonalAvoid": [
+    "厚手のジャケット、ウール、ニット、重いブーツなど秋冬に見える重ね着",
+    "紅葉、深い暖色照明、秋物広告、重い茶色や黒が面積を占める色調"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable company names",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person",
+    "documentary interview look",
+    "fixed gender age or occupation",
+    "stock photo corporate aesthetic",
+    "fashion campaign posing",
+    "thick autumn or winter clothing",
+    "personal belongings on floor",
+    "distorted hands or anatomy"
+  ],
+  "similarityReviewedAgainst": [
+    "cool-room-thin-book-summer-sound",
+    "summer-shade-walk-from-station",
+    "summer-light-bag-contents",
+    "sandals-leather-shoes-in-between"
+  ],
+  "visualDifference": "直近の棚上の静物、屋外を歩く後ろ姿、ベンチ上の鞄と手元に加え、次の公開予定記事の玄関で靴を手入れする手元構図を確認した。今回は看板のない屋内通路で静止して袖を整える人物をmediumで捉え、街路歩行、静物、持ち物支度、商品手入れの視覚文法を避けた。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-08-23T18:07:31+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "軽い布鞄は人物の肩に掛けられている。通路と床に書籍、飲料、衣類、ハンカチ、財布、鍵、携帯電話などの私物は置かれていない。"
+  }
+}
