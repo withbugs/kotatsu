@@ -1,0 +1,62 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-002",
+  "article": "cool-room-thin-book-summer-sound",
+  "githubIssue": 53,
+  "editorialIntent": "外の熱気から戻った直後に、読むことと小さな音で室内の速度を整える余白を残す。",
+  "subject": "無地の薄い本、小さな無地のスピーカー、畳んだ淡い青の半袖シャツを置いた、床から明確に浮いた淡い棚",
+  "setting": "2026年8月下旬の日本、夕立後の濡れた街路の反射が窓に見える、冷房の効いた静かな室内の薄暮",
+  "composition": "横長hero向け。三分の一ほどの斜め方向から、画面右の明確に浮いた淡い棚と棚上の静物を主役にし、左に青みのある窓と雨後の反射を広く残すmedium-wide構図。床面は空で、物はすべて棚上に置く。",
+  "compositionFamily": "still-life-rainy-window-elevated-shelf-medium-wide",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "blue-gray twilight",
+    "pale stone gray shelf",
+    "soft off-white paper",
+    "pale blue cotton",
+    "cool rain reflection"
+  ],
+  "colorMood": "夕立後の青みを帯びた薄暮、冷房の穏やかな白い光、淡い石調の棚と青い綿で、8月下旬の室内の涼しさを軽く見せる。",
+  "promptSummary": "2026年8月下旬の日本、夕立後の青みのある薄暮に、冷房の部屋の床から明確に浮いた淡い棚へ、文字もロゴもない薄い本、小さな無地スピーカー、畳んだ淡青の半袖シャツを置く。",
+  "caption": "夕立後の青みが残る冷房の部屋で、薄い本と小さな音のための余白を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年8月下旬の日本。蒸し暑い夕方と夕立後の湿度が残り、冷房の効いた室内へ戻る時間を描く。",
+  "seasonalCues": [
+    "畳んだ薄手の綿の半袖シャツと、軽い紙のページの影",
+    "夕立後の濡れた窓外の反射と、青みを帯びた薄暮",
+    "冷房の穏やかな白い光と、空に保たれた清潔な室内床"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウール、長い重ね着、秋冬に見える深い暖色の照明",
+    "紅葉、湯気の強い飲み物、深い木面、秋冬の重い革小物",
+    "書籍、飲料容器、衣類、携帯電話を路面、床、玄関土間へ直接置く構図"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable book titles",
+    "readable album covers",
+    "real store signage",
+    "celebrity likeness",
+    "stock photo look",
+    "product recommendation look",
+    "warm amber lighting",
+    "personal belongings on floor"
+  ],
+  "similarityReviewedAgainst": [
+    "summer-light-bag-contents",
+    "summer-shade-walk-from-station",
+    "summer-shirt-airy-room"
+  ],
+  "visualDifference": "直近の昼光の布接写、屋内ベンチ上で鞄へ収める手元、街路の人物を実画像で確認した。今回は人物と昼光を使わず、夕立後の薄暮、窓の反射、床から明確に浮いた低い棚の静物を主役にして、ベンチやテーブル、接写の視覚文法を避けた。",
+  "referenceSheetUse": "none; no roster model used in the final public hero",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-08-21T12:00:00+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "薄い本、無地の小さなスピーカー、畳んだ半袖シャツは、床から明確に浮いた淡い棚の上にあり、画面に見える清潔な床面へ私物は直接置かれていない。"
+  }
+}
