@@ -83,7 +83,7 @@
 
 予定実行の欠損、技術的失敗、公開予定日の超過は `docs/editorial/recovery-workflow.md` を正本とする。通常工程は成果物と品質ゲートを定義し、復旧工程は完了済みゲートを保持する条件、未完了の再開地点、protected公開日を動かさない最短空き枠だけを定義する。
 
-09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。activeまたはcheckpointの復旧goalは通常担当より先に再開し、実施可能なreviseを理由に固定時刻まで待たない。排他leaseを持つのは最新記録が期限内の `state: active` であるsessionだけで、checkpointは即時再開できる。未来日時まで正常に掲載待機する `waiting-publishAt` は復旧優先対象にせず、ほかの記事を進める。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot` と `pnpm article:recover-publication` を同じsession内で実行する。読者向け内容の再確認が必要なEditorial recoveryは進行編集workerが `pnpm article:rebook` を使い、open・未mergeのpublished記事PRでは編集長再確認後に `--resume-unmerged-publication` を付けてdraftへ戻す。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
+09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。activeまたはcheckpointの復旧goalは通常担当より先に再開し、実施可能なreviseを理由に固定時刻まで待たない。ただし、進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に月次計画の期限判定を行う。排他leaseを持つのは最新記録が期限内の `state: active` であるsessionだけで、checkpointは即時再開できる。未来日時まで正常に掲載待機する `waiting-publishAt` は復旧優先対象にせず、ほかの記事を進める。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot` と `pnpm article:recover-publication` を同じsession内で実行する。読者向け内容の再確認が必要なEditorial recoveryは進行編集workerが `pnpm article:rebook` を使い、open・未mergeのpublished記事PRでは編集長再確認後に `--resume-unmerged-publication` を付けてdraftへ戻す。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
 
 復旧でも記事状態は `draft -> scheduled -> published` とし、公開担当だけが最終記事PRをmainへmergeする。未来記事の日付を連鎖的に変更せず、制作中または期限内のprotected日付を維持する。
 
@@ -98,7 +98,11 @@
 3. 第4月曜 `finalize`: 調査を再更新し、テーマ、記事順、公開週、季節感、AIビジュアル方針を正式計画にする。編集長がVol.計画を編集承認し、PRをReadyにする。
 4. 各月曜12:00に進行編集が成果を確認する。research/shortlistは次月曜までplanned、finalizeだけをmainへ反映する。
 
-検索が利用できない場合は根拠を捏造せずfinalizeしない。第5月曜は新規計画ではなくpreflightに使う。個別記事の公開前に編集長の最終承認は設けず、編集長は週次会議とVol.計画承認で品質を担保する。
+進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの暦とGitHub上の全計画Issue・milestoneを照合し、期限を過ぎた計画がなければ未来Vol.1件分のmilestoneとresearch Issueだけを重複なく作る。出力が `recovery-required` なら `docs/editorial/recovery-workflow.md` のPlanning Recoveryを開始または再開する。
+
+遅延回復でもresearch、進行編集確認、shortlist、進行編集確認、finalize、進行編集確認の順序と調査基準は省略しない。ただし完了済み段階から再開し、次の月曜を待たず同じ日中sessionで期待段階まで逐次進める。各段階をIssueコメント、planning branchのcommit、stage labelへ記録し、進行編集確認を通さず次段階へ進めない。
+
+検索が利用できない場合は根拠を捏造せずfinalizeしない。第5月曜は通常時はpreflightに使うが、未完了のPlanning Recoveryがあればfinalizeまでの不足段階を優先する。個別記事の公開前に編集長の最終承認は設けず、編集長は週次会議とVol.計画承認で品質を担保する。
 
 正式計画が `main` に入り、正式カバーIssueと記事Issueを展開したら、計画Issueはdoneでcloseできる。closeは次Vol.開始のトリガーではない。
 

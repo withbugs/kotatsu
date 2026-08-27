@@ -27,6 +27,8 @@ Planning for the next calendar-month volume begins on or after the second Monday
 | Third Monday | `planning:shortlist` | Refreshed evidence, a provisional theme, and a provisional lineup on the same Draft PR |
 | Fourth Monday | `planning:finalize` | Final research, seasonal and visual direction, the approved plan, and a Ready PR |
 
+At every 09:00, 10:00, 12:00, and 16:00 managing-editor or editor-in-chief run, `pnpm planning:recover -- --apply` checks this calendar before article recovery. A missed stage resumes immediately from its durable Issue and planning PR; research, shortlist, finalize, and the separate managing-editor gates remain ordered, but recovery does not wait for another Monday. Missing milestone and planning Issue records are created once by the repository-locked command.
+
 The editor-in-chief approves the volume plan. The managing editor checks production readiness and merges only the finalized plan. Individual articles do not require a separate editor-in-chief approval immediately before publication.
 
 After the approved plan reaches `main`, the managing editor creates one formal cover Issue and the article Issues. Closing a planning Issue records completion; it never starts another volume by itself.
