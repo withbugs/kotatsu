@@ -12,6 +12,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 同一週に2本公開する場合は、ライターへ渡す前に各Issueへ具体的な公開日を割り当て、`publishAt`を48時間以上離す。
 - reviseが2回の担当起動を越えて動かない場合は、停止理由と必要な人手をIssueへ記録する。
 - 計画Issueのcloseだけを理由に次Vol.を作らない。未来Vol.は同時に1件までとする。
+- 各起動で記事復旧より先に `pnpm planning:recover -- --apply` を実行し、期限超過した計画をPlanning Recoveryとして固定曜日を待たず再開する。
 - 各起動で `node scripts/editorial/close-complete-milestones.mjs --apply` を実行し、正式計画、正式カバー、全記事Issueがdoneで揃ったVol.のmilestoneを閉じる。
 - 各起動で全open Article Issueの期限超過を状態labelにかかわらず確認し、欠けた予定実行を再現せず次の有効な公開枠へ再予約する。
 - 予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を `docs/editorial/recovery-workflow.md` でDelivery、Production、Editorialへ分類する。
@@ -20,7 +21,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 
 ## Desk Gates
 
-- 12:00に三段階計画を確認し、research/shortlistはplanned、編集長が承認したfinalizeだけをmainへ反映する。
+- 09:00、12:00、16:00に三段階計画を確認する。通常のresearch/shortlistは次月曜までplannedとし、Planning Recoveryでは合格したstageを次の編集長workerへ即時返す。編集長が承認したfinalizeだけをmainへ反映する。
 - 月曜12:00に編集長の未着手brief提案を採否判断し、採用分だけ14:00前に反映する。
 - brief提案の対象Vol.、正式計画、milestone、publishAt、参照Vol.を照合する。別Vol.参照の参照先計画見出し、適用範囲と除外範囲がなければ採用せず、ライターreadyにしない。
 - 16:00にライターPR URL、head branch、正式計画、記事ファイル、CIを確認してビジュアル編集へ渡す。

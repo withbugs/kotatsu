@@ -11,6 +11,18 @@
 - 復旧の速さと公開カレンダーを分離する。制作上の未完了工程は速やかに完了させ、公開は読者向けの間隔を守る最短空き枠で行う。
 - Delivery recoveryの7日判定は、記事の現在の `publishAt`、つまり最後に承認された掲載予約日から数える。`scheduleRecovery.originalPublishAt` は監査履歴であり、この判定には使わない。
 
+## Planning Recovery
+
+月次計画は記事制作とは別の期限付きレーンである。進行編集の09:00、12:00、16:00と編集長の10:00は、記事のRapid Recoveryより先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの第2・第3・第4月曜から期待段階を機械判定し、現在月のVol.または翌月Vol.の計画欠落、stage遅延、重複をGitHub Issueとmilestoneから検出する。
+
+計画Issueまたはmilestoneが欠けている場合、コマンドは未来Vol.1件の制限を確認し、次番号のmilestoneと `planning:research` の計画Issueだけを冪等に作る。別月のopen計画Issue、複数stage labelなどの矛盾があれば自動作成せず `blocked` を返す。予定実行は番号や対象月を推測で補わない。
+
+`recovery-required` では、計画Issueに `<!-- kotatsu:planning-recovery -->`、session id、期待段階、現在段階、planning PR/head SHA、開始時刻、120分後の期限、`state: active` を記録する。Planning Recoveryのleaseは記事Rapid Recoveryのleaseと独立し、記事のactive/checkpointを理由に開始を遅らせない。同じ計画Issueの最新sessionが期限内のactiveである場合だけ二重開始を避け、checkpointは即時再開できる。
+
+コーディネーターは、未完了の段階について編集長workerと別の進行編集workerを交互に1件ずつ起動する。順序はresearch、進行編集gate、shortlist、進行編集gate、finalize、進行編集gateであり、workerを並列実行しない。各編集長workerはその段階のウェブ調査、候補メモ、Issueコメント、planning branch commit、PRを完成させる。各進行編集workerは対象月、Vol.、stage成果、調査基準、branch、PR、CIを確認し、合格時だけ次stageへ進める。遅延中は次の月曜を待たず、同じ日中sessionで期待段階まで続ける。
+
+finalize gate通過後、進行編集workerは承認済み計画PRをmainへmergeし、正式カバーIssueと計画どおりの記事Issueを作成して、計画Issueを `kotatsu:done` でcloseする。ここまでをPlanning Recoveryのgoalとし、正式カバー生成や記事制作は通常工程へ渡す。検索不能、未解消矛盾、外部障害、予期しないhead SHA変更、120分、worker 8件、19:00 JSTのいずれかで、現在段階、保持成果、次action、`endedAt`を記録して `state: checkpoint` としleaseを解放する。次の対象予定実行が固定曜日を待たず再開する。
+
 ## Rapid Recovery Dispatch
 
 通常の時刻表は制作開始と障害時のfallbackであり、復旧工程間の待ち時間ではない。09:00から18:00までの予定済みタスクが遅延を発見した場合、そのroot実行が迅速復旧コーディネーターとなり、同じ実行内に役割別サブエージェントを逐次dispatchする。新しい高頻度automationや夜間枠は追加しない。10:00は編集長の予定済みタスクだけが全体復旧を開始し、同時刻のビジュアル編集は通常担当だけを扱う。

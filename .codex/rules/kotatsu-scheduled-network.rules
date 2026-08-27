@@ -39,6 +39,18 @@ prefix_rule(
 )
 
 prefix_rule(
+    pattern = ["node", "scripts/editorial/monthly-planning-recovery.mjs"],
+    decision = "allow",
+    justification = "The repository-locked script detects overdue monthly planning and creates at most one missing future-volume milestone and research Issue.",
+    match = [
+        "node scripts/editorial/monthly-planning-recovery.mjs --apply",
+    ],
+    not_match = [
+        "node scripts/editorial/another-script.mjs --apply",
+    ],
+)
+
+prefix_rule(
     pattern = ["pnpm", "install", "--offline", "--frozen-lockfile", "--ignore-scripts"],
     decision = "allow",
     justification = "Scheduled worktrees restore the frozen dependency set from the local pnpm store without network access or lifecycle scripts.",
