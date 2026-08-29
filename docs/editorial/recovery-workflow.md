@@ -89,7 +89,7 @@ plannedかつ記事PRのない記事は、公開72時間前に入った時点で
 
 ## Production And Editorial Recovery
 
-Production recoveryは、未完了の同じ担当へ `kotatsu:revise` で戻し、PR/head branch、再開地点、完了条件をコメントする。ライターから画像、画像から校正のような担当間handoffは通常どおり進行編集を介す。完了済みの本文、画像、校正を理由なく作り直さない。
+Production recoveryは、未完了の同じ担当へ `kotatsu:revise` で戻し、PR/head branch、再開地点、完了条件をコメントする。ライターから画像、画像から校正のような担当間handoffは通常どおり進行編集を介す。完了済みの本文、画像、校正を理由なく作り直さない。合格済みのビジュアルプログラム、媒体、専属モデル選定、生成済みartifactも保持し、画像生成が一時的に失敗した場合は同じアートブリーフから再開する。回復速度を理由にイラスト、コラージュ、専属モデルを匿名人物の写真調へ置き換えない。
 
 Editorial recoveryは、次のいずれかで開始する。
 

@@ -11,6 +11,7 @@ Codex scheduled tasks act as an AI editorial room. GitHub Issues are the product
 - [Recovery lane](docs/editorial/recovery-workflow.md)
 - [Role cards](.agents/kotatsu)
 - [AI visual policy](docs/editorial/ai-visual-policy.md)
+- [August 2026 visual-system audit](docs/editorial/visual-system-audit-2026-08.md)
 - [Reader trust policy](docs/editorial/reader-trust-policy.md)
 
 This README is an operational overview. If it differs from a canonical document, the topic owner listed in Rule ownership wins.
@@ -82,7 +83,7 @@ After the broker refreshes `origin/main`, each scheduled worktree runs `pnpm ins
 
 ## Visual Policy
 
-KOTATSU does not use photographed assets, stock photography, or official product photography. Photorealistic images, illustrations, collages, and covers are AI-generated for the specific editorial intent. Rendered images, not prompt claims, determine seasonal coherence, visual variety, fictional-model safety, and reader comfort.
+KOTATSU does not use photographed assets, stock photography, or official product photography. Photorealistic images, illustrations, collages, and covers are AI-generated for the specific editorial intent. From Vol. 003 onward, every volume reserves one non-photorealistic article and one separate roster-model article, while the visual editor retains control of the exact style, composition, location, perspective, and model. Rendered images, not prompt claims, determine seasonal coherence, visual variety, fictional-model safety, and reader comfort.
 
 ## Site
 

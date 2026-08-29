@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 
 const visualSchema = z.object({
   source: z.literal('ai-generated'),
-  mode: z.enum(['photorealistic', 'illustration', 'collage', 'still-life']),
+  mode: z.enum(['pending', 'photorealistic', 'illustration', 'collage', 'still-life']),
   promptSummary: z.string().min(20),
   intent: z.string().min(10),
   avoid: z.array(z.string()).default([]),

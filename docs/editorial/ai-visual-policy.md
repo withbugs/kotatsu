@@ -36,7 +36,7 @@ KOTATSUでは、撮影した写真を使用しない。誌面に使うすべて�
 
 ビジュアル担当は、各記事に対して次を定義する。
 
-- `visualMode`: `photorealistic`, `illustration`, `collage`, `still-life`
+- `visualMode`: `photorealistic`, `illustration`, `collage`。静物は媒体ではなく主題なので `object-narrative` または `material-study` として構図を記録する
 - `editorialIntent`: 記事で残したい感覚
 - `subject`: 画像の主題
 - `setting`: 場所、時間帯、光
@@ -75,13 +75,52 @@ KOTATSUらしさは、木のテーブル、コーヒー、白シャツ、茶色�
 
 2026年7月18日以降に公開予定の記事とVol. 002以降の正式カバーは、sidecar metadataに次を残す。
 
-- `compositionFamily`: `human-environmental-medium-wide`、`still-life-oblique`、`street-observation-wide`、`material-macro`、`editorial-illustration` など構図の系統
+- `compositionFamily`: 構図の大分類。Vol. 003以降は下記の管理語彙を使う
 - `cameraDistance`: `wide`、`medium-wide`、`medium`、`close`、`macro`
 - `visualTemperature`: `cool`、`neutral`、`warm`、`mixed`
 - `visualDensity`: `airy`、`balanced`、`dense`
 - `dominantPalette`: 主要色を3件以上
 - `similarityReviewedAgainst`: 比較した直近の公開記事slugを2件以上
 - `visualDifference`: 直近画像と何を変えたか
+
+### Vol. 003以降のクリエイティブゲート
+
+Vol. 003以降は、表現媒体と構図を分離して記録する。分類は比較のための索引であり、構図をテンプレート化する指示ではない。
+
+- `visualMode`: `photorealistic`, `illustration`, `collage`
+- `compositionFamily`: `portrait-presence`, `human-environment`, `human-action`, `street-observation`, `object-narrative`, `material-study`, `spatial-interior`, `editorial-illustration`, `editorial-collage`, `abstract-symbolic`
+- `sceneFamily`: `interior`, `street`, `transit`, `cafe`, `workshop`, `vehicle`, `nature`, `graphic-space`
+- `perspective`: `eye-level`, `overhead`, `low-angle`, `high-angle`, `first-person`, `detail`, `long-lens-layered`
+- `humanPresence`: `none`, `anonymous`, `roster-model`
+- `creativeRationale`: 記事に対して、その表現を選んだ編集上の理由
+- `sameCategoryReviewedAgainst`: 直前の同カテゴリ記事slug
+- `categoryVisualDifference`: 同カテゴリの前作から変えた視覚文法
+
+直前の同カテゴリ記事から、`visualMode`、`compositionFamily`、`sceneFamily`、`perspective`、`cameraDistance`、`visualTemperature`、`visualDensity`、`humanPresence` のうち比較可能な3軸以上を変える。文字列だけを言い換えて同じ構図を通さないため、構図分類は上記の管理語彙に限定する。frontmatterの `visual.mode` とsidecarの `visualMode` は一致させる。Vol. 001/002の既存 `still-life` 表記は履歴として保持するが、新規制作では使わない。
+
+正式計画には `## ビジュアルプログラム` のJSONを1件置き、次だけを予約する。
+
+```json
+{
+  "version": 1,
+  "volume": "vol-003",
+  "creativeOwner": "agent:visual-editor",
+  "nonPhotorealisticArticle": {
+    "category": "CULTURE",
+    "allowedModes": ["illustration", "collage"]
+  },
+  "rosterModelArticle": {
+    "category": "PEOPLE"
+  },
+  "retiredPatterns": [
+    "窓辺に白または淡青のシャツを置く静物",
+    "鞄へ物を入れる匿名の手元",
+    "日陰の街路を後ろ姿で歩く人物"
+  ]
+}
+```
+
+非実写調の記事と専属モデル記事は別カテゴリにする。編集長はカテゴリと直近から休ませるパターンだけを決め、具体的な画風、構図、場所、視点、モデルはビジュアル編集が記事を読んで決める。カテゴリごとの固定構図表は作らない。イラストとコラージュは代替案や失敗時の逃げ道ではなく、写真調と同格の編集表現として扱う。
 
 盛夏ではプロンプト上の季節語だけでなく、画像の面積で温度感を判断する。茶色い木面、琥珀色の光、濃色の革、厚い布、深い暖色影が大きな面積を占める場合は、半袖や水筒が写っていても暑苦しく見えるため再生成する。寒色化そのものを目的にはせず、読者が画面を見た瞬間に感じる温度、空気、重さを記事の公開時期へ合わせる。
 
@@ -114,6 +153,7 @@ KOTATSUらしさは、木のテーブル、コーヒー、白シャツ、茶色�
 - 再登場時は登録済みreference sheetをidentity referenceに使い、顔、見た目年齢、髪、体格、恒常的な特徴を保つ。
 - 記事ごとに服、場所、動作、季節は変えてよい。同じ無彩色の制服へ収束させない。
 - 専属モデルが登場するsidecarには `modelId` を記録する。
+- Vol. 003以降は、正式計画で予約した1カテゴリに専属モデルを必ず登場させる。顔や全身を隠す必要はなく、人物の個性と生活が記事の中心になる構図を選べる。
 - 隣接する記事heroで同じ専属モデルを続けて使わない。連載として編集承認された場合だけ例外とする。
 - 架空の勤務先、住所、発言、病歴、購入歴、実体験を事実として付与しない。
 - reference sheet自体を記事画像として公開しない。
@@ -130,6 +170,7 @@ Vol.カバーは、記事heroや初期サンプル画像の流用ではなく、
 - `src/content/volumes/vol-XXX.md` の `coverImage`、`coverAlt`、`visual` を更新する。
 - `coverAlt` には `AI生成ビジュアル` を含め、撮影写真と誤認させない。
 - 最初の記事公開前に正式Vol.カバーが存在することを原則とする。
+- Vol. 003以降は前Vol.カバーを実画像で比較し、記事と同じ管理語彙に加えて `previousVolumeCoverReviewedAgainst` と `coverDifference` をsidecarへ残す。比較可能な視覚軸を3件以上変える。
 ## サンプル画像の扱い
 
 初期表示や検証のために生成した画像を、記事やVol.の正式ビジュアルとして流用しない。ライター初稿では `heroImage: __AI_VISUAL_PENDING__` を使い、ビジュアル編集工程で記事ごとに意図へ沿ったAI生成画像を作成して差し替える。
@@ -146,12 +187,16 @@ Vol.カバーは、記事heroや初期サンプル画像の流用ではなく、
   "source": "ai-generated",
   "visualMode": "photorealistic",
   "editorialIntent": "週末の朝に、自分のリズムへ戻る感覚",
-  "compositionFamily": "human-environmental-medium-wide",
+  "compositionFamily": "human-environment",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "roster-model",
   "cameraDistance": "medium-wide",
   "visualTemperature": "cool",
   "visualDensity": "airy",
   "dominantPalette": ["pale gray", "soft blue", "white"],
   "modelId": "K-02-RUI",
+  "creativeRationale": "静物が続いた誌面に人物の視線と生活動作を戻し、天気を読む習慣を記事の入口にする。",
   "promptSummary": "雨上がりの窓辺で、架空の専属AIモデルが週末の天気をノートに記す",
   "seasonalContext": "2026年8月の日本、蒸し暑い週末の朝",
   "seasonalCues": ["風通しのよい薄手の綿", "強い日差しと深い日陰"],
@@ -159,6 +204,8 @@ Vol.カバーは、記事heroや初期サンプル画像の流用ではなく、
   "seasonalityReviewedBy": "agent:visual-editor",
   "similarityReviewedAgainst": ["previous-article-a", "previous-article-b"],
   "visualDifference": "直近の静物と街の後ろ姿を避け、顔の見える生活動作と雨上がりの寒色へ切り替えた。",
+  "sameCategoryReviewedAgainst": "previous-life-article",
+  "categoryVisualDifference": "前回の鞄と手元の接写から、人物と部屋を同時に見せる中景へ変えた。",
   "readerComfort": {
     "reviewedBy": "agent:visual-editor",
     "hygieneSensitiveItemsOnFloor": [],

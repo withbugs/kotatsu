@@ -1,6 +1,6 @@
 # KOTATSU fictional model roster
 
-KOTATSU may use recurring, entirely fictional AI-generated adults as exclusive editorial models. Their faces and full bodies may appear when a person genuinely improves the story. They are not based on photographed people, stock models, celebrities, public figures, or named real individuals.
+KOTATSU uses recurring, entirely fictional AI-generated adults as exclusive editorial models. From Vol. 003 onward, each volume reserves one article for a roster model through its visual program; the visual editor chooses the person whose editorial persona best serves that article. Their faces and full bodies may appear when a person genuinely improves the story. They are not based on photographed people, stock models, celebrities, public figures, or named real individuals.
 
 The source of truth is `roster.json`. Reference sheets in `references/` are internal identity and persona locks, not article images and not assets to publish directly.
 
