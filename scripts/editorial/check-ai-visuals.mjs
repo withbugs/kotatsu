@@ -2,10 +2,18 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { diversityPolicyEffectiveAt, seasonalPolicyEffectiveAt } from './visual-policy-dates.mjs';
+import {
+  countVisualDifferences,
+  creativeVisualPolicyVolume,
+  extractVisualProgram,
+  validateCreativeVisual,
+  validateVisualProgram
+} from './visual-diversity.mjs';
 
 const root = process.cwd();
 const volumeDir = path.join(root, 'src', 'content', 'volumes');
 const articleDir = path.join(root, 'src', 'content', 'articles');
+const planDir = path.join(root, 'docs', 'editorial', 'plans');
 const contentDirs = [volumeDir, articleDir];
 const publicDir = path.join(root, 'public');
 const modelRosterPath = path.join(root, 'docs', 'editorial', 'models', 'roster.json');
@@ -47,34 +55,29 @@ function readJson(file, errors, label) {
   }
 }
 
+function volumeNumberFor(file, data) {
+  if (file.startsWith(volumeDir)) return Number(data.number);
+  return Number(String(data.volume || '').match(/^vol-(\d{3})$/)?.[1]);
+}
+
 function requiresSeasonality(file, data, imageValue) {
   if (String(imageValue) === pendingVisualMarker) return false;
-
-  if (file.startsWith(volumeDir)) {
-    return Number(data.number) >= 2;
-  }
-
+  if (file.startsWith(volumeDir)) return Number(data.number) >= 2;
   if (file.startsWith(articleDir)) {
     if (data.status !== 'published') return true;
     const publishAt = Date.parse(data.publishAt);
     return Number.isFinite(publishAt) && publishAt >= seasonalPolicyEffectiveAt;
   }
-
   return false;
 }
 
 function requiresDiversity(file, data, imageValue) {
   if (String(imageValue) === pendingVisualMarker) return false;
-
-  if (file.startsWith(volumeDir)) {
-    return Number(data.number) >= 2;
-  }
-
+  if (file.startsWith(volumeDir)) return Number(data.number) >= 2;
   if (file.startsWith(articleDir)) {
     const publishAt = Date.parse(data.publishAt);
     return Number.isFinite(publishAt) && publishAt >= diversityPolicyEffectiveAt;
   }
-
   return false;
 }
 
@@ -82,15 +85,12 @@ function validateSeasonality(record, rel, errors, label) {
   if (!record || !hasMeaningfulText(record.seasonalContext)) {
     errors.push(`${rel}: ${label}.seasonalContext must describe publication period, locale, and climate`);
   }
-
   if (!record || !hasMeaningfulList(record.seasonalCues)) {
     errors.push(`${rel}: ${label}.seasonalCues must contain at least two concrete wardrobe or environment cues`);
   }
-
   if (!record || !hasMeaningfulList(record.seasonalAvoid)) {
     errors.push(`${rel}: ${label}.seasonalAvoid must contain at least two seasonal-misread risks`);
   }
-
   if (!record || record.seasonalityReviewedBy !== 'agent:visual-editor') {
     errors.push(`${rel}: ${label}.seasonalityReviewedBy must be agent:visual-editor`);
   }
@@ -121,7 +121,6 @@ function validateDiversity(record, rel, errors, expectedComparisons = []) {
   if (!record || record.reviewedBy !== 'agent:visual-editor') {
     errors.push(`${rel}: metadata.reviewedBy must be agent:visual-editor`);
   }
-
   for (const slug of expectedComparisons) {
     if (!record?.similarityReviewedAgainst?.includes(slug)) {
       errors.push(`${rel}: metadata.similarityReviewedAgainst must include recent article ${slug}`);
@@ -131,7 +130,6 @@ function validateDiversity(record, rel, errors, expectedComparisons = []) {
 
 function validateReaderComfort(record, rel, errors) {
   const readerComfort = record?.readerComfort;
-
   if (!readerComfort || readerComfort.reviewedBy !== 'agent:visual-editor') {
     errors.push(`${rel}: metadata.readerComfort.reviewedBy must be agent:visual-editor`);
   }
@@ -148,8 +146,11 @@ function validateReaderComfort(record, rel, errors) {
 const errors = [];
 const referencedImages = new Map();
 const articleVisuals = [];
+const volumeVisuals = [];
+const visualPrograms = new Map();
 const roster = readJson(modelRosterPath, errors, path.relative(root, modelRosterPath));
 const modelById = new Map((roster?.models || []).map((model) => [model.id, model]));
+const rosterIds = new Set(modelById.keys());
 
 for (const model of modelById.values()) {
   if (!hasText(model.referenceImage)) {
@@ -162,11 +163,25 @@ for (const model of modelById.values()) {
   }
 }
 
+if (fs.existsSync(planDir)) {
+  for (const file of fs.readdirSync(planDir).filter((name) => /^vol-\d{3}\.md$/.test(name))) {
+    const volumeSlug = path.basename(file, '.md');
+    const number = Number(volumeSlug.slice(4));
+    if (number < creativeVisualPolicyVolume) continue;
+    const parsed = extractVisualProgram(fs.readFileSync(path.join(planDir, file), 'utf8'));
+    if (!parsed.error && validateVisualProgram(parsed.program, volumeSlug).length === 0) {
+      visualPrograms.set(volumeSlug, parsed.program);
+    }
+  }
+}
+
 for (const dir of contentDirs) {
   for (const file of listContentFiles(dir)) {
     const parsed = matter(fs.readFileSync(file, 'utf8'));
     const rel = path.relative(root, file);
     const visual = parsed.data.visual;
+    const volumeNumber = volumeNumberFor(file, parsed.data);
+    const creativeReviewRequired = volumeNumber >= creativeVisualPolicyVolume;
 
     if (!visual || visual.source !== 'ai-generated') {
       errors.push(`${rel}: visual.source must be ai-generated`);
@@ -175,32 +190,35 @@ for (const dir of contentDirs) {
     for (const key of ['coverImage', 'heroImage']) {
       const imageValue = parsed.data[key];
       if (!imageValue) continue;
-
       const isDraftArticle = file.startsWith(articleDir) && parsed.data.status === 'draft';
-      const isPendingDraftHero =
-        key === 'heroImage' && isDraftArticle && String(imageValue) === pendingVisualMarker;
+      const isPendingDraftHero = key === 'heroImage' && isDraftArticle && String(imageValue) === pendingVisualMarker;
       if (isPendingDraftHero) continue;
 
-      const seasonalReviewRequired = requiresSeasonality(file, parsed.data, imageValue);
-      const diversityReviewRequired = requiresDiversity(file, parsed.data, imageValue);
-      if (seasonalReviewRequired) {
-        validateSeasonality(visual, rel, errors, 'visual');
+      if (creativeReviewRequired && visual?.mode === 'pending') {
+        errors.push(`${rel}: completed Vol. ${String(volumeNumber).padStart(3, '0')} visual.mode cannot remain pending`);
       }
 
-      const existing = referencedImages.get(imageValue);
-      referencedImages.set(imageValue, {
-        seasonalReviewRequired: Boolean(existing?.seasonalReviewRequired || seasonalReviewRequired),
-        diversityReviewRequired: Boolean(existing?.diversityReviewRequired || diversityReviewRequired),
-        expectedComparisons: existing?.expectedComparisons || []
-      });
+      const reference = {
+        rel,
+        contentType: file.startsWith(articleDir) ? 'article' : 'volume',
+        slug: path.basename(file, path.extname(file)),
+        volume: file.startsWith(articleDir) ? parsed.data.volume : `vol-${String(volumeNumber).padStart(3, '0')}`,
+        volumeNumber,
+        category: parsed.data.category,
+        frontmatterMode: visual?.mode,
+        seasonalReviewRequired: requiresSeasonality(file, parsed.data, imageValue),
+        diversityReviewRequired: requiresDiversity(file, parsed.data, imageValue),
+        creativeReviewRequired,
+        expectedComparisons: []
+      };
 
-      if (file.startsWith(articleDir) && key === 'heroImage') {
-        articleVisuals.push({
-          slug: path.basename(file, path.extname(file)),
-          publishAt: Date.parse(parsed.data.publishAt),
-          image: String(imageValue),
-          diversityReviewRequired
-        });
+      if (reference.seasonalReviewRequired) validateSeasonality(visual, rel, errors, 'visual');
+      referencedImages.set(String(imageValue), reference);
+
+      if (reference.contentType === 'article' && key === 'heroImage') {
+        articleVisuals.push({ ...reference, publishAt: Date.parse(parsed.data.publishAt), image: String(imageValue) });
+      } else if (reference.contentType === 'volume' && key === 'coverImage') {
+        volumeVisuals.push({ ...reference, image: String(imageValue) });
       }
     }
   }
@@ -212,28 +230,25 @@ const chronologicalArticles = articleVisuals
 
 for (const current of chronologicalArticles) {
   if (!current.diversityReviewRequired) continue;
-  const previous = chronologicalArticles
+  current.expectedComparisons = chronologicalArticles
     .filter((entry) => entry.publishAt < current.publishAt)
     .slice(-2)
     .map((entry) => entry.slug);
   const reference = referencedImages.get(current.image);
-  if (reference) reference.expectedComparisons = previous;
+  if (reference) reference.expectedComparisons = current.expectedComparisons;
 }
 
 const metadataByImage = new Map();
-
 for (const [image, reference] of referencedImages) {
   if (!image.startsWith('/')) {
     errors.push(`${image}: image path must be root-relative`);
     continue;
   }
-
   const imagePath = path.join(publicDir, image.slice(1));
   if (!fs.existsSync(imagePath)) {
     errors.push(`${image}: image file does not exist in public/`);
     continue;
   }
-
   const metaPath = imagePath.replace(/\.(png|jpe?g|webp|avif)$/i, '.json');
   if (!fs.existsSync(metaPath)) {
     errors.push(`${image}: missing AI visual metadata sidecar JSON`);
@@ -245,19 +260,12 @@ for (const [image, reference] of referencedImages) {
   if (!metadata) continue;
   metadataByImage.set(image, metadata);
 
-  if (metadata.source !== 'ai-generated') {
-    errors.push(`${metadataRel}: source must be ai-generated`);
-  }
-
-  if (reference.seasonalReviewRequired) {
-    validateSeasonality(metadata, metadataRel, errors, 'metadata');
-  }
-
+  if (metadata.source !== 'ai-generated') errors.push(`${metadataRel}: source must be ai-generated`);
+  if (reference.seasonalReviewRequired) validateSeasonality(metadata, metadataRel, errors, 'metadata');
   if (reference.diversityReviewRequired) {
     validateDiversity(metadata, metadataRel, errors, reference.expectedComparisons);
     validateReaderComfort(metadata, metadataRel, errors);
   }
-
   if (metadata.modelId && !modelById.has(metadata.modelId)) {
     errors.push(`${metadataRel}: modelId ${metadata.modelId} is not registered in docs/editorial/models/roster.json`);
   }
@@ -265,27 +273,83 @@ for (const [image, reference] of referencedImages) {
 
 for (let index = 0; index < chronologicalArticles.length; index += 1) {
   const current = chronologicalArticles[index];
-  if (!current.diversityReviewRequired || index === 0) continue;
-
-  const previous = chronologicalArticles[index - 1];
   const currentMetadata = metadataByImage.get(current.image);
-  const previousMetadata = metadataByImage.get(previous.image);
-  if (!currentMetadata || !previousMetadata) continue;
+  if (!currentMetadata) continue;
 
+  if (current.creativeReviewRequired) {
+    const previousCategory = chronologicalArticles
+      .slice(0, index)
+      .filter((entry) => entry.category === current.category)
+      .at(-1);
+    const program = visualPrograms.get(current.volume);
+    if (!program) errors.push(`${current.rel}: approved plan ${current.volume} is missing a valid visual program`);
+    const previousCategoryRecord = previousCategory
+      ? { slug: previousCategory.slug, metadata: metadataByImage.get(previousCategory.image) }
+      : undefined;
+    const metadataRel = path.relative(
+      root,
+      path.join(publicDir, current.image.slice(1)).replace(/\.(png|jpe?g|webp|avif)$/i, '.json')
+    );
+    for (const error of validateCreativeVisual(currentMetadata, {
+      frontmatterMode: current.frontmatterMode,
+      category: current.category,
+      program,
+      previousCategory: previousCategoryRecord,
+      rosterIds,
+      label: 'metadata'
+    })) {
+      errors.push(`${metadataRel}: ${error}`);
+    }
+  }
+
+  if (index === 0) continue;
+  const previous = chronologicalArticles[index - 1];
+  const previousMetadata = metadataByImage.get(previous.image);
+  if (!previousMetadata) continue;
   if (previousMetadata.compositionFamily && currentMetadata.compositionFamily === previousMetadata.compositionFamily) {
     errors.push(`${current.slug}: compositionFamily repeats adjacent article ${previous.slug}`);
   }
-
   if (previousMetadata.modelId && currentMetadata.modelId === previousMetadata.modelId) {
     errors.push(`${current.slug}: modelId repeats adjacent article ${previous.slug}`);
   }
-
   const recentWindow = chronologicalArticles.slice(Math.max(0, index - 3), index + 1);
   const stillLifeCount = recentWindow.filter((entry) =>
     String(metadataByImage.get(entry.image)?.compositionFamily || '').startsWith('still-life')
   ).length;
   if (recentWindow.length === 4 && stillLifeCount > 2) {
     errors.push(`${current.slug}: more than two of the latest four article heroes use still-life composition families`);
+  }
+}
+
+const orderedVolumes = volumeVisuals.sort((a, b) => a.volumeNumber - b.volumeNumber);
+for (let index = 0; index < orderedVolumes.length; index += 1) {
+  const current = orderedVolumes[index];
+  if (!current.creativeReviewRequired) continue;
+  const metadata = metadataByImage.get(current.image);
+  if (!metadata) continue;
+  const metadataRel = path.relative(
+    root,
+    path.join(publicDir, current.image.slice(1)).replace(/\.(png|jpe?g|webp|avif)$/i, '.json')
+  );
+  for (const error of validateCreativeVisual(metadata, {
+    frontmatterMode: current.frontmatterMode,
+    rosterIds,
+    label: 'metadata'
+  })) {
+    errors.push(`${metadataRel}: ${error}`);
+  }
+
+  const previous = orderedVolumes[index - 1];
+  const previousMetadata = previous && metadataByImage.get(previous.image);
+  if (!previous || !previousMetadata) continue;
+  if (metadata.previousVolumeCoverReviewedAgainst !== previous.volume) {
+    errors.push(`${metadataRel}: previousVolumeCoverReviewedAgainst must be ${previous.volume}`);
+  }
+  if (!hasMeaningfulText(metadata.coverDifference)) {
+    errors.push(`${metadataRel}: coverDifference must explain the change from ${previous.volume}`);
+  }
+  if (countVisualDifferences(metadata, previousMetadata).length < 3) {
+    errors.push(`${metadataRel}: volume cover must differ from ${previous.volume} on at least three visual axes`);
   }
 }
 
