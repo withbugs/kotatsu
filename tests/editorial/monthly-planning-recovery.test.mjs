@@ -52,6 +52,108 @@ test('an existing research Issue resumes rather than being duplicated', () => {
   assert.equal(result.expectedStage, 'finalize');
 });
 
+test('a completed research gate waits normally until the shortlist window', () => {
+  const result = assessMonthlyPlanning({
+    today: '2026-08-12',
+    milestones: [currentMilestone, {
+      number: 3, title: 'Vol. 003 2026年9月号', state: 'open',
+    }],
+    issues: [{
+      number: 91,
+      title: '[Vol. 003][PLAN] 2026年9月号テーマ検討',
+      state: 'OPEN',
+      labels: [{ name: 'planning:research' }, { name: 'kotatsu:planned' }],
+    }],
+  });
+  assert.equal(result.status, 'on-track');
+  assert.equal(result.recoveryRequired, false);
+  assert.equal(result.workflowState, 'planned');
+});
+
+test('active or revised work at the expected stage remains recoverable', () => {
+  for (const state of ['ready', 'running', 'review', 'revise']) {
+    const result = assessMonthlyPlanning({
+      today: '2026-08-12',
+      milestones: [currentMilestone, {
+        number: 3, title: 'Vol. 003 2026年9月号', state: 'open',
+      }],
+      issues: [{
+        number: 91,
+        title: '[Vol. 003][PLAN] 2026年9月号テーマ検討',
+        state: 'OPEN',
+        labels: [{ name: 'planning:research' }, { name: `kotatsu:${state}` }],
+      }],
+    });
+    assert.equal(result.status, 'recovery-required');
+    assert.equal(result.recoveryCause, 'stage-work-incomplete');
+  }
+});
+
+test('finalize remains in recovery until the plan Issue is done and closed', () => {
+  for (const state of ['planned', 'review', 'revise']) {
+    const result = assessMonthlyPlanning({
+      today: '2026-08-27',
+      milestones: [currentMilestone, {
+        number: 3, title: 'Vol. 003 2026年9月号', state: 'open',
+      }],
+      issues: [{
+        number: 92,
+        title: '[Vol. 003][PLAN] 2026年9月号テーマ検討',
+        state: 'OPEN',
+        labels: [{ name: 'planning:finalize' }, { name: `kotatsu:${state}` }],
+      }],
+    });
+    assert.equal(result.status, 'recovery-required');
+    assert.equal(result.recoveryCause, 'finalize-not-complete');
+    assert.equal(result.actualStage, 'finalize');
+  }
+});
+
+test('a closed plan without done is reopened by recovery', () => {
+  const issue = {
+    number: 92,
+    title: '[Vol. 003][PLAN] 2026年9月号テーマ検討',
+    state: 'CLOSED',
+    milestone: { title: 'Vol. 003 2026年9月号' },
+    labels: [{ name: 'planning:finalize' }, { name: 'kotatsu:planned' }],
+  };
+  const result = assessMonthlyPlanning({
+    today: '2026-08-27',
+    milestones: [currentMilestone, {
+      number: 3, title: 'Vol. 003 2026年9月号', state: 'open',
+    }],
+    issues: [issue],
+  });
+  assert.equal(result.status, 'recovery-required');
+  assert.equal(result.recoveryCause, 'issue-closed-without-done');
+  const [reopen, edit] = planningBootstrapCommands(result, issue);
+  assert.deepEqual(reopen, ['issue', 'reopen', '92', '--repo', 'withbugs/kotatsu']);
+  assert.ok(edit.includes('--remove-label'));
+  assert.ok(edit.includes('kotatsu:ready'));
+});
+
+test('contradictory workflow states are blocked instead of reported on-track', () => {
+  const result = assessMonthlyPlanning({
+    today: '2026-08-27',
+    milestones: [currentMilestone, {
+      number: 3, title: 'Vol. 003 2026年9月号', state: 'open',
+    }],
+    issues: [{
+      number: 92,
+      title: '[Vol. 003][PLAN] 2026年9月号テーマ検討',
+      state: 'OPEN',
+      labels: [
+        { name: 'planning:finalize' },
+        { name: 'kotatsu:review' },
+        { name: 'kotatsu:revise' },
+      ],
+    }],
+  });
+  assert.equal(result.status, 'blocked');
+  assert.equal(result.reason, 'invalid-planning-workflow-state');
+  assert.equal(result.recoveryRequired, false);
+});
+
 test('a completed target plan does not reopen', () => {
   const result = assessMonthlyPlanning({
     today: '2026-08-27',

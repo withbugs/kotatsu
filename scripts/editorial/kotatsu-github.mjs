@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const repository = 'withbugs/kotatsu';
 const allowedActions = new Map([
   ['issue', new Set(['list', 'view', 'edit', 'comment', 'create', 'close', 'reopen'])],
-  ['pr', new Set(['list', 'view', 'checks', 'ready', 'create', 'merge', 'close'])],
+  ['pr', new Set(['list', 'view', 'checks', 'ready', 'edit', 'create', 'merge', 'close'])],
   ['run', new Set(['list', 'view'])],
 ]);
 

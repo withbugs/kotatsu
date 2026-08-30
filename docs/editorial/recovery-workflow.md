@@ -13,7 +13,7 @@
 
 ## Planning Recovery
 
-月次計画は記事制作とは別の期限付きレーンである。進行編集の09:00、12:00、16:00と編集長の10:00は、記事のRapid Recoveryより先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの第2・第3・第4月曜から期待段階を機械判定し、現在月のVol.または翌月Vol.の計画欠落、stage遅延、重複をGitHub Issueとmilestoneから検出する。
+月次計画は記事制作とは別の期限付きレーンである。進行編集の09:00、12:00、16:00と編集長の10:00は、記事のRapid Recoveryより先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの第2・第3・第4月曜から期待段階を機械判定し、現在月のVol.または翌月Vol.の計画欠落、stage遅延、未完了workflow state、重複をGitHub Issueとmilestoneから検出する。stage labelが期待段階に一致していても、ready、running、review、reviseは `recovery-required` とする。通常待機の `on-track` は期待段階以上のstageが進行編集gateを通過して `kotatsu:planned` にある場合だけである。
 
 計画Issueまたはmilestoneが欠けている場合、コマンドは未来Vol.1件の制限を確認し、次番号のmilestoneと `planning:research` の計画Issueだけを冪等に作る。別月のopen計画Issue、複数stage labelなどの矛盾があれば自動作成せず `blocked` を返す。予定実行は番号や対象月を推測で補わない。
 
@@ -21,7 +21,7 @@
 
 コーディネーターは、未完了の段階について編集長workerと別の進行編集workerを交互に1件ずつ起動する。順序はresearch、進行編集gate、shortlist、進行編集gate、finalize、進行編集gateであり、workerを並列実行しない。各編集長workerはその段階のウェブ調査、候補メモ、Issueコメント、planning branch commit、PRを完成させる。各進行編集workerは対象月、Vol.、stage成果、調査基準、branch、PR、CIを確認し、合格時だけ次stageへ進める。遅延中は次の月曜を待たず、同じ日中sessionで期待段階まで続ける。
 
-finalize gate通過後、進行編集workerは承認済み計画PRをmainへmergeし、正式カバーIssueと計画どおりの記事Issueを作成して、計画Issueを `kotatsu:done` でcloseする。ここまでをPlanning Recoveryのgoalとし、正式カバー生成や記事制作は通常工程へ渡す。検索不能、未解消矛盾、外部障害、予期しないhead SHA変更、120分、worker 8件、19:00 JSTのいずれかで、現在段階、保持成果、次action、`endedAt`を記録して `state: checkpoint` としleaseを解放する。次の対象予定実行が固定曜日を待たず再開する。
+finalizeラベルは完了条件ではない。finalize gate通過後、進行編集workerは承認済み計画PRをmainへmergeし、正式カバーIssueと計画どおりの記事Issueを作成して、計画Issueを `kotatsu:done` でcloseする。ここまでをPlanning Recoveryのgoalとし、未完了なら機械判定は `finalize-not-complete` を返して回復対象に残す。正式カバー生成や記事制作は通常工程へ渡す。検索不能、未解消矛盾、外部障害、予期しないhead SHA変更、120分、worker 8件、19:00 JSTのいずれかで、現在段階、保持成果、次action、`endedAt`を記録して `state: checkpoint` としleaseを解放する。次の対象予定実行が固定曜日を待たず再開する。
 
 ## Rapid Recovery Dispatch
 
@@ -89,7 +89,7 @@ plannedかつ記事PRのない記事は、公開72時間前に入った時点で
 
 ## Production And Editorial Recovery
 
-Production recoveryは、未完了の同じ担当へ `kotatsu:revise` で戻し、PR/head branch、再開地点、完了条件をコメントする。ライターから画像、画像から校正のような担当間handoffは通常どおり進行編集を介す。完了済みの本文、画像、校正を理由なく作り直さない。
+Production recoveryは、未完了の同じ担当へ `kotatsu:revise` で戻し、PR/head branch、再開地点、完了条件をコメントする。ライターから画像、画像から校正のような担当間handoffは通常どおり進行編集を介す。完了済みの本文、画像、校正を理由なく作り直さない。合格済みのビジュアルプログラム、媒体、専属モデル選定、生成済みartifactも保持し、画像生成が一時的に失敗した場合は同じアートブリーフから再開する。回復速度を理由にイラスト、コラージュ、専属モデルを匿名人物の写真調へ置き換えない。
 
 Editorial recoveryは、次のいずれかで開始する。
 

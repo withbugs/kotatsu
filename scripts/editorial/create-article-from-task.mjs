@@ -181,7 +181,7 @@ ${crossVolumeYaml}${crossVolumeReviewYaml}  integrityReview:
     crossVolumeDecision: ${crossVolumeDecision}
 visual:
   source: ai-generated
-  mode: photorealistic
+  mode: pending
   promptSummary: "TODO: ビジュアル編集工程で生成プロンプトの要約を書く。"
   intent: "TODO: 編集意図を書く。"
   seasonalContext: "TODO: 公開時期、想定地域、気温や天候を書く。"

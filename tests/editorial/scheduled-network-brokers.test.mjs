@@ -5,6 +5,9 @@ import { validateKotatsuGitRemoteArgs } from '../../scripts/editorial/kotatsu-gi
 
 test('GitHub broker accepts the required repository-scoped operations', () => {
   assert.doesNotThrow(() => validateKotatsuGhArgs(['issue', 'list', '--repo', 'withbugs/kotatsu']));
+  assert.doesNotThrow(() => validateKotatsuGhArgs([
+    'pr', 'edit', '93', '--repo', 'withbugs/kotatsu', '--body', 'Finalized planning record',
+  ]));
   assert.doesNotThrow(() => validateKotatsuGhArgs(['pr', 'merge', '65', '--repo', 'withbugs/kotatsu']));
   assert.doesNotThrow(() => validateKotatsuGhArgs(['run', 'view', '123', '--repo', 'withbugs/kotatsu']));
   assert.doesNotThrow(() => validateKotatsuGhArgs(['api', 'repos/withbugs/kotatsu/milestones?state=open&per_page=100']));
@@ -15,6 +18,9 @@ test('GitHub broker accepts the required repository-scoped operations', () => {
 
 test('GitHub broker rejects other repositories, auth changes, and arbitrary API calls', () => {
   assert.throws(() => validateKotatsuGhArgs(['issue', 'list', '--repo', 'withbugs/other']));
+  assert.throws(() => validateKotatsuGhArgs([
+    'pr', 'edit', '93', '--repo', 'withbugs/other', '--body', 'Do not allow this',
+  ]));
   assert.throws(() => validateKotatsuGhArgs([
     'issue', 'list', '--repo', 'withbugs/kotatsu', '--repo=withbugs/other',
   ]));

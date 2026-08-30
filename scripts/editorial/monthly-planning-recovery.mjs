@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const repository = 'withbugs/kotatsu';
 const stageOrder = ['research', 'shortlist', 'finalize'];
+const workflowStates = ['ready', 'planned', 'running', 'review', 'revise', 'publish', 'done'];
 
 function labelsOf(issue) {
   return new Set((issue?.labels || []).map((label) => (
@@ -64,11 +65,19 @@ export function expectedPlanningStage(today) {
 function planningStage(issue) {
   if (!issue) return 'missing';
   const labels = labelsOf(issue);
+  const stages = stageOrder.filter((stage) => labels.has(`planning:${stage}`));
+  if (stages.length > 1) return 'invalid';
   if (String(issue.state).toLowerCase() === 'closed' && labels.has('kotatsu:done')) {
     return 'complete';
   }
-  const stages = stageOrder.filter((stage) => labels.has(`planning:${stage}`));
-  return stages.length === 1 ? stages[0] : stages.length ? 'invalid' : 'missing';
+  return stages.length === 1 ? stages[0] : 'missing';
+}
+
+function planningWorkflowState(issue) {
+  if (!issue) return 'missing';
+  const labels = labelsOf(issue);
+  const states = workflowStates.filter((state) => labels.has(`kotatsu:${state}`));
+  return states.length === 1 ? states[0] : states.length ? 'invalid' : 'missing';
 }
 
 function stageRank(stage) {
@@ -121,6 +130,7 @@ export function assessMonthlyPlanning({ today, issues = [], milestones = [] }) {
     publicationMonthFromText(milestone.title) === targetMonth
   ));
   const actualStage = planningStage(targetIssue);
+  const workflowState = planningWorkflowState(targetIssue);
   const otherOpenPlanning = issues.find((issue) => {
     const issueMonth = publicationMonthFromText(issue.title);
     return String(issue.state).toLowerCase() === 'open'
@@ -133,23 +143,48 @@ export function assessMonthlyPlanning({ today, issues = [], milestones = [] }) {
     ?? Math.max(0, ...allKnownVolumeNumbers(issues, milestones)) + 1;
   const volume = String(targetVolumeNumber).padStart(3, '0');
   const invalidStage = actualStage === 'invalid';
+  const invalidWorkflow = workflowState === 'invalid' || workflowState === 'publish';
   const blocked = !targetIssue && Boolean(otherOpenPlanning);
-  const recoveryRequired = !blocked && !invalidStage && (
-    !targetIssue || !targetMilestone || stageRank(actualStage) < stageRank(expectedStage)
+  const issueClosedWithoutCompletion = Boolean(targetIssue)
+    && String(targetIssue.state).toLowerCase() === 'closed'
+    && actualStage !== 'complete';
+  const workflowNeedsRecovery = Boolean(targetIssue)
+    && actualStage !== 'complete'
+    && workflowState !== 'planned';
+  const recoveryRequired = !blocked && !invalidStage && !invalidWorkflow && (
+    !targetIssue
+    || !targetMilestone
+    || stageRank(actualStage) < stageRank(expectedStage)
+    || actualStage === 'finalize'
+    || issueClosedWithoutCompletion
+    || workflowNeedsRecovery
   );
+
+  let recoveryCause = null;
+  if (!targetIssue) recoveryCause = 'planning-issue-missing';
+  else if (!targetMilestone) recoveryCause = 'milestone-missing';
+  else if (issueClosedWithoutCompletion) recoveryCause = 'issue-closed-without-done';
+  else if (stageRank(actualStage) < stageRank(expectedStage)) recoveryCause = 'stage-behind-calendar';
+  else if (actualStage === 'finalize') recoveryCause = 'finalize-not-complete';
+  else if (workflowNeedsRecovery) recoveryCause = 'stage-work-incomplete';
 
   return {
     today,
-    status: blocked || invalidStage
+    status: blocked || invalidStage || invalidWorkflow
       ? 'blocked'
       : recoveryRequired ? 'recovery-required' : actualStage === 'complete' ? 'complete' : 'on-track',
     recoveryRequired,
-    reason: invalidStage ? 'multiple-planning-stage-labels' : blocked ? 'another-open-future-plan' : reason,
+    reason: invalidStage
+      ? 'multiple-planning-stage-labels'
+      : invalidWorkflow ? 'invalid-planning-workflow-state'
+        : blocked ? 'another-open-future-plan' : reason,
+    recoveryCause,
     currentMonth,
     targetMonth,
     targetMonthLabel: monthLabel(targetMonth),
     expectedStage,
     actualStage,
+    workflowState,
     volume,
     issueNumber: targetIssue?.number ?? null,
     issueUrl: targetIssue?.url ?? null,
@@ -251,7 +286,9 @@ export function planningBootstrapCommands(status, issue = null) {
     editArgs.push('--add-label', 'planning:research');
   }
   if (!labels.has('agent:editor-in-chief')) editArgs.push('--add-label', 'agent:editor-in-chief');
-  const activeStates = ['kotatsu:ready', 'kotatsu:running', 'kotatsu:review', 'kotatsu:revise'];
+  const activeStates = [
+    'kotatsu:ready', 'kotatsu:running', 'kotatsu:review', 'kotatsu:revise', 'kotatsu:done',
+  ];
   if (labels.has('kotatsu:planned')) {
     editArgs.push('--remove-label', 'kotatsu:planned', '--add-label', 'kotatsu:ready');
   } else if (!activeStates.some((label) => labels.has(label))) {

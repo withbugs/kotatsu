@@ -95,16 +95,16 @@
 
 1. 第2月曜 `research`: 検索語3件以上、確認日付きURL4件以上、情報種別3種類以上で需要を調べ、候補メモだけを作る。
 2. 第3月曜 `shortlist`: 調査を更新し、テーマとラインナップを仮決定する。正式計画は作らない。
-3. 第4月曜 `finalize`: 調査を再更新し、テーマ、記事順、公開週、季節感、AIビジュアル方針を正式計画にする。編集長がVol.計画を編集承認し、PRをReadyにする。
+3. 第4月曜 `finalize`: 調査を再更新し、テーマ、記事順、公開週、季節感、AIビジュアル方針を正式計画にする。Vol. 003以降は、非実写調1カテゴリ、専属モデル1カテゴリ、休ませる直近3パターンだけをビジュアルプログラムへ記録し、具体的な構図はビジュアル編集へ委ねる。編集長がVol.計画を編集承認し、PRをReadyにする。
 4. 各月曜12:00に進行編集が成果を確認する。research/shortlistは次月曜までplanned、finalizeだけをmainへ反映する。
 
-進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの暦とGitHub上の全計画Issue・milestoneを照合し、期限を過ぎた計画がなければ未来Vol.1件分のmilestoneとresearch Issueだけを重複なく作る。出力が `recovery-required` なら `docs/editorial/recovery-workflow.md` のPlanning Recoveryを開始または再開する。
+進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの暦とGitHub上の全計画Issue・milestoneを照合し、期限を過ぎた計画がなければ未来Vol.1件分のmilestoneとresearch Issueだけを重複なく作る。出力が `recovery-required` なら `recoveryCause` から再開地点を判断し、`docs/editorial/recovery-workflow.md` のPlanning Recoveryを開始または再開する。期限段階とstage labelが一致していても、workflow stateがready、running、review、reviseなら未完了として回復を続ける。
 
 遅延回復でもresearch、進行編集確認、shortlist、進行編集確認、finalize、進行編集確認の順序と調査基準は省略しない。ただし完了済み段階から再開し、次の月曜を待たず同じ日中sessionで期待段階まで逐次進める。各段階をIssueコメント、planning branchのcommit、stage labelへ記録し、進行編集確認を通さず次段階へ進めない。
 
 検索が利用できない場合は根拠を捏造せずfinalizeしない。第5月曜は通常時はpreflightに使うが、未完了のPlanning Recoveryがあればfinalizeまでの不足段階を優先する。個別記事の公開前に編集長の最終承認は設けず、編集長は週次会議とVol.計画承認で品質を担保する。
 
-正式計画が `main` に入り、正式カバーIssueと記事Issueを展開したら、計画Issueはdoneでcloseできる。closeは次Vol.開始のトリガーではない。
+finalizeラベルは完了条件ではない。正式計画が `main` に入り、正式カバーIssueと記事Issueを展開し、計画Issueを `kotatsu:done` でcloseした時点だけを計画完了とする。それまでは次の09:00、10:00、12:00、16:00実行が固定曜日を待たず回復を再開する。closeは次Vol.開始のトリガーではない。
 
 ## Volume Closeout
 
@@ -152,7 +152,7 @@ Article Issueには公開予定日、公開予定週、または `publishAt` を
 ## Article Production Gates
 
 1. ライターは `editorial` metadataを作り、既存画像を流用せず、`heroImage: __AI_VISUAL_PENDING__` とビジュアルブリーフを残す。
-2. ビジュアル編集は同じ記事PR branchでAI画像、alt、caption、sidecarを完成させる。画像生成ツールが使えない場合はブリーフを残し、`agent:visual-editor` + `kotatsu:revise` にする。未生成のままreviewへ進めない。
+2. ビジュアル編集は同じ記事PR branchでAI画像、alt、caption、sidecarを完成させる。Vol. 003以降は直前の同カテゴリheroと比較し、ビジュアルプログラムを満たす。画像生成ツールが使えない場合は同じアート方針のブリーフを残し、`agent:visual-editor` + `kotatsu:revise` にする。未生成のままreviewへ進めない。回復時に写真調へ単純化しない。
 3. 進行編集は本文と `editorial` metadataを正式計画・公開日に照合し、実画像を拡大して季節、多様性、モデル同一性、床置き防止をポリシーと照合する。通過分だけcopy-editorへreadyで渡す。
 4. 校正は同じbranchで文体、事実、禁止表現、読者信頼に加えて計画・公開時期・別Vol.参照を独立確認し、`integrityReview` を記録してreviewへ戻す。別Vol.参照を残す場合はacceptedとしても進行編集承認待ちにする。
 5. 進行編集は残修正がなく `integrityReview` がpassedで、別Vol.参照がある場合は `managingEditorApproval` もapprovedの場合だけ `pnpm article:schedule -- --slug=<slug>` を実行する。続けて `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをそのままIssueへ反映する。未来時刻ならplanned、到来済みならpublisher + publishへ進め、更新後のIssueを再取得して一致を確認する。

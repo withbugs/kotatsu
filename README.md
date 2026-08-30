@@ -11,6 +11,7 @@ Codex scheduled tasks act as an AI editorial room. GitHub Issues are the product
 - [Recovery lane](docs/editorial/recovery-workflow.md)
 - [Role cards](.agents/kotatsu)
 - [AI visual policy](docs/editorial/ai-visual-policy.md)
+- [August 2026 visual-system audit](docs/editorial/visual-system-audit-2026-08.md)
 - [Reader trust policy](docs/editorial/reader-trust-policy.md)
 
 This README is an operational overview. If it differs from a canonical document, the topic owner listed in Rule ownership wins.
@@ -27,7 +28,7 @@ Planning for the next calendar-month volume begins on or after the second Monday
 | Third Monday | `planning:shortlist` | Refreshed evidence, a provisional theme, and a provisional lineup on the same Draft PR |
 | Fourth Monday | `planning:finalize` | Final research, seasonal and visual direction, the approved plan, and a Ready PR |
 
-At every 09:00, 10:00, 12:00, and 16:00 managing-editor or editor-in-chief run, `pnpm planning:recover -- --apply` checks this calendar before article recovery. A missed stage resumes immediately from its durable Issue and planning PR; research, shortlist, finalize, and the separate managing-editor gates remain ordered, but recovery does not wait for another Monday. Missing milestone and planning Issue records are created once by the repository-locked command.
+At every 09:00, 10:00, 12:00, and 16:00 managing-editor or editor-in-chief run, `pnpm planning:recover -- --apply` checks this calendar before article recovery. A missed or unfinished stage resumes immediately from its durable Issue and planning PR; research, shortlist, finalize, and the separate managing-editor gates remain ordered, but recovery does not wait for another Monday. Missing milestone and planning Issue records are created once by the repository-locked command. Reaching `planning:finalize` is not completion: recovery remains active until the approved PR is merged, cover and article Issues are created, and the planning Issue is closed with `kotatsu:done`.
 
 The editor-in-chief approves the volume plan. The managing editor checks production readiness and merges only the finalized plan. Individual articles do not require a separate editor-in-chief approval immediately before publication.
 
@@ -82,7 +83,7 @@ After the broker refreshes `origin/main`, each scheduled worktree runs `pnpm ins
 
 ## Visual Policy
 
-KOTATSU does not use photographed assets, stock photography, or official product photography. Photorealistic images, illustrations, collages, and covers are AI-generated for the specific editorial intent. Rendered images, not prompt claims, determine seasonal coherence, visual variety, fictional-model safety, and reader comfort.
+KOTATSU does not use photographed assets, stock photography, or official product photography. Photorealistic images, illustrations, collages, and covers are AI-generated for the specific editorial intent. From Vol. 003 onward, every volume reserves one non-photorealistic article and one separate roster-model article, while the visual editor retains control of the exact style, composition, location, perspective, and model. Rendered images, not prompt claims, determine seasonal coherence, visual variety, fictional-model safety, and reader comfort.
 
 ## Site
 
