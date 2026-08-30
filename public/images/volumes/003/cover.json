@@ -1,0 +1,69 @@
+{
+  "source": "ai-generated",
+  "usage": "volume-cover",
+  "visualMode": "photorealistic",
+  "volume": "vol-003",
+  "githubIssue": 96,
+  "editorialIntent": "Vol. 003『夏のまま、秋へ渡る』を、残暑の白い光から初秋の青みを帯びた夕方へ連なる一室として表し、季節を急がず生活の道具を渡していく感覚を代表する。",
+  "subject": "明るい窓辺の衣類ラックに掛けた淡い青の薄手シャツ、椅子に掛けた淡いベージュの軽い羽織、専用ベンチ上で乾いた明るいグレーの靴",
+  "setting": "2026年9月の日本、残暑の白い昼光が残る窓辺から青みのある初秋の夕方へ奥行きが続く、風通しのよい室内",
+  "composition": "横長カバー向けのeye-level wide。左の明るい窓辺から右の青みを帯びた夕方の空間へ視線が流れるspatial-interior。薄手シャツ、軽い羽織、乾いた靴をテーブル静物にせず、用途の明確なラック、椅子、靴用ベンチへ分散する。",
+  "compositionFamily": "spatial-interior",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "none",
+  "cameraDistance": "wide",
+  "visualTemperature": "mixed",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "white residual daylight",
+    "pale blue cotton",
+    "blue-gray evening shadow",
+    "dry muted green",
+    "pale beige linen"
+  ],
+  "colorMood": "白い残暑光、淡い青、青みのあるグレー、乾いた緑、淡いベージュをつなぎ、深い暖色や重い秋冬素材を避ける。",
+  "creativeRationale": "前号の窓辺テーブル静物から空間全体へ視点を引き、光の変化と生活用品の置き場所を一つの室内の奥行きで結ぶことで、夏から秋への緩やかな移行を表す。",
+  "promptSummary": "2026年9月の日本の室内で、残暑の白い窓光から青みのある夕方へ視線が渡り、淡い青の薄手シャツ、軽い羽織、専用ベンチ上の乾いた靴を配した横長の正式Vol.カバー。",
+  "caption": "残暑の白い光から青みのある夕方へ、薄手の服と乾いた靴を渡していくVol. 003正式カバーのAI生成ビジュアル。",
+  "seasonalContext": "2026年9月の日本。前半を中心に残暑と白い昼光が残り、夕方は少し早く青みを帯びる初秋の端境期を想定する。",
+  "seasonalCues": [
+    "風を通す淡い青の薄手シャツと淡いベージュの軽い羽織",
+    "残暑の白い窓光から青みのある夕方へ移る室内光",
+    "十分に乾き、明るい色を保った日常用の軽い靴"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウール、コート、重いブーツで秋冬を先取りしない",
+    "紅葉、暖炉、こたつ、深い琥珀色の照明を使わない",
+    "濃い茶色の木面、厚い革、重い布を大きな面積にしない"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "human faces or bodies",
+    "stock photo look",
+    "official product photo look",
+    "travel advertising",
+    "heavy autumn or winter clothing",
+    "warm amber lighting dominance",
+    "hygiene-sensitive items placed directly on the floor"
+  ],
+  "similarityReviewedAgainst": [
+    "sandals-leather-shoes-in-between",
+    "cool-room-thin-book-summer-sound",
+    "summer-shade-walk-from-station"
+  ],
+  "visualDifference": "直近の靴手入れの人物接写、低い室内静物、日陰の街路を歩く後ろ姿を避け、人物のいない室内全景と、白い昼光から青灰色の夕方へ移る空間的な光の流れを主役にした。",
+  "previousVolumeCoverReviewedAgainst": "vol-002",
+  "coverDifference": "Vol. 002のcoolなmedium-wide窓辺テーブル静物から、mixed lightのwideなeye-level spatial-interiorへ変更した。物を一か所へ集めず、ラック、椅子、靴用ベンチへ分散して時間と空間の奥行きを出し、visualDensityもairyからbalancedへ変えた。",
+  "referenceSheetUse": "none; no roster model used in the volume cover",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-08-30T10:08:57+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "薄手シャツは衣類ラック、軽い羽織は椅子、乾いた靴は専用の清潔なスラットベンチ上にあり、衣類や私物は床へ直接触れていない。"
+  }
+}
