@@ -1,5 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  creativeVisualPolicyVolume,
+  extractVisualProgram,
+  validateVisualProgram
+} from './visual-diversity.mjs';
 
 const root = process.cwd();
 const candidateDir = path.join(root, 'docs', 'editorial', 'candidates');
@@ -102,6 +107,27 @@ for (const file of listVolumeFiles(planDir)) {
     errors.push(
       `${rel}: approved plan requires corresponding candidate memo ${path.relative(root, candidatePath)}`
     );
+  }
+
+  if (volumeNumber(file) >= creativeVisualPolicyVolume) {
+    const parsedProgram = extractVisualProgram(raw);
+    if (parsedProgram.error) {
+      errors.push(`${rel}: ${parsedProgram.error}`);
+    } else {
+      const volumeSlug = path.basename(file, '.md');
+      for (const error of validateVisualProgram(parsedProgram.program, volumeSlug)) {
+        errors.push(`${rel}: ${error}`);
+      }
+      const articlePlan = sectionBody(raw, '## 記事構成');
+      for (const category of [
+        parsedProgram.program?.nonPhotorealisticArticle?.category,
+        parsedProgram.program?.rosterModelArticle?.category
+      ].filter(Boolean)) {
+        if (!new RegExp(`\\b${category}\\b`).test(articlePlan)) {
+          errors.push(`${rel}: visual program category ${category} must exist in ## 記事構成`);
+        }
+      }
+    }
   }
 }
 

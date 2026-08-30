@@ -12,6 +12,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 同一週に2本公開する場合は、ライターへ渡す前に各Issueへ具体的な公開日を割り当て、`publishAt`を48時間以上離す。
 - reviseが2回の担当起動を越えて動かない場合は、停止理由と必要な人手をIssueへ記録する。
 - 計画Issueのcloseだけを理由に次Vol.を作らない。未来Vol.は同時に1件までとする。
+- 各起動で記事復旧より先に `pnpm planning:recover -- --apply` を実行し、期限超過またはworkflow未完了の計画を `recoveryCause` から再開して、Planning Recoveryとして固定曜日を待たず完了まで進める。
 - 各起動で `node scripts/editorial/close-complete-milestones.mjs --apply` を実行し、正式計画、正式カバー、全記事Issueがdoneで揃ったVol.のmilestoneを閉じる。
 - 各起動で全open Article Issueの期限超過を状態labelにかかわらず確認し、欠けた予定実行を再現せず次の有効な公開枠へ再予約する。
 - 予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を `docs/editorial/recovery-workflow.md` でDelivery、Production、Editorialへ分類する。
@@ -20,12 +21,13 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 
 ## Desk Gates
 
-- 12:00に三段階計画を確認し、research/shortlistはplanned、編集長が承認したfinalizeだけをmainへ反映する。
+- 09:00、12:00、16:00に三段階計画を確認する。通常のresearch/shortlistは次月曜までplannedとし、Planning Recoveryでは合格したstageを次の編集長workerへ即時返す。編集長が承認したfinalizeだけをmainへ反映する。`planning:finalize` は完了扱いにせず、main反映、子Issue展開、計画Issueのdone closeまで同じ回復goalを維持する。
 - 月曜12:00に編集長の未着手brief提案を採否判断し、採用分だけ14:00前に反映する。
 - brief提案の対象Vol.、正式計画、milestone、publishAt、参照Vol.を照合する。別Vol.参照の参照先計画見出し、適用範囲と除外範囲がなければ採用せず、ライターreadyにしない。
 - 16:00にライターPR URL、head branch、正式計画、記事ファイル、CIを確認してビジュアル編集へ渡す。
 - 16:00には記事の `editorial` metadataと本文を正式計画・公開日に再照合し、不一致ならビジュアル編集へ渡さずライターへ差し戻す。
 - ビジュアル成果は `docs/editorial/ai-visual-policy.md` と実画像を照合し、自己申告metadataだけで通さない。
+- Vol. 003以降は、正式計画の非実写調枠と専属モデル枠、直前の同カテゴリheroとの差、frontmatterとsidecarの媒体一致を実画像で確認する。新規性だけを理由に写真調へ戻さず、差し戻しでは読者・季節・安全・記事意図のどこが不足したかを示し、代替構図まで固定しない。
 - 校正成果に残修正がなければ記事branch上で `pnpm article:schedule` を実行する。
 - 13:00公開後も状態、公開日、成果物に不整合がある場合だけ16:00に判断する。技術的失敗で `agent:publisher` の `revise` に残った記事は引き取らず、17:00公開担当の再試行に任せる。
 - 制作内容の判断を伴わない通信、Actions、artifact取得、Pages確認の失敗は進行編集へ引き取らず、同じ担当の `kotatsu:revise` で次の同担当起動へ残す。
@@ -35,6 +37,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - `publishAt` が未来ならplanned、到来済みで正式カバーがあればpublisher + publishへ渡す。文章判断でlabelを決めず `article:handoff` の出力を使う。
 - 記事PRのないplanned記事が公開72時間前に入ったら、次週分でも担当ライターへreadyを付ける。毎日14:00のライターデスクを48時間前のProduction cutoffより前に最低1回確保し、公開日は動かさない。
 - 復旧のために未来Issueを連鎖的に移動しない。published、scheduled、記事PR作成済み、または公開48時間前より前のplanned記事をprotectedとして維持する。期限までにPRがないplanned枠だけを解放し、その記事自身を復旧待ちへ移す。
+- Production recoveryでは合格済みのビジュアルプログラム、媒体、専属モデル選定、生成済みartifactを保持する。未完了地点だけを再開し、速度のために表現を写真調へ単純化しない。
 - Delivery recoveryが読者向け旧具体日、直前の掲載予約日から7日超、月跨ぎを検出した場合だけEditorial recoveryへ切り替える。必要な本文、画像、校正だけを再確認し、変更不要な工程を巻き戻さない。
 - open・未mergeのpublished記事PRをEditorial recoveryへ戻す場合は、編集長再確認日を得てから `pnpm article:rebook` の `--resume-unmerged-publication` を使う。機械出力どおりにdraftへ戻し、ビジュアル再確認または校正へ渡す。
 - milestoneは月末や計画Issueのcloseだけで閉じず、機械判定がeligibleになった場合だけ閉じる。

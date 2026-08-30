@@ -9,9 +9,10 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 - GitHub Connector、GitHub MCP、GitHub app toolsを呼び出さない。
 - Connectorの利用可否を調べるtool discoveryも行わず、Connector承認をユーザーへ要求しない。
 - GitHub操作は `node scripts/editorial/kotatsu-github.mjs <gh引数>` を使い、必ず `--repo withbugs/kotatsu` を明記する。予定実行から `gh` を直接呼ばない。
-- Issueの取得・更新、PRの取得・更新、Actions確認はbrokerが許可する `issue` / `pr` / `run` の範囲に限る。`api` はVol. milestoneの一覧取得とcloseだけに限る。
+- Issueの取得・更新、PRの取得・本文更新・Ready化・merge、Actions確認はbrokerが許可する `issue` / `pr` / `run` の範囲に限る。PR更新にはrepository固定の `pr edit --repo withbugs/kotatsu` を使う。`api` はVol. milestoneの一覧取得とcloseだけに限る。
 - remote fetch/pushは `node scripts/editorial/kotatsu-git-remote.mjs fetch origin main [head branch]` と `node scripts/editorial/kotatsu-git-remote.mjs push origin HEAD:<head branch>` を使う。予定実行からremote `git fetch` / `git push` を直接呼ばない。
 - milestone closeoutはrepository固定の `node scripts/editorial/close-complete-milestones.mjs --apply` を使う。
+- 月次計画の期限判定と欠落queue作成はrepository固定の `node scripts/editorial/monthly-planning-recovery.mjs --apply` を使う。このスクリプトだけが `withbugs/kotatsu` の全Vol. milestoneと計画Issueを照合し、未来Vol.1件の範囲で欠けたmilestoneとresearch Issueを作成できる。
 - local branch、commit、switch、mergeは通常の `git` を使う。
 
 ## Isolated Worktrees
@@ -26,8 +27,8 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 
 ## Authentication And Retry
 
-- `.codex/rules/kotatsu-scheduled-network.rules` は上記2つのbrokerとrepository固定のmilestone closeoutだけを外部実行へ許可する。任意の `gh`、`git`、shellコマンドにはネットワーク権限を与えない。
-- GitHub/Git通信のbroker、milestone closeout、`pnpm install --offline --frozen-lockfile --ignore-scripts` は、最初の `exec_command` から `sandbox_permissions: "require_escalated"` を指定する。command ruleが許可するprefixだけを無人承認させ、通常サンドボックス内でproxy失敗またはpnpmストア参照失敗させてから再試行しない。
+- `.codex/rules/kotatsu-scheduled-network.rules` は上記2つのbrokerとrepository固定のmilestone closeout、月次計画回復だけを外部実行へ許可する。任意の `gh`、`git`、shellコマンドにはネットワーク権限を与えない。
+- GitHub/Git通信のbroker、milestone closeout、月次計画回復、`pnpm install --offline --frozen-lockfile --ignore-scripts` は、最初の `exec_command` から `sandbox_permissions: "require_escalated"` を指定する。command ruleが許可するprefixだけを無人承認させ、通常サンドボックス内でproxy失敗またはpnpmストア参照失敗させてから再試行しない。
 - offline installはグローバルpnpmストアの参照だけに昇格を使う。`--offline`、`--frozen-lockfile`、`--ignore-scripts`を外したinstallや外部取得への切り替えは禁止する。
 - broker、command rule、keyring、network、permission由来の失敗が出た場合は、許可範囲を広げたりユーザー承認を待ったりしない。同じ担当の次回起動で再試行できる状態を保つ。
 - 失敗した場合は、コマンド、エラー、未完了操作を報告し、GitHub状態を先へ進めず停止する。
