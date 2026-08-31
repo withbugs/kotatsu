@@ -15,7 +15,8 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 各起動で記事復旧より先に `pnpm planning:recover -- --apply` を実行し、期限超過またはworkflow未完了の計画を `recoveryCause` から再開して、Planning Recoveryとして固定曜日を待たず完了まで進める。
 - 各起動で `node scripts/editorial/close-complete-milestones.mjs --apply` を実行し、正式計画、正式カバー、全記事Issueがdoneで揃ったVol.のmilestoneを閉じる。
 - 各起動で全open Article Issueの期限超過を状態labelにかかわらず確認し、欠けた予定実行を再現せず次の有効な公開枠へ再予約する。
-- 予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を `docs/editorial/recovery-workflow.md` でDelivery、Production、Editorialへ分類する。
+- 予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を `docs/editorial/recovery-workflow.md` でDelivery、Production、Editorial、Governanceへ分類する。
+- 正本矛盾は `pnpm recovery:source-conflict` でfingerprintとrepair ownerを確定し、同じ未解決fingerprintの元ゲートを再試行せず、source修正、review、元担当への復帰を進める。
 - 各起動でscheduled記事に `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをIssueへ完全一致で反映してから再取得確認する。
 - 記事branchを変更する前に分離worktreeでclean確認、fetch、対象branchへのdetached switch、`origin/main` の通常mergeを順に通す。成功前にIssueをrunningへ変更せず、rebaseを使用しない。
 
@@ -41,10 +42,11 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - Delivery recoveryが読者向け旧具体日、直前の掲載予約日から7日超、月跨ぎを検出した場合だけEditorial recoveryへ切り替える。必要な本文、画像、校正だけを再確認し、変更不要な工程を巻き戻さない。
 - open・未mergeのpublished記事PRをEditorial recoveryへ戻す場合は、編集長再確認日を得てから `pnpm article:rebook` の `--resume-unmerged-publication` を使う。機械出力どおりにdraftへ戻し、ビジュアル再確認または校正へ渡す。
 - milestoneは月末や計画Issueのcloseだけで閉じず、機械判定がeligibleになった場合だけ閉じる。
+- Governance recoveryのsource PRは、repair owner、修正対象、失敗検査、CIがrecordと一致する場合だけmergeする。merge後に元検査を再実行し、合格したrecordをresolvedにして保持済み記事PRをresumeAgentへreadyで戻す。
 
 ## Main Authority
 
-進行編集がmainへ反映できるのは、承認済み正式計画と、記事本文を含まない正式Vol.カバーだけである。制作中の記事PRはmergeしない。
+進行編集がmainへ反映できるのは、承認済み正式計画、記事本文を含まない正式Vol.カバー、repair ownerが承認したGovernance recoveryのsource PRだけである。制作中の記事PRはmergeしない。
 
 ## Boundaries
 
