@@ -21,7 +21,34 @@
 
 コーディネーターは、未完了の段階について編集長workerと別の進行編集workerを交互に1件ずつ起動する。順序はresearch、進行編集gate、shortlist、進行編集gate、finalize、進行編集gateであり、workerを並列実行しない。各編集長workerはその段階のウェブ調査、候補メモ、Issueコメント、planning branch commit、PRを完成させる。各進行編集workerは対象月、Vol.、stage成果、調査基準、branch、PR、CIを確認し、合格時だけ次stageへ進める。遅延中は次の月曜を待たず、同じ日中sessionで期待段階まで続ける。
 
-finalizeラベルは完了条件ではない。finalize gate通過後、進行編集workerは承認済み計画PRをmainへmergeし、正式カバーIssueと計画どおりの記事Issueを作成して、計画Issueを `kotatsu:done` でcloseする。ここまでをPlanning Recoveryのgoalとし、未完了なら機械判定は `finalize-not-complete` を返して回復対象に残す。正式カバー生成や記事制作は通常工程へ渡す。検索不能、未解消矛盾、外部障害、予期しないhead SHA変更、120分、worker 8件、19:00 JSTのいずれかで、現在段階、保持成果、次action、`endedAt`を記録して `state: checkpoint` としleaseを解放する。次の対象予定実行が固定曜日を待たず再開する。
+finalizeラベルは完了条件ではない。finalize gate通過後、進行編集workerは承認済み計画PRをmainへmergeし、正式カバーIssueと計画どおりの記事Issueを作成して、計画Issueを `kotatsu:done` でcloseする。ここまでをPlanning Recoveryのgoalとし、未完了なら機械判定は `finalize-not-complete` を返して回復対象に残す。正式カバー生成や記事制作は通常工程へ渡す。検索不能、owner未登録の矛盾、外部障害、予期しないhead SHA変更、120分、worker 8件、19:00 JSTのいずれかで、現在段階、保持成果、次action、`endedAt`を記録して `state: checkpoint` としleaseを解放する。次の対象予定実行が固定曜日を待たず再開する。
+
+正本または機械検査の既知pathに矛盾がある場合はcheckpointを繰り返さず、次のSource-of-Truth Recoveryへ移す。repair ownerを特定できない矛盾だけを `checkpoint` とする。
+
+## Source-of-Truth Recovery
+
+正本同士、または正本と機械検査の矛盾は `Governance` classとして記事制作と分離して修復する。記事PR上で都合のよい解釈を選ばず、記事本文、画像、head SHA、公開予約、通過済みゲートは変更しない。正本所有者は `docs/editorial/rule-hierarchy.md` と `pnpm recovery:source-conflict` の機械出力で決める。
+
+制作担当が矛盾を検出したら、修正すべき正本 `repairSource`、競合するpath、安定した `reasonCode`、失敗したコマンドとエラー、Article Issue、記事PR/head SHA、修復後に戻す `resumeAgent` を進行編集へ返す。進行編集は次のコマンドを実行し、出力されたmarkerとJSONをIssueへそのまま記録する。
+
+```text
+pnpm recovery:source-conflict -- --repair-source=<path> --conflict-source=<path> --reason=<reasonCode> --issue=<number> --article-pr=<number> --head-sha=<sha> --resume-agent=<agent label>
+```
+
+markerは `<!-- kotatsu:source-conflict-recovery -->` とし、同じ修正対象、競合元、reasonCodeから同じfingerprintを作る。最新の同fingerprintが `repair-required`、`repair-in-progress`、`repair-review` の間は新しいrapid recovery sessionで元の失敗ゲートを再実行せず、そのrecordの次actionだけを行う。
+
+| State | Actor | Required action |
+| --- | --- | --- |
+| `repair-required` | 進行編集 | 記事Issueを `kotatsu:revise + repair owner` にし、正本修正だけを委任する |
+| `repair-in-progress` | repair owner | 最新mainから専用branch/PRを作り、`repairSource`だけを必要最小限修正して失敗した検査を通す |
+| `repair-review` | 進行編集 | source PR、owner承認、CI、差分を確認し、権限内ならmainへmergeする |
+| `resolved` | 進行編集 | 新しいmainで元の検査を再実行し、合格時だけ保持した `resumeAgent + kotatsu:ready` へ記事Issueを戻す |
+
+stateを進める場合も同じコマンド引数を使い、`--state=repair-review --repair-pr=<number>`、または `--state=resolved --repair-pr=<number> --verification-command=<command> --verified-main-sha=<sha> --verified-at=<ISO datetime>` を追加する。`resolved` はsource PRとmain上の再検証記録がなければコマンドが拒否する。
+
+repair ownerは記事PRへ正本修正を混ぜず、source PR URLと検査結果をmarkerの `repairPr` とともに `repair-review + agent:managing-editor` へ返す。進行編集はsource PR merge後に元の検査を1回だけ再実行する。不合格なら同recordを `repair-required` へ戻し、新しい規則や別sessionを作らない。合格なら `resolved` markerを記録し、記事PR/head SHAと通過済みゲートを保ったまま元工程へ戻す。修復と元工程のworkerを同じ日中のrapid recovery sessionで続けられる場合は固定時刻を待たない。
+
+owner未登録、修正範囲に人間だけが決められる編集判断がある、予期しない記事head SHA変更、外部障害の場合だけ `blocked` にする。既知ownerへの修正依頼中はblockerではなく進行中の回復であり、予定済みタスクを増やしたり夜間まで延長したりしない。
 
 ## Rapid Recovery Dispatch
 
@@ -37,21 +64,22 @@ rapid recovery sessionは次の手順で行う。
 2. Issueへ `<!-- kotatsu:rapid-recovery -->`、session id、owner run、goal、class、現在工程、PR head SHA、開始時刻、120分後の期限、`active` 状態をコメントし、現在担当1つと `kotatsu:running` を反映して再取得する。最新のsession記録が `state: active` で期限内の場合だけ有効な別leaseとして扱い、開始しない。後続の `checkpoint`、`waiting-publishAt`、`completed` 記録があるsessionは、元のexpiresAtが未来でも排他leaseを持たない。
 3. 現在工程のrole cardを指定してworkerを1件だけ起動する。workerには指定IssueとPR branchだけを扱い、別agentを起動せず、成果、検査、再開地点をGitHubへ残すよう明記する。
 4. worker完了を待ってIssue、PR、Actionsとhead SHAを再取得する。ProductionまたはEditorialの制作workerがreviewへ戻した場合は進行編集workerを起動し、その判断後に必要な修正担当または次担当workerを起動する。実施可能な差し戻しは同じsessionで続け、workerを並列実行しない。
-5. 公開完了でgoalを `completed` にする。人手でしか決められない編集判断、正本と実装の未解消矛盾、回復不能な外部障害、予期しないhead SHA変更、120分経過、worker 8件完了、19:00 JSTでは、現在工程、次action、`endedAt`を記録してgoalを `checkpoint` にし、その時点でleaseを解放する。19:00以降に新しいworkerを起動しない。
+5. 公開完了でgoalを `completed` にする。人手でしか決められない編集判断、owner未登録の正本矛盾、回復不能な外部障害、予期しないhead SHA変更、120分経過、worker 8件完了、19:00 JSTでは、現在工程、次action、`endedAt`を記録してgoalを `checkpoint` にし、その時点でleaseを解放する。既知ownerの正本矛盾はSource-of-Truth Recoveryへ移し、checkpointにしない。19:00以降に新しいworkerを起動しない。
 
-rootコーディネーター自身は本文、画像、校正、編集承認、公開を代行せず、最終記事PRをmainへmergeできるのは公開担当workerだけである。同じ障害fingerprintの再試行はsession内で1回までとし、再失敗時は現在工程、保持済みゲート、次actionを `kotatsu:revise` に残す。multi-agent tools、利用上限、PC、Codexアプリ、認証などの外部条件で続行できない場合もGitHubを永続checkpointとする。次に起動した日中の予定済みタスクは、新規session idとleaseを取得してcheckpointのgoalを通常作業より先に再開し、固定された担当時刻を待たない。
+rootコーディネーター自身は本文、画像、校正、編集承認、公開を代行せず、最終記事PRをmainへmergeできるのは公開担当workerだけである。Governance以外の同じ障害fingerprintの再試行はsession内で1回までとし、再失敗時は現在工程、保持済みゲート、次actionを `kotatsu:revise` に残す。Governanceはsource-conflict recordのstateを進め、元ゲートを再試行しない。multi-agent tools、利用上限、PC、Codexアプリ、認証などの外部条件で続行できない場合もGitHubを永続checkpointとする。次に起動した日中の予定済みタスクは、新規session idとleaseを取得してcheckpointのgoalを通常作業より先に再開し、固定された担当時刻を待たない。
 
 制作と品質ゲートが回復し、機械出力が未来の `publishAt` に対する `kotatsu:planned + agent:publisher` を返した場合は、goalを `waiting-publishAt` としてleaseを解放する。これは遅延中のactive/checkpointではなく正常な掲載待機であり、到来前の予定済みタスクは復旧優先対象にせず、ほかの記事制作を進める。公開日時が到来した公開担当が同じgoalを再開し、公開URL確認とIssue closeで `completed` にする。
 
 ## Recovery Classes
 
-進行編集は、予定済み担当の起動が1回欠けた、予定工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を次の3種類に分類する。複数に当てはまる場合は、より下の編集判断を要する分類を使う。
+進行編集は、予定済み担当の起動が1回欠けた、予定工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を次の4種類に分類する。既知pathの正本矛盾があれば他の停止状態より先にGovernanceとし、解消後に残る状態をDelivery、Production、Editorialへ分類する。
 
 | Class | Condition | Resume point |
 | --- | --- | --- |
 | Delivery | 校正、画像、CI、掲載予約を通過し、通信、Actions、artifact、Pages確認、mergeだけが未完了 | 公開担当が次の公開枠で再予約し、同じ起動内で公開を再開する |
 | Production | ライター、ビジュアル、校正など通常工程の一部が未完了 | 完了済み工程を保ち、未完了の担当へ戻す |
 | Editorial | 読者向け本文に旧具体日が残る、7日超、月跨ぎ、季節・生活イベントが変わる | 編集長または必要な制作担当から再確認する |
+| Governance | 正本同士、または正本と機械検査が矛盾し、制作担当が一意に判断できない | source-conflict recordを作り、repair ownerのsource PRから再開する |
 
 利用上限、PC停止、Codexアプリ停止などで予定済みタスク自体がGitHubへ結果を残せなかった場合も、次に起動した迅速復旧コーディネーターまたは進行編集はIssueとPRの最終更新時刻から同じ分類を行う。失敗した実行の再現を待たない。
 

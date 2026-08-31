@@ -4,6 +4,7 @@ import {
   countVisualDifferences,
   extractVisualProgram,
   validateCreativeVisual,
+  validatePlanCreativeFreedom,
   validateVisualProgram
 } from '../../scripts/editorial/visual-diversity.mjs';
 
@@ -53,6 +54,31 @@ test('keeps exact art direction out of the editor-in-chief plan', () => {
   const overDirected = structuredClone(program);
   overDirected.nonPhotorealisticArticle.compositionFamily = 'editorial-illustration';
   assert.match(validateVisualProgram(overDirected, 'vol-003').join('\n'), /belongs to the visual editor/);
+});
+
+test('accepts a volume-wide visual policy that leaves exact direction to the visual editor', () => {
+  const raw = `## AI生成ビジュアル方針
+
+- すべてのheroはAI生成物とする。
+- 具体的な媒体、構図、場所、視点、距離、モデルはビジュアル編集が記事ごとに選定する。
+`;
+  assert.deepEqual(validatePlanCreativeFreedom(raw), []);
+});
+
+test('rejects category-fixed art direction outside the bounded visual program', () => {
+  const raw = `## AI生成ビジュアル方針
+
+- STYLEを material-macro、LIFEを still-life-oblique とする。
+`;
+  assert.match(validatePlanCreativeFreedom(raw).join('\n'), /category-specific visual commitments/);
+});
+
+test('rejects an article-by-article visual sequence in the volume plan', () => {
+  const raw = `## AI生成ビジュアル方針
+
+- 構図のシークエンスは第1本を近接、第2本を俯瞰とする。
+`;
+  assert.match(validatePlanCreativeFreedom(raw).join('\n'), /article-by-article visual sequence/);
 });
 
 test('rejects a visual program without three retired recent patterns', () => {

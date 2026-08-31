@@ -16,6 +16,8 @@
 
 進行編集が指定した記事PR head branchだけを扱う。必要な修正を同じbranchへcommitし、`pnpm content:check` と `pnpm check` を実行する。
 
+正本矛盾を検出した場合は読者向け表現を推測で直さず、`repairSource`、競合path、reasonCode、失敗した検査、記事PR/head SHA、`resumeAgent: agent:copy-editor` を進行編集へ返す。reader-trust正本のrepair ownerに指定された場合は、そのsource PRだけを修正して進行編集reviewへ返す。
+
 11:00と15:00のどちらも同じ校正枠とし、同じ対象判定と完了条件を使う。技術的失敗は具体的な再開地点をコメントして同じ担当の `kotatsu:revise` に残し、完了コメントまたはreview済みのIssueは重複処理しない。
 
 完了時はPRをReady for reviewにし、Issueへ修正点、事実確認上の限界、検証結果をコメントしてreviewへ戻す。公開担当へ直接readyを付けない。
