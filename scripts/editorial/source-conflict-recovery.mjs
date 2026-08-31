@@ -121,6 +121,7 @@ export function createSourceConflictRecord(input) {
     repairPr: null,
     verificationCommand: null,
     verifiedMainSha: null,
+    verifiedArticleHeadSha: null,
     verifiedAt: null
   };
 }
@@ -156,6 +157,13 @@ export function validateSourceConflictRecord(record) {
   ) {
     errors.push('resolved requires verificationCommand, verifiedMainSha, and verifiedAt');
   }
+  if (
+    record?.state === 'resolved' &&
+    record.articleHeadSha &&
+    record.verifiedArticleHeadSha !== record.articleHeadSha
+  ) {
+    errors.push('resolved requires the unchanged articleHeadSha to be verified');
+  }
   if (record?.state === 'blocked' && !record?.blocker) errors.push('blocked requires blocker');
 
   return errors;
@@ -167,6 +175,7 @@ export function transitionSourceConflict(record, state, additions = {}) {
     'repairPr',
     'verificationCommand',
     'verifiedMainSha',
+    'verifiedArticleHeadSha',
     'verifiedAt',
     'blocker'
   ]);
@@ -216,6 +225,24 @@ export function selectSourceConflictRecord(records, candidate) {
     return { record: same, created: false, action: nextSourceConflictAction(same) };
   }
   return { record: candidate, created: true, action: nextSourceConflictAction(candidate) };
+}
+
+export function reconcileSourceConflict(records, candidate, verification = {}) {
+  const same = [...records].reverse().find((record) => record.fingerprint === candidate.fingerprint);
+
+  if (verification.passed) {
+    const resolved = transitionSourceConflict(same || candidate, 'resolved', {
+      repairPr: verification.repairPr,
+      verificationCommand: verification.command,
+      verifiedMainSha: verification.mainSha,
+      verifiedArticleHeadSha: verification.articleHeadSha || null,
+      verifiedAt: verification.verifiedAt,
+      blocker: null
+    });
+    return { record: resolved, created: true, action: nextSourceConflictAction(resolved) };
+  }
+
+  return selectSourceConflictRecord(records, candidate);
 }
 
 export function formatSourceConflictRecord(record) {
@@ -269,6 +296,7 @@ function runCli() {
       repairPr: args['repair-pr'] || null,
       verificationCommand: args['verification-command'] || null,
       verifiedMainSha: args['verified-main-sha'] || null,
+      verifiedArticleHeadSha: args['verified-article-head-sha'] || null,
       verifiedAt: args['verified-at'] || null,
       blocker: args.blocker || null
     });

@@ -61,8 +61,11 @@ requireText('docs/editorial/recovery-workflow.md', '## Source-of-Truth Recovery'
 requireText('docs/editorial/recovery-workflow.md', '<!-- kotatsu:source-conflict-recovery -->');
 requireText('docs/editorial/recovery-workflow.md', 'pnpm recovery:source-conflict');
 requireText('docs/editorial/recovery-workflow.md', '同fingerprint');
+requireText('docs/editorial/recovery-workflow.md', '### Existing Checkpoint Reconciliation');
+requireText('docs/editorial/recovery-workflow.md', '--verified-article-head-sha');
 requireText('docs/editorial/rule-hierarchy.md', 'Repair owner');
 requireText('.agents/kotatsu/managing-editor.md', 'Governance recovery');
+requireText('.agents/kotatsu/managing-editor.md', 'markerのない旧checkpoint');
 requireText('.agents/kotatsu/editor-in-chief.md', 'repair owner');
 requireText('.agents/kotatsu/visual-editor.md', 'repairSource');
 requireText('docs/editorial/recovery-workflow.md', '<!-- kotatsu:planning-recovery -->');

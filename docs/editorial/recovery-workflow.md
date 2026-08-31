@@ -44,11 +44,17 @@ markerは `<!-- kotatsu:source-conflict-recovery -->` とし、同じ修正対�
 | `repair-review` | 進行編集 | source PR、owner承認、CI、差分を確認し、権限内ならmainへmergeする |
 | `resolved` | 進行編集 | 新しいmainで元の検査を再実行し、合格時だけ保持した `resumeAgent + kotatsu:ready` へ記事Issueを戻す |
 
-stateを進める場合も同じコマンド引数を使い、`--state=repair-review --repair-pr=<number>`、または `--state=resolved --repair-pr=<number> --verification-command=<command> --verified-main-sha=<sha> --verified-at=<ISO datetime>` を追加する。`resolved` はsource PRとmain上の再検証記録がなければコマンドが拒否する。
+stateを進める場合も同じコマンド引数を使い、`--state=repair-review --repair-pr=<number>`、または `--state=resolved --repair-pr=<number> --verification-command=<command> --verified-main-sha=<sha> --verified-article-head-sha=<sha> --verified-at=<ISO datetime>` を追加する。記事PRがある `resolved` はsource PR、main上の再検証、変更されていない記事head SHAがなければコマンドが拒否する。
 
 repair ownerは記事PRへ正本修正を混ぜず、source PR URLと検査結果をmarkerの `repairPr` とともに `repair-review + agent:managing-editor` へ返す。進行編集はsource PR merge後に元の検査を1回だけ再実行する。不合格なら同recordを `repair-required` へ戻し、新しい規則や別sessionを作らない。合格なら `resolved` markerを記録し、記事PR/head SHAと通過済みゲートを保ったまま元工程へ戻す。修復と元工程のworkerを同じ日中のrapid recovery sessionで続けられる場合は固定時刻を待たない。
 
 owner未登録、修正範囲に人間だけが決められる編集判断がある、予期しない記事head SHA変更、外部障害の場合だけ `blocked` にする。既知ownerへの修正依頼中はblockerではなく進行中の回復であり、予定済みタスクを増やしたり夜間まで延長したりしない。
+
+### Existing Checkpoint Reconciliation
+
+この仕組みの導入前に作られたmarkerのないcheckpoint、またはsource PRが別経路で既にmainへmergeされたrecordは、ownerへ戻す前に進行編集が一度だけreconcileする。最新main、記事PR/head SHA、元の失敗検査を取得し、矛盾が残る場合だけ `repair-required` を作る。既に合格する場合は、矛盾を解消したmerged source PRをmain履歴から特定し、`resolved` recordへsource PR、検査コマンド、main SHA、不変の記事head SHA、確認時刻を記録して、同じ起動内に `resumeAgent + kotatsu:ready` へ戻す。
+
+markerのない旧checkpointを新しい障害として数えず、owner修正や翌日を余分に待たせない。source PRを特定できない、記事head SHAが変わった、または元検査を再現できない場合はresolvedにせず、記事成果を保持したまま進行編集checkpointへ残す。
 
 ## Rapid Recovery Dispatch
 

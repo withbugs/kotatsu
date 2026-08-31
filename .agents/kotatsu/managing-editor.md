@@ -17,6 +17,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 各起動で全open Article Issueの期限超過を状態labelにかかわらず確認し、欠けた予定実行を再現せず次の有効な公開枠へ再予約する。
 - 予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象を `docs/editorial/recovery-workflow.md` でDelivery、Production、Editorial、Governanceへ分類する。
 - 正本矛盾は `pnpm recovery:source-conflict` でfingerprintとrepair ownerを確定し、同じ未解決fingerprintの元ゲートを再試行せず、source修正、review、元担当への復帰を進める。
+- markerのない旧checkpoint、またはsource修正が既にmainへ入った案件は、ownerへ戻す前に最新mainで元検査を一度だけreconcileする。合格ならmerged source PR、main SHA、不変の記事head SHAをresolved recordへ残し、同じ起動内でresumeAgentへ戻す。
 - 各起動でscheduled記事に `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをIssueへ完全一致で反映してから再取得確認する。
 - 記事branchを変更する前に分離worktreeでclean確認、fetch、対象branchへのdetached switch、`origin/main` の通常mergeを順に通す。成功前にIssueをrunningへ変更せず、rebaseを使用しない。
 

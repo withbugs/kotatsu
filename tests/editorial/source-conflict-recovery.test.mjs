@@ -6,6 +6,7 @@ import {
   fingerprintSourceConflict,
   formatSourceConflictRecord,
   nextSourceConflictAction,
+  reconcileSourceConflict,
   selectSourceConflictRecord,
   sourceOwnerFor,
   transitionSourceConflict,
@@ -63,6 +64,7 @@ test('routes repair, review, and resolution without returning to the failing gat
   const resolved = transitionSourceConflict(review, 'resolved', {
     verificationCommand: 'pnpm content:check',
     verifiedMainSha: 'def456',
+    verifiedArticleHeadSha: 'abc123',
     verifiedAt: '2026-08-31T21:30:00+09:00'
   });
   assert.deepEqual(nextSourceConflictAction(resolved), {
@@ -70,6 +72,31 @@ test('routes repair, review, and resolution without returning to the failing gat
     agent: 'agent:visual-editor',
     stateLabel: 'kotatsu:ready'
   });
+});
+
+test('reconciles a legacy checkpoint when a merged source PR already fixed main', () => {
+  const reconciled = reconcileSourceConflict([], record(), {
+    passed: true,
+    repairPr: 105,
+    command: 'pnpm content:check',
+    mainSha: '7fb9b79',
+    articleHeadSha: 'abc123',
+    verifiedAt: '2026-09-01T09:05:00+09:00'
+  });
+  assert.equal(reconciled.record.state, 'resolved');
+  assert.equal(reconciled.record.repairPr, 105);
+  assert.equal(reconciled.action.action, 'resume-original-stage');
+});
+
+test('does not resolve an externally fixed source after the article head changed', () => {
+  assert.throws(() => reconcileSourceConflict([], record(), {
+    passed: true,
+    repairPr: 105,
+    command: 'pnpm content:check',
+    mainSha: '7fb9b79',
+    articleHeadSha: 'changed-head',
+    verifiedAt: '2026-09-01T09:05:00+09:00'
+  }), /unchanged articleHeadSha/);
 });
 
 test('does not allow a source conflict to resolve without merged-source verification', () => {
