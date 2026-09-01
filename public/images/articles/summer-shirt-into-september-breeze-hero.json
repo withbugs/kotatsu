@@ -1,0 +1,71 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-003",
+  "article": "summer-shirt-into-september-breeze",
+  "githubIssue": 97,
+  "editorialIntent": "夏に着た薄手シャツを季節外れとして退けず、残暑と少し乾いた風のあいだを調整する生活着として、翌日も手に取れる場所へ残す。",
+  "subject": "清潔な淡色の椅子の背に掛けた、洗いざらしの淡青灰の薄手コットンリネンシャツ",
+  "setting": "2026年9月初めの日本、窓やカーテンのない私的な屋根付き中庭回廊。通風ブロックの先に乾いた緑が見え、屋根下には涼しい影が残る。",
+  "composition": "横長hero向け。椅子とシャツを画面左の約3分の1に置き、右側に屋根付き回廊と通風ブロックまで続く大きな余白を残すwideの空間構図。シャツの接写や商品陳列にせず、空気と温度差を主役にする。",
+  "compositionFamily": "spatial-interior",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "none",
+  "cameraDistance": "wide",
+  "visualTemperature": "mixed",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "pale blue-gray",
+    "soft white",
+    "cool concrete gray",
+    "dry muted green",
+    "very pale beige"
+  ],
+  "colorMood": "屋根下の青みを帯びた淡い影と、通風ブロック越しの白い光、乾いた緑で、残暑を残しながら朝夕の風が少し変わる九月初めを軽く見せる。",
+  "creativeRationale": "直前の同カテゴリheroが布と袖口のcloseなmaterial-studyだったため、今回はシャツを小さく含むwideなspatial-interiorへ切り替えた。人物を主役にした直近2本とも距離を取り、衣替えを急がず一枚を残す本文の判断を空間の余白で表す。",
+  "promptSummary": "2026年9月初めの日本、窓やカーテンのない私的な屋根付き中庭回廊で、清潔な椅子の背に残した淡青灰の薄手シャツが、通風ブロック越しの乾いた風を含む。",
+  "caption": "九月初めの屋根付き回廊で、翌日も着る薄手シャツが風を含む様子を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年9月2日の日本。日中の暑さが残る一方、屋根下や朝夕には少し乾いた風が通り、薄手の長袖を上げ下げして調整できる初秋。",
+  "seasonalCues": [
+    "透けるほど薄い淡青灰のコットンリネン、洗いざらしの皺、風でわずかに持ち上がる袖と裾",
+    "屋根下の涼しい淡い影、通風ブロック越しの白い光、まだ明るい乾いた緑"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウール、コート、重いブーツ、紅葉など秋冬を先取りする要素",
+    "深い琥珀色の光、濃い茶色の木面、厚い革や布が大きな面積を占める暑苦しい色調",
+    "窓辺に白または淡青のシャツを置く静物、衣類ラック、商品カタログ風の畳んだシャツ"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable labels",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real location",
+    "stock photo look",
+    "fashion advertising",
+    "official product photo look",
+    "window-side pale shirt still life",
+    "top-down flat lay",
+    "fabric macro close-up",
+    "personal belongings on floor"
+  ],
+  "similarityReviewedAgainst": [
+    "summer-return-to-work-clothes",
+    "sandals-leather-shoes-in-between",
+    "cool-room-thin-book-summer-sound"
+  ],
+  "visualDifference": "直近3本の、人物が通路で袖を整えるmediumな後ろ姿、玄関で靴を手入れするmedium-closeの手元、青い窓と棚上の静物によるmedium-wideを実画像で比較した。今回は人物、手元、窓、棚を使わず、衣類を支える椅子と長い屋根付き回廊をwideに捉え、空気の通り道と余白を主役にした。",
+  "sameCategoryReviewedAgainst": "summer-shirt-airy-room",
+  "categoryVisualDifference": "前回STYLEのphotorealistic / material-study相当 / close / cool / humanPresence noneの布接写から、photorealistic / spatial-interior / wide / mixed / humanPresence noneの回廊全景へ変更した。構図、距離、温度、場所、視覚密度を変え、窓辺の白・淡青シャツ静物は休ませた。",
+  "referenceSheetUse": "none; no person or roster model used",
+  "diversityReview": "人物を登場させず、性別、年齢、家族構成、職業、身体像を読者像として固定していない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-09-01T10:16:16+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "薄手シャツは清潔な椅子の背と座面に支えられ、床へ直接触れていない。画像内に書籍、飲料、ハンカチ、財布、鍵、携帯電話などの床置きもない。"
+  }
+}
