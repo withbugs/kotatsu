@@ -67,6 +67,35 @@ function sectionBody(raw, heading) {
   return nextHeading < 0 ? remainder : remainder.slice(0, nextHeading);
 }
 
+export function validatePlanCreativeFreedom(raw) {
+  const errors = [];
+  const body = sectionBody(raw, '## AI生成ビジュアル方針');
+  if (!body) return errors;
+
+  const categoryPattern = new RegExp(`\\b(?:${[...articleCategories].join('|')})\\b`);
+  const sequencePattern = /(?:構図|画風|媒体|場所|視点|距離|モデル).*(?:シークエンス|公開順|第[一二三四五六七八九十0-9]+本)/;
+
+  for (const line of body.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    if (categoryPattern.test(trimmed)) {
+      errors.push(
+        '## AI生成ビジュアル方針 must remain volume-wide; category-specific visual commitments belong only in ## ビジュアルプログラム'
+      );
+      break;
+    }
+  }
+
+  if (sequencePattern.test(body)) {
+    errors.push(
+      'the volume plan must not assign an article-by-article visual sequence; exact art direction belongs to agent:visual-editor'
+    );
+  }
+
+  return errors;
+}
+
 export function extractVisualProgram(raw) {
   const body = sectionBody(raw, '## ビジュアルプログラム');
   if (!body) return { error: 'missing required section ## ビジュアルプログラム' };

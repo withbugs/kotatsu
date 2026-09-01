@@ -2,23 +2,23 @@
 
 KOTATSUの編集ルールは、内容ごとに次のファイルを正本とする。同じ規則をautomation prompt、README、Issue templateへ複製しない。
 
-| Topic | Source of truth |
-| --- | --- |
-| 状態label、工程、時刻、branch、受け渡し、公開頻度 | `docs/editorial/agent-workflow.md` |
-| 予定実行の欠損、技術障害、期限超過、復旧公開枠 | `docs/editorial/recovery-workflow.md` |
-| 予定済みタスクからのGitHubアクセス | `docs/editorial/github-access-policy.md` |
-| AI生成ビジュアル、季節感、人物、metadata | `docs/editorial/ai-visual-policy.md` |
-| 読者向け表示、未完成記事、表現 | `docs/editorial/reader-trust-policy.md` |
-| 各担当に固有の編集判断 | `.agents/kotatsu/<role>.md` |
-| 発行Vol.固有のテーマ、記事構成、公開週 | `docs/editorial/plans/vol-XXX.md` |
-| 機械的に検査できる条件 | `src/content/config.ts` と `scripts/editorial/` |
+| Topic | Source of truth | Repair owner |
+| --- | --- | --- |
+| 状態label、工程、時刻、branch、受け渡し、公開頻度 | `docs/editorial/agent-workflow.md` | `agent:managing-editor` |
+| 予定実行の欠損、技術障害、期限超過、復旧公開枠 | `docs/editorial/recovery-workflow.md` | `agent:managing-editor` |
+| 予定済みタスクからのGitHubアクセス | `docs/editorial/github-access-policy.md` | `agent:managing-editor` |
+| AI生成ビジュアル、季節感、人物、metadata | `docs/editorial/ai-visual-policy.md` | `agent:visual-editor` |
+| 読者向け表示、未完成記事、表現 | `docs/editorial/reader-trust-policy.md` | `agent:copy-editor` |
+| 各担当に固有の編集判断 | `.agents/kotatsu/<role>.md` | 当該role。共通工程は `agent:managing-editor` |
+| 発行Vol.固有のテーマ、記事構成、公開週 | `docs/editorial/plans/vol-XXX.md` | `agent:editor-in-chief` |
+| 機械的に検査できる条件 | `src/content/config.ts` と `scripts/editorial/` | `agent:managing-editor` |
 
 ## Precedence
 
 - automation promptは、担当名、起動時刻、対象label、読む正本だけを指定する。編集ルールを再定義しない。
 - README、`docs/editorial/ai-editorial-room.md`、Issue templateは案内または入力補助であり、正本を上書きしない。
 - Vol.固有計画は記事の方向を具体化できるが、共通の安全、読者信頼、公開ゲートを緩和できない。
-- 文書とスクリプトが食い違う場合は、都合のよい方を選ばない。作業を次工程へ渡さず、GitHub Issueへ不一致を記録して修正対象にする。
+- 文書とスクリプトが食い違う場合は、都合のよい方を選ばない。`docs/editorial/recovery-workflow.md` のSource-of-Truth Recoveryで修正対象、競合元、失敗した検査、元工程を記録し、表のrepair ownerへ回送する。同じ不一致を各予定実行が再検査するだけの状態にしない。
 
 ## Branch Freshness
 

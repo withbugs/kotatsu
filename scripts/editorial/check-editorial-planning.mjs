@@ -3,6 +3,7 @@ import path from 'node:path';
 import {
   creativeVisualPolicyVolume,
   extractVisualProgram,
+  validatePlanCreativeFreedom,
   validateVisualProgram
 } from './visual-diversity.mjs';
 
@@ -110,6 +111,10 @@ for (const file of listVolumeFiles(planDir)) {
   }
 
   if (volumeNumber(file) >= creativeVisualPolicyVolume) {
+    for (const error of validatePlanCreativeFreedom(raw)) {
+      errors.push(`${rel}: ${error}`);
+    }
+
     const parsedProgram = extractVisualProgram(raw);
     if (parsedProgram.error) {
       errors.push(`${rel}: ${parsedProgram.error}`);

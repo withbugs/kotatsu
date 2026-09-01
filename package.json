@@ -13,6 +13,7 @@
     "article:rebook": "node scripts/editorial/rebook-overdue-article.mjs",
     "article:recover-publication": "node scripts/editorial/recover-interrupted-publication.mjs",
     "recovery:slot": "node scripts/editorial/find-recovery-slot.mjs",
+    "recovery:source-conflict": "node scripts/editorial/source-conflict-recovery.mjs",
     "article:handoff": "node scripts/editorial/check-publication-handoff.mjs",
     "visual:artifact": "node scripts/editorial/download-visual-artifact.mjs",
     "test:visual": "playwright test",
