@@ -1,0 +1,72 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-003",
+  "article": "shoes-bags-rest-after-rain",
+  "githubIssue": 98,
+  "editorialIntent": "雨と汗を受けた靴と鞄を急いで収納せず、別々の清潔な置き面で風に任せて休ませる短い手入れを見せる。",
+  "subject": "白いスラット台で間を空けた淡青灰の軽い靴、別のパンチング台で口を開けた生成りの布鞄、清潔な台上の白いトレーと乾いた布",
+  "setting": "2026年9月初めの日本、短い雨のあとの明るい玄関脇にある清潔な屋内ユーティリティスペース。すりガラスの開口部の先に雨で濡れた淡い緑が見える。",
+  "composition": "横長hero向け。斜め上からのhigh-angleで、靴、鞄、乾いた布を別々の高所へ対角線状に置くmedium-wide構図。すべての支持面と床からの距離を明瞭に見せ、真上からの在庫並べや商品正面写真にしない。",
+  "compositionFamily": "object-narrative",
+  "sceneFamily": "interior",
+  "perspective": "high-angle",
+  "humanPresence": "none",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "neutral",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "pale blue-gray",
+    "soft white",
+    "cool concrete gray",
+    "muted rain-wet green",
+    "very pale canvas beige"
+  ],
+  "colorMood": "雨上がりの青灰色を含む白い昼光と淡い緑を使い、残暑の湿気のあとに風が通る軽さと清潔さを保つ。",
+  "creativeRationale": "靴や鞄を扱う人物の手元ではなく、三つの清潔な支持面と物の間の空気を主役にした。直前の回廊全景とも異なる斜め上のobject-narrativeで、本文の『しまわない時間』を物の距離として見せる。",
+  "promptSummary": "2026年9月初めの日本。雨上がりの明るい玄関脇で、淡青灰の軽い靴を白いスラット台、生成りの布鞄を別のパンチング台に置き、収納せず風を通す。",
+  "caption": "雨上がりの玄関脇で、靴と鞄を別々の清潔な台に置いて風を通す様子を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年9月5日の日本。日中の蒸し暑さと急な雨が残る一方、雨上がりに少し軽い風が通る初秋。",
+  "seasonalCues": [
+    "淡青灰の通気性がある軽い靴、薄い生成りの布鞄、乾いた白い布という残暑向けの軽い素材",
+    "雨上がりの青灰色を帯びた白い反射光、濡れた淡い緑、空気を通すスラットとパンチング面"
+  ],
+  "seasonalAvoid": [
+    "厚手のウール、重いブーツ、紅葉、暖房など九月初めを越えた秋冬表現",
+    "深い琥珀色の照明、濃い茶色の木面、厚い革や布が大きな面積を占める暑苦しい画面",
+    "玄関土間への私物直置き、鞄へ物を入れる匿名の手元、商品カタログ風の整列"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable labels",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real location",
+    "stock photo look",
+    "official product photo look",
+    "luxury advertising mood",
+    "top-down inventory layout",
+    "anonymous hands",
+    "strong chemical cleaners",
+    "direct hot air treatment",
+    "personal belongings on floor"
+  ],
+  "similarityReviewedAgainst": [
+    "summer-shirt-into-september-breeze",
+    "summer-return-to-work-clothes",
+    "sandals-leather-shoes-in-between"
+  ],
+  "visualDifference": "直近3本の、椅子とシャツを含むwideな回廊全景、人物が袖を整えるmediumな後ろ姿、靴を手入れするmedium-closeの手元を実画像で比較した。今回は人物と手元を使わず、靴、鞄、布を別々の高所で休ませるhigh-angleのobject-narrativeへ切り替えた。",
+  "sameCategoryReviewedAgainst": "summer-light-bag-contents",
+  "categoryVisualDifference": "前回LIFEのphotorealistic / human-hands-bench-bag-medium-close / medium / cool / balancedから、photorealistic / object-narrative / medium-wide / neutral / airyへ変更した。鞄へ物を入れる手元と持ち物の列挙を避け、人物のいない雨上がりの手入れ後を主役にした。",
+  "referenceSheetUse": "none; no person or roster model used",
+  "diversityReview": "人物を登場させず、性別、年齢、職業、家族構成、身体像を読者像として固定していない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-09-02T18:08:57+09:00",
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "靴は白いスラット台、鞄は別のパンチング台、乾いた布は白いトレーとその支持台の上にあり、いずれも床や玄関土間へ直接触れていない。財布、鍵、携帯電話、本、飲食物は画像内にない。"
+  }
+}
