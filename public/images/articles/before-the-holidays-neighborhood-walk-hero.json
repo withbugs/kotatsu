@@ -1,0 +1,80 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-003",
+  "article": "before-the-holidays-neighborhood-walk",
+  "githubIssue": 99,
+  "editorialIntent": "連休を旅行や特別な予定に結びつけず、残暑の近所を短く歩き、余力のあるうちに家へ戻る時間を静かな休憩として見せる。",
+  "subject": "薄手の淡青灰の半袖シャツと軽いパンツを着た完全に架空の匿名人物が、木陰の清潔な公共ベンチで横向きに休む。無地の小さな布鞄は肩掛けのまま膝で支える。",
+  "setting": "2026年9月中旬の日本を想定した架空の近所。夕方の木陰がある小さな公園と、短い曲線路の先に見える固有性のない住居入口。",
+  "composition": "横長hero向け。人物を画面左約3分の1のベンチに横向きで置き、右側に短い曲線路、近い住居入口、長い影を見せるmediumのeye-level構図。人物は歩かず、後ろ姿の街歩きにしない。",
+  "compositionFamily": "human-action",
+  "sceneFamily": "nature",
+  "perspective": "eye-level",
+  "humanPresence": "anonymous",
+  "cameraDistance": "medium",
+  "visualTemperature": "mixed",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "pale blue-gray",
+    "chalk white",
+    "light concrete gray",
+    "fresh muted green",
+    "very pale beige"
+  ],
+  "colorMood": "青灰色の木陰と白い残暑の光、まだ緑を保つ葉、淡い衣服で、暑さを避けながら夕方へ移る軽い空気を作る。",
+  "creativeRationale": "直前WEEKENDの後ろ姿で街路を歩く構図を反復せず、歩行の成果ではなく休んで戻る判断を主役にした。直近2本の無人静物と無人回廊からも人物の生活動作へ切り替え、短い外出と帰宅の近さを同じ画面に置く。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: KOTATSU editorial article hero image, wide landscape composition\nPrimary request: Create a quiet AI-generated editorial visual about taking a short neighborhood outing during lingering September heat and choosing to return home with energy to spare.\nScene/backdrop: A completely fictional, non-identifiable Japanese neighborhood pocket park in mid-September 2026, late afternoon. A clean pale stone path curves only a short distance toward a generic nearby residential entrance. Leafy green shade, no autumn foliage, no tourist landmark, no storefront.\nSubject: One entirely fictional anonymous adult sits in clear side profile on a clean raised public bench under tree shade, pausing before heading home. The person is stationary, not walking, not shown from behind, and wears a thin breathable pale blue-gray short-sleeve shirt, lightweight neutral trousers, and comfortable unbranded shoes. A small plain fabric crossbody bag remains worn on the body. No personal belongings are placed on the ground or pavement.\nStyle/medium: photorealistic natural editorial image with believable everyday textures, subtle film grain, not glossy advertising and not stock-photo polish.\nComposition/framing: wide 16:9 hero crop, high-angle medium framing; the seated person occupies about one third of the image, seen from the side; the bench, curving short path, nearby residential threshold, and long late-afternoon shadows clearly show that home is close and there is time to turn back. Do not recreate a rear-view person walking down a shaded street.\nLighting/mood: lingering hot-season white daylight softened by cool blue-gray late-afternoon shade, long shadows, a faint dry breeze; calm, breathable, unhurried.\nColor palette: pale blue-gray, chalk white, light concrete gray, fresh muted green, very pale beige.\nMaterials/textures: thin cotton, light canvas, clean matte bench surface, pale dry pavement, summer-green leaves.\nConstraints: AI-generated fictional scene only; natural anatomy and hands; no readable text; no logos; no trademarks; no real store signs; no famous landmark; no celebrity or recognizable real person; no extra people; no shopping or travel-ad mood; no autumn leaves; no thick jackets, knitwear, wool, boots, amber light, dark brown wood, heavy leather, or winter cues; no food, drink container, book, clothing, handkerchief, wallet, keys, phone, or accessories on the ground, pavement, or bench; all personal items remain worn; no watermark.\nAvoid: rear-view walking figure, person walking in a shaded street, staged fashion pose, anonymous hand packing a bag, top-down inventory, window-side pale shirt still life, product catalog, distorted fingers, duplicated limbs, readable signage, clutter.",
+  "promptSummary": "2026年9月中旬の架空の近所。夕方の木陰にある清潔なベンチで、薄手の服の匿名人物が横向きに休み、短い曲線路の先にある近い住まいへ戻る時間を見ている。",
+  "caption": "九月中旬の夕方、近所の木陰でひと休みし、余力のあるうちに家へ戻る時間を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年9月11日の日本。日中の残暑を避け、夕方の影が長くなるころに短く外へ出る一方、緑と白い光にはまだ夏の名残がある時期。",
+  "seasonalCues": [
+    "薄手の淡青灰の半袖シャツ、軽いパンツ、通気性のある靴と布鞄という残暑向けの装い",
+    "まだ青い葉、白い残暑の光、青灰色の木陰、長く伸びる夕方の影"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウール、コート、重いブーツ、紅葉など九月中旬を越えた秋冬表現",
+    "深い琥珀色の照明、濃い茶色の木面、厚い革や布が大きな面積を占める暑苦しい画面",
+    "日陰の街路を後ろ姿で歩く人物、旅行広告、観光名所、祝日の過ごし方を固定する大人数"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable labels",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person",
+    "recognizable real location",
+    "stock photo look",
+    "travel-ad look",
+    "rear-view walking figure",
+    "staged fashion pose",
+    "personal belongings on pavement or bench",
+    "distorted hands or anatomy"
+  ],
+  "similarityReviewedAgainst": [
+    "shoes-bags-rest-after-rain",
+    "summer-shirt-into-september-breeze",
+    "summer-shade-walk-from-station"
+  ],
+  "visualDifference": "直近2本の、無人で靴と鞄を分けたhigh-angleのobject-narrative、無人でシャツと回廊を見せるwideのspatial-interiorを実画像で比較した。今回は人物が木陰のベンチで休むhuman-actionへ切り替え、mediumの距離とbalancedな密度で、短い外出から戻る判断を主役にした。",
+  "sameCategoryReviewedAgainst": "summer-shade-walk-from-station",
+  "categoryVisualDifference": "前回WEEKENDのphotorealistic / street-observation / street / medium-wide / airyから、photorealistic / human-action / nature / medium / balancedへ変更した。後ろ姿で日陰の街路を歩く人物を反復せず、横向きに静止して休む人物と近い帰路を同時に見せる。",
+  "referenceSheetUse": "none; no roster model used",
+  "diversityReview": "完全に架空の匿名人物を横向きかつ画面内で小さく扱い、実在の取材対象や著名人を示す固有特徴、氏名、職業、家族構成を付与していない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-09-08T14:29:42+09:00",
+  "imageReview": {
+    "dimensions": "1672x941",
+    "seasonality": "薄手の半袖、まだ青い葉、白い残暑光、長い夕方の影を原寸で確認し、九月中旬を越えた秋冬表現がない。",
+    "anatomyAndIdentity": "顔、手指、脚、靴を原寸で確認し、破綻、余分な手足、著名人や実在取材対象を示す特徴がない。",
+    "textAndBrands": "読める文字、ロゴ、商標、店舗看板、固有のランドマークがない。",
+    "retiredPatterns": "人物はベンチで横向きに静止し、日陰の街路を後ろ姿で歩く構図ではない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "小さな布鞄は肩に掛けたまま膝で支えられ、靴は着用中。食品、飲料容器、本、衣類、ハンカチ、財布、鍵、携帯電話、アクセサリーは路面、地面、床、ベンチへ置かれていない。"
+  }
+}
