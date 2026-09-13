@@ -13,8 +13,8 @@ export const DEFAULT_POLL_SECONDS = 15;
 
 const ACTIVE_STATUSES = new Set(['queued', 'in_progress', 'pending', 'requested', 'waiting']);
 
-function parseArgs(argv) {
-  return Object.fromEntries(argv.map((arg) => {
+export function parseArgs(argv) {
+  return Object.fromEntries(argv.filter((arg) => arg !== '--').map((arg) => {
     const [key, ...value] = arg.replace(/^--/, '').split('=');
     return [key, value.join('=') || true];
   }));
