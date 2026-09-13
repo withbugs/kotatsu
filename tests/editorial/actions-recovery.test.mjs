@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { buildRunMutationArgs, evaluateRequiredActionRuns } from '../../scripts/editorial/actions-recovery.mjs';
+import { buildRunMutationArgs, evaluateRequiredActionRuns, parseArgs } from '../../scripts/editorial/actions-recovery.mjs';
 
 const now = new Date('2026-09-13T06:00:00Z');
 const headSha = 'c9f9938859251ef4445e6d57abbbebf2374d12b7';
@@ -18,6 +18,13 @@ function run(workflowName, overrides = {}) {
     ...overrides,
   };
 }
+
+test('CLI parsing accepts the pnpm argument separator', () => {
+  assert.deepEqual(
+    parseArgs(['--', '--ci-run=101', '--visual-run=102', `--head-sha=${headSha}`, '--apply']),
+    { 'ci-run': '101', 'visual-run': '102', 'head-sha': headSha, apply: true },
+  );
+});
 
 test('required successful runs are ready for artifact inspection and merge', () => {
   const result = evaluateRequiredActionRuns([run('CI'), run('Visual Check')], { now, expectedHeadSha: headSha });
