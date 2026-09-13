@@ -52,14 +52,19 @@ export function validateKotatsuGhArgs(args) {
   return args;
 }
 
-export function runKotatsuGh(args, options = {}) {
+export function runKotatsuGhResult(args, options = {}) {
   const validated = validateKotatsuGhArgs(args);
   const result = (options.spawn ?? spawnSync)('gh', validated, {
     encoding: 'utf8',
     stdio: options.stdio ?? 'inherit',
+    windowsHide: true,
   });
   if (result.error) throw result.error;
-  return result.status ?? 1;
+  return result;
+}
+
+export function runKotatsuGh(args, options = {}) {
+  return runKotatsuGhResult(args, options).status ?? 1;
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {

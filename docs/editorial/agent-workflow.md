@@ -83,7 +83,7 @@
 
 予定実行の欠損、技術的失敗、公開予定日の超過、正本矛盾は `docs/editorial/recovery-workflow.md` を正本とする。通常工程は成果物と品質ゲートを定義し、復旧工程は完了済みゲートを保持する条件、未完了の再開地点、protected公開日を動かさない最短空き枠だけを定義する。
 
-09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。activeまたはcheckpointの復旧goalは通常担当より先に再開し、実施可能なreviseを理由に固定時刻まで待たない。ただし、進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に月次計画の期限判定を行う。排他leaseを持つのは最新記録が期限内の `state: active` であるsessionだけで、checkpointは即時再開できる。未来日時まで正常に掲載待機する `waiting-publishAt` は復旧優先対象にせず、ほかの記事を進める。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot` と `pnpm article:recover-publication` を同じsession内で実行する。読者向け内容の再確認が必要なEditorial recoveryは進行編集workerが `pnpm article:rebook` を使い、open・未mergeのpublished記事PRでは編集長再確認後に `--resume-unmerged-publication` を付けてdraftへ戻す。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
+09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。activeまたはcheckpointの復旧goalは通常担当より先に再開し、実施可能なreviseを理由に固定時刻まで待たない。ただし、進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に月次計画の期限判定を行う。排他leaseを持つのは最新記録が期限内の `state: active` であるsessionだけで、checkpointは即時再開できる。未来日時まで正常に掲載待機する `waiting-publishAt` は復旧優先対象にせず、ほかの記事を進める。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot`、`pnpm article:recover-publication`、必要時の `pnpm recovery:actions` を同じsession内で実行する。Actions runのfresh待機、stale cancel/rerun、試行上限はコマンド出力に従い、手計算しない。読者向け内容の再確認が必要なEditorial recoveryは進行編集workerが `pnpm article:rebook` を使い、open・未mergeのpublished記事PRでは編集長再確認後に `--resume-unmerged-publication` を付けてdraftへ戻す。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
 
 正本矛盾はGovernance recoveryとし、`pnpm recovery:source-conflict` が返すownerへsource PRを委任する。同じfingerprintが未解決の間は元の制作ゲートを予定実行ごとに繰り返さず、source PRの修正、進行編集gate、元工程への復帰を進める。
 
@@ -158,7 +158,7 @@ Article Issueには公開予定日、公開予定週、または `publishAt` を
 3. 進行編集は本文と `editorial` metadataを正式計画・公開日に照合し、実画像を拡大して季節、多様性、モデル同一性、床置き防止をポリシーと照合する。通過分だけcopy-editorへreadyで渡す。
 4. 校正は同じbranchで文体、事実、禁止表現、読者信頼に加えて計画・公開時期・別Vol.参照を独立確認し、`integrityReview` を記録してreviewへ戻す。別Vol.参照を残す場合はacceptedとしても進行編集承認待ちにする。
 5. 進行編集は残修正がなく `integrityReview` がpassedで、別Vol.参照がある場合は `managingEditorApproval` もapprovedの場合だけ `pnpm article:schedule -- --slug=<slug>` を実行する。続けて `pnpm article:handoff -- --slug=<slug>` を実行し、出力されたstate labelとagent labelをそのままIssueへ反映する。未来時刻ならplanned、到来済みならpublisher + publishへ進め、更新後のIssueを再取得して一致を確認する。
-6. 公開担当は `pnpm publish:check -- --candidate=<slug>`、`pnpm article:publish -- --slug=<slug>`、`pnpm check`、`pnpm build` を順に通す。PRのVisual Check成功後に `pnpm visual:artifact -- --run-id=<run id> --repo=withbugs/kotatsu` を終了まで待ち、列挙されたdesktop/mobile画像をすべて開いてから最終記事PRをmainへmergeする。
+6. 公開担当は `pnpm publish:check -- --candidate=<slug>`、`pnpm article:publish -- --slug=<slug>`、`pnpm check`、`pnpm build` を順に通す。PRのCIとVisual Checkを `pnpm recovery:actions` で機械判定し、stale runは限定回数だけ自動再実行する。成功後に `pnpm visual:artifact -- --run-id=<run id> --repo=withbugs/kotatsu` を終了まで待ち、列挙されたdesktop/mobile画像をすべて開いてから最終記事PRをmainへmergeする。
 
 記事状態は必ず `draft -> scheduled -> published` とする。公開担当はfrontmatterを手作業でpublishedにしない。
 

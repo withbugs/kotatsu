@@ -26,6 +26,9 @@ test('GitHub broker rejects other repositories, auth changes, and arbitrary API 
   ]));
   assert.throws(() => validateKotatsuGhArgs(['issue', 'list', '-R', 'withbugs/kotatsu']));
   assert.throws(() => validateKotatsuGhArgs(['auth', 'logout']));
+  assert.throws(() => validateKotatsuGhArgs(['run', 'cancel', '123', '--repo', 'withbugs/kotatsu']));
+  assert.throws(() => validateKotatsuGhArgs(['run', 'rerun', '123', '--repo', 'withbugs/kotatsu']));
+  assert.throws(() => validateKotatsuGhArgs(['run', 'delete', '123', '--repo', 'withbugs/kotatsu']));
   assert.throws(() => validateKotatsuGhArgs(['api', 'repos/withbugs/kotatsu/git/refs/heads/main']));
   assert.throws(() => validateKotatsuGhArgs([
     'api', '--method', 'DELETE', 'repos/withbugs/kotatsu/milestones/2',
