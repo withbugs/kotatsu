@@ -25,12 +25,14 @@ draftまたは未来日時の記事は公開せず、理由をコメントして
 2. `pnpm article:publish -- --slug=<slug>`
 3. `pnpm check`
 4. `pnpm build`
-5. GitHub ActionsのCIとVisual Check成功後、`pnpm visual:artifact -- --run-id=<Visual Check run id> --repo=withbugs/kotatsu` を完了まで待つ。成功出力に列挙されたdesktop/mobile screenshotをすべて画像として開き、大きな崩れがないことを確認
+5. CIとVisual Checkのrun idと記事PR head SHAを `pnpm recovery:actions -- --ci-run=<id> --visual-run=<id> --head-sha=<sha> --apply` へ渡す。`ready`なら返されたVisual Check run idで `pnpm visual:artifact -- --run-id=<id> --repo=withbugs/kotatsu` を完了まで待ち、列挙されたdesktop/mobile screenshotをすべて画像として開いて大きな崩れがないことを確認
 6. 最終記事PRをmainへmergeし、GitHub Pagesの公開URLを確認
 
 ローカルの `pnpm test:visual` は任意の事前確認だが、PR上のVisual Checkは必須である。frontmatterを手作業でpublishedにしない。
 
 `visual:artifact` は長時間無出力でも終了するまで待ち、途中の保存先を空と判定しない。失敗時は自動再試行後の終了コードとエラーを使う。公開前半でpublishedのcommitをpush済みなら、再実行時の `article:publish` はidempotentな確認として扱い、同じ変更を重複commitしない。
+
+`recovery:actions`がfreshな待機を返した場合は有界pollを完了まで待つ。stale runはコマンドにcancel/rerunさせ、成功済みの別runを再実行しない。`checkpoint`ならrun id、head SHA、試行数、次actionをIssueへ残してleaseを解放する。次の日中scheduled runから委任された公開担当workerは同じコマンドから再開し、固定の公開担当時刻を待たない。`blocked`は上限到達または入力矛盾なので、必須checkを迂回せず具体的理由をcheckpointへ残す。
 
 成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、具体的な再開地点をコメントして `kotatsu:revise + agent:publisher` に残す。日付をまたいでも次の公開枠でDelivery recoveryを自己完結し、完了済みゲートを保持する。本文、画像、校正の判断が必要な失敗だけEditorialまたはProduction recoveryへ戻す。
 

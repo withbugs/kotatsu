@@ -93,6 +93,22 @@ rootコーディネーター自身は本文、画像、校正、編集承認、�
 
 当日中の技術的中断は `kotatsu:revise + agent:publisher` のまま、次の13:00または17:00公開担当が同じPRの未完了地点から再開する。`article:publish` と `visual:artifact` は再実行可能として扱い、commit、artifact、mergeを重複させない。
 
+公開commitをpushした後のCIとVisual Checkは、文章で待機判定せず次のrepository固定コマンドへ渡す。
+
+```text
+pnpm recovery:actions -- --ci-run=<CI run id> --visual-run=<Visual Check run id> --head-sha=<article PR head SHA> --apply
+```
+
+このコマンドは2つのrunが同じ記事headを検査していることを確認し、成功済みrunを保持したまま次を機械判定する。
+
+- `queued`から30分未満、または`in_progress`など実行状態から60分未満は、最大15分の有界pollを行う。
+- 上記期限を超えたrunはstaleとし、対象runだけをcancelして同じrun idをrerunする。失敗終了したrunはcancelせずrerunする。
+- rerunを含む試行はrunごとに最大3回とし、head SHA不一致、必要workflowの欠落、上限到達では変更せず`blocked`を返す。
+- コマンドが`ready`を返したら、返されたVisual Check run idでartifact確認から同じsession内に再開する。
+- 15分の有界pollで完了しない場合は`checkpoint`を返す。leaseを解放し、次に起動した09:00から18:00の迅速復旧コーディネーターが、公開担当workerへ同じコマンドを再実行させる。13:00または17:00まで待たない。
+
+Actionsのstale判定だけを理由に公開日を再予約せず、本文、画像、校正、published commitを変更しない。GitHubの全体statusが正常でもrun単位のstale判定を優先する。必須checkとartifact確認は省略せず、runを手動成功扱いにしない。
+
 日付をまたいだscheduled記事、またはopen・未mergeのPR内でpublishedまで進んだ記事も、次の13:00または17:00公開担当が次の順で扱う。技術的な再予約に進行編集の中継を必須としない。Issue labelが誤って他担当を指していても、open・未mergeの記事PR内でpublished、校正passed、正式画像確認済みなら孤立したDelivery案件として公開担当が回収する。PRと記事metadataをDelivery状態の発見元とし、古いlabelだけを理由に対象外にしない。
 
 1. 保護された公開日を集め、`pnpm recovery:slot -- --occupied=<comma-separated ISO dates>` で最短空き枠を得る。

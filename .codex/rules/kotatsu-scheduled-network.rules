@@ -51,6 +51,30 @@ prefix_rule(
 )
 
 prefix_rule(
+    pattern = ["node", "scripts/editorial/actions-recovery.mjs"],
+    decision = "allow",
+    justification = "The repository-locked recovery command verifies required workflow names and article head SHA before bounded cancel and rerun operations.",
+    match = [
+        "node scripts/editorial/actions-recovery.mjs --ci-run=123 --visual-run=456 --head-sha=0123456789abcdef0123456789abcdef01234567 --apply",
+    ],
+    not_match = [
+        "node scripts/editorial/another-script.mjs --ci-run=123 --visual-run=456 --head-sha=0123456789abcdef0123456789abcdef01234567 --apply",
+    ],
+)
+
+prefix_rule(
+    pattern = ["pnpm", "recovery:actions"],
+    decision = "allow",
+    justification = "This package alias invokes only the repository-locked required-Actions recovery command.",
+    match = [
+        "pnpm recovery:actions -- --ci-run=123 --visual-run=456 --head-sha=0123456789abcdef0123456789abcdef01234567 --apply",
+    ],
+    not_match = [
+        "pnpm another-script -- --ci-run=123 --visual-run=456 --head-sha=0123456789abcdef0123456789abcdef01234567 --apply",
+    ],
+)
+
+prefix_rule(
     pattern = ["pnpm", "install", "--offline", "--frozen-lockfile", "--ignore-scripts"],
     decision = "allow",
     justification = "Scheduled worktrees restore the frozen dependency set from the local pnpm store without network access or lifecycle scripts.",
