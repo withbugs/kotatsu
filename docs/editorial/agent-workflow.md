@@ -100,7 +100,7 @@
 3. 第4月曜 `finalize`: 調査を再更新し、テーマ、記事順、公開週、季節感、AIビジュアル方針を正式計画にする。Vol. 003以降は、非実写調1カテゴリ、専属モデル1カテゴリ、休ませる直近3パターンだけをビジュアルプログラムへ記録し、具体的な構図はビジュアル編集へ委ねる。編集長がVol.計画を編集承認し、PRをReadyにする。
 4. 各月曜12:00に進行編集が成果を確認する。research/shortlistは次月曜までplanned、finalizeだけをmainへ反映する。
 
-進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの暦とGitHub上の全計画Issue・milestoneを照合し、期限を過ぎた計画がなければ未来Vol.1件分のmilestoneとresearch Issueだけを重複なく作る。出力が `recovery-required` なら `recoveryCause` から再開地点を判断し、`docs/editorial/recovery-workflow.md` のPlanning Recoveryを開始または再開する。期限段階とstage labelが一致していても、workflow stateがready、running、review、reviseなら未完了として回復を続ける。
+進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に `pnpm planning:recover --apply` を実行する。コマンドはJSTの暦とGitHub上の全計画Issue・milestoneを照合し、期限を過ぎた計画がなければ未来Vol.1件分のmilestoneとresearch Issueだけを重複なく作る。出力が `recovery-required` なら `recoveryCause` から再開地点を判断し、`docs/editorial/recovery-workflow.md` のPlanning Recoveryを開始または再開する。期限段階とstage labelが一致していても、workflow stateがready、running、review、reviseなら未完了として回復を続ける。
 
 遅延回復でもresearch、進行編集確認、shortlist、進行編集確認、finalize、進行編集確認の順序と調査基準は省略しない。ただし完了済み段階から再開し、次の月曜を待たず同じ日中sessionで期待段階まで逐次進める。各段階をIssueコメント、planning branchのcommit、stage labelへ記録し、進行編集確認を通さず次段階へ進めない。
 
