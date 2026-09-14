@@ -1,0 +1,78 @@
+{
+  "source": "ai-generated",
+  "visualMode": "collage",
+  "volume": "vol-003",
+  "article": "shorter-evening-room-sound-books",
+  "githubIssue": 100,
+  "editorialIntent": "秋らしさを演出するのではなく、少し早まった夕方に本と音を置き、部屋の明るさが変わる時間を急がず受け取る余韻を伝える。",
+  "subject": "清潔な高いテーブル上の無地の本と抽象的な音の道具、そこから青灰色の薄暮へ流れる半透明の紙の帯。",
+  "setting": "2026年9月中旬の日本を想定し、残暑の白い昼光から青みの薄暮へ移る架空の室内を、窓のない紙とインクの層で表した。",
+  "composition": "横長hero向け。テーブルと本を左下4分の1に置き、半透明の音の帯を右上の薄暮へ斜めに流す、余白のあるeye-levelの平面的な編集コラージュ。",
+  "compositionFamily": "editorial-collage",
+  "sceneFamily": "graphic-space",
+  "perspective": "eye-level",
+  "humanPresence": "none",
+  "cameraDistance": "wide",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "chalk white",
+    "pale mineral blue",
+    "blue-gray",
+    "muted dry green",
+    "very pale apricot"
+  ],
+  "colorMood": "白い残暑光から青灰色の薄暮へ横に移り、乾いた緑とごく淡い杏色を小さく添えて、九月中旬の軽さを保つ。",
+  "creativeRationale": "直近3本の写真調から媒体そのものを変え、CULTUREの非実写調枠を紙とインクの編集コラージュとして使った。人物、手入れの静物、回廊の実景を反復せず、本と音のあいだに生まれる時間を半透明の帯と色面で可視化した。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: stylized-concept\nAsset type: KOTATSU Japanese editorial magazine article hero image, wide 16:9 landscape\nPrimary request: Create a quiet, original AI-generated editorial collage for an essay titled ‘日が短くなる部屋に、音と本を置く’ about noticing a September evening become shorter by placing a book and gentle sound into an ordinary room, without dramatizing autumn.\nScene/backdrop: A completely fictional, non-identifiable Japanese interior in mid-September 2026, represented as layered cut paper and softly printed ink fields rather than a photograph. No window. The room shifts horizontally from lingering pale off-white daylight to cool blue-gray dusk. A raised, clean, pale side table is unmistakably above the floor.\nSubject: One closed, completely blank unbranded book resting on the raised table, with a simple bookmark edge but no title or readable marks. Beside it is a small abstract, unbranded sound object. Thin translucent paper ribbons and quiet curved ink lines travel upward and across the room to suggest sound, time, and the transition from afternoon to evening; they must not form letters or musical notation.\nStyle/medium: refined contemporary editorial collage; layered handmade Japanese paper, subtle risograph grain, restrained geometric cut-paper forms, tactile deckled edges, sophisticated magazine art direction; clearly non-photorealistic and not a stock-photo imitation.\nComposition/framing: wide 16:9 hero crop, eye-level but flattened collage perspective; the raised table and book occupy the lower-left quarter, while abstract sound ribbons move diagonally through generous open space toward the upper-right dusk field. No overhead flat lay. No centered product presentation. Keep key elements safe within a wide crop.\nLighting/mood: quiet late-afternoon daylight cooling gradually into blue-gray twilight; calm, breathable, reflective, with no dark night and no warm amber lamp glow.\nColor palette: soft chalk white, pale mineral blue, blue-gray, muted dry green, very pale apricot accent, graphite gray; avoid dominant brown.\nMaterials/textures: fibrous paper, translucent vellum, matte ink, subtle grain, light paper shadows.\nConstraints: AI-generated fictional visual only; no people; no hands; no readable text; no letters; no book title; no musical notes; no logos; no trademarks; no real brands; no store signs; no celebrity or real person; no photograph; no watermark. The book and sound object must sit visibly on the raised table, never on the floor. No food, drink, clothing, phone, wallet, keys, or personal accessories.\nAvoid: photorealism, stock-photo look, product catalog look, literal stereo equipment, recognizable album cover, readable book spine, autumn leaves, wool, knitwear, heavy leather, fireplace, deep amber light, dark brown wood, cozy winter clichés, window-side pale shirt still life, anonymous hands packing a bag, rear-view person walking on a shaded street, clutter, distorted perspective.",
+  "promptSummary": "2026年9月中旬の架空の室内。残暑の白い夕方から青灰色の薄暮へ移る紙の空間で、高いテーブル上の本と音の道具から半透明の帯が広がる。",
+  "caption": "九月中旬の部屋で、本と音のそばを白い夕方から青灰色の薄暮へ渡る時間を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年9月18日の日本。日中の残暑と白い明るさを残しつつ、夕方が少し早まり、室内の色が青灰色へ移る時期。",
+  "seasonalCues": [
+    "白く明るい残暑の夕方から青灰色の薄暮へ移る横方向の色面",
+    "軽い紙、淡い鉱物色、乾いた緑、薄い影で表した九月中旬の涼み始める時間"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウール、毛布、暖炉、紅葉など九月中旬を越えた秋冬表現",
+    "深い琥珀色の照明、濃い茶色の木面、厚い革や布が大きな面積を占める暑苦しい画面"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable book titles",
+    "readable album covers",
+    "musical notation",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person",
+    "stock photo look",
+    "product catalog look",
+    "personal belongings on floor",
+    "autumn or winter clichés"
+  ],
+  "similarityReviewedAgainst": [
+    "before-the-holidays-neighborhood-walk",
+    "shoes-bags-rest-after-rain",
+    "summer-shirt-into-september-breeze"
+  ],
+  "visualDifference": "直近3本の人物を含む公園の写真調、靴と鞄を斜め上から捉えた写真調、回廊とシャツを広く見せた写真調を原寸で比較した。今回は人物や実景を使わない紙とインクのcollageへ切り替え、graphic-spaceの色面と音の帯を主役にした。",
+  "sameCategoryReviewedAgainst": "cool-room-thin-book-summer-sound",
+  "categoryVisualDifference": "前回CULTUREのphotorealistic / 窓と棚上静物 / medium-wideから、collage / editorial-collage / graphic-space / wideへ変更した。窓、畳んだシャツ、商品に見えるスピーカー写真を使わず、平面的な紙の室内と抽象的な音の流れで視覚文法を変えた。",
+  "referenceSheetUse": "none; no person or roster model used",
+  "diversityReview": "人物を登場させず、性別、年齢、職業、家族構成、身体像を読者像として固定していない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-09-14T18:07:39+09:00",
+  "imageReview": {
+    "dimensions": "1672x941",
+    "seasonality": "白い残暑光、青灰色の薄暮、軽い紙の質感を原寸で確認し、厚手素材、紅葉、暖炉、深い琥珀色など九月中旬を越える表現がない。",
+    "anatomyAndIdentity": "人物と手は描かれておらず、実在人物や著名人との類似リスクがない。",
+    "textAndBrands": "本、音の道具、背景を原寸で確認し、読める文字、ロゴ、商標、店舗看板、音符、固有の場所がない。",
+    "retiredPatterns": "窓辺の白・淡青シャツ静物、鞄へ物を入れる手元、日陰の街路を歩く後ろ姿のいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "本と音の道具は脚の見える清潔な高いテーブル上にあり、右奥の本も棚に収められている。食品、飲料容器、衣類、ハンカチ、財布、鍵、携帯電話、アクセサリーは床へ置かれていない。"
+  }
+}
