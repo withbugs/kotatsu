@@ -48,7 +48,7 @@ requireText('.agents/kotatsu/copy-editor.md', 'managingEditorApproval');
 requireText('docs/editorial/agent-workflow.md', 'crossVolumeReview.managingEditorApproval');
 requireText('docs/editorial/agent-workflow.md', '## Volume Closeout');
 requireText('docs/editorial/agent-workflow.md', 'node scripts/editorial/close-complete-milestones.mjs --apply');
-requireText('docs/editorial/agent-workflow.md', 'pnpm planning:recover -- --apply');
+requireText('docs/editorial/agent-workflow.md', 'pnpm planning:recover --apply');
 requireText('docs/editorial/agent-workflow.md', '## Recovery');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:rebook');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:handoff');
