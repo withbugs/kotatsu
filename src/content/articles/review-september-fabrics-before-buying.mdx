@@ -7,8 +7,8 @@ kind: shopping-guide
 template: shopping-guide
 status: draft
 publishAt: "2026-09-24T00:00:00+09:00"
-heroImage: "__AI_VISUAL_PENDING__"
-heroAlt: "AI生成ビジュアルをビジュアル編集工程で生成予定"
+heroImage: "/images/articles/review-september-fabrics-before-buying-hero.png"
+heroAlt: "AI生成ビジュアル: 九月下旬の明るい縫製作業室で、淡い緑の綿、生成りのリネン、補修糸のある白い薄手布がラックに掛かり、織りと軽さを見比べる場面"
 editorial:
   issueNumber: 101
   approvedPlan: "docs/editorial/plans/vol-003.md"
@@ -23,10 +23,10 @@ editorial:
     crossVolumeDecision: not-applicable
 visual:
   source: ai-generated
-  mode: pending
-  promptSummary: "九月下旬の日本。残暑に使った綿、リネン、薄手の布を手持ちから見直し、買い足す前の静かな判断を伝える。媒体、構図、場所、視点はビジュアル編集が本文と直近誌面を見て決める。"
-  intent: "新しい秋物を並べる商品広告ではなく、手持ちの素材の厚さ、風通し、重ねやすさを確かめ、今ある服をもう一度生活へ戻す余白を見せる。"
-  seasonalContext: "2026年9月下旬の日本。日中には残暑が続く一方、朝夕の風や冷房との温度差があり、厚手の秋服へ一度に替えず薄手素材を使い続ける時期。"
+  mode: photorealistic
+  promptSummary: "2026年9月下旬の架空の明るい縫製作業室。ラックに掛けた使い込んだ淡い緑の綿、生成りのリネン、補修糸のある白い薄手布を近接で捉え、織り、しわ、透け、軽さを見直す。"
+  intent: "新しい秋物を並べる商品広告ではなく、手持ちの素材の厚さ、風通し、重ねやすさを質感から確かめ、今ある服をもう一度生活へ戻す余白を見せる。"
+  seasonalContext: "2026年9月24日の日本。日中には残暑の白い光が続く一方、朝夕には少し乾いた風があり、厚手の秋服へ一度に替えず薄手素材を使い続ける時期。"
   seasonalCues:
     - "洗いざらしの綿、リネン、薄手の織物、袖をまくれる長袖など、残暑と朝夕の差を行き来できる軽い素材"
     - "白い昼光、青みのある影、乾いた淡い緑など、夏の明るさを残しながら初秋へ移る空気"
@@ -34,7 +34,7 @@ visual:
     - seasonally implausible layering
     - "厚手のニット、ウールの重ね着、コート、重いブーツ、紅葉の盛りなど、九月下旬を越えた秋冬表現"
     - "窓辺に白または淡青のシャツを置く静物、商品を整然と比較するカタログ構図、読めるブランド表示"
-  seasonalityReviewedBy: pending
+  seasonalityReviewedBy: agent:visual-editor
   avoid:
     - real brand logos
     - real store signage
@@ -43,6 +43,8 @@ visual:
     - official product photo look
     - shopping urgency
     - fabric or clothing placed on floor
+    - readable care labels
+    - retail clothing rack
 tags:
   - 素材選び
   - 手持ちの服

@@ -1,0 +1,79 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-003",
+  "article": "review-september-fabrics-before-buying",
+  "githubIssue": 101,
+  "editorialIntent": "新しい秋物を並べる商品広告ではなく、手持ちの素材の厚さ、風通し、重ねやすさを質感から確かめ、今ある服をもう一度生活へ戻す余白を見せる。",
+  "subject": "使い込んだ淡い緑の綿、生成りのリネン、補修糸のある白い薄手布を、清潔な自立式ラックへ掛けて織りと軽さを見比べる。",
+  "setting": "2026年9月下旬の日本を想定した、架空で固有性のない明るい縫製・補修作業室。背景には清潔な高い作業台だけを置き、店舗やショールームには見せない。",
+  "composition": "横長hero向け。布の高さからeye-levelのdetail視点で、重なる布端を縦と斜めに横切らせるcloseのmaterial-study。ラックを画面右まで見せ、吊り下げ位置と床から離れていることを明瞭にする。",
+  "compositionFamily": "material-study",
+  "sceneFamily": "workshop",
+  "perspective": "detail",
+  "humanPresence": "none",
+  "cameraDistance": "close",
+  "visualTemperature": "mixed",
+  "visualDensity": "dense",
+  "dominantPalette": [
+    "pale sage green",
+    "natural flax beige",
+    "chalk white",
+    "cool blue-gray",
+    "muted apricot thread"
+  ],
+  "colorMood": "残暑の冷たい白色光を基調に、薄い布を透過するごく淡い暖色と補修糸だけを添え、九月下旬の軽さと乾いた空気を保つ。",
+  "creativeRationale": "買い物記事を商品比較や新品の陳列にせず、既に使った布の織り、しわ、透け、補修跡を読むmaterial-studyにした。直近のコラージュ室内、木陰の人物、雨上がりの靴と鞄から、場所、視点、距離、密度を変えた。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: KOTATSU Japanese editorial magazine article hero image, wide 16:9 landscape\nPrimary request: Create a quiet original AI-generated editorial material study for an article titled ‘足す前に、九月まで使う素材を見直す,’ about examining the cotton, linen, and lightweight clothes already owned before buying anything new.\nScene/backdrop: A completely fictional, non-identifiable bright sewing and mending workspace in Japan in late September 2026. No storefront, no showroom, no window-side still life. A freestanding matte-metal garment rail and a clean raised worktable sit above the floor; the background is pale blue-gray and softly out of focus.\nSubject: A close, tactile view through three gently separated, already-used unbranded fabric layers hanging from the freestanding rail: washed pale sage cotton with a rolled sleeve edge, natural flax linen with soft lived-in wrinkles, and a thin chalk-white woven layer with a small neat repair stitch. A faint dry breeze lifts the edges so the different weight, weave, breathability, and layering potential can be visually compared. These are familiar cared-for garments, not pristine merchandise.\nStyle/medium: photorealistic natural editorial photography, believable fiber texture, subtle wear, imperfect wrinkles, fine stitch detail, restrained film grain; calm magazine art direction, not glossy advertising, not stock photography.\nComposition/framing: wide 16:9 hero crop; close material-study framing at fabric height, eye-level to slightly detail-oriented side angle. Overlapping vertical and diagonal fabric edges create a gentle rhythm across the frame. Keep the rail clearly visible so fabrics are hanging, and keep a small portion of the clean raised worktable visible behind them. No overhead flat lay, no centered product lineup, no full garment catalog.\nLighting/mood: cool-white late-September daylight with a slight mixed warmth only at the thinnest translucent edges; breathable, dry, quiet, still carrying the lightness of lingering heat.\nColor palette: pale sage green, natural flax beige, chalk white, cool blue-gray, a very small muted apricot thread accent; avoid dominant brown.\nMaterials/textures: visible cotton weave, dry linen slub, light translucent weave, soft washed creases, one subtle hand-repair stitch, matte metal rail, clean pale work surface.\nConstraints: AI-generated fictional visual only; no people; no hands; no faces; no readable text; no care labels; no logos; no trademarks; no real brands; no store signs; no price tags; no hangers with branding; no celebrity or recognizable person; no watermark. Fabrics and garments must hang from the freestanding rail or rest on the raised table, never on the floor. The floor should not be visible. No food, drink, books, phones, wallets, keys, shoes, bags, or accessories.\nAvoid: ecommerce catalog, fashion campaign, luxury product styling, fabric swatch grid, retail rack, clothing store, pristine new merchandise, top-down inventory, window-side white or pale-blue shirt still life, anonymous hands packing a bag, rear-view person walking on a shaded street, thick knitwear, wool coats, heavy leather, boots, autumn leaves, amber lamp light, dark brown wood, winter mood, excessive blur, distorted textile edges.",
+  "promptSummary": "2026年9月下旬の架空の明るい縫製作業室。ラックに掛けた使い込んだ淡い緑の綿、生成りのリネン、補修糸のある白い薄手布を近接で捉え、織り、しわ、透け、軽さを見直す。",
+  "caption": "九月下旬の明るい作業室で、使い込んだ綿、リネン、薄手布の織りと軽さを見直す場面を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年9月24日の日本。日中には残暑の白い光が続く一方、朝夕には少し乾いた風があり、厚手の秋服へ一度に替えず薄手素材を使い続ける時期。",
+  "seasonalCues": [
+    "洗いざらしの綿、乾いたリネン、透ける薄手織物、袖をまくれる長袖という残暑と朝夕の差に対応する軽い素材",
+    "冷たい白色光、淡い青灰の背景、乾いた淡緑、薄い布を透過する光という九月下旬の明るく軽い空気"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウール、コート、重いブーツ、紅葉など九月下旬を越えた秋冬表現",
+    "深い琥珀色の照明、濃い茶色の木面、厚い革や布が大きな面積を占める暑苦しい画面"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable care labels",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person",
+    "stock photo look",
+    "official product photo look",
+    "affiliate catalog composition",
+    "retail clothing rack",
+    "new-product display",
+    "fabric or clothing on floor",
+    "autumn or winter clichés"
+  ],
+  "similarityReviewedAgainst": [
+    "shorter-evening-room-sound-books",
+    "before-the-holidays-neighborhood-walk",
+    "shoes-bags-rest-after-rain"
+  ],
+  "visualDifference": "直近3本の紙とインクによるwideなeditorial-collage、木陰の人物をmediumで捉えたhuman-action、靴と鞄をhigh-angleで見せたmedium-wideのobject-narrativeを原寸で比較した。今回は写真調を保ちつつ、人物のいないworkshopで布の織りと補修跡へ寄るclose / detail / material-studyとし、密度もdenseへ変えた。",
+  "sameCategoryReviewedAgainst": "sandals-leather-shoes-in-between",
+  "categoryVisualDifference": "前回SHOPPINGのphotorealistic / 人物の手元と靴 / 玄関 / medium-close / mixed / balancedから、photorealistic / material-study / workshop / detail / close / mixed / denseへ変更した。人物、手指、履物、玄関を使わず、吊り下げた使い込み布の表面を主役にして比較可能な6軸を変えた。",
+  "referenceSheetUse": "none; no person or roster model used",
+  "diversityReview": "人物を登場させず、性別、年齢、職業、家族構成、身体像を読者像として固定していない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-09-21T18:06:11+09:00",
+  "imageReview": {
+    "dimensions": "1672x941",
+    "seasonality": "淡い綿、乾いたリネン、透ける白い薄手布、冷たい白色光を原寸で確認し、厚手ニット、ウール、重い革、紅葉、深い琥珀色など九月下旬を越える表現がない。",
+    "anatomyAndIdentity": "人物、顔、手指はなく、実在人物や著名人との類似リスクがない。",
+    "textAndBrands": "布、ラック、背景の作業台を原寸で確認し、読める文字、ケアラベル、ロゴ、商標、価格タグ、店舗看板、固有の場所がない。",
+    "retiredPatterns": "窓辺の白・淡青シャツ静物、鞄へ物を入れる手元、日陰の街路を歩く後ろ姿のいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "綿、リネン、薄手布は自立式ラックに掛けられ、背景の布も清潔な高い作業台上にある。床は画面に写らず、衣類、食品、飲料容器、本、財布、鍵、携帯電話、アクセサリーは床へ直接触れていない。"
+  }
+}
