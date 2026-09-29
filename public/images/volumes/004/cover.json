@@ -1,0 +1,77 @@
+{
+  "source": "ai-generated",
+  "usage": "volume-cover",
+  "visualMode": "photorealistic",
+  "volume": "vol-004",
+  "githubIssue": 117,
+  "editorialIntent": "Vol. 004『日が短くなる前に、暮らしを軽くする』を、雨上がりの白い光と青灰色の早い夕方が同じ生活路に残る場面として表し、十月の服や時間を一度に重くしない感覚を代表する。",
+  "subject": "雨上がりの架空の住宅中庭と細い生活路、濡れた青灰色の舗装、白い光、まだ緑を残す植栽、屋根下の専用スタンドに立てた軽い透明傘",
+  "setting": "2026年10月の日本。暖かい日中の雨が上がり、白い低い光と青灰色の早い夕方が重なる、固有性のない静かな住宅中庭。",
+  "composition": "横長カバー向けのhigh-angle wide。手前の屋根下から奥の生活路へ、濡れた舗装の反射と斜めの光が流れるstreet-observation。傘は左端の専用スタンドへ収め、商品や人物を中心に置かない。",
+  "compositionFamily": "street-observation",
+  "sceneFamily": "street",
+  "perspective": "high-angle",
+  "humanPresence": "none",
+  "cameraDistance": "wide",
+  "visualTemperature": "cool",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "chalk white",
+    "pale blue-gray",
+    "wet slate",
+    "muted living green",
+    "light metal gray"
+  ],
+  "colorMood": "雨上がりの青灰色と白い低い光を基調に、まだ緑を残す植栽を添え、濃い茶や琥珀色へ寄せない。",
+  "creativeRationale": "前号カバーの室内、衣類、靴を反復せず、Vol.004の暖かい昼、雨上がり、早まる日没を一つの屋外生活路の光と反射でつないだ。人物や商品ではなく、天候のあとに生活の速度が軽く戻る空間を主役にした。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural. Asset type: KOTATSU Japanese editorial magazine formal volume cover, wide 16:9 landscape. Create a fictional modest Japanese residential courtyard and narrow pedestrian passage in October 2026 just after rain. Make changing neutral-white low daylight, cool blue-gray shadow and wet reflections the subject. Use a high-angle wide street-observation from a sheltered landing, with still-green plants and one plain translucent umbrella upright in a dedicated stand under cover. Photorealistic natural editorial image with slightly imperfect matte plaster and everyday mineral paving. No people, text, signs, logos, brands, famous location, travel or real-estate advertising, autumn clichés, amber light, heavy clothing, personal belongings on the ground, or watermark.",
+  "promptSummary": "2026年10月の架空の住宅中庭。雨上がりの青灰色の路面に白い低い光が差し、まだ緑の植栽と専用スタンドの軽い透明傘が、暖かい昼から早い夕方への移り変わりを示す。",
+  "caption": "雨上がりの白い光と青灰色の早い夕方が、緑を残す生活路に重なるVol. 004正式カバーのAI生成ビジュアル。",
+  "seasonalContext": "2026年10月の日本。全国的に暖かさが残り、地域ごとに雨と日照の差がある一方、月内に日没が早まる時期を想定する。",
+  "seasonalCues": [
+    "雨上がりの濡れた青灰色の舗装と、屋根下の専用スタンドで水を切る軽い透明傘",
+    "まだ緑を残す植栽、白い低い日差し、少し長い影、早い夕方の冷たい反射"
+  ],
+  "seasonalAvoid": [
+    "紅葉の盛り、厚手のコート、ニット、暖炉、雪など十月の地域差を飛び越える秋冬表現",
+    "深い琥珀色、濃い茶色、重い革や布、ハロウィン記号を大きな面積で使う画面"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable signs or house numbers",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person or location",
+    "stock photo look",
+    "travel advertising",
+    "real estate advertising",
+    "heavy autumn or winter clothing",
+    "warm amber lighting dominance",
+    "hygiene-sensitive items placed directly on the ground"
+  ],
+  "similarityReviewedAgainst": [
+    "shorter-evening-room-sound-books",
+    "review-september-fabrics-before-buying",
+    "between-busy-and-quiet-weeks"
+  ],
+  "visualDifference": "直近3本の紙コラージュによる室内、布のcloseなmaterial-study、専属モデルのmedium-wideな室内肖像を原寸で比較した。今回は人物と室内を使わず、high-angle / wide / street-observationで雨上がりの路面と光の奥行きを主役にした。",
+  "previousVolumeCoverReviewedAgainst": "vol-003",
+  "coverDifference": "Vol.003のphotorealistic / spatial-interior / interior / eye-level / wide / mixedから、photorealistic / street-observation / street / high-angle / wide / coolへ変更した。衣類、靴、室内の奥行きを使わず、濡れた路面、白い低い光、緑を残す植栽へ視覚文法を切り替えた。",
+  "referenceSheetUse": "none; no roster model used in the volume cover",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-09-29T10:09:05+09:00",
+  "imageReview": {
+    "dimensions": "1672x941",
+    "seasonality": "雨上がりの濡れた青灰色の路面、白い低い光、まだ緑の植栽、軽い透明傘を原寸で確認し、紅葉の盛り、厚手素材、冬の小物、深い琥珀色がない。",
+    "anatomyAndIdentity": "人物、顔、手指は写っておらず、実在人物や著名人との類似リスクがない。",
+    "textAndBrands": "壁、通路、傘、植栽を原寸で確認し、読める文字、家番号、ロゴ、商標、店舗看板、固有の場所がない。",
+    "retiredPatterns": "高いラックの薄手布への近接、紙コラージュ室内、木陰の公園ベンチで休む人物のいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "食品、飲料容器、本、衣類、ハンカチ、財布、鍵、携帯電話、腕時計、アクセサリーは画面にない。透明傘は屋根下の用途が明確な専用スタンドへ立て、路面へ直接置いていない。"
+  }
+}
