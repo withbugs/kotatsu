@@ -7,8 +7,8 @@ kind: feature
 template: feature
 status: draft
 publishAt: "2026-10-02T00:00:00+09:00"
-heroImage: "__AI_VISUAL_PENDING__"
-heroAlt: "AI生成ビジュアル制作予定：暖かい昼と涼しい朝夕のあいだで、薄手の羽織を手元に残す十月の生活場面。"
+heroImage: "/images/articles/light-layer-between-morning-evening-hero.png"
+heroAlt: "十月初めの雨上がりの屋根付き通路で、白い薄手シャツ姿の匿名人物が淡い緑の羽織を腕に掛け、光と影の境目を歩くAI生成ビジュアル"
 editorial:
   issueNumber: 118
   approvedPlan: "docs/editorial/plans/vol-004.md"
@@ -23,16 +23,17 @@ editorial:
     crossVolumeDecision: not-applicable
 visual:
   source: ai-generated
-  mode: pending
-  promptSummary: "2026年10月初めの日本。暖かい昼と涼しい朝夕のあいだで、薄手の長袖と軽い羽織を手元に残し、着る、脱ぐ、持つという調整の動作が伝わる生活場面。"
+  mode: photorealistic
+  promptSummary: "2026年10月初めの架空の屋根付き通路。白い薄手シャツ姿の匿名人物が淡いセージ色の羽織を腕に掛け、雨上がりの青灰の影から白い日差しへ歩く。"
   intent: "秋らしい装いの完成形を示すのではなく、一日の温度差に合わせて手持ちの服を選び直せる軽さと余白を見せる。"
-  seasonalContext: "2026年10月初めの日本。日中には暖かさが残る一方、朝夕には涼しさがあり、地域、天候、移動時間によって体感が変わる時期。"
+  seasonalContext: "2026年10月2日の日本。日中には暖かさが残り、雨上がりの朝夕や日陰には涼しさがあり、時間と移動条件で体感が変わる時期。"
   seasonalCues:
-    - "乾きやすい綿の長袖、薄手のシャツジャケット、軽いカーディガンなど、畳んだり袖を通したりしやすい素材"
-    - "白から青灰へ移る朝夕の光、まだ緑を残す植物、暖かい昼と少し長くなる影"
+    - "袖を一度だけまくった白い薄手綿シャツと、腕に掛けて持ち歩ける淡いセージ色の軽い羽織"
+    - "雨上がりの青灰の影、白い日差し、まだ緑を残す植物、濡れた路面の淡い反射"
   seasonalAvoid:
     - "厚手のコート、ダウン、重いウール、暖房など、十月初めを冬へ固定する要素"
     - "紅葉の盛り、濃い琥珀色だけの画面、ハロウィン装飾など、地域差を消す記号的な秋表現"
+  seasonalityReviewedBy: "agent:visual-editor"
   avoid:
     - real brand logos
     - real store signage
