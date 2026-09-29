@@ -1,0 +1,78 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-003",
+  "article": "between-busy-and-quiet-weeks",
+  "githubIssue": 102,
+  "editorialIntent": "会う日、ひとりで休む日、仕事へ戻る日を優劣なく扱う記事の入口として、予定の合間に自分の速度へ戻る短い静止を見せる。",
+  "subject": "登録済みの完全に架空の専属AIモデル MIKI が、薄手の青灰色シャツと軽い鞄のまま、明るい室内の椅子で静かに座る。",
+  "setting": "2026年9月末の日本を想定した、固有の住所・店舗・勤務先を示さない架空の明るい室内。淡い青灰の壁、清潔な高いテーブル、白い昼光だけで生活の切替を示す。",
+  "composition": "横長hero向け。人物を左3分の1に置くeye-levelのmedium-wide human-environment。顔と自然な両腕を見せ、右側に余白のある淡い室内と高いテーブルを置く。",
+  "compositionFamily": "human-environment",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "roster-model",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "pale blue-gray",
+    "chalk white",
+    "light stone beige",
+    "muted dry olive",
+    "soft skin tone"
+  ],
+  "colorMood": "白い残暑光と淡い青灰の壁、乾いたオリーブの鞄、石色の服で、九月末の明るく少し乾き始める空気を保つ。",
+  "modelId": "K-04-MIKI",
+  "creativeRationale": "Vol.003でPEOPLEに予約された専属モデルを、顔の見える生活の主題として用いた。直近の紙とインクのコラージュ、素材の近接、ベンチ上の匿名人物から、室内の専属モデルと余白のある中景へ切り替え、予定の多さを達成や孤立の物語に固定しない。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural. Asset type: KOTATSU Japanese editorial magazine article hero image, wide 16:9 landscape. Primary request: a quiet original AI-generated editorial scene for an article about giving equal weight to meeting people, resting alone, and returning to work. The supplied reference image is used only to preserve the identity of the registered fictional roster model MIKI. Scene: a completely fictional, non-identifiable modest Japanese apartment living room in late September 2026, pale blue-gray wall, clean raised light table, and soft white late-afternoon daylight. Subject: MIKI, a fictional 49-year-old woman with loose shoulder-length dark curls and a broad silver streak, sits in relaxed three-quarter view after coming home; she wears a washed pale blue-gray lightweight cotton shirt with rolled sleeves, stone-beige trousers, and a plain olive canvas crossbody bag worn on her body. Style: photorealistic natural editorial image, never stock or documentary. Composition: airy eye-level medium-wide human-environment, face and natural arms visible, person in left third, generous room space at right. Constraints: no readable text, notebooks, calendars, books, phones, wallets, keys, food, drink, logos, real locations, celebrity likeness, or watermark; worn bag only; no personal items or clothing on a floor; no thick knitwear, autumn leaves, amber lighting, winter cues, rear-view street walk, fashion pose, or distorted anatomy.",
+  "promptSummary": "2026年9月末の架空の明るい室内。完全に架空の専属AIモデル MIKI が薄手の青灰色シャツと軽い鞄で静かに座り、会う日と休む日の切替を受け止める。",
+  "caption": "九月末の明るい室内で、会う日と休む日のあいだに自分の速度を取り戻す時間を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年9月29日の日本。日中には残暑の白い光が残り、冷房の室内との温度差や朝夕の乾いた風を意識し始める時期。",
+  "seasonalCues": [
+    "洗いざらしの薄手の青灰色コットンシャツを袖まくりで着て、残暑と室内の温度差に対応している",
+    "白い昼光、淡い青灰の壁、軽い石色の素材、乾いたオリーブの鞄が九月末の明るく軽い空気を作る"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウール、コート、重いブーツ、紅葉、暖炉など九月末を飛び越える秋冬表現",
+    "深い琥珀色の照明、濃い茶色の木面、厚い革や厚手の布が画面を占める暑苦しい表現"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable text or signage",
+    "celebrity likeness",
+    "recognizable real person",
+    "recognizable real location",
+    "stock photo look",
+    "workplace documentary",
+    "staged fashion pose",
+    "personal belongings on floor",
+    "rear-view street walk",
+    "autumn or winter clichés"
+  ],
+  "similarityReviewedAgainst": [
+    "shorter-evening-room-sound-books",
+    "review-september-fabrics-before-buying"
+  ],
+  "visualDifference": "直近2本の紙とインクによるwideなeditorial-collageと、無人のcloseなmaterial-studyを実画像で比較した。今回は写真調の専属モデルを顔の見えるmedium-wide / eye-level / human-environmentで扱い、室内の余白と生活動作の前の静止へ切り替えた。",
+  "sameCategoryReviewedAgainst": "summer-return-to-work-clothes",
+  "categoryVisualDifference": "前回PEOPLEのphotorealistic / 人物の袖を整える動作 / medium / mixed / airyを実画像で比較した。今回は登録済みの専属モデルを、human-environment / interior / eye-level / medium-wide / cool / airyで顔の見える静止として扱い、袖の調整、背面寄りの動作、仕事帰りの服の主題を反復しない。比較可能な構図、場面、視点、距離、温度、人の扱いの6軸を変えた。",
+  "referenceSheetUse": "docs/editorial/models/references/k-04-miki.png を、登録済みの完全に架空のモデル MIKI の顔、髪、体格の連続性確認だけに使用。reference sheet自体は公開していない。",
+  "diversityReview": "完全に架空の専属モデル MIKI を、職業、住所、勤務先、家族構成、実体験を付与しない生活の主題として扱った。実在人物・著名人との類似、取材写真に見える固有情報がないことを原寸で確認した。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-09-28T16:42:00+09:00",
+  "imageReview": {
+    "dimensions": "1672x941",
+    "seasonality": "薄手の袖まくりシャツ、白い残暑光、淡い青灰の室内と軽い素材を原寸で確認し、厚手素材、紅葉、深い琥珀光、冬の小物がない。",
+    "anatomyAndIdentity": "顔、両腕、手指、姿勢を原寸で確認し、余分な指や手足、著名人・実在取材対象を示す特徴がない。登録済みの完全に架空のモデル MIKI の連続性だけを保っている。",
+    "textAndBrands": "壁、テーブル、鞄、衣服、背景を原寸で確認し、読める文字、ロゴ、商標、店舗看板、固有の住所や場所がない。",
+    "retiredPatterns": "窓辺に白または淡青のシャツを置く静物、鞄へ物を入れる匿名の手元、日陰の街路を後ろ姿で歩く人物のいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "画面内に食品、飲料容器、本、衣類、ハンカチ、財布、鍵、携帯電話、アクセサリーは置かれていない。軽い布鞄は人物が身につけ、テーブルは空で清潔な高い面に保たれ、床には私物がない。"
+  }
+}
