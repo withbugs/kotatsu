@@ -1,0 +1,78 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-004",
+  "article": "light-layer-between-morning-evening",
+  "githubIssue": 118,
+  "editorialIntent": "秋らしい装いの完成形を示すのではなく、暖かい昼と涼しい朝夕のあいだで、薄い羽織を着る、脱ぐ、持つという小さな調整を選べる余白として見せる。",
+  "subject": "白い薄手綿シャツの袖を一度まくり、淡いセージ色の軽い羽織を腕に掛けて歩く、顔を画面外にした匿名の成人。",
+  "setting": "2026年10月初めの日本を想定した、固有性のない架空の屋根付き歩行通路。雨上がりの青灰の影と白い日差し、まだ緑を残す植栽が同居する。",
+  "composition": "横長hero向け。人物を左側へ置き、肩から膝下をmediumで捉えるlow-angleの三分の二側面。右側の通路へ余白を残し、人物が冷たい影と暖かい日差しの境目を横切るhuman-action。",
+  "compositionFamily": "human-action",
+  "sceneFamily": "transit",
+  "perspective": "low-angle",
+  "humanPresence": "anonymous",
+  "cameraDistance": "medium",
+  "visualTemperature": "mixed",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "chalk white",
+    "pale sage green",
+    "cool blue-gray",
+    "light concrete gray",
+    "muted living green"
+  ],
+  "colorMood": "雨上がりの青灰の影と白い日差しを一画面に置き、淡いセージとまだ緑の植栽で、十月初めの暖かい昼と涼しい朝夕の差を軽く見せる。",
+  "creativeRationale": "前作STYLEの無人の回廊と椅子上のシャツを反復せず、服そのものの陳列ではなく、軽い羽織を腕に掛けて温度差を渡る生活動作へ主題を移した。直近の顔の見える室内人物、布の近接、青灰の室内コラージュとも構図、場所、距離、人の扱いを変えた。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: KOTATSU Japanese editorial magazine article hero image, wide 16:9 landscape\nPrimary request: Create an original AI-generated editorial hero for the article ‘朝夕のあいだに、薄い羽織を残す,’ about keeping a lightweight layer available between a cool early-October morning/evening and a still-warm daytime in Japan.\nScene/backdrop: A completely fictional, non-identifiable covered pedestrian passage in Japan in early October 2026, with one side in cool blue-gray shade and a clean patch of soft white midday sunlight crossing the walkway. A few still-green plants and a faint reflection from recently dried rain suggest changing weather. No storefronts, station signs, advertisements, vehicles, or recognizable architecture.\nSubject: One anonymous adult in motion, shown from shoulders to below the knees with the face fully outside the frame. They wear a breathable chalk-white lightweight cotton long-sleeve shirt with sleeves casually rolled once, and carry an unbranded pale sage lightweight overshirt neatly draped over one bent forearm, ready to put back on later. The action should feel natural and unhurried, clearly showing ‘wear, remove, carry’ as a flexible choice rather than a fashion pose. Hands should be relaxed and anatomically correct; if possible keep fingers mostly obscured by the folded overshirt.\nStyle/medium: photorealistic natural editorial photography, believable cotton texture and lived-in wrinkles, restrained film grain, calm Japanese lifestyle magazine art direction; not glossy advertising and not stock photography.\nComposition/framing: wide 16:9 hero crop, medium distance, low-angle three-quarter side view, with the person crossing the boundary between cool shade and warm daylight. Keep generous negative space toward the lit passage. The body is in active stride; no seated pose, no rear-view street walking, no rack, no chair, no tabletop, no fabric close-up.\nLighting/mood: mixed early-October light—cool blue-gray shade with clean neutral-white sun, longer soft shadows but no golden-hour amber. Quiet, fresh, breathable, slightly damp after rain, neither midsummer nor winter.\nColor palette: chalk white, pale sage green, cool blue-gray, light concrete gray, muted living green; avoid dominant brown, orange, or amber.\nMaterials/textures: thin washed cotton, light matte overshirt fabric, clean stone walkway, faint rain reflection, soft planted leaves.\nConstraints: AI-generated fictional visual only; no identifiable person; no face; no celebrity likeness; no real brands; no logos; no readable text; no signs; no trademarks; no real location; no watermark. The overshirt remains supported on the person’s forearm and never touches the floor. No bags, books, food, drinks, phones, wallets, keys, accessories, or clothing placed on the floor.\nAvoid: fashion campaign, ecommerce catalog, posed model, stock-photo smile, seated person at a table, park bench, close fabric study on a high rack, window-side shirt still life, pale shirt on a chair in a white corridor, abstract book-and-sound collage, rear-view pedestrian, thick knitwear, wool coat, heavy jacket, boots, autumn leaves, Halloween decorations, golden amber light, dark brown wood, winter mood, distorted hands, extra fingers, duplicated limbs, text, logos, signs.",
+  "promptSummary": "2026年10月初めの架空の屋根付き通路。白い薄手シャツ姿の匿名人物が淡いセージ色の羽織を腕に掛け、雨上がりの青灰の影から白い日差しへ歩く。",
+  "caption": "十月初めの雨上がり、薄い羽織を腕に残して光と影のあいだを歩く場面を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年10月2日の日本。日中には暖かさが残り、雨上がりの朝夕や日陰には涼しさがあり、時間と移動条件で体感が変わる時期。",
+  "seasonalCues": [
+    "袖を一度だけまくった白い薄手綿シャツと、腕に掛けて持ち歩ける淡いセージ色の軽い羽織",
+    "雨上がりの青灰の影、白い日差し、まだ緑を残す植物、濡れた路面の淡い反射"
+  ],
+  "seasonalAvoid": [
+    "厚手のニット、ウール、コート、重いブーツ、紅葉の盛りなど、十月初めを冬へ固定する表現",
+    "深い琥珀色の光、濃い茶色の木面、厚い革や布、ハロウィン装飾が画面を占める記号的な秋表現"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable text or signage",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person",
+    "recognizable real location",
+    "stock photo look",
+    "fashion campaign",
+    "clothing or personal items on floor",
+    "rear-view street walk",
+    "autumn or winter clichés"
+  ],
+  "similarityReviewedAgainst": [
+    "between-busy-and-quiet-weeks",
+    "review-september-fabrics-before-buying",
+    "shorter-evening-room-sound-books"
+  ],
+  "visualDifference": "直近3本の、顔の見える室内人物によるairyなhuman-environment、吊り下げた布へ寄るdenseなmaterial-study、紙とインクによるwideなeditorial-collageを原寸で比較した。今回は架空の屋根付き通路で、顔を画面外にした匿名人物が羽織を腕に掛けて歩くmedium / low-angle / human-actionとし、雨上がりの路面反射と光域の境目を主役にした。",
+  "sameCategoryReviewedAgainst": "summer-shirt-into-september-breeze",
+  "categoryVisualDifference": "前回STYLEのphotorealistic / spatial-interior / interior / eye-level / humanPresence none / wide / mixed / airyから、photorealistic / human-action / transit / low-angle / humanPresence anonymous / medium / mixed / balancedへ変更した。人物の有無、構図、場所、視点、距離、密度の6軸を変え、白い回廊と椅子上の淡青シャツを反復していない。",
+  "referenceSheetUse": "none; no roster model used",
+  "diversityReview": "顔、性別、年齢、職業、家族構成、身体像を特定しない匿名の成人を生活動作の一部として扱い、実在取材対象や著名人に見える顔・固有情報を画面へ入れていない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-09-29T11:22:03+09:00",
+  "imageReview": {
+    "dimensions": "1672x941",
+    "seasonality": "白い薄手綿シャツの一度まくった袖、腕で持てる淡いセージ色の羽織、まだ緑の植物、雨上がりの青灰の影と白い日差しを原寸で確認した。厚手ニット、ウール、コート、ブーツ、紅葉、琥珀色の照明など十月初めを越える秋冬表現はない。",
+    "anatomyAndIdentity": "顔は鼻より上が画面外で個人を識別できない。両腕、見えている左手の指、右手と羽織の接触、歩行姿勢を原寸で確認し、余分な指や手足、破綻、著名人・実在人物への類似を示す顔情報はない。",
+    "textAndBrands": "シャツ、羽織、ボタン、通路、植栽、柱、路面を原寸で確認し、読める文字、ロゴ、商標、看板、透かし、固有の住所や場所はない。",
+    "retiredPatterns": "高いラックの薄手布を近接する素材研究、本と抽象的な音の帯を斜めに配する紙コラージュ、木陰の公園ベンチで横向きに休む人物のいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "淡いセージ色の羽織は人物の曲げた前腕に支えられ、裾まで路面から十分離れている。画面内に食品、飲料容器、本、衣類、ハンカチ、財布、鍵、携帯電話、アクセサリーの床置きはない。"
+  }
+}
