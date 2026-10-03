@@ -1,0 +1,79 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-004",
+  "article": "after-rain-pause-before-putting-away",
+  "githubIssue": 119,
+  "editorialIntent": "雨を受けた靴や鞄を収納へ急いで戻さず、清潔な高い場所で空気を通し、状態をもう一度確かめるための短い間を見せる。",
+  "subject": "壁付けの高い通風ラックで、履き口を開けて離した淡い青灰の軽い靴、口を開けた生成りの布鞄、清潔なトレー上の白い乾いた布を休ませる。",
+  "setting": "2026年10月初めの日本を想定した、固有性のない架空の明るい室内通風スペース。網戸越しに雨上がりのまだ緑の植物と淡い反射が見える。",
+  "composition": "横長hero向け。目線の高さから室内全体をwideで捉え、壁付けラック、開口部、物の周囲の空気、空の清潔な床を同時に見せるspatial-interior。高角度の物撮りや台を三つ並べる構図にしない。",
+  "compositionFamily": "spatial-interior",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "none",
+  "cameraDistance": "wide",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "pale blue-gray",
+    "chalk white",
+    "soft flax beige",
+    "light cool metal gray",
+    "muted living green"
+  ],
+  "colorMood": "雨上がりの青灰を含む白い光、淡い金属色、まだ緑の葉を使い、暖かさの残る十月初めに風が通る清潔さと軽さを保つ。",
+  "creativeRationale": "同じ靴と鞄を扱った前回LIFEの高角度object-narrativeを繰り返さず、収納前に空けておく場所そのものをwideなspatial-interiorとして主題にした。直近の人物動作、顔の見える室内人物、布の近接とも距離と視覚文法を変えた。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: KOTATSU Japanese editorial magazine article hero image, wide 16:9 landscape\nPrimary request: Create an original AI-generated editorial hero for the article ‘雨のあと、しまう前のひと呼吸,’ about pausing after rain to let everyday shoes and a light cloth bag dry before returning them to storage.\nScene/backdrop: A completely fictional, non-identifiable clean interior utility alcove in Japan in early October 2026, just after rain. View the full airy space at eye level: a pale blue-gray wall, a wide open screened ventilation panel with soft white post-rain daylight, a glimpse of still-green leaves and faint wet reflection outside, and a slim wall-mounted pale metal drying rack clearly raised well above the clean floor. No genkan threshold, no storefront, no identifiable home, no dark wood.\nSubject: One pair of unbranded lightweight gray-blue walking shoes rests separated on the raised perforated rack with the openings loosened toward the breeze. A simple unbranded pale flax canvas shoulder bag is open and lightly supported upright on a separate upper shelf of the same wall system so air can enter. A dry chalk-white cotton cloth lies folded on a small clean tray attached to the rack. The objects show gentle recent use and a few realistic rain droplets, but no mud, damage, luxury styling, or merchandise presentation.\nStyle/medium: photorealistic natural editorial imagery, believable everyday materials, subtle imperfections, restrained film grain, calm Japanese lifestyle magazine art direction; original AI visual, not stock photography and not an official product photo.\nComposition/framing: wide 16:9 horizontal hero. Spatial-interior composition from eye level at wide distance, with the architecture, open ventilation, and empty air around the objects as important as the objects. Use gentle foreground-to-background layering and vertical wall planes; keep the entire raised rack and its clearance from the floor visible. Do not use high-angle, overhead, flat-lay, close-up material study, three separate stools, diagonal product lineup, or centered catalog arrangement. No people or hands.\nLighting/mood: cool-neutral white light after rain, quiet and breathable, with pale blue-gray reflected light and a very small soft warmth in the off-white fabric only; early October in Japan with lingering mild weather, neither midsummer nor winter.\nColor palette: pale blue-gray, chalk white, soft flax beige, light cool metal gray, muted living green; no dominant brown, orange, amber, or black.\nMaterials/textures: breathable canvas, lightweight knit shoe uppers, matte perforated metal, soft washed cotton, faint water droplets, clean plaster wall, screened opening.\nConstraints: AI-generated fictional visual only; no readable text; no labels; no logos; no trademarks; no real brands; no real store signs; no recognizable place; no celebrity likeness; no watermark. Shoes, bag, and cloth must remain clearly supported on clean raised surfaces and must not touch the floor or a genkan floor. No wallet, keys, phone, book, food, drink, accessories, clothing, or bag contents. Floor remains empty and visibly clean.\nAvoid: stock-photo staging, ecommerce catalog, shoe advertisement, luxury fashion campaign, product grid, high-angle object narrative, separate furniture pedestals, anonymous hands packing a bag, walking person, face, rack of hanging fabrics, paper collage, window-side shirt still life, strong cleaners, hair dryer, heater, direct hot air, thick boots, leather luggage, wool, coat, autumn leaves, Halloween decorations, golden-hour amber, dark wooden furniture, winter mood, muddy surfaces, distorted shoes, duplicate objects.",
+  "promptSummary": "2026年10月初めの架空の室内通風スペース。壁付けの高いラックで、淡い青灰の軽い靴、生成りの布鞄、白い乾いた布を離して休ませ、雨上がりの風を通す。",
+  "caption": "十月初めの雨上がり、靴と鞄を壁付けの高いラックで休ませ、収納へ戻す前に風を通す場面を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年10月6日の日本。暖かさと雨が残り、地域や日によって湿度と乾き方が異なる十月初め。",
+  "seasonalCues": [
+    "淡い青灰の通気性がある軽い靴、薄い生成りの布鞄、白い乾いた綿布という暖かさの残る時期の軽い道具",
+    "雨上がりの青灰を含む白い光、網戸越しのまだ緑の植物、淡い濡れた反射、風を通す金属棚"
+  ],
+  "seasonalAvoid": [
+    "厚手のブーツ、重いウール、暖房、紅葉の盛りなど十月初めを冬へ固定する表現",
+    "深い琥珀色の照明、濃い茶色の木面、厚い革、ハロウィン装飾など記号的で重い秋冬表現"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable labels or signage",
+    "real store signage",
+    "recognizable real location",
+    "stock photo look",
+    "official product photo look",
+    "ecommerce catalog composition",
+    "high-angle object narrative",
+    "strong chemical cleaners",
+    "direct hot air treatment",
+    "personal belongings on floor",
+    "autumn or winter clichés"
+  ],
+  "similarityReviewedAgainst": [
+    "light-layer-between-morning-evening",
+    "between-busy-and-quiet-weeks",
+    "review-september-fabrics-before-buying"
+  ],
+  "visualDifference": "直近3本の、雨上がりの通路を歩くmediumなhuman-action、顔の見える室内人物によるmedium-wideなhuman-environment、吊り下げた布へ寄るcloseなmaterial-studyを原寸で比較した。今回は人物のいない室内全体をeye-level / wide / spatial-interiorで捉え、壁付けラックと物の周囲の空気を主役にした。",
+  "sameCategoryReviewedAgainst": "shoes-bags-rest-after-rain",
+  "categoryVisualDifference": "前回LIFEのphotorealistic / object-narrative / interior / high-angle / humanPresence none / medium-wide / neutral / airyから、photorealistic / spatial-interior / interior / eye-level / humanPresence none / wide / cool / airyへ変更した。三つの独立した台への斜め配置を使わず、構図、視点、距離、温度の4軸を変え、壁面、開口部、空の床を含む場所全体で収納前の間を見せた。",
+  "referenceSheetUse": "none; no person or roster model used",
+  "diversityReview": "人物を登場させず、性別、年齢、職業、家族構成、身体像を読者像として固定していない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-10-03T18:05:42+09:00",
+  "imageReview": {
+    "dimensions": "1672x941",
+    "seasonality": "淡い青灰の軽い靴、薄い生成りの布鞄、白い綿布、雨上がりの白い光、まだ緑の植物を原寸で確認した。厚手ブーツ、ウール、紅葉、暖房、深い琥珀光など十月初めを越える秋冬表現はない。",
+    "anatomyAndIdentity": "人物、顔、手指はなく、実在人物や著名人との類似リスクがない。靴は一足分の左右、鞄は一つで、重複や形状破綻がない。",
+    "textAndBrands": "靴、鞄、布、ラック、壁、窓、植物、外景を原寸で確認し、読める文字、ラベル、ロゴ、商標、看板、透かし、固有の住所や場所がない。",
+    "retiredPatterns": "高いラックの薄手布を近接する素材研究、本と抽象的な音の帯を斜めに配する紙コラージュ、木陰の公園ベンチで横向きに休む人物のいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "靴は壁付けの高いパンチング棚、鞄はその上の独立した高い棚、白い布は棚上の清潔なトレーにあり、いずれも床や玄関土間へ直接触れていない。床は空で、財布、鍵、携帯電話、本、飲食物、衣類、アクセサリーは画像内にない。"
+  }
+}
