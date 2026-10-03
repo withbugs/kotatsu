@@ -21,7 +21,7 @@
 
 新taskは既存の専用分離checkout `/workspace/kotatsu` を使用し、worktreeを作成しない。clean確認、正式remote broker fetch、対象branchへのdetached switch、origin/main通常mergeの順序を保ち、前の実行の部分変更が残れば停止する。reset/clean/forceで捨てない。
 
-scheduled rootだけが `cloud-run-guard.mjs <role> -- <approved launcher>` でlocal lockと共有leaseを取得する。共有leaseはrepository固定 `refs/heads/kotatsu/cloud-editorial-lease` を空expectedの `--force-with-lease` で原子的createし、owner SHA一致のCASでのみdeleteする。main/article refは選べない。異なるcheckout/環境の同時claimは1件だけ成功することをlocal bare Gitで検査する。Issue commentとlocal lockだけを排他保証に使わない。
+scheduled rootだけが `cloud-run-guard.mjs <role> -- <approved launcher>` でlocal lockと共有leaseを取得する。共有leaseはrepository固定 `refs/heads/kotatsu/cloud-editorial-lease` を空expectedの `--force-with-lease` で原子的createし、owner SHA一致のCASでのみdeleteする。main/article refは選べない。送信前にoriginの全resolved fetch/push URLが単一canonical withbugs/kotatsuであることを確認し、別pushurl・複数宛先・effective URL rewrite（環境override/include/globalを含む）を拒否する。push/verifyはorigin名ではなく固定HTTPS repository URLを使う。異なるcheckout/環境の同時claimは1件だけ成功することをlocal bare Gitで検査する。Issue commentとlocal lockだけを排他保証に使わない。
 親からworkerへ `KOTATSU_CLOUD_LEASE_TOKEN` を渡し、workerはverifyして逐次実行し再claimしない。親は全worker終了まで保持する。22時に競合した担当は状態を進めず次回へ残す。正常終了のみreleaseし、失敗・中断は共有leaseを残す。人が全worker停止を確認後、所有tokenでreleaseする。期限経過だけの削除・盗取は禁止。
 本PRは共有refを実GitHubへ作成しない。固定ref CASの通信権限を親がレビューし、実環境で同時claim/releaseを検査するまで `KOTATSU_SHARED_LEASE_ENABLED=1` を設定せず予定を有効化しない。任意launcher全体をネットワーク許可する規則は追加しない。
 

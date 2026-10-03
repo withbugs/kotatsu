@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { NIGHT_SCHEDULE, nightClock } from './night-schedule.mjs';
 
+export const CLOUD_LEASE_REPOSITORY_URL = 'https://github.com/withbugs/kotatsu.git';
 export const CLOUD_LEASE_REF = 'refs/heads/kotatsu/cloud-editorial-lease';
 export function gitLeaseCommand(args, input) {
   return new Promise((resolve, reject) => {
@@ -19,8 +20,18 @@ async function checked(run, args, input) {
   return result.stdout.trim();
 }
 async function repository(run) {
-  const url = await checked(run, ['remote', 'get-url', 'origin']);
-  if (!['https://github.com/withbugs/kotatsu.git','https://github.com/withbugs/kotatsu'].includes(url)) throw new Error('shared lease is repository-locked to withbugs/kotatsu');
+  const canonical = new Set([CLOUD_LEASE_REPOSITORY_URL, 'https://github.com/withbugs/kotatsu']);
+  // --all is essential: Git pushes to every configured pushurl, not the fetch URL.
+  // get-url resolves insteadOf/pushInsteadOf, including effective environment config.
+  for (const args of [['remote','get-url','--all','origin'], ['remote','get-url','--push','--all','origin']]) {
+    const urls = (await checked(run, args)).split('\n');
+    if (urls.length !== 1 || !canonical.has(urls[0])) throw new Error('shared lease requires one canonical fetch and push destination; stop before any lease write');
+  }
+  // A validated resolved URL could be rewritten again when passed literally. Reject
+  // all effective URL rewrite rules (local/global/include/environment) and use one
+  // fixed HTTPS target, so changing origin pushurl after validation cannot redirect it.
+  const rewrites = await run(['config','--get-regexp','^url\\..*\\.(insteadof|pushinsteadof)$']);
+  if (rewrites.status !== 1 || rewrites.stdout.trim()) throw new Error('shared lease URL rewriting is unsupported; stop before any lease write');
 }
 export async function claimCloudLease({ role, head, now = new Date() }, run = gitLeaseCommand) {
   if (!Object.hasOwn(NIGHT_SCHEDULE, role) || !/^[a-f0-9]{40}$/.test(head) || !nightClock(now).workerAllowed) throw new Error('invalid role/head or outside worker window');
@@ -31,19 +42,19 @@ export async function claimCloudLease({ role, head, now = new Date() }, run = gi
   const token = await checked(run, ['-c','user.name=KOTATSU lease','-c','user.email=kotatsu-lease@example.invalid','commit-tree',tree], metadata);
   // Empty expected value means create-if-absent, atomically checked by the Git server.
   // This one fixed lease ref is the sole CAS exception; main/article refs cannot be selected.
-  await checked(run, ['push','--porcelain',`--force-with-lease=${CLOUD_LEASE_REF}:`,'origin',`${token}:${CLOUD_LEASE_REF}`]);
+  await checked(run, ['push','--porcelain',`--force-with-lease=${CLOUD_LEASE_REF}:`,CLOUD_LEASE_REPOSITORY_URL,`${token}:${CLOUD_LEASE_REF}`]);
   return { token, role, head, ref: CLOUD_LEASE_REF };
 }
 export async function releaseCloudLease(token, run = gitLeaseCommand) {
   if (!/^[a-f0-9]{40}$/.test(token)) throw new Error('full owner token required');
   await repository(run);
   // A stale owner cannot delete a later owner's lease.
-  await checked(run, ['push','--porcelain',`--force-with-lease=${CLOUD_LEASE_REF}:${token}`,'origin',`:${CLOUD_LEASE_REF}`]);
+  await checked(run, ['push','--porcelain',`--force-with-lease=${CLOUD_LEASE_REF}:${token}`,CLOUD_LEASE_REPOSITORY_URL,`:${CLOUD_LEASE_REF}`]);
 }
 export async function verifyCloudLease(token, run = gitLeaseCommand) {
   if (!/^[a-f0-9]{40}$/.test(token)) throw new Error('full owner token required');
   await repository(run);
-  const value = await checked(run, ['ls-remote','origin',CLOUD_LEASE_REF]);
+  const value = await checked(run, ['ls-remote',CLOUD_LEASE_REPOSITORY_URL,CLOUD_LEASE_REF]);
   if (value.split(/\s+/)[0] !== token) throw new Error('shared lease ownership lost; stop before dispatch');
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
