@@ -36,7 +36,7 @@ After the approved plan reaches `main`, the managing editor creates one formal c
 
 ## Two-Night Cloud Production Schedule
 
-All times are Japan Standard Time. Each production night starts at 21:00; 00:00–06:00 belong to the following calendar day. Automations run every day, but labels gate actual work. Publication dates and weekly/monthly limits use the actual JST calendar date. The six cloud schedules remain disabled until this change is reviewed and merged and the operator completes the cutover; local schedules are paused, never deleted, for rollback.
+All times are Japan Standard Time. Each production night starts at 21:00; 00:00–06:00 belong to the following calendar day. Automations run every day, but labels gate actual work. Publication dates and weekly/monthly limits use the actual JST calendar date. The single parent dispatcher and its six role task specifications remain disabled until this change is reviewed and merged and the operator completes the cutover; local schedules must be paused, never deleted, for rollback. The parent registers scheduled JST datetime + role in a durable ledger, creates fresh native role tasks sequentially, and at 22:00 runs editor-in-chief then visual without changing their scheduled time. An uncertain create response holds the queue; no exactly-once guarantee is claimed.
 
 | Day | Time | Role | Main responsibility |
 | --- | --- | --- | --- |

@@ -87,3 +87,19 @@ prefix_rule(
         "pnpm install --offline",
     ],
 )
+
+prefix_rule(
+    pattern = ["node", "scripts/editorial/cloud-run-guard.mjs"],
+    decision = "allow",
+    justification = "Native task begin/finish hold only the repository-locked fixed CAS lease; no subprocess launcher or arbitrary URL is accepted.",
+    match = ["node scripts/editorial/cloud-run-guard.mjs begin visual-editor --apply=true"],
+    not_match = ["node scripts/editorial/cloud-run-guard.mjs visual-editor -- arbitrary-command"],
+)
+
+prefix_rule(
+    pattern = ["node", "scripts/editorial/kotatsu-cloud-lease.mjs"],
+    decision = "allow",
+    justification = "Only validated fixed-repository fixed-ref claim/owner verification/release; canonical URL checks and editorial identity apply.",
+    match = ["node scripts/editorial/kotatsu-cloud-lease.mjs verify --token=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa --apply=true"],
+    not_match = ["node scripts/editorial/another-script.mjs claim --apply=true"],
+)

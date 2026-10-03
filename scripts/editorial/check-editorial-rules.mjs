@@ -195,6 +195,9 @@ for(const role of schedules.roles){
 if(new Set(schedules.roles.map(r=>r.role)).size!==6)throw new Error('duplicate cloud role');
 if(errors.length) { console.error(errors.join('\n')); process.exit(1); }
 
+if(JSON.stringify(schedules.dispatcher?.hours)!==JSON.stringify([21,22,23,0,1,2,3,4,5,6])||JSON.stringify(schedules.dispatcher?.at22)!==JSON.stringify(['editor-in-chief','visual-editor']))throw new Error('parent dispatcher slot drift');
+requireText('scripts/editorial/cloud-bootstrap.sh','kotatsu-identity.mjs bootstrap');
+requireText('scripts/editorial/kotatsu-git-remote.mjs','assertEditorialCommitRange');
 const promptProvenance=JSON.parse(read('docs/editorial/cloud-prompt-provenance.json'));
 const { createHash } = await import('node:crypto');
 for(const role of schedules.roles){

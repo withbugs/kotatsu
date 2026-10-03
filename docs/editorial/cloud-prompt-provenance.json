@@ -6,7 +6,7 @@
       "source": "02-adapted-role-prompts/zipangu-kotatsu-github-issue.txt",
       "sourceSha256": "3299b2cb9eb2a85aa728023e99bb5a7a916235dd476a0faa776ab74317a52c26",
       "destination": "prompts/kotatsu/cloud-managing-editor.md",
-      "destinationSha256": "ab4a9a078540be92e34941a06148123293539720bb79299a60dcff6723be8926",
+      "destinationSha256": "9824f184723f740502a94538b4c7321aa481beafcd263eda5d4d510d60c91ddc",
       "changes": [
         "runtime environment reference",
         "offline store argument",
@@ -17,7 +17,7 @@
       "source": "02-adapted-role-prompts/kotatsu.txt",
       "sourceSha256": "2c816983c06206d9dd78c9a08c2c1144b14e701b3fdb07ab59b67f460cadeaea",
       "destination": "prompts/kotatsu/cloud-editor-in-chief.md",
-      "destinationSha256": "c06b06b2fb2aa56fad9722b66ac331374e56f6a3cfec17fe025ab9cd620ed14d",
+      "destinationSha256": "7683e361213e97117b7415bc334419d0d333902d9616ecfbcb8f5f9b463dff2a",
       "changes": [
         "runtime environment reference",
         "offline store argument",
@@ -28,7 +28,7 @@
       "source": "02-adapted-role-prompts/kotatsu-2.txt",
       "sourceSha256": "0bf078a33a16f59e0832f30bd52fddda9bbf837cdf805b7de81ede310013364b",
       "destination": "prompts/kotatsu/cloud-visual-editor.md",
-      "destinationSha256": "668480c4dd61b3b99a9887266e9cbec7fb0a6f29879a9e32623a98051dff8097",
+      "destinationSha256": "c3097f481c3edfc5ea42ac6163a0b6f5d3b0c899893b7f6d78d68b682ecdb7a9",
       "changes": [
         "runtime environment reference",
         "offline store argument",
@@ -39,7 +39,7 @@
       "source": "02-adapted-role-prompts/kotatsu-3.txt",
       "sourceSha256": "9b95fcc5bf963332fb81c0a3d590e5ac14b6bb216ab45c3aa463fff8b44e6f4c",
       "destination": "prompts/kotatsu/cloud-copy-editor.md",
-      "destinationSha256": "c318dedc330852afce47648264b4426277e0b9686d8941d3fee51bf4c85bbcb3",
+      "destinationSha256": "b87db23ec6a9a3d0224a889efcab803e10ce6711623b312bdaf8706dba4ea490",
       "changes": [
         "runtime environment reference",
         "offline store argument",
@@ -50,7 +50,7 @@
       "source": "02-adapted-role-prompts/kotatsu-4.txt",
       "sourceSha256": "ca98b24b7f2d9d82ec9d6203c61cd63c5096e80bf9d890b891119ead1f30311c",
       "destination": "prompts/kotatsu/cloud-publisher.md",
-      "destinationSha256": "e4b6bd3995094873e3233472780a5cf009b2def1d9341d0259c74d5c63e2b762",
+      "destinationSha256": "bc7982fc66193aff6475c5c92aaae8cfc89149ee15b7ed9e4005a0708d8549ae",
       "changes": [
         "runtime environment reference",
         "offline store argument",
@@ -61,7 +61,7 @@
       "source": "02-adapted-role-prompts/kotatsu-style.txt",
       "sourceSha256": "b3fee5472f5ee692b2c9c479f06ac44dfef230fd481cec025f547efd6562e496",
       "destination": "prompts/kotatsu/cloud-writer-desk.md",
-      "destinationSha256": "9660b3a4e038ff91d04c8be4c4ee02f7449cd44517b2a8109b5c432f0e053102",
+      "destinationSha256": "02050f0d438e18f962717af713d13ae541a3ecea1f0c75e135a8acec54fc475e",
       "changes": [
         "runtime environment reference",
         "offline store argument",

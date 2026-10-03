@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { assertEditorialCommitRange } from './kotatsu-identity.mjs';
 
 const branchPattern = /^(?:article|codex|kotatsu|planning)\/[A-Za-z0-9._\/-]+$/;
 
@@ -45,6 +46,7 @@ export function validateKotatsuGitRemoteArgs(args) {
 export function runKotatsuGitRemote(args, options = {}) {
   const validated = validateKotatsuGitRemoteArgs(args);
   const [operation, remote, ...rest] = validated;
+  if(operation==='push')assertEditorialCommitRange();
   const commandArgs = operation === 'fetch'
     ? [
         'fetch', remote,
