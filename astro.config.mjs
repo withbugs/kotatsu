@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/kotatsu',
   output: 'static',
   trailingSlash: 'always',
+  devToolbar: { enabled: !process.env.KOTATSU_VISUAL_CANDIDATE },
   integrations: [mdx()]
 });
-
 

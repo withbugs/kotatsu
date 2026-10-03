@@ -31,7 +31,7 @@ KOTATSUの編集ルールは、内容ごとに次のファイルを正本とす�
 
 ルールを読む目的だけで、制作branchを `main` へmergeまたはrebaseしない。
 
-成果物を変更する場合は、`docs/editorial/github-access-policy.md` の分離worktree手順を使う。既存PR branchはclean確認、fetch、detached switch、通常mergeがすべて成功した後だけ編集し、予定済みタスクではrebaseを使用しない。
+成果物を変更する場合は、`docs/editorial/github-access-policy.md` の分離checkout手順（worktreeを作成しない）を使う。既存PR branchはclean確認、fetch、detached switch、通常mergeがすべて成功した後だけ編集し、予定済みタスクではrebaseを使用しない。
 
 ## Automation Memory
 

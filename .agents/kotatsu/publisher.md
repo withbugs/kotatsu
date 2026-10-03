@@ -6,7 +6,7 @@
 
 ## Eligibility
 
-13:00と17:00のどちらも同じ公開枠とし、同じ対象判定、公開ゲート、再開規則を使う。`kotatsu:planned` は対象にしない。
+01:00と05:00のどちらも同じ公開枠とし、同じ対象判定、公開ゲート、再開規則を使う。`kotatsu:planned` は対象にしない。
 
 - `agent:publisher` と `kotatsu:publish`、または公開工程に限った `kotatsu:revise` が付いている。
 - 記事がscheduledでpublishAtが到来済み、または公開担当の前回起動でpublishedまで進んだopen・未mergeの同じ記事PRを技術的に再開する状態である。
@@ -17,7 +17,7 @@
 
 draftまたは未来日時の記事は公開せず、理由をコメントして進行編集へ戻す。
 
-`publishAt` のJST日付が現在日より前なら古い日付のまま公開しない。Delivery条件を満たす場合は、`docs/editorial/recovery-workflow.md` に従い、保護日を集めて `pnpm recovery:slot` と `pnpm article:recover-publication` を実行する。7日判定は現在の `publishAt` を使い、`scheduleRecovery.originalPublishAt` を使って手計算しない。記事branchとIssue本文の日付を同期し、`article:handoff` のlabelを再取得確認してから、同じ起動内で公開ゲートへ進む。コマンドが編集判断を要求して拒否した場合だけ進行編集へ戻す。同日0:00のpublishAtは当日13:00または17:00の公開対象として扱う。
+`publishAt` のJST日付が現在日より前なら古い日付のまま公開しない。Delivery条件を満たす場合は、`docs/editorial/recovery-workflow.md` に従い、保護日を集めて `pnpm recovery:slot` と `pnpm article:recover-publication` を実行する。7日判定は現在の `publishAt` を使い、`scheduleRecovery.originalPublishAt` を使って手計算しない。記事branchとIssue本文の日付を同期し、`article:handoff` のlabelを再取得確認してから、同じ起動内で公開ゲートへ進む。コマンドが編集判断を要求して拒否した場合だけ進行編集へ戻す。同日0:00のpublishAtは当日01:00または05:00の公開対象として扱う。
 
 ## Publishing
 
@@ -25,15 +25,16 @@ draftまたは未来日時の記事は公開せず、理由をコメントして
 2. `pnpm article:publish -- --slug=<slug>`
 3. `pnpm check`
 4. `pnpm build`
-5. CIとVisual Checkのrun idと記事PR head SHAを `pnpm recovery:actions -- --ci-run=<id> --visual-run=<id> --head-sha=<sha> --apply` へ渡す。`ready`なら返されたVisual Check run idで `pnpm visual:artifact -- --run-id=<id> --repo=withbugs/kotatsu` を完了まで待ち、列挙されたdesktop/mobile screenshotをすべて画像として開いて大きな崩れがないことを確認
+5. CIとVisual Checkのrun idと記事PR head SHAを `pnpm recovery:actions -- --ci-run=<id> --visual-run=<id> --head-sha=<sha> --apply` へ渡す。`ready`なら `docs/editorial/cloud-visual-gate.md` の `pnpm visual:cloud` generate/全画像review/verifyを最新headで通す。candidate本文/hero不足はfail、CI実merge-refとhead treeを照合、OS/fonts差を記録する
 6. 最終記事PRをmainへmergeし、GitHub Pagesの公開URLを確認
 
 ローカルの `pnpm test:visual` は任意の事前確認だが、PR上のVisual Checkは必須である。frontmatterを手作業でpublishedにしない。
 
-`visual:artifact` は長時間無出力でも終了するまで待ち、途中の保存先を空と判定しない。失敗時は自動再試行後の終了コードとエラーを使う。公開前半でpublishedのcommitをpush済みなら、再実行時の `article:publish` はidempotentな確認として扱い、同じ変更を重複commitしない。
 
-`recovery:actions`がfreshな待機を返した場合は有界pollを完了まで待つ。stale runはコマンドにcancel/rerunさせ、成功済みの別runを再実行しない。`checkpoint`ならrun id、head SHA、試行数、次actionをIssueへ残してleaseを解放する。次の日中scheduled runから委任された公開担当workerは同じコマンドから再開し、固定の公開担当時刻を待たない。`blocked`は上限到達または入力矛盾なので、必須checkを迂回せず具体的理由をcheckpointへ残す。
+`recovery:actions`がfreshな待機を返した場合は有界pollを完了まで待つ。stale runはコマンドにcancel/rerunさせ、成功済みの別runを再実行しない。`checkpoint`ならrun id、head SHA、試行数、次actionをIssueへ残してleaseを解放する。次の夜間scheduled runから委任された公開担当workerは同じコマンドから再開し、固定の公開担当時刻を待たない。`blocked`は上限到達または入力矛盾なので、必須checkを迂回せず具体的理由をcheckpointへ残す。
 
 成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、具体的な再開地点をコメントして `kotatsu:revise + agent:publisher` に残す。日付をまたいでも次の公開枠でDelivery recoveryを自己完結し、完了済みゲートを保持する。本文、画像、校正の判断が必要な失敗だけEditorialまたはProduction recoveryへ戻す。
 
 公開担当はVol.のmilestone自体は閉じない。最終記事Issueをcloseした後、進行編集の次回起動がVol.完了条件を確認して閉じる。
+
+公開前は `docs/editorial/cloud-visual-gate.md` の同一headクラウド画像確認を必須とする。`pnpm visual:artifact` は調査用のみ。head更新で旧証拠は失効する。

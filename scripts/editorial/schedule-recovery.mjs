@@ -1,6 +1,6 @@
 const PUBLISH_TIME_ZONE = 'Asia/Tokyo';
 const MAX_ROUTINE_DELAY_DAYS = 7;
-const LAST_PUBLISHER_HOUR_JST = 17;
+import { nextPublicationDate } from './night-schedule.mjs';
 const DAY_MS = 24 * 60 * 60 * 1000;
 const DEFAULT_RECOVERY_SEARCH_DAYS = 62;
 const MIN_PUBLISH_INTERVAL_MS = 48 * 60 * 60 * 1000;
@@ -86,9 +86,7 @@ function validDate(value) {
 }
 
 export function earliestRecoveryDateKey(now = new Date()) {
-  const value = parts(now);
-  const today = `${value.year}-${value.month}-${value.day}`;
-  return Number(value.hour) > LAST_PUBLISHER_HOUR_JST ? addDays(today, 1) : today;
+  return nextPublicationDate(now);
 }
 
 export function findEarliestRecoverySlot({

@@ -52,3 +52,8 @@ test('Git remote broker rejects main pushes, force forms, and other remotes', ()
   assert.throws(() => validateKotatsuGitRemoteArgs(['push', 'origin', 'HEAD:article/../main']));
   assert.throws(() => validateKotatsuGitRemoteArgs(['fetch', 'upstream', 'main']));
 });
+
+test('CI checkout fetch accepts only full SHA on origin and never pushes', () => {
+  assert.deepEqual(validateKotatsuGitRemoteArgs(['fetch-ci-merge','origin','f'.repeat(40)]), ['fetch-ci-merge','origin','f'.repeat(40)]);
+  for (const args of [['fetch-ci-merge','origin','main'], ['fetch-ci-merge','other','f'.repeat(40)], ['fetch-ci-merge','origin','f'.repeat(40),'main']]) assert.throws(()=>validateKotatsuGitRemoteArgs(args));
+});

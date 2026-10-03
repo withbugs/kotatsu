@@ -1,0 +1,88 @@
+{
+  "timezone": "Asia/Tokyo",
+  "enabled": false,
+  "roles": [
+    {
+      "role": "managing-editor",
+      "hours": [
+        21,
+        0,
+        4
+      ],
+      "model": "gpt-5.6-terra",
+      "reasoningEffort": "high",
+      "prompt": "prompts/kotatsu/cloud-managing-editor.md"
+    },
+    {
+      "role": "editor-in-chief",
+      "hours": [
+        22
+      ],
+      "model": "gpt-5.6-sol",
+      "reasoningEffort": "high",
+      "prompt": "prompts/kotatsu/cloud-editor-in-chief.md"
+    },
+    {
+      "role": "visual-editor",
+      "hours": [
+        22,
+        6
+      ],
+      "model": "gpt-5.6-sol",
+      "reasoningEffort": "high",
+      "prompt": "prompts/kotatsu/cloud-visual-editor.md"
+    },
+    {
+      "role": "copy-editor",
+      "hours": [
+        23,
+        3
+      ],
+      "model": "gpt-5.6-sol",
+      "reasoningEffort": "high",
+      "prompt": "prompts/kotatsu/cloud-copy-editor.md"
+    },
+    {
+      "role": "publisher",
+      "hours": [
+        1,
+        5
+      ],
+      "model": "gpt-5.6-terra",
+      "reasoningEffort": "high",
+      "prompt": "prompts/kotatsu/cloud-publisher.md"
+    },
+    {
+      "role": "writer-desk",
+      "hours": [
+        2
+      ],
+      "model": "gpt-5.6-sol",
+      "reasoningEffort": "high",
+      "prompt": "prompts/kotatsu/cloud-writer-desk.md"
+    }
+  ],
+  "dispatcher": {
+    "timezone": "Asia/Tokyo",
+    "hours": [
+      21,
+      22,
+      23,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "mode": "single durable parent dispatcher; fresh native role tasks sequential",
+    "ledgerKey": "scheduled JST datetime + role",
+    "at22": [
+      "editor-in-chief",
+      "visual-editor"
+    ],
+    "unknownStart": "hold until task reconciliation; never retry blindly",
+    "stopNewRolesAt": "07:00 Asia/Tokyo"
+  }
+}

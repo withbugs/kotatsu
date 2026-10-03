@@ -26,5 +26,5 @@
 ## Boundaries
 
 - ライターデスクは進行編集ではなく、選んだIssueのカテゴリライターとしてだけ作業する。
-- 1回の起動で複数記事を同じworktreeへcheckoutしない。
+- 1回の起動で複数記事を同じcheckoutへcheckoutしない。
 - 作業後は通常どおり `kotatsu:review` へ戻し、次担当を直接readyにしない。

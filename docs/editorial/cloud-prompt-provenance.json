@@ -1,0 +1,72 @@
+{
+  "libraryId": "libfile_d9d8547beed08191bacdb97634846bc5",
+  "archiveSha256": "828380b3c84143b5e51c3fdf2b13aac67bb2bc1631dc48ed3ea7dac9c0a4ad2e",
+  "roles": {
+    "managing-editor": {
+      "source": "02-adapted-role-prompts/zipangu-kotatsu-github-issue.txt",
+      "sourceSha256": "3299b2cb9eb2a85aa728023e99bb5a7a916235dd476a0faa776ab74317a52c26",
+      "destination": "prompts/kotatsu/cloud-managing-editor.md",
+      "destinationSha256": "9824f184723f740502a94538b4c7321aa481beafcd263eda5d4d510d60c91ddc",
+      "changes": [
+        "runtime environment reference",
+        "offline store argument",
+        "appended cloud guard and same-head visual gate; original role body preserved"
+      ]
+    },
+    "editor-in-chief": {
+      "source": "02-adapted-role-prompts/kotatsu.txt",
+      "sourceSha256": "2c816983c06206d9dd78c9a08c2c1144b14e701b3fdb07ab59b67f460cadeaea",
+      "destination": "prompts/kotatsu/cloud-editor-in-chief.md",
+      "destinationSha256": "7683e361213e97117b7415bc334419d0d333902d9616ecfbcb8f5f9b463dff2a",
+      "changes": [
+        "runtime environment reference",
+        "offline store argument",
+        "appended cloud guard and same-head visual gate; original role body preserved"
+      ]
+    },
+    "visual-editor": {
+      "source": "02-adapted-role-prompts/kotatsu-2.txt",
+      "sourceSha256": "0bf078a33a16f59e0832f30bd52fddda9bbf837cdf805b7de81ede310013364b",
+      "destination": "prompts/kotatsu/cloud-visual-editor.md",
+      "destinationSha256": "c3097f481c3edfc5ea42ac6163a0b6f5d3b0c899893b7f6d78d68b682ecdb7a9",
+      "changes": [
+        "runtime environment reference",
+        "offline store argument",
+        "appended cloud guard and same-head visual gate; original role body preserved"
+      ]
+    },
+    "copy-editor": {
+      "source": "02-adapted-role-prompts/kotatsu-3.txt",
+      "sourceSha256": "9b95fcc5bf963332fb81c0a3d590e5ac14b6bb216ab45c3aa463fff8b44e6f4c",
+      "destination": "prompts/kotatsu/cloud-copy-editor.md",
+      "destinationSha256": "b87db23ec6a9a3d0224a889efcab803e10ce6711623b312bdaf8706dba4ea490",
+      "changes": [
+        "runtime environment reference",
+        "offline store argument",
+        "appended cloud guard and same-head visual gate; original role body preserved"
+      ]
+    },
+    "publisher": {
+      "source": "02-adapted-role-prompts/kotatsu-4.txt",
+      "sourceSha256": "ca98b24b7f2d9d82ec9d6203c61cd63c5096e80bf9d890b891119ead1f30311c",
+      "destination": "prompts/kotatsu/cloud-publisher.md",
+      "destinationSha256": "bc7982fc66193aff6475c5c92aaae8cfc89149ee15b7ed9e4005a0708d8549ae",
+      "changes": [
+        "runtime environment reference",
+        "offline store argument",
+        "appended cloud guard and same-head visual gate; original role body preserved"
+      ]
+    },
+    "writer-desk": {
+      "source": "02-adapted-role-prompts/kotatsu-style.txt",
+      "sourceSha256": "b3fee5472f5ee692b2c9c479f06ac44dfef230fd481cec025f547efd6562e496",
+      "destination": "prompts/kotatsu/cloud-writer-desk.md",
+      "destinationSha256": "02050f0d438e18f962717af713d13ae541a3ecea1f0c75e135a8acec54fc475e",
+      "changes": [
+        "runtime environment reference",
+        "offline store argument",
+        "appended cloud guard and same-head visual gate; original role body preserved"
+      ]
+    }
+  }
+}
