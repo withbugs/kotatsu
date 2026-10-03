@@ -91,7 +91,7 @@ rootコーディネーター自身は本文、画像、校正、編集承認、�
 
 ## Delivery Recovery
 
-当夜間の技術的中断は `kotatsu:revise + agent:publisher` のまま、次の01:00または05:00公開担当が同じPRの未完了地点から再開する。`article:publish` と `visual:artifact` は再実行可能として扱い、commit、artifact、mergeを重複させない。
+同じ夜の技術的中断は `kotatsu:revise + agent:publisher` のまま、次の01:00または05:00公開担当が同じPRの未完了地点から再開する。`article:publish` と `visual:cloud verify` は再実行可能として扱い、commit、artifact、mergeを重複させない。
 
 公開commitをpushした後のCIとVisual Checkは、文章で待機判定せず次のrepository固定コマンドへ渡す。
 

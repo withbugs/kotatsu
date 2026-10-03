@@ -69,7 +69,7 @@ Scheduled agents that change repository files run in isolated checkouts, without
 
 Two repository-scoped brokers validate unattended network operations before invoking `gh` or remote Git. `.codex/rules/kotatsu-scheduled-network.rules` permits only those brokers and the repository-locked milestone closeout command, so scheduled checkouts can reach the durable Issue/PR queue without granting arbitrary shell network access, main pushes, or force pushes.
 
-After the broker refreshes `origin/main`, each scheduled worktree runs `pnpm install --offline --frozen-lockfile --ignore-scripts --store-dir /workspace/.onboarding/pnpm-store`. This restores dependencies only from the frozen lockfile and the existing local pnpm store, without registry access or package lifecycle scripts.
+After the broker refreshes `origin/main`, each scheduled checkout runs `pnpm install --offline --frozen-lockfile --ignore-scripts --store-dir /workspace/.onboarding/pnpm-store`. This restores dependencies only from the frozen lockfile and the existing local pnpm store, without registry access or package lifecycle scripts.
 
 ## Branch And Publishing Rules
 

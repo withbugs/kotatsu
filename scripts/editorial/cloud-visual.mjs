@@ -6,7 +6,7 @@ import { runKotatsuGhResult } from './kotatsu-github.mjs';
 import { runKotatsuGitRemote } from './kotatsu-git-remote.mjs';
 const require=createRequire(import.meta.url);const testRequire=createRequire(require.resolve('@playwright/test'));const {chromium,devices}=testRequire('playwright');const matter=require('gray-matter');
 const root=process.cwd();
-function command(cmd,args,options={}){const r=spawnSync(cmd,args,{encoding:'utf8',...options});if(r.error||r.status!==0)throw new Error(`${cmd} ${args.join(' ')} failed: ${r.error?.message||r.stderr||r.stdout}`);return r.stdout.trim();}
+function command(cmd,args,options={}){const r=spawnSync(cmd,args,{encoding:'utf8',...options});if(r.error||r.status!==0)throw new Error(`${cmd} ${args.join(' ')} failed: ${r.error?.message||r.stderr||r.stdout}`);return (r.stdout || "").trim();}
 const git=(...args)=>command('git',args);
 const args=Object.fromEntries(process.argv.slice(3).map(a=>{if(!/^--[^=]+=.+$/.test(a))throw new Error('use --key=value');const i=a.indexOf('=');return[a.slice(2,i),a.slice(i+1)]}));
 const mode=process.argv[2];const dir=path.resolve(args.dir||'test-results/cloud-evidence');
