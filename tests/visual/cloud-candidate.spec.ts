@@ -8,6 +8,7 @@ if (slug) {
     const response = await page.goto(route);
     expect(response?.status()).toBe(200);
     await expect(page.locator('.article-content')).toBeVisible();
+    await expect(page.locator('astro-dev-toolbar')).toHaveCount(0);
     expect((await page.locator('.article-content').innerText()).trim().length).toBeGreaterThanOrEqual(100);
     await expect(page.locator('.article-hero__image img')).toBeVisible();
     await page.evaluate(async () => {
