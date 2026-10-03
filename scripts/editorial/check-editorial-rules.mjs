@@ -187,7 +187,7 @@ const schedules=JSON.parse(read('docs/editorial/cloud-schedules.json'));
 if(schedules.enabled!==false || schedules.timezone!=='Asia/Tokyo' || schedules.roles.length!==6) throw new Error('cloud cutover must remain review-only');
 for(const role of schedules.roles){
   if (JSON.stringify(role.hours)!==JSON.stringify(NIGHT_SCHEDULE[role.role])) throw new Error('schedule hour drift');
-  const model = ['managing-editor','editor-in-chief'].includes(role.role) ? 'gpt-5.6-terra' : 'gpt-5.6-sol';
+  const model = ['managing-editor','publisher'].includes(role.role) ? 'gpt-5.6-terra' : 'gpt-5.6-sol';
   if (role.model!==model) throw new Error('original model preference drift');
   if(role.reasoningEffort!=='high')throw new Error('reasoning effort drift');
   requireText(role.prompt,'cloud-visual-gate.md');requireText(role.prompt,'--store-dir /workspace/.onboarding/pnpm-store');
@@ -195,4 +195,14 @@ for(const role of schedules.roles){
 if(new Set(schedules.roles.map(r=>r.role)).size!==6)throw new Error('duplicate cloud role');
 if(errors.length) { console.error(errors.join('\n')); process.exit(1); }
 
+const promptProvenance=JSON.parse(read('docs/editorial/cloud-prompt-provenance.json'));
+const { createHash } = await import('node:crypto');
+for(const role of schedules.roles){
+ const entry=promptProvenance.roles[role.role];
+ if(entry.destination!==role.prompt || createHash('sha256').update(read(role.prompt)).digest('hex')!==entry.destinationSha256)throw new Error('full prompt provenance drift');
+ const preserved=read(role.prompt).split('\n\nクラウド実行の追加必須条件')[0].replace('承認済みkotatsu環境（runtimeで公開版を確認）','environmentConfigId=091928ff-ec70-409e-9d90-d60731472fbb~asenvcfg_bb1cd6d50c248191b0f3909b800c9bb9').replaceAll('pnpm install --offline --frozen-lockfile --ignore-scripts --store-dir /workspace/.onboarding/pnpm-store','pnpm install --offline --frozen-lockfile --ignore-scripts');
+ if(createHash('sha256').update(preserved).digest('hex')!==entry.sourceSha256)throw new Error('original full role prompt was omitted or changed');
+ requireText(role.prompt,'cloud-planning-preflight.mjs');
+}
+requireText('prompts/kotatsu/cloud-visual-editor.md','2時間を超えて有意な進捗がない');
 console.log("Editorial rule consistency check passed.");

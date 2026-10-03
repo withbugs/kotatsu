@@ -19,11 +19,11 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 ## Isolated Cloud Checkouts
 
 - 予定済みエージェントは専用分離checkoutを使い、worktreeを作成しない。共有ローカルPCを制作場所にしない。
-- 全roleのlauncherは `cloud-run-guard.mjs` の共通排他guardを通し、GitHubのactive leaseも確認する。
+- scheduled rootのlauncherは `cloud-run-guard.mjs` の共通排他guardを通し、GitHubのactive leaseも確認する。
 - 既存PR branchへ着手する前に `git status --porcelain` が空か確認し、正式remote broker fetch、`git switch --detach origin/<head branch>`、`git merge --no-edit origin/main` を順に実行する。対象branchへのdetached switchと通常mergeが成功する前にIssueをrunningにしない。rebaseを使用しない。
 - index、HEAD、worktree metadataへ書くコマンドが許可範囲外ならruntimeの `sandbox_permissions: "require_escalated"` を使い、拒否時は停止する。許可済みworkspace内の専用checkoutでは不要な昇格を要求しない。
 - 同期失敗、部分変更、non-fast-forwardではreset、restore、clean、force checkoutで復元せず停止する。次回は確認済みcleanな分離checkoutから再開する。
-- commitはremote brokerの `push origin HEAD:<head branch>` のみ。main、未許可family、forceは禁止。
+- 記事commitはremote brokerの `push origin HEAD:<head branch>` のみ。main、未許可family、forceは禁止。
 - CI実checkoutのtree照合に限り `node scripts/editorial/kotatsu-git-remote.mjs fetch-ci-merge origin <full SHA>` でCI logのmerge objectを取得する。mainや記事branchを変更しない。
 
 ## Authentication And Retry
@@ -39,3 +39,5 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 ## Interactive Exception
 
 ユーザーが対話中にGitHub Connectorの使用を明示した場合だけ、そのタスクに限ってConnectorを使用できる。この例外は予定済みエージェントには引き継がない。
+
+共有排他の例外案: repository固定kotatsu-cloud-lease.mjsだけが refs/heads/kotatsu/cloud-editorial-lease に対し空expectedでcreate、owner token一致でdeleteするCASを行う。main/articleへforceする権限はない。rootだけclaimし、workerは継承tokenをverifyする。実GitHubでの権限確認前はshared leaseを有効化せずscheduled実行を止める。詳細はcloud-operations.md。

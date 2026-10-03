@@ -1,16 +1,16 @@
 # 夜間クラウド運用（切替レビュー中）
 
-この変更は設定を有効化しない。親コーディネーターがmerge後にモデル利用可否と環境setupを確認し、ローカル6予定を削除せずpauseしてからクラウド6予定を有効化する。昼間/クラウドの同時有効化は禁止。問題時はクラウドをpause、進行中leaseの解放を確認してからローカルをresumeする。PC停止、購入、認証、network変更は含めない。
+この変更は設定を有効化しない。親コーディネーターがmerge後にモデル利用可否と環境setupを確認し、ローカル6予定を削除せずpauseしてからクラウド6予定を有効化する。昼間/クラウドの同時有効化は禁止。問題時は下記のコード・正本rollbackを完了してからローカルをresumeする。PC停止、購入、認証、network変更は含めない。
 
 `cloud-schedules.json` と `prompts/kotatsu/cloud-*.md` が確認用の6設定と完全prompt。時刻はJSTで従来から+12時間。
 
 | 役割 | 時刻 | 元モデル / reasoning |
 | --- | --- | --- |
 | managing-editor | 21:00、00:00、04:00 | gpt-5.6-terra / high |
-| editor-in-chief | 22:00 | gpt-5.6-terra / high |
+| editor-in-chief | 22:00 | gpt-5.6-sol / high |
 | visual-editor | 22:00、06:00 | gpt-5.6-sol / high |
 | copy-editor | 23:00、03:00 | gpt-5.6-sol / high |
-| publisher | 01:00、05:00 | gpt-5.6-sol / high |
+| publisher | 01:00、05:00 | gpt-5.6-terra / high |
 | writer-desk | 02:00 | gpt-5.6-sol / high |
 
 モデル名は既存予定の希望値を保存したもの。利用可能と仮定せず親が確認し、不在なら勝手にモデル変更・運用開始しない。00〜06時は開始夜の翌暦日。月曜22時の会議成果を火曜00時にdesk確認する。公開日、公開週、月次計画は実際のJST暦日で判定する。21時のDelivery再予約は翌日0時以降の公開枠、05時台は当日枠、06時以降は翌日枠を使い、月跨ぎ再検証と48時間間隔を維持する。
@@ -21,7 +21,9 @@
 
 新taskは既存の専用分離checkout `/workspace/kotatsu` を使用し、worktreeを作成しない。clean確認、正式remote broker fetch、対象branchへのdetached switch、origin/main通常mergeの順序を保ち、前の実行の部分変更が残れば停止する。reset/clean/forceで捨てない。
 
-全roleは同じcheckoutを変更し得るので、承認済みrole launcher全体を `node scripts/editorial/cloud-run-guard.mjs <role> -- <approved launcher>` で囲む。local leaseは全role共通、重複起動を拒否し終了時に解放する。lockが残った場合はownerと実行状態を人が確認し、勝手にlockを削除しない。別環境にも適用されるGitHub Issue上の期限内active leaseとrunning更新時刻も確認する。22時に編集長/visualが重なるため、競合した実行はqueueの状態を進めず次回同担当へ残す。guardは別環境間の排他を保証しない。
+scheduled rootだけが `cloud-run-guard.mjs <role> -- <approved launcher>` でlocal lockと共有leaseを取得する。共有leaseはrepository固定 `refs/heads/kotatsu/cloud-editorial-lease` を空expectedの `--force-with-lease` で原子的createし、owner SHA一致のCASでのみdeleteする。main/article refは選べない。異なるcheckout/環境の同時claimは1件だけ成功することをlocal bare Gitで検査する。Issue commentとlocal lockだけを排他保証に使わない。
+親からworkerへ `KOTATSU_CLOUD_LEASE_TOKEN` を渡し、workerはverifyして逐次実行し再claimしない。親は全worker終了まで保持する。22時に競合した担当は状態を進めず次回へ残す。正常終了のみreleaseし、失敗・中断は共有leaseを残す。人が全worker停止を確認後、所有tokenでreleaseする。期限経過だけの削除・盗取は禁止。
+本PRは共有refを実GitHubへ作成しない。固定ref CASの通信権限を親がレビューし、実環境で同時claim/releaseを検査するまで `KOTATSU_SHARED_LEASE_ENABLED=1` を設定せず予定を有効化しない。任意launcher全体をネットワーク許可する規則は追加しない。
 
 ## 新task bootstrap案
 
@@ -39,3 +41,9 @@ bootstrapは既存offline storeがない場合に停止する。公式Playwright
 ## 品質gate
 
 CIとVisual Check成功は従来どおり必須。画像レビューの正本は `cloud-visual-gate.md`。サンプル成功を最新記事PRへ流用しない。candidate本文/heroがない場合はfail。head変更でrender/review/CI証拠が失効する。
+
+## コードと正本のrollback
+
+クラウド6予定をpauseし、全root/worker停止と共有lease owner-only releaseを確認する。ローカル6予定は引き続きpauseする。切替時に記録した本PRのmerge/squash SHAを対象に、最新mainから専用rollback branchを作り `git revert`（merge commitなら `-m 1`）する。mainを過去SHAへresetせず、その後の他記事変更を保持し競合をレビューする。README、role cards、recovery-workflow、schedule-recoveryの昼間時刻が移行前正本へ戻ることを差分確認する。pnpm check/build、09/17/18/19時と日/週/月/年跨ぎの昼間回復境界を検証し、rollback PRのCI/Visual Checkを通して承認mergeする。元6担当の完全promptはLibrary libfile_d9d8547beed08191bacdb97634846bc5 の01-originalsから復元し、元モデル/時刻/責務を照合する。main正本とスクリプトと6promptが昼間枠で一致した確認後だけローカルをresumeする。pause/resumeだけでrollback完了にしない。
+
+既存monthly-planning-recoveryには、当月Vol.記録が存在すると未完了当月計画でも月初にnot-dueへ落ち得るリスクがある。本PRは計画判定を全面改修しない。起動前に当月以前の未完了計画を別途確認し、存在すれば通常処理を止め正本所有者へ回送する。月初・年跨ぎと完了済み対象除外のnegative testsを保持する。
