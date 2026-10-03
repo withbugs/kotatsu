@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { NIGHT_SCHEDULE } from './night-schedule.mjs';
 
 const root = process.cwd();
 const errors = [];
@@ -52,7 +53,7 @@ requireText('docs/editorial/agent-workflow.md', 'pnpm planning:recover --apply')
 requireText('docs/editorial/agent-workflow.md', '## Recovery');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:rebook');
 requireText('docs/editorial/agent-workflow.md', 'pnpm article:handoff');
-requireText('docs/editorial/agent-workflow.md', '17:00');
+requireText('docs/editorial/agent-workflow.md', '05:00');
 requireText('docs/editorial/agent-workflow.md', '技術的失敗');
 requireText('docs/editorial/recovery-workflow.md', '## Recovery Classes');
 requireText('docs/editorial/recovery-workflow.md', '## Rapid Recovery Dispatch');
@@ -81,26 +82,26 @@ requireText('docs/editorial/recovery-workflow.md', '読者向け本文');
 requireText('docs/editorial/recovery-workflow.md', 'frontmatter全体を再シリアライズせず');
 requireText('docs/editorial/recovery-workflow.md', 'workerを並列実行しない');
 requireText('docs/editorial/recovery-workflow.md', '別agentを起動せず');
-requireText('docs/editorial/recovery-workflow.md', '19:00以降に新しいworkerを起動しない');
+requireText('docs/editorial/recovery-workflow.md', '翌07:00以降に新しいworkerを起動しない');
 requireText('docs/editorial/recovery-workflow.md', '公開担当workerだけである');
 requireText('docs/editorial/recovery-workflow.md', 'goalを `checkpoint`');
 requireText('docs/editorial/recovery-workflow.md', '最新のsession記録が `state: active`');
 requireText('docs/editorial/recovery-workflow.md', 'goalを `waiting-publishAt`');
 requireText('docs/editorial/recovery-workflow.md', '--resume-unmerged-publication --editorial-revalidated-at');
 requireText('.agents/kotatsu/publisher.md', 'milestone自体は閉じない');
-requireText('.agents/kotatsu/publisher.md', '13:00と17:00のどちらも同じ公開枠');
-requireText('.agents/kotatsu/publisher.md', 'pnpm visual:artifact');
+requireText('.agents/kotatsu/publisher.md', '01:00と05:00のどちらも同じ公開枠');
+requireText('.agents/kotatsu/publisher.md', 'pnpm visual:cloud');
 requireText('.agents/kotatsu/publisher.md', 'pnpm article:recover-publication');
 requireText('.agents/kotatsu/publisher.md', 'pnpm recovery:actions');
 requireText('.agents/kotatsu/publisher.md', 'Issue labelだけで対象を絞り込まない');
-requireText('.agents/kotatsu/visual-editor.md', '10:00と18:00のどちらも同じ制作枠');
+requireText('.agents/kotatsu/visual-editor.md', '22:00と06:00のどちらも同じ制作枠');
 requireText('.agents/kotatsu/visual-editor.md', '2時間を超えて有意な進捗がない');
 requireText('.agents/kotatsu/visual-editor.md', '第一案として選ぶ');
 requireText('.agents/kotatsu/visual-editor.md', '具体的な媒体、画風、構図、場所、視点、モデル選定');
 requireText('docs/editorial/recovery-workflow.md', '同じアートブリーフから再開する');
 requireText('docs/editorial/ai-visual-policy.md', '## ビジュアルプログラム');
-requireText('.agents/kotatsu/copy-editor.md', '11:00と15:00のどちらも同じ校正枠');
-requireText('.agents/kotatsu/managing-editor.md', '9:00、12:00、16:00');
+requireText('.agents/kotatsu/copy-editor.md', '23:00と03:00のどちらも同じ校正枠');
+requireText('.agents/kotatsu/managing-editor.md', '21:00、00:00、04:00');
 requireText('.agents/kotatsu/managing-editor.md', 'pnpm planning:recover -- --apply');
 requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:handoff');
 requireText('.agents/kotatsu/editor-in-chief.md', 'pnpm planning:recover -- --apply');
@@ -154,31 +155,17 @@ rejectPattern(
   /current monthly issue/i,
   'monthly issue terminology'
 );
-rejectPattern(
-  'docs/editorial/agent-workflow.md',
-  /(?:20:00|21:00|22:00)/,
-  'late recovery window'
-);
+
 requireText('docs/editorial/agent-workflow.md', 'open・未mergeのpublished記事PR');
 requireText('.agents/kotatsu/managing-editor.md', '--resume-unmerged-publication');
 requireText('.agents/kotatsu/writer-desk.md', '1回の起動で複数記事');
-rejectPattern(
-  'README.md',
-  /(?:20:00|21:00|22:00)/,
-  'late recovery window'
-);
+
 rejectPattern(
   '.codex/rules/kotatsu-scheduled-network.rules',
   /pattern\s*=\s*\["(?:gh|git)"/,
   'direct network command permission'
 );
-for (const role of ['managing-editor', 'publisher', 'visual-editor', 'copy-editor']) {
-  rejectPattern(
-    `.agents/kotatsu/${role}.md`,
-    /(?:20:00|21:00|22:00)/,
-    'late recovery window'
-  );
-}
+
 
 for (const category of ['style', 'life', 'weekend', 'culture', 'people', 'shopping']) {
   const role = `.agents/kotatsu/${category}-writer.md`;
@@ -192,4 +179,20 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log('Editorial rule consistency check passed.');
+
+for (const file of ['README.md','docs/editorial/agent-workflow.md','docs/editorial/recovery-workflow.md', '.agents/kotatsu/managing-editor.md','.agents/kotatsu/publisher.md','.agents/kotatsu/visual-editor.md','.agents/kotatsu/copy-editor.md']) {
+  if (/(?:09|9|10|11|12|13|14|15|16|17|18|19):00/.test(read(file))) throw new Error(`${file}: stale daytime schedule`);
+}
+const schedules=JSON.parse(read('docs/editorial/cloud-schedules.json'));
+if(schedules.enabled!==false || schedules.timezone!=='Asia/Tokyo' || schedules.roles.length!==6) throw new Error('cloud cutover must remain review-only');
+for(const role of schedules.roles){
+  if (JSON.stringify(role.hours)!==JSON.stringify(NIGHT_SCHEDULE[role.role])) throw new Error('schedule hour drift');
+  const model = ['managing-editor','editor-in-chief'].includes(role.role) ? 'gpt-5.6-terra' : 'gpt-5.6-sol';
+  if (role.model!==model) throw new Error('original model preference drift');
+  if(role.reasoningEffort!=='high')throw new Error('reasoning effort drift');
+  requireText(role.prompt,'cloud-visual-gate.md');requireText(role.prompt,'--store-dir /workspace/.onboarding/pnpm-store');
+}
+if(new Set(schedules.roles.map(r=>r.role)).size!==6)throw new Error('duplicate cloud role');
+if(errors.length) { console.error(errors.join('\n')); process.exit(1); }
+
+console.log("Editorial rule consistency check passed.");

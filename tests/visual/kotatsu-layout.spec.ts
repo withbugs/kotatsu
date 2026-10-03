@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import matter from 'gray-matter';
+import { attachCloudMetrics } from './cloud-metrics';
 
 function loadContent(directory: string) {
   return fs.readdirSync(directory)
@@ -47,6 +48,7 @@ for (const targetPath of paths) {
         await new Promise((resolve) => window.setTimeout(resolve, 80));
       }
       window.scrollTo(0, 0);
+      await document.fonts.ready;
     });
 
     await page.waitForFunction(() =>
@@ -81,6 +83,7 @@ for (const targetPath of paths) {
     const screenshotName = `${targetPath.replace(/\W+/g, '-') || 'home'}.jpg`;
     const screenshotPath = testInfo.outputPath('screenshots', screenshotName);
     const screenshot = await page.screenshot({ path: screenshotPath, fullPage: true, type: 'jpeg', quality: 85 });
+    await attachCloudMetrics(page, testInfo, targetPath, false);
     await testInfo.attach(`screenshot-${screenshotName}`, {
       body: screenshot,
       contentType: 'image/jpeg'

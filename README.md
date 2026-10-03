@@ -28,46 +28,48 @@ Planning for the next calendar-month volume begins on or after the second Monday
 | Third Monday | `planning:shortlist` | Refreshed evidence, a provisional theme, and a provisional lineup on the same Draft PR |
 | Fourth Monday | `planning:finalize` | Final research, seasonal and visual direction, the approved plan, and a Ready PR |
 
-At every 09:00, 10:00, 12:00, and 16:00 managing-editor or editor-in-chief run, `pnpm planning:recover -- --apply` checks this calendar before article recovery. A missed or unfinished stage resumes immediately from its durable Issue and planning PR; research, shortlist, finalize, and the separate managing-editor gates remain ordered, but recovery does not wait for another Monday. Missing milestone and planning Issue records are created once by the repository-locked command. Reaching `planning:finalize` is not completion: recovery remains active until the approved PR is merged, cover and article Issues are created, and the planning Issue is closed with `kotatsu:done`.
+At every 21:00, 22:00, 00:00, and 04:00 managing-editor or editor-in-chief run, `pnpm planning:recover -- --apply` checks this calendar before article recovery. A missed or unfinished stage resumes immediately from its durable Issue and planning PR; research, shortlist, finalize, and the separate managing-editor gates remain ordered, but recovery does not wait for another Monday. Missing milestone and planning Issue records are created once by the repository-locked command. Reaching `planning:finalize` is not completion: recovery remains active until the approved PR is merged, cover and article Issues are created, and the planning Issue is closed with `kotatsu:done`.
 
 The editor-in-chief approves the volume plan. The managing editor checks production readiness and merges only the finalized plan. Individual articles do not require a separate editor-in-chief approval immediately before publication.
 
 After the approved plan reaches `main`, the managing editor creates one formal cover Issue and the article Issues. Closing a planning Issue records completion; it never starts another volume by itself.
 
-## Two-Day Production Schedule
+## Two-Night Cloud Production Schedule
 
-All times are Japan Standard Time. Automations run every day, but labels gate actual work.
+All times are Japan Standard Time. Each production night starts at 21:00; 00:00–06:00 belong to the following calendar day. Automations run every day, but labels gate actual work. Publication dates and weekly/monthly limits use the actual JST calendar date. The six cloud schedules remain disabled until this change is reviewed and merged and the operator completes the cutover; local schedules are paused, never deleted, for rollback.
 
 | Day | Time | Role | Main responsibility |
 | --- | --- | --- | --- |
-| Day 1 | 09:00 | Managing editor | Triage states, milestones, stalled work, publication weeks, and planning stages |
-| Day 1 | 10:00 | Editor-in-chief | Hold the Monday editorial meeting or process the assigned planning stage |
-| Day 1 | 10:00 | Visual editor | Process eligible new or retry work with the same production gate |
-| Day 1 | 12:00 | Managing editor | Review planning or copy results and route only complete work |
-| Day 1 | 14:00 | Writer desk | Select one eligible article and write it with the assigned category role card in an isolated worktree |
-| Day 1 | 16:00 | Managing editor | Verify writer PRs and route the same article branches to visual editing |
-| Day 1 | 18:00 | Visual editor | Generate and inspect AI visuals, metadata, and formal covers |
-| Day 2 | 09:00 | Managing editor | Inspect the rendered visual and route accepted work to copy editing |
-| Day 2 | 11:00 | Copy editor | Edit the same article branch and return it for desk review |
-| Day 2 | 12:00 | Managing editor | Schedule `draft -> scheduled`; hold future work or route due work |
-| Day 2 | 13:00 | Publisher | Publish due scheduled articles and verify CI, Visual Check, and Pages |
-| Day 2 | 15:00 | Copy editor | Process eligible new or retry work with the same copy gate |
-| Day 2 | 16:00 | Managing editor | Resolve review, date, or label mismatches and route the next step |
-| Day 2 | 17:00 | Publisher | Process due scheduled articles or resume interrupted technical publication |
+| Day 1 | 21:00 | Managing editor | Triage states, milestones, stalled work, publication weeks, and planning stages |
+| Day 1 | 22:00 | Editor-in-chief | Hold the Monday editorial meeting or process the assigned planning stage |
+| Day 1 | 22:00 | Visual editor | Process eligible new or retry work with the same production gate |
+| Day 1 +1 | 00:00 | Managing editor | Review planning or copy results and route only complete work |
+| Day 1 +1 | 02:00 | Writer desk | Select one eligible article and write it with the assigned category role card in an isolated checkout |
+| Day 1 +1 | 04:00 | Managing editor | Verify writer PRs and route the same article branches to visual editing |
+| Day 1 +1 | 06:00 | Visual editor | Generate and inspect AI visuals, metadata, and formal covers |
+| Day 2 | 21:00 | Managing editor | Inspect the rendered visual and route accepted work to copy editing |
+| Day 2 | 23:00 | Copy editor | Edit the same article branch and return it for desk review |
+| Day 2 +1 | 00:00 | Managing editor | Schedule `draft -> scheduled`; hold future work or route due work |
+| Day 2 +1 | 01:00 | Publisher | Publish due scheduled articles and verify CI, Visual Check, and Pages |
+| Day 2 +1 | 03:00 | Copy editor | Process eligible new or retry work with the same copy gate |
+| Day 2 +1 | 04:00 | Managing editor | Resolve review, date, or label mismatches and route the next step |
+| Day 2 +1 | 05:00 | Publisher | Process due scheduled articles or resume interrupted technical publication |
 
 Production roles never pass work directly to one another. Each returns `kotatsu:review`; the managing editor assigns the next role. `kotatsu:revise` is actionable at the next assigned run, while future work remains `kotatsu:planned`.
 
 At every managing-editor run, `pnpm milestone:close -- --apply` closes an open volume milestone only after its approved plan, formal cover, and every planned article Issue are closed with `kotatsu:done`. The command is idempotent and leaves incomplete volumes open with a reason.
 
-Recovery has a separate decision path but keeps the normal quality gates. Any daytime scheduled run can become a bounded recovery coordinator for the oldest delayed article and dispatch one role-specific subagent at a time. The active goal is publication and URL verification, so an executable revision continues to the responsible worker instead of ending the session. Production workers still return through a separate managing-editor worker before the next role, while a gate-complete Delivery failure can go directly to a publisher worker. Required Actions runs use a repository-locked recovery command: a queued run becomes stale after 30 minutes, an active run after 60 minutes, and only the affected run is cancelled and rerun, with a three-attempt cap and exact PR head-SHA verification. A session checkpoints after one article, 120 minutes, eight workers, an unresolved source-of-truth conflict, an external blocker, or 19:00 JST; checkpointing releases its lease immediately and the next daytime run resumes that GitHub goal before normal work. A recovered article scheduled for a future slot waits normally without blocking other production. Passed copy and approved visuals remain valid only when the delivery move stays within seven days and the same month and no reader-facing old date exists. Protected future dates never move as a cascade, and no extra high-frequency or late-night automation is added.
+Recovery has a separate decision path but keeps the normal quality gates. Any nightly scheduled run can become a bounded recovery coordinator for the oldest delayed article and dispatch one role-specific subagent at a time. The active goal is publication and URL verification, so an executable revision continues to the responsible worker instead of ending the session. Production workers still return through a separate managing-editor worker before the next role, while a gate-complete Delivery failure can go directly to a publisher worker. Required Actions runs use a repository-locked recovery command: a queued run becomes stale after 30 minutes, an active run after 60 minutes, and only the affected run is cancelled and rerun, with a three-attempt cap and exact PR head-SHA verification. A session checkpoints after one article, 120 minutes, eight workers, an unresolved source-of-truth conflict, an external blocker, or the following 07:00 JST; checkpointing releases its lease immediately and the next nightly run resumes that GitHub goal before normal work. A recovered article scheduled for a future slot waits normally without blocking other production. Passed copy and approved visuals remain valid only when the delivery move stays within seven days and the same month and no reader-facing old date exists. Protected future dates never move as a cascade, and no extra high-frequency automation is added.
+
+The deployment manifest and complete role prompts are in [cloud operations](docs/editorial/cloud-operations.md). Browser provisioning and duplicate-run guards are prepared there; this repository change does not enable a schedule.
 
 The six category writer profiles remain independent role cards and GitHub assignees, but one daily Writer desk loads the matching profile for the earliest eligible article. It handles one article per run. This preserves category-specific judgment and isolated article branches while avoiding six empty Codex runs every day.
 
-Scheduled agents that change repository files run in disposable worktrees. They verify a clean worktree, fetch and detach at the existing PR branch, and merge `origin/main` without rebasing before changing GitHub state. A failed preparation is discarded with its worktree, so a later scheduled run restarts from the remote branch instead of repairing a partially changed shared checkout.
+Scheduled agents that change repository files run in isolated checkouts, without creating worktrees. They verify a clean checkout, fetch and detach at the existing PR branch, and merge `origin/main` without rebasing before changing GitHub state. A failed preparation is discarded with its checkout, so a later scheduled run restarts from the remote branch instead of repairing a partially changed shared checkout.
 
-Two repository-scoped brokers validate unattended network operations before invoking `gh` or remote Git. `.codex/rules/kotatsu-scheduled-network.rules` permits only those brokers and the repository-locked milestone closeout command, so scheduled worktrees can reach the durable Issue/PR queue without granting arbitrary shell network access, main pushes, or force pushes.
+Two repository-scoped brokers validate unattended network operations before invoking `gh` or remote Git. `.codex/rules/kotatsu-scheduled-network.rules` permits only those brokers and the repository-locked milestone closeout command, so scheduled checkouts can reach the durable Issue/PR queue without granting arbitrary shell network access, main pushes, or force pushes.
 
-After the broker refreshes `origin/main`, each scheduled worktree runs `pnpm install --offline --frozen-lockfile --ignore-scripts`. This restores dependencies only from the frozen lockfile and the existing local pnpm store, without registry access or package lifecycle scripts.
+After the broker refreshes `origin/main`, each scheduled worktree runs `pnpm install --offline --frozen-lockfile --ignore-scripts --store-dir /workspace/.onboarding/pnpm-store`. This restores dependencies only from the frozen lockfile and the existing local pnpm store, without registry access or package lifecycle scripts.
 
 ## Branch And Publishing Rules
 
@@ -79,7 +81,7 @@ After the broker refreshes `origin/main`, each scheduled worktree runs `pnpm ins
 - A next-week article enters the Writer desk up to 72 hours before `publishAt`, ensuring one daily writing run before the 48-hour production cutoff without moving its publication date.
 - Recovery does not automatically shift later protected dates. A planned article without a PR releases its slot only when it misses the 48-hour production cutoff.
 - A formal, AI-generated volume cover must exist before the first article in that volume is published.
-- GitHub Actions CI and Visual Check are mandatory. Local `pnpm test:visual` is optional preflight.
+- GitHub Actions CI and Visual Check are mandatory. Same-head cloud desktop/mobile rendering and a complete review receipt are mandatory; see [cloud visual gate](docs/editorial/cloud-visual-gate.md).
 
 ## Visual Policy
 

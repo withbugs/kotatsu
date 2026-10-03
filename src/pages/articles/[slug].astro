@@ -5,7 +5,10 @@ import VisualCredit from '../../components/VisualCredit.astro';
 import { assetPath, categorySlug, formatDate } from '../../lib/kotatsu';
 
 export async function getStaticPaths() {
-  const articles = (await getCollection('articles')).filter((article) => article.data.status === 'published');
+  // A candidate can be rendered only by local dev, never by the production build.
+  const candidate = import.meta.env.DEV ? process.env.KOTATSU_VISUAL_CANDIDATE : undefined;
+  const articles = (await getCollection('articles')).filter((article) =>
+    article.data.status === 'published' || (candidate && article.slug === candidate));
   return articles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
 }
 
@@ -33,6 +36,5 @@ const { Content } = await render(article);
     </article>
   </main>
 </BaseLayout>
-
 
 

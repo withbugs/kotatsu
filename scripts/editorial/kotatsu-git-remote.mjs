@@ -17,6 +17,11 @@ export function validateKotatsuGitRemoteArgs(args) {
   const [operation, remote, ...rest] = args;
   if (remote !== 'origin') throw new Error('scheduled Git operations may use only origin');
 
+  if (operation === 'fetch-ci-merge') {
+    if (rest.length !== 1 || !/^[a-f0-9]{40}$/.test(rest[0])) throw new Error('CI fetch requires exactly one full checkout SHA');
+    return args;
+  }
+
   if (operation === 'fetch') {
     if (rest[0] !== 'main' || rest.length > 2) {
       throw new Error('fetch must request origin main and at most one article or planning branch');
@@ -46,7 +51,7 @@ export function runKotatsuGitRemote(args, options = {}) {
         '+refs/heads/main:refs/remotes/origin/main',
         ...(rest[1] ? [`+refs/heads/${rest[1]}:refs/remotes/origin/${rest[1]}`] : []),
       ]
-    : validated;
+    : operation === 'fetch-ci-merge' ? ['fetch', 'origin', rest[0]] : validated;
   const result = (options.spawn ?? spawnSync)('git', commandArgs, {
     encoding: 'utf8',
     stdio: options.stdio ?? 'inherit',

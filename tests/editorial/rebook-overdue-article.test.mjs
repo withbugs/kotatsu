@@ -69,7 +69,7 @@ test('editorial rebooking updates public and editorial dates together', () => {
       script,
       '--slug=summer-outing',
       '--publishAt=2026-08-14T00:00:00+09:00',
-      '--now=2026-08-12T16:00:00+09:00'
+      '--now=2026-08-12T04:00:00+09:00'
     ], { cwd: fixture.root, encoding: 'utf8' });
 
     assert.equal(result.status, 0, result.stderr || result.stdout);
@@ -91,7 +91,7 @@ test('editorial rebooking requires visual review for an old sidecar date', () =>
       script,
       '--slug=summer-outing',
       '--publishAt=2026-08-14T00:00:00+09:00',
-      '--now=2026-08-12T16:00:00+09:00'
+      '--now=2026-08-12T04:00:00+09:00'
     ], { cwd: fixture.root, encoding: 'utf8' });
 
     assert.equal(result.status, 0, result.stderr || result.stdout);
@@ -112,7 +112,7 @@ test('published articles require an explicit unmerged editorial recovery flag', 
       script,
       '--slug=summer-outing',
       '--publishAt=2026-08-14T00:00:00+09:00',
-      '--now=2026-08-12T16:00:00+09:00'
+      '--now=2026-08-12T04:00:00+09:00'
     ], { cwd: fixture.root, encoding: 'utf8' });
 
     assert.equal(result.status, 1);
@@ -130,7 +130,7 @@ test('editorial recovery reopens an unmerged published article without reseriali
       script,
       '--slug=summer-outing',
       '--publishAt=2026-08-21T00:00:00+09:00',
-      '--now=2026-08-21T09:00:00+09:00',
+      '--now=2026-08-21T01:00:00+09:00',
       '--resume-unmerged-publication',
       '--editorial-revalidated-at=2026-08-21'
     ], { cwd: fixture.root, encoding: 'utf8' });
