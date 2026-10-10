@@ -1,0 +1,79 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-004",
+  "article": "afternoon-route-by-return-time",
+  "githubIssue": 120,
+  "editorialIntent": "遠出や運動の達成を示すのではなく、帰る時刻と余力から短い外出を選び、外へ出ない午後も同じ重さで残せる週末を見せる。",
+  "subject": "人物のいない架空の住宅地。少し高い位置から、中央で二つに分かれ、どちらも近所へ続く短い生活道路を望む。",
+  "setting": "2026年10月上旬の日本を想定した、固有性のない住宅地の端。まだ緑を多く残す植栽、乾いた路面、白から青灰へ移る午後の空と少し長い影が見える。",
+  "composition": "横長hero向け。屋外の少し高い位置から、中央の分岐と左右へ続く二つの近所道をhigh-angleで見るwideなstreet-observation。住宅と植栽を層状に重ね、目的地ではなく戻りやすい道の小ささを主題にする。",
+  "compositionFamily": "street-observation",
+  "sceneFamily": "street",
+  "perspective": "high-angle",
+  "humanPresence": "none",
+  "cameraDistance": "wide",
+  "visualTemperature": "neutral",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "pale concrete gray",
+    "muted living green",
+    "off-white",
+    "soft sky blue-gray",
+    "dry straw-beige"
+  ],
+  "colorMood": "淡いコンクリート色、まだ緑の植栽、青灰へ移る遠景、乾いた光と少し長い影を組み合わせ、十月上旬の暖かさが残る午後から涼しい帰り道へ移る軽い空気を作る。",
+  "creativeRationale": "直前記事の無人の室内全景、壁付けラック、開口部を反復せず、屋外の分岐する生活道路を少し高い位置から観察する構図へ切り替えた。目的地や運動の達成ではなく、二つの短い道と戻りやすさを主題にした。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: KOTATSU Japanese editorial magazine article hero image, wide landscape 3:2\nPrimary request: Create an original AI-generated editorial hero for an article about choosing a short afternoon route by deciding the return time first. The image should make two nearby routes and the option to turn back feel equally valid, without presenting exercise, travel, shopping, or reaching a destination as an achievement.\nScene/backdrop: A completely fictional, non-identifiable quiet residential edge in Japan in early October 2026. View an ordinary small T-junction and a gently curving pedestrian lane from a modest elevated outdoor viewpoint such as the top of a short public slope or low footbridge. The routes remain close to homes and visibly loop back into the neighborhood. Still-green shrubs, simple pale walls, utility poles without readable labels, dry pavement, no landmark and no storefront.\nSubject: The branching neighborhood lanes, their modest scale, and the late-afternoon light are the subject. No people, vehicles, signs, clocks, products, or personal belongings. A long soft shadow crossing the road suggests the day is getting shorter while plenty of visibility remains.\nStyle/medium: photorealistic natural editorial photography, believable everyday textures, restrained film grain, quiet Japanese lifestyle magazine art direction; original AI visual, not stock photography.\nComposition/framing: wide 3:2 horizontal hero, high-angle street-observation from outdoors, long-lens layered view with the T-junction in the middle distance and two routes clearly legible. Balanced visual density. No interior, doorway, window, shoe rack, hanging clothing, drying rack, tabletop, bench, seated person, walking person, first-person threshold view, overhead flat-lay, centered catalog arrangement, or symmetrical room.\nLighting/mood: neutral late-afternoon daylight shifting subtly toward cool blue-gray in the distance, with small areas of dry pale sunlight and lengthening shadows. Calm, unhurried, open-ended, mild early October weather.\nColor palette: pale concrete gray, muted living green, soft sky blue-gray, off-white, small restrained touches of dry straw-beige; avoid dominant brown, amber, orange, black, or saturated autumn red.\nMaterials/textures: fine asphalt grain, pale concrete, simple plaster walls, leaves still mostly green, natural soft shadow edges.\nConstraints: no people; no text; no logos; no trademarks; no readable street markings or signs; no real brands; no real store signs; no recognizable place; no celebrity likeness; no watermark; no food, drink, books, clothing, keys, phone, wallet, bags, or hygiene-sensitive items on any ground surface. Architecture and perspective must be coherent, with no duplicated poles or impossible roads.\nAvoid: interior spatial composition, open doorway framing, windows occupying the frame, rack-and-object composition, travel-ad look, athletic framing, tourist vista, commercial street, famous landmark, destination signage, cars, bicycles, dramatic sunset, golden-hour amber, wet pavement, heavy coats, wool, autumn-leaf spectacle, Halloween decorations, winter cues, dark wood, distorted architecture, duplicated objects.",
+  "promptSummary": "2026年10月上旬の架空の住宅地。まだ緑の残る二つの近所道を、長い影が伸びる午後に少し高い位置から望む。",
+  "caption": "十月上旬の午後、まだ緑の残る住宅地で二つに分かれる近所の道と、戻りやすい距離を望むAI生成ビジュアル。",
+  "seasonalContext": "2026年10月10日の日本。日中には暖かさが残る地域があり、夕方へ向かう光と風には涼しさが混じり、地域と天候で体感が変わる時期。",
+  "seasonalCues": [
+    "まだ緑を多く残す住宅地の植栽と、暖かさの残る乾いた近所の路面",
+    "明るさを保ちながら少し長く伸びる影と、遠景で白から青灰へ移る午後の光"
+  ],
+  "seasonalAvoid": [
+    "厚手のコート、ダウン、重いウール、ブーツ、雪、紅葉の盛りなど、十月上旬を冬や晩秋へ固定する表現",
+    "深い琥珀色の光、濃い茶色や厚い革が大面積を占める画面、ハロウィン装飾など記号的な秋表現",
+    "旅行広告、競技や運動の達成、特定の家族像、商業施設を休日の正解にする表現"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable text or signage",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person",
+    "recognizable real location",
+    "stock photo look",
+    "travel-ad look",
+    "athletic-achievement framing",
+    "personal belongings on the floor",
+    "autumn or winter cliches"
+  ],
+  "similarityReviewedAgainst": [
+    "after-rain-pause-before-putting-away",
+    "light-layer-between-morning-evening",
+    "between-busy-and-quiet-weeks"
+  ],
+  "visualDifference": "直近3本を原寸で比較した。直前の#119は無人の室内全景、壁付けラック、窓の開口を使うwide / eye-level / spatial-interiorだったため、今回は屋外の住宅路を少し高い位置から層状に望むwide / high-angle / street-observationへ切り替えた。#118の人物が歩くmediumなhuman-actionと#117の顔の見えるmedium-wideなhuman-environmentも反復していない。",
+  "sameCategoryReviewedAgainst": "before-the-holidays-neighborhood-walk",
+  "categoryVisualDifference": "前回WEEKENDのphotorealistic / human-action / nature / eye-level / humanPresence anonymous / medium / mixed / balancedから、photorealistic / street-observation / street / high-angle / humanPresence none / wide / neutral / balancedへ変更した。構図、場所、視点、人物の有無、距離、温度の6軸を変え、公園ベンチで休む人物を反復していない。",
+  "referenceSheetUse": "none; no roster model used",
+  "diversityReview": "人物を置かない構図のため、顔、身体、年齢、性別、職業、家族構成を休日の標準として固定せず、誰でも外出と在宅の両方を選べる余白として扱った。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-10-10T11:11:47+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "まだ緑を多く残す植栽、乾いた路面、明るさを保ちながら少し長く伸びる影、遠景の青灰を原寸で確認した。雪、紅葉の盛り、琥珀色の照明など十月上旬を越える秋冬表現はない。",
+    "anatomyAndIdentity": "人物、顔、手指、身体は描かれておらず、実在人物や著名人への類似、手足の破綻はない。住宅、道路、擁壁、電柱、植栽の形状に使用を妨げる破綻や不自然な重複はない。",
+    "textAndBrands": "住宅、道路、電柱、植栽、路面を原寸で確認し、読める文字、ロゴ、商標、店舗看板、透かし、固有の住所やランドマークはない。",
+    "retiredPatterns": "高いラックの薄手布へ寄る写真調の素材研究、本と音の帯を配した紙コラージュ、木陰の公園ベンチで横向きに休む人物のいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "住宅路には人物や私物を置いていない。食品、飲料容器、本、衣類、ハンカチ、財布、鍵、携帯電話、腕時計、アクセサリーの路面・地面への直置きはない。"
+  }
+}
