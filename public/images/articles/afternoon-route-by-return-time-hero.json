@@ -1,0 +1,79 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-004",
+  "article": "afternoon-route-by-return-time",
+  "githubIssue": 120,
+  "editorialIntent": "遠出や運動の達成を示すのではなく、帰る時刻と余力から短い外出を選び、外へ出ない午後も同じ重さで残せる週末を見せる。",
+  "subject": "人物のいない住まいの玄関。薄い青灰色の羽織を壁のフックへ掛け、無地の歩き慣れた靴を床から上がった木製ラックへ揃え、開いた戸口の先に近所の短い住宅路を望む。",
+  "setting": "2026年10月上旬の日本を想定した、固有性のない架空の住まいと住宅路。まだ緑を残す植栽と、白から青灰へ移る乾いた午後の光が見える。",
+  "composition": "横長hero向け。玄関内から戸口と近い住宅路を一人称のeye-levelで見るwideなspatial-interior。左の羽織と靴、中央の開いた戸口、奥で緩く曲がる道に視線をつなぎ、出かける選択と家に留まる選択を同じ画面に残す。",
+  "compositionFamily": "spatial-interior",
+  "sceneFamily": "interior",
+  "perspective": "first-person",
+  "humanPresence": "none",
+  "cameraDistance": "wide",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "soft blue-gray",
+    "off-white",
+    "muted living green",
+    "light concrete gray",
+    "pale natural wood"
+  ],
+  "colorMood": "青灰色の薄い羽織、白い壁、淡い木、まだ緑の植栽、乾いた路面を組み合わせ、十月上旬の暖かさが残る午後から涼しい帰り道へ移る軽い空気を作る。",
+  "creativeRationale": "直前記事の歩く匿名人物、直近の顔の見える室内人物、布の接写、紙コラージュを反復せず、人物のいない玄関から近所を望む空間構図へ切り替えた。外出そのものではなく、出発前に帰路と在宅の両方を残す判断を主題にした。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: editorial magazine article hero, wide landscape 3:2\nPrimary request: Create a quiet, highly realistic AI-generated editorial image about choosing a short afternoon outing by first deciding when to return home. Show the choice to step outside or stay home without depicting achievement, travel, exercise, or a destination.\nScene/backdrop: View from just inside a modest contemporary Japanese home entryway toward an open doorway and a nearby calm residential lane. The street is close and ordinary, with two subtly visible directions at a small junction beyond the doorway, still-green plants, and no identifiable landmark. Early October in Japan, late afternoon shifting from soft white daylight toward blue-gray, slightly lengthened shadows, mild warmth still in the air, dry weather.\nSubject: No people. A lightweight pale blue-gray overshirt hangs neatly on a wall hook above floor level; a pair of plain well-worn walking shoes rests on a clean raised shoe rack by the threshold. The empty doorway and near street are the main subject, leaving both going out and staying in possible.\nStyle/medium: photorealistic natural editorial photography, believable architecture and material textures, restrained and quiet, not glossy stock photography.\nComposition/framing: wide landscape hero, first-person eye-height view from the interior, spatial depth through the doorway, airy visual density, balanced negative space, no close-up fabric study, no overhead/high-angle street view.\nLighting/mood: neutral-to-cool late-afternoon light, soft blue-gray and off-white tones with muted green; calm, unhurried, open-ended.\nColor palette: blue-gray, off-white, muted green, light concrete gray, only small restrained natural wood accents.\nConstraints: no people; no text; no logos; no brands; no signage; no famous landmarks; no food, drink, books, clothing, keys, phone, wallet, or personal items placed directly on the floor. Shoes may be on the raised rack only. The overshirt must be visibly hanging from the hook, not lying on the floor. Keep the lane pedestrian-scaled and close to home.\nAvoid: autumn-leaf spectacle, Halloween decorations, heavy coats, wool, dark leather, amber lighting, deep brown dominance, winter cues, rain-wet pavement, travel-ad look, athletic framing, commercial storefronts, distorted architecture, duplicated objects, watermarks.",
+  "promptSummary": "2026年10月上旬の架空の住まい。薄い羽織と靴を整えた無人の玄関から、まだ緑の残る近所の短い道を青灰色の午後に望む。",
+  "caption": "十月上旬の午後、薄い羽織と靴を整えた玄関から近所の短い道と帰る余白を望むAI生成ビジュアル。",
+  "seasonalContext": "2026年10月10日の日本。日中には暖かさが残る地域があり、夕方へ向かう光と風には涼しさが混じり、地域と天候で体感が変わる時期。",
+  "seasonalCues": [
+    "薄い青灰色の長袖羽織と、短い外出に使える歩き慣れた軽い靴",
+    "まだ緑を残す植栽、白から青灰へ移る午後の光、乾いた近所の路面と少し長い影"
+  ],
+  "seasonalAvoid": [
+    "厚手のコート、ダウン、重いウール、ブーツ、雪、紅葉の盛りなど、十月上旬を冬や晩秋へ固定する表現",
+    "深い琥珀色の光、濃い茶色や厚い革が大面積を占める画面、ハロウィン装飾など記号的な秋表現",
+    "旅行広告、競技や運動の達成、特定の家族像、商業施設を休日の正解にする表現"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "readable text or signage",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person",
+    "recognizable real location",
+    "stock photo look",
+    "travel-ad look",
+    "athletic-achievement framing",
+    "personal belongings on the floor",
+    "autumn or winter cliches"
+  ],
+  "similarityReviewedAgainst": [
+    "light-layer-between-morning-evening",
+    "between-busy-and-quiet-weeks",
+    "review-september-fabrics-before-buying"
+  ],
+  "visualDifference": "直近3本の、匿名人物が通路を歩くmediumなhuman-action、顔の見える室内人物によるmedium-wideなhuman-environment、吊り下げた布へ寄るcloseなmaterial-studyを原寸で比較した。今回は人物のいない玄関から近所を望むwide / first-person / spatial-interiorとし、出発前の静かな選択と戸口の奥行きを主役にした。",
+  "sameCategoryReviewedAgainst": "before-the-holidays-neighborhood-walk",
+  "categoryVisualDifference": "前回WEEKENDのphotorealistic / human-action / nature / eye-level / humanPresence anonymous / medium / mixed / balancedから、photorealistic / spatial-interior / interior / first-person / humanPresence none / wide / cool / airyへ変更した。構図、場所、視点、人物の有無、距離、温度、密度の7軸を変え、公園ベンチで休む人物を反復していない。",
+  "referenceSheetUse": "none; no roster model used",
+  "diversityReview": "人物を置かない構図のため、顔、身体、年齢、性別、職業、家族構成を休日の標準として固定せず、誰でも外出と在宅の両方を選べる余白として扱った。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-10-05T18:12:00+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "薄い青灰色の長袖羽織、軽い靴、まだ緑を残す植栽、白から青灰へ移る乾いた午後の光を原寸で確認した。厚手のコート、ウール、雪、紅葉の盛り、琥珀色の照明など十月上旬を越える秋冬表現はない。",
+    "anatomyAndIdentity": "人物、顔、手指、身体は描かれておらず、実在人物や著名人への類似、手足の破綻はない。玄関、戸口、ラック、靴、住宅路の形状に使用を妨げる破綻や不自然な重複はない。",
+    "textAndBrands": "羽織、靴、玄関、植栽、住宅、路面を原寸で確認し、読める文字、ロゴ、商標、店舗看板、透かし、固有の住所やランドマークはない。",
+    "retiredPatterns": "高いラックの薄手布へ寄る写真調の素材研究、本と音の帯を配した紙コラージュ、木陰の公園ベンチで横向きに休む人物のいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "薄い羽織は壁のフックへ掛けられ、靴は玄関床から上がった清潔な木製ラック上に揃っている。食品、飲料容器、本、衣類、ハンカチ、財布、鍵、携帯電話、腕時計、アクセサリーの床置きはない。"
+  }
+}
