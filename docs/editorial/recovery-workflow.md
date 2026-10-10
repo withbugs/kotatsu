@@ -13,15 +13,15 @@
 
 ## Planning Recovery
 
-月次計画は記事制作とは別の期限付きレーンである。進行編集の09:00、12:00、16:00と編集長の10:00は、記事のRapid Recoveryより先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの第2・第3・第4月曜から期待段階を機械判定し、現在月のVol.または翌月Vol.の計画欠落、stage遅延、未完了workflow state、重複をGitHub Issueとmilestoneから検出する。stage labelが期待段階に一致していても、ready、running、review、reviseは `recovery-required` とする。通常待機の `on-track` は期待段階以上のstageが進行編集gateを通過して `kotatsu:planned` にある場合だけである。
+月次計画は記事制作とは別の期限付きレーンである。進行編集の21:00、00:00、04:00と編集長の22:00は、記事のRapid Recoveryより先に `pnpm planning:recover -- --apply` を実行する。コマンドはJSTの第2・第3・第4月曜から期待段階を機械判定し、現在月のVol.または翌月Vol.の計画欠落、stage遅延、未完了workflow state、重複をGitHub Issueとmilestoneから検出する。stage labelが期待段階に一致していても、ready、running、review、reviseは `recovery-required` とする。通常待機の `on-track` は期待段階以上のstageが進行編集gateを通過して `kotatsu:planned` にある場合だけである。
 
 計画Issueまたはmilestoneが欠けている場合、コマンドは未来Vol.1件の制限を確認し、次番号のmilestoneと `planning:research` の計画Issueだけを冪等に作る。別月のopen計画Issue、複数stage labelなどの矛盾があれば自動作成せず `blocked` を返す。予定実行は番号や対象月を推測で補わない。
 
 `recovery-required` では、計画Issueに `<!-- kotatsu:planning-recovery -->`、session id、期待段階、現在段階、planning PR/head SHA、開始時刻、120分後の期限、`state: active` を記録する。Planning Recoveryのleaseは記事Rapid Recoveryのleaseと独立し、記事のactive/checkpointを理由に開始を遅らせない。同じ計画Issueの最新sessionが期限内のactiveである場合だけ二重開始を避け、checkpointは即時再開できる。
 
-コーディネーターは、未完了の段階について編集長workerと別の進行編集workerを交互に1件ずつ起動する。順序はresearch、進行編集gate、shortlist、進行編集gate、finalize、進行編集gateであり、workerを並列実行しない。各編集長workerはその段階のウェブ調査、候補メモ、Issueコメント、planning branch commit、PRを完成させる。各進行編集workerは対象月、Vol.、stage成果、調査基準、branch、PR、CIを確認し、合格時だけ次stageへ進める。遅延中は次の月曜を待たず、同じ日中sessionで期待段階まで続ける。
+コーディネーターは、未完了の段階について編集長workerと別の進行編集workerを交互に1件ずつ起動する。順序はresearch、進行編集gate、shortlist、進行編集gate、finalize、進行編集gateであり、workerを並列実行しない。各編集長workerはその段階のウェブ調査、候補メモ、Issueコメント、planning branch commit、PRを完成させる。各進行編集workerは対象月、Vol.、stage成果、調査基準、branch、PR、CIを確認し、合格時だけ次stageへ進める。遅延中は次の月曜を待たず、同じ夜間sessionで期待段階まで続ける。
 
-finalizeラベルは完了条件ではない。finalize gate通過後、進行編集workerは承認済み計画PRをmainへmergeし、正式カバーIssueと計画どおりの記事Issueを作成して、計画Issueを `kotatsu:done` でcloseする。ここまでをPlanning Recoveryのgoalとし、未完了なら機械判定は `finalize-not-complete` を返して回復対象に残す。正式カバー生成や記事制作は通常工程へ渡す。検索不能、owner未登録の矛盾、外部障害、予期しないhead SHA変更、120分、worker 8件、19:00 JSTのいずれかで、現在段階、保持成果、次action、`endedAt`を記録して `state: checkpoint` としleaseを解放する。次の対象予定実行が固定曜日を待たず再開する。
+finalizeラベルは完了条件ではない。finalize gate通過後、進行編集workerは承認済み計画PRをmainへmergeし、正式カバーIssueと計画どおりの記事Issueを作成して、計画Issueを `kotatsu:done` でcloseする。ここまでをPlanning Recoveryのgoalとし、未完了なら機械判定は `finalize-not-complete` を返して回復対象に残す。正式カバー生成や記事制作は通常工程へ渡す。検索不能、owner未登録の矛盾、外部障害、予期しないhead SHA変更、120分、worker 8件、07:00 JSTのいずれかで、現在段階、保持成果、次action、`endedAt`を記録して `state: checkpoint` としleaseを解放する。次の対象予定実行が固定曜日を待たず再開する。
 
 正本または機械検査の既知pathに矛盾がある場合はcheckpointを繰り返さず、次のSource-of-Truth Recoveryへ移す。repair ownerを特定できない矛盾だけを `checkpoint` とする。
 
@@ -46,7 +46,7 @@ markerは `<!-- kotatsu:source-conflict-recovery -->` とし、同じ修正対�
 
 stateを進める場合も同じコマンド引数を使い、`--state=repair-review --repair-pr=<number>`、または `--state=resolved --repair-pr=<number> --verification-command=<command> --verified-main-sha=<sha> --verified-article-head-sha=<sha> --verified-at=<ISO datetime>` を追加する。記事PRがある `resolved` はsource PR、main上の再検証、変更されていない記事head SHAがなければコマンドが拒否する。
 
-repair ownerは記事PRへ正本修正を混ぜず、source PR URLと検査結果をmarkerの `repairPr` とともに `repair-review + agent:managing-editor` へ返す。進行編集はsource PR merge後に元の検査を1回だけ再実行する。不合格なら同recordを `repair-required` へ戻し、新しい規則や別sessionを作らない。合格なら `resolved` markerを記録し、記事PR/head SHAと通過済みゲートを保ったまま元工程へ戻す。修復と元工程のworkerを同じ日中のrapid recovery sessionで続けられる場合は固定時刻を待たない。
+repair ownerは記事PRへ正本修正を混ぜず、source PR URLと検査結果をmarkerの `repairPr` とともに `repair-review + agent:managing-editor` へ返す。進行編集はsource PR merge後に元の検査を1回だけ再実行する。不合格なら同recordを `repair-required` へ戻し、新しい規則や別sessionを作らない。合格なら `resolved` markerを記録し、記事PR/head SHAと通過済みゲートを保ったまま元工程へ戻す。修復と元工程のworkerを同じ夜間のrapid recovery sessionで続けられる場合は固定時刻を待たない。
 
 owner未登録、修正範囲に人間だけが決められる編集判断がある、予期しない記事head SHA変更、外部障害の場合だけ `blocked` にする。既知ownerへの修正依頼中はblockerではなく進行中の回復であり、予定済みタスクを増やしたり夜間まで延長したりしない。
 
@@ -58,7 +58,7 @@ markerのない旧checkpointを新しい障害として数えず、owner修正�
 
 ## Rapid Recovery Dispatch
 
-通常の時刻表は制作開始と障害時のfallbackであり、復旧工程間の待ち時間ではない。09:00から18:00までの予定済みタスクが遅延を発見した場合、そのroot実行が迅速復旧コーディネーターとなり、同じ実行内に役割別サブエージェントを逐次dispatchする。新しい高頻度automationや夜間枠は追加しない。10:00は編集長の予定済みタスクだけが全体復旧を開始し、同時刻のビジュアル編集は通常担当だけを扱う。
+通常の時刻表は制作開始と障害時のfallbackであり、復旧工程間の待ち時間ではない。21:00から翌06:00までの予定済みタスクが遅延を発見した場合、そのroot実行が迅速復旧コーディネーターとなり、同じ実行内に役割別サブエージェントを逐次dispatchする。新しい高頻度automationは追加しない。22:00は編集長の予定済みタスクだけが全体復旧を開始し、同時刻のビジュアル編集は通常担当だけを扱う。
 
 迅速復旧のゴールは「現在工程を終えること」ではなく、対象記事を安全に公開し、公開URLを確認してIssueをcloseすることである。root実行と後続の予定済みタスクは、Issueのactive goalを通常担当より優先し、役割ごとの修正、desk gate、公開ゲートを必要な順番で継続する。実施可能な `revise` は停止理由ではなく次workerへの入力として扱う。
 
@@ -70,9 +70,9 @@ rapid recovery sessionは次の手順で行う。
 2. Issueへ `<!-- kotatsu:rapid-recovery -->`、session id、owner run、goal、class、現在工程、PR head SHA、開始時刻、120分後の期限、`active` 状態をコメントし、現在担当1つと `kotatsu:running` を反映して再取得する。最新のsession記録が `state: active` で期限内の場合だけ有効な別leaseとして扱い、開始しない。後続の `checkpoint`、`waiting-publishAt`、`completed` 記録があるsessionは、元のexpiresAtが未来でも排他leaseを持たない。
 3. 現在工程のrole cardを指定してworkerを1件だけ起動する。workerには指定IssueとPR branchだけを扱い、別agentを起動せず、成果、検査、再開地点をGitHubへ残すよう明記する。
 4. worker完了を待ってIssue、PR、Actionsとhead SHAを再取得する。ProductionまたはEditorialの制作workerがreviewへ戻した場合は進行編集workerを起動し、その判断後に必要な修正担当または次担当workerを起動する。実施可能な差し戻しは同じsessionで続け、workerを並列実行しない。
-5. 公開完了でgoalを `completed` にする。人手でしか決められない編集判断、owner未登録の正本矛盾、回復不能な外部障害、予期しないhead SHA変更、120分経過、worker 8件完了、19:00 JSTでは、現在工程、次action、`endedAt`を記録してgoalを `checkpoint` にし、その時点でleaseを解放する。既知ownerの正本矛盾はSource-of-Truth Recoveryへ移し、checkpointにしない。19:00以降に新しいworkerを起動しない。
+5. 公開完了でgoalを `completed` にする。人手でしか決められない編集判断、owner未登録の正本矛盾、回復不能な外部障害、予期しないhead SHA変更、120分経過、worker 8件完了、07:00 JSTでは、現在工程、次action、`endedAt`を記録してgoalを `checkpoint` にし、その時点でleaseを解放する。既知ownerの正本矛盾はSource-of-Truth Recoveryへ移し、checkpointにしない。翌07:00以降に新しいworkerを起動しない。
 
-rootコーディネーター自身は本文、画像、校正、編集承認、公開を代行せず、最終記事PRをmainへmergeできるのは公開担当workerだけである。Governance以外の同じ障害fingerprintの再試行はsession内で1回までとし、再失敗時は現在工程、保持済みゲート、次actionを `kotatsu:revise` に残す。Governanceはsource-conflict recordのstateを進め、元ゲートを再試行しない。multi-agent tools、利用上限、PC、Codexアプリ、認証などの外部条件で続行できない場合もGitHubを永続checkpointとする。次に起動した日中の予定済みタスクは、新規session idとleaseを取得してcheckpointのgoalを通常作業より先に再開し、固定された担当時刻を待たない。
+rootコーディネーター自身は本文、画像、校正、編集承認、公開を代行せず、最終記事PRをmainへmergeできるのは公開担当workerだけである。Governance以外の同じ障害fingerprintの再試行はsession内で1回までとし、再失敗時は現在工程、保持済みゲート、次actionを `kotatsu:revise` に残す。Governanceはsource-conflict recordのstateを進め、元ゲートを再試行しない。multi-agent tools、利用上限、PC、Codexアプリ、認証などの外部条件で続行できない場合もGitHubを永続checkpointとする。次に起動した夜間の予定済みタスクは、新規session idとleaseを取得してcheckpointのgoalを通常作業より先に再開し、固定された担当時刻を待たない。
 
 制作と品質ゲートが回復し、機械出力が未来の `publishAt` に対する `kotatsu:planned + agent:publisher` を返した場合は、goalを `waiting-publishAt` としてleaseを解放する。これは遅延中のactive/checkpointではなく正常な掲載待機であり、到来前の予定済みタスクは復旧優先対象にせず、ほかの記事制作を進める。公開日時が到来した公開担当が同じgoalを再開し、公開URL確認とIssue closeで `completed` にする。
 
@@ -91,7 +91,7 @@ rootコーディネーター自身は本文、画像、校正、編集承認、�
 
 ## Delivery Recovery
 
-当日中の技術的中断は `kotatsu:revise + agent:publisher` のまま、次の13:00または17:00公開担当が同じPRの未完了地点から再開する。`article:publish` と `visual:artifact` は再実行可能として扱い、commit、artifact、mergeを重複させない。
+同じ夜の技術的中断は `kotatsu:revise + agent:publisher` のまま、次の01:00または05:00公開担当が同じPRの未完了地点から再開する。`article:publish` と `visual:cloud verify` は再実行可能として扱い、commit、artifact、mergeを重複させない。
 
 公開commitをpushした後のCIとVisual Checkは、文章で待機判定せず次のrepository固定コマンドへ渡す。
 
@@ -104,12 +104,12 @@ pnpm recovery:actions -- --ci-run=<CI run id> --visual-run=<Visual Check run id>
 - `queued`から30分未満、または`in_progress`など実行状態から60分未満は、最大15分の有界pollを行う。
 - 上記期限を超えたrunはstaleとし、対象runだけをcancelして同じrun idをrerunする。失敗終了したrunはcancelせずrerunする。
 - rerunを含む試行はrunごとに最大3回とし、head SHA不一致、必要workflowの欠落、上限到達では変更せず`blocked`を返す。
-- コマンドが`ready`を返したら、返されたVisual Check run idでartifact確認から同じsession内に再開する。
-- 15分の有界pollで完了しない場合は`checkpoint`を返す。leaseを解放し、次に起動した09:00から18:00の迅速復旧コーディネーターが、公開担当workerへ同じコマンドを再実行させる。13:00または17:00まで待たない。
+- コマンドが`ready`を返したら、返されたVisual Check run idで同一headクラウド画像確認から同じsession内に再開する。
+- 15分の有界pollで完了しない場合は`checkpoint`を返す。leaseを解放し、次に起動した21:00から翌06:00の迅速復旧コーディネーターが、公開担当workerへ同じコマンドを再実行させる。01:00または05:00まで待たない。
 
-Actionsのstale判定だけを理由に公開日を再予約せず、本文、画像、校正、published commitを変更しない。GitHubの全体statusが正常でもrun単位のstale判定を優先する。必須checkとartifact確認は省略せず、runを手動成功扱いにしない。
+Actionsのstale判定だけを理由に公開日を再予約せず、本文、画像、校正、published commitを変更しない。GitHubの全体statusが正常でもrun単位のstale判定を優先する。必須checkと全画像review receipt確認は省略せず、runを手動成功扱いにしない。
 
-日付をまたいだscheduled記事、またはopen・未mergeのPR内でpublishedまで進んだ記事も、次の13:00または17:00公開担当が次の順で扱う。技術的な再予約に進行編集の中継を必須としない。Issue labelが誤って他担当を指していても、open・未mergeの記事PR内でpublished、校正passed、正式画像確認済みなら孤立したDelivery案件として公開担当が回収する。PRと記事metadataをDelivery状態の発見元とし、古いlabelだけを理由に対象外にしない。
+日付をまたいだscheduled記事、またはopen・未mergeのPR内でpublishedまで進んだ記事も、次の01:00または05:00公開担当が次の順で扱う。技術的な再予約に進行編集の中継を必須としない。Issue labelが誤って他担当を指していても、open・未mergeの記事PR内でpublished、校正passed、正式画像確認済みなら孤立したDelivery案件として公開担当が回収する。PRと記事metadataをDelivery状態の発見元とし、古いlabelだけを理由に対象外にしない。
 
 1. 保護された公開日を集め、`pnpm recovery:slot -- --occupied=<comma-separated ISO dates>` で最短空き枠を得る。
    対象記事自身の期限超過した旧枠は `occupied` に含めない。
@@ -117,7 +117,7 @@ Actionsのstale判定だけを理由に公開日を再予約せず、本文、�
 3. コマンドが読者向け本文、title、description、heroAlt、tagsに旧具体日を検出した場合は変更せずEditorial recoveryへ移す。
 4. 成功時はfrontmatter全体を再シリアライズせず、元の表記を保持したまま内部のeditorial、visual、sidecarの日付、status、scheduleRecoveryだけを更新し、passedの校正と確認済み画像を保持したscheduledへ戻す。
 5. 記事branchの `publishAt` と `editorial.publicationDate` をIssue本文の現在公開予定へ同期し、class、元日時、新日時、保持したゲートをコメントする。
-6. `article:handoff` の結果をIssueへ完全一致で反映し、Issueを再取得して確認する。到来済みなら同じ起動内で通常の公開ゲートを再開する。13:00と17:00の起動中は同日の回復枠を使用できる。
+6. `article:handoff` の結果をIssueへ完全一致で反映し、Issueを再取得して確認する。到来済みなら同じ起動内で通常の公開ゲートを再開する。01:00と05:00の起動中は同日の回復枠を使用できる。
 
 Delivery recoveryは画像、本文、校正の内容を変更しない。内部日付以外の差分が生じた場合は使用せず、ProductionまたはEditorial recoveryへ移す。
 
@@ -131,7 +131,7 @@ Delivery recoveryは画像、本文、校正の内容を変更しない。内部
 - 記事PRが存在する `ready`、`running`、`review`、`publish` の記事
 - 公開48時間前より前で、まだ制作開始前のplanned記事
 
-plannedかつ記事PRのない記事は、公開72時間前に入った時点で次週分でもライターreadyへ進める。これは毎日14:00のライターデスクを48時間前のProduction cutoffより前に最低1回確保する先行窓であり、公開枠の移動には使わない。
+plannedかつ記事PRのない記事は、公開72時間前に入った時点で次週分でもライターreadyへ進める。これは毎日02:00のライターデスクを48時間前のProduction cutoffより前に最低1回確保する先行窓であり、公開枠の移動には使わない。
 
 公開48時間前までに制作開始できなかった場合、その枠は保護を解除し、その記事自身を復旧待ちへ移す。空いた枠は、工程が最も進んだ遅延記事が使える。優先順は、open・未mergeのpublished、校正済みscheduled、review、running、未着手plannedとし、同じ工程なら元の公開予定が早い記事を先にする。
 
@@ -155,3 +155,5 @@ Editorial recoveryは、次のいずれかで開始する。
 ## Completion
 
 復旧は、Issueコメントにclass、元の停止地点、選んだ公開枠、保持したゲート、再実行した検査を記録する。公開URL確認後は通常どおり `kotatsu:done` でIssueをcloseする。復旧中に同じ原因で再度失敗しても、新しい規則を追加せず、同じclassと再開地点を更新する。
+
+画像確認の復旧は `docs/editorial/cloud-visual-gate.md` に従う。最新headのCI/Visual Checkを維持し、同一headのcloud描画、全desktop/mobile画像review、実merge-ref tree照合を完了する。古いheadのartifactやreceiptは流用しない。

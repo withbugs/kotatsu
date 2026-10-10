@@ -1,6 +1,6 @@
 # GitHub Access Policy For Scheduled Agents
 
-KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Actions、label、milestoneの読み書きにローカルの `gh` CLIを使用する。
+KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Actions、label、milestoneの読み書きにruntimeの正式 `gh` CLIを使用する。
 
 これはユーザーが選択したKOTATSU固有の無人実行方針であり、一般的なGitHub pluginのconnector-first指針より優先する。
 
@@ -16,21 +16,21 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 - 必須Actionsのstale判定と再実行はrepository固定の `pnpm recovery:actions -- --ci-run=<id> --visual-run=<id> --head-sha=<sha> --apply`（`actions-recovery.mjs`の固定alias）を使う。予定実行がrunを直接cancel/rerunしない。
 - local branch、commit、switch、mergeは通常の `git` を使う。
 
-## Isolated Worktrees
+## Isolated Cloud Checkouts
 
-- リポジトリを変更する予定済みエージェントは、Codexの分離worktree実行を使う。共有チェックアウトを制作場所にしない。
-- 既存PR branchへ着手する前にIssueのhead branchを確認する。`git status --porcelain` が空であることを確認し、remote brokerによるfetch、`git switch --detach origin/<head branch>`、`git merge --no-edit origin/main` を順に実行する。
-- 分離worktreeの `.git` は共有repositoryの管理領域を参照する。`git switch --detach`、`git merge --no-edit`、`git add -- <paths>`、`git commit -m <message>` のようにindex、HEAD、worktree metadataへ書くコマンドは、最初の `exec_command` から `sandbox_permissions: "require_escalated"` を指定する。通常サンドボックスでpermission failureを起こしてから再試行しない。`git status`、`git diff`、`git show`など読取りだけの操作は通常権限でよい。
-- 上記の3操作がすべて成功する前にIssueをrunningへ変更しない。rebaseを使用しない。
-- 同期失敗時はreset、restore、clean、force checkoutで復元を試みない。分離worktreeを破棄し、GitHub上の状態を変更せず、次の予定実行が新しいworktreeで再試行できるようにする。
-- 完了したcommitはremote brokerの `push origin HEAD:<head branch>` で送る。brokerはmain、未許可のbranch family、force形式を拒否する。non-fast-forwardなら停止し、Issueを元の担当・状態に保ったまま次の予定実行で最新branchからやり直す。
-- 新規branchも分離worktreeの `origin/main` から作る。mainへ直接pushしない。
+- 予定済みエージェントは専用分離checkoutを使い、worktreeを作成しない。共有ローカルPCを制作場所にしない。
+- scheduled rootのlauncherは `cloud-run-guard.mjs` の共通排他guardを通し、GitHubのactive leaseも確認する。
+- 既存PR branchへ着手する前に `git status --porcelain` が空か確認し、正式remote broker fetch、`git switch --detach origin/<head branch>`、`git merge --no-edit origin/main` を順に実行する。対象branchへのdetached switchと通常mergeが成功する前にIssueをrunningにしない。rebaseを使用しない。
+- index、HEAD、worktree metadataへ書くコマンドが許可範囲外ならruntimeの `sandbox_permissions: "require_escalated"` を使い、拒否時は停止する。許可済みworkspace内の専用checkoutでは不要な昇格を要求しない。
+- 同期失敗、部分変更、non-fast-forwardではreset、restore、clean、force checkoutで復元せず停止する。次回は確認済みcleanな分離checkoutから再開する。
+- 記事commitはremote brokerの `push origin HEAD:<head branch>` のみ。main、未許可family、forceは禁止。
+- CI実checkoutのtree照合に限り `node scripts/editorial/kotatsu-git-remote.mjs fetch-ci-merge origin <full SHA>` でCI logのmerge objectを取得する。mainや記事branchを変更しない。
 
 ## Authentication And Retry
 
 - `.codex/rules/kotatsu-scheduled-network.rules` は上記2つのbrokerとrepository固定のmilestone closeout、月次計画回復、必須Actions回復だけを外部実行へ許可する。任意の `gh`、`git`、shellコマンドにはネットワーク権限を与えない。
-- GitHub/Git通信のbroker、milestone closeout、月次計画回復、`pnpm install --offline --frozen-lockfile --ignore-scripts` は、最初の `exec_command` から `sandbox_permissions: "require_escalated"` を指定する。command ruleが許可するprefixだけを無人承認させ、通常サンドボックス内でproxy失敗またはpnpmストア参照失敗させてから再試行しない。
-- offline installはグローバルpnpmストアの参照だけに昇格を使う。`--offline`、`--frozen-lockfile`、`--ignore-scripts`を外したinstallや外部取得への切り替えは禁止する。
+- GitHub/Git通信のbroker、milestone closeout、月次計画回復、`pnpm install --offline --frozen-lockfile --ignore-scripts --store-dir /workspace/.onboarding/pnpm-store` は、許可済みruntime brokerを使用する。追加権限が必要なときだけ `sandbox_permissions: "require_escalated"` を指定し、command ruleが許可するprefixだけを無人承認させ、通常サンドボックス内でproxy失敗またはpnpmストア参照失敗させてから再試行しない。
+- offline installは `/workspace/.onboarding/pnpm-store` を明示する。`--offline`、`--frozen-lockfile`、`--ignore-scripts`を外したinstallや外部取得への切り替えは禁止する。
 - broker、command rule、keyring、network、permission由来の失敗が出た場合は、許可範囲を広げたりユーザー承認を待ったりしない。同じ担当の次回起動で再試行できる状態を保つ。
 - 失敗した場合は、コマンド、エラー、未完了操作を報告し、GitHub状態を先へ進めず停止する。
 - `gh auth status`、`gh auth refresh`、`gh auth logout`、token再発行、資格情報削除は自動実行しない。
@@ -39,3 +39,5 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 ## Interactive Exception
 
 ユーザーが対話中にGitHub Connectorの使用を明示した場合だけ、そのタスクに限ってConnectorを使用できる。この例外は予定済みエージェントには引き継がない。
+
+共有排他の例外案: repository固定kotatsu-cloud-lease.mjsだけが refs/heads/kotatsu/cloud-editorial-lease に対し空expectedでcreate、owner token一致でdeleteするCASを行う。main/articleへforceする権限はない。rootだけclaimし、workerは継承tokenをverifyする。実GitHubでの権限確認前はshared leaseを有効化せずscheduled実行を止める。詳細はcloud-operations.md。

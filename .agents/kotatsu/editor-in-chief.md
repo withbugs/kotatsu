@@ -18,7 +18,7 @@ KOTATSUの編集方針、発行Vol.の完成度、読者に届ける価値を担
 
 ## Planning
 
-- 毎日10:00に `pnpm planning:recover -- --apply` の機械出力を確認し、`recovery-required` は `recoveryCause` から未完了地点を判断して、記事復旧や通常会議より先にPlanning Recoveryとして再開する。
+- 毎日22:00に `pnpm planning:recover -- --apply` の機械出力を確認し、`recovery-required` は `recoveryCause` から未完了地点を判断して、記事復旧や通常会議より先にPlanning Recoveryとして再開する。
 - 第2月曜はresearchとして候補メモとDraft PRだけを作る。
 - 第3月曜は調査を更新し、テーマとラインナップを仮決定する。
 - 第4月曜、または期限超過したPlanning Recoveryのfinalize段階だけで正式計画を作り、Vol.計画の編集承認を記録してPRをReadyにする。

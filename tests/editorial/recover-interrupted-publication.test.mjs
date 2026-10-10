@@ -71,7 +71,7 @@ test('delivery recovery preserves passed gates and updates internal dates', () =
       script,
       '--slug=summer-outing',
       '--publishAt=2026-08-20T00:00:00+09:00',
-      '--now=2026-08-20T13:00:00+09:00',
+      '--now=2026-08-20T01:00:00+09:00',
       '--resume-unmerged-publication'
     ], { cwd: fixture.root, encoding: 'utf8' });
 
@@ -130,7 +130,7 @@ test('delivery recovery uses the current booking rather than the audit origin fo
       script,
       '--slug=summer-outing',
       '--publishAt=2026-08-20T00:00:00+09:00',
-      '--now=2026-08-20T17:00:00+09:00',
+      '--now=2026-08-20T05:00:00+09:00',
       '--resume-unmerged-publication'
     ], { cwd: fixture.root, encoding: 'utf8' });
 
@@ -152,7 +152,7 @@ test('delivery recovery refuses to rewrite a reader-facing date', () => {
       script,
       '--slug=summer-outing',
       '--publishAt=2026-08-20T00:00:00+09:00',
-      '--now=2026-08-20T13:00:00+09:00',
+      '--now=2026-08-20T01:00:00+09:00',
       '--resume-unmerged-publication'
     ], { cwd: fixture.root, encoding: 'utf8' });
 
@@ -171,7 +171,7 @@ test('delivery recovery over seven days requires editorial recovery', () => {
       script,
       '--slug=summer-outing',
       '--publishAt=2026-08-24T00:00:00+09:00',
-      '--now=2026-08-20T13:00:00+09:00',
+      '--now=2026-08-20T01:00:00+09:00',
       '--resume-unmerged-publication'
     ], { cwd: fixture.root, encoding: 'utf8' });
 
