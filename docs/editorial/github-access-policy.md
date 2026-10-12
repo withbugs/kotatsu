@@ -4,6 +4,16 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 
 これはユーザーが選択したKOTATSU固有の無人実行方針であり、一般的なGitHub pluginのconnector-first指針より優先する。
 
+## Startup Gate
+
+全予定実行は、最初の通信で `node scripts/editorial/kotatsu-git-remote.mjs fetch origin main` を実行する。取得成功後、この文書を `git show origin/main:docs/editorial/github-access-policy.md` で読み、次の順序で準備する。
+
+1. `git status --porcelain` が空なら `git switch --detach origin/main` を実行する。dirtyなら変更を削除・復元せず準備を中断する。
+2. `pnpm install --offline --frozen-lockfile --ignore-scripts` を実行する。不足時は外部取得へ切り替えない。
+3. 最新mainのrule-hierarchy、agent-workflow、recovery-workflowと担当role cardを読み、Execution Priorityから着手対象を決める。古いHEADの正本スクリプトは実行しない。
+
+fetch、switch、offline installには、初回呼び出しから `sandbox_permissions: "require_escalated"` を指定する。準備未完了ならIssueをrunningへ変更しない。
+
 ## Scheduled Runs
 
 - GitHub Connector、GitHub MCP、GitHub app toolsを呼び出さない。
@@ -32,7 +42,7 @@ KOTATSUの予定済みエージェントは、GitHub Issue、Pull Request、Acti
 - GitHub/Git通信のbroker、milestone closeout、月次計画回復、`pnpm install --offline --frozen-lockfile --ignore-scripts` は、最初の `exec_command` から `sandbox_permissions: "require_escalated"` を指定する。command ruleが許可するprefixだけを無人承認させ、通常サンドボックス内でproxy失敗またはpnpmストア参照失敗させてから再試行しない。
 - offline installはグローバルpnpmストアの参照だけに昇格を使う。`--offline`、`--frozen-lockfile`、`--ignore-scripts`を外したinstallや外部取得への切り替えは禁止する。
 - broker、command rule、keyring、network、permission由来の失敗が出た場合は、許可範囲を広げたりユーザー承認を待ったりしない。同じ担当の次回起動で再試行できる状態を保つ。
-- 失敗した場合は、コマンド、エラー、未完了操作を報告し、GitHub状態を先へ進めず停止する。
+- 認証、権限、同期、依存準備が回復できない場合はその操作を中断し、コマンド、エラー、未完了操作を残す。GitHubへ到達できる復旧sessionはcheckpointを記録してleaseを解放する。制作中の修正・CI・artifact失敗は一律停止せず、recovery-workflowの同じ再開地点と限定再試行に従う。
 - `gh auth status`、`gh auth refresh`、`gh auth logout`、token再発行、資格情報削除は自動実行しない。
 - `gh` の失敗からGitHub Connectorへフォールバックしない。
 

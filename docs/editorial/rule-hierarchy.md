@@ -5,7 +5,7 @@ KOTATSUの編集ルールは、内容ごとに次のファイルを正本とす�
 | Topic | Source of truth | Repair owner |
 | --- | --- | --- |
 | 状態label、工程、時刻、branch、受け渡し、公開頻度 | `docs/editorial/agent-workflow.md` | `agent:managing-editor` |
-| 予定実行の欠損、技術障害、期限超過、復旧公開枠 | `docs/editorial/recovery-workflow.md` | `agent:managing-editor` |
+| 実行優先順位、予定実行の欠損、技術障害、期限超過、復旧公開枠 | `docs/editorial/recovery-workflow.md` | `agent:managing-editor` |
 | 予定済みタスクからのGitHubアクセス | `docs/editorial/github-access-policy.md` | `agent:managing-editor` |
 | AI生成ビジュアル、季節感、人物、metadata | `docs/editorial/ai-visual-policy.md` | `agent:visual-editor` |
 | 読者向け表示、未完成記事、表現 | `docs/editorial/reader-trust-policy.md` | `agent:copy-editor` |
@@ -16,9 +16,16 @@ KOTATSUの編集ルールは、内容ごとに次のファイルを正本とす�
 ## Precedence
 
 - automation promptは、担当名、起動時刻、対象label、読む正本だけを指定する。編集ルールを再定義しない。
+- role cardの時刻と次回起動待ちは通常進行に適用する。迅速復旧の再開・委任・停止は `recovery-workflow.md` のExecution Priorityを優先する。role cardは成果物、固有判断、品質ゲート、merge権限を引き続き定める。
 - README、`docs/editorial/ai-editorial-room.md`、Issue templateは案内または入力補助であり、正本を上書きしない。
 - Vol.固有計画は記事の方向を具体化できるが、共通の安全、読者信頼、公開ゲートを緩和できない。
 - 文書とスクリプトが食い違う場合は、都合のよい方を選ばない。`docs/editorial/recovery-workflow.md` のSource-of-Truth Recoveryで修正対象、競合元、失敗した検査、元工程を記録し、表のrepair ownerへ回送する。同じ不一致を各予定実行が再検査するだけの状態にしない。
+
+## Autonomous Decisions
+
+ユーザーが承認した運用範囲内の調査、担当の編集判断、修正、PR作成、担当権限内のmerge・公開は、既存ゲートを通して追加の人間承認を待たず進める。通常の選択はGitHubの現在状態、正式計画、実成果物を調べて担当が判断する。別のスキルや例文から承認待ちや独自ゲートを追加しない。承認範囲を超える判断だけを具体的な不足情報とともに返す。
+
+指示はモデル名で分岐させない。指定された必須検査が合格したら次工程へ進み、変更・失敗・未解決の懸念がない限り同じ検査や全体検査を繰り返さない。共通規則をrole cardやautomation promptへ複製しない。
 
 ## Branch Freshness
 
