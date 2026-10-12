@@ -28,6 +28,12 @@ function rejectPattern(relativePath, pattern, description) {
 
 requireText('docs/editorial/rule-hierarchy.md', 'docs/editorial/agent-workflow.md');
 requireText('docs/editorial/rule-hierarchy.md', 'docs/editorial/recovery-workflow.md');
+requireText('docs/editorial/rule-hierarchy.md', '## Autonomous Decisions');
+requireText('docs/editorial/rule-hierarchy.md', '迅速復旧の再開・委任・停止');
+requireText('docs/editorial/recovery-workflow.md', '## Execution Priority');
+requireText('docs/editorial/recovery-workflow.md', '別roleへのhandoffだけを理由に復旧sessionを終えない');
+requireText('docs/editorial/github-access-policy.md', '## Startup Gate');
+requireText('prompts/kotatsu/agent-handoff.md', 'without starting another agent');
 requireText('docs/editorial/agent-workflow.md', 'draft -> scheduled -> published');
 requireText('docs/editorial/agent-workflow.md', '制作担当同士は直接');
 requireText('docs/editorial/agent-workflow.md', '未来週のライター修正');
@@ -101,9 +107,9 @@ requireText('docs/editorial/recovery-workflow.md', '同じアートブリーフ�
 requireText('docs/editorial/ai-visual-policy.md', '## ビジュアルプログラム');
 requireText('.agents/kotatsu/copy-editor.md', '11:00と15:00のどちらも同じ校正枠');
 requireText('.agents/kotatsu/managing-editor.md', '9:00、12:00、16:00');
-requireText('.agents/kotatsu/managing-editor.md', 'pnpm planning:recover -- --apply');
+requireText('.agents/kotatsu/managing-editor.md', 'Execution Priority');
 requireText('.agents/kotatsu/managing-editor.md', 'pnpm article:handoff');
-requireText('.agents/kotatsu/editor-in-chief.md', 'pnpm planning:recover -- --apply');
+requireText('.agents/kotatsu/editor-in-chief.md', 'Execution Priority');
 requireText('.agents/kotatsu/managing-editor.md', '対象branchへのdetached switch');
 requireText('.agents/kotatsu/writer.md', 'detached switch');
 requireText('docs/editorial/github-access-policy.md', 'git status --porcelain');
@@ -177,6 +183,11 @@ for (const role of ['managing-editor', 'publisher', 'visual-editor', 'copy-edito
     `.agents/kotatsu/${role}.md`,
     /(?:20:00|21:00|22:00)/,
     'late recovery window'
+  );
+  rejectPattern(
+    `.agents/kotatsu/${role}.md`,
+    /17:00公開担当の再試行に任せる|日付をまたいでも次の公開枠|`revise` の次回起動で/,
+    'fixed-role wait overriding rapid recovery'
   );
 }
 

@@ -34,6 +34,6 @@ draftまたは未来日時の記事は公開せず、理由をコメントして
 
 `recovery:actions`がfreshな待機を返した場合は有界pollを完了まで待つ。stale runはコマンドにcancel/rerunさせ、成功済みの別runを再実行しない。`checkpoint`ならrun id、head SHA、試行数、次actionをIssueへ残してleaseを解放する。次の日中scheduled runから委任された公開担当workerは同じコマンドから再開し、固定の公開担当時刻を待たない。`blocked`は上限到達または入力矛盾なので、必須checkを迂回せず具体的理由をcheckpointへ残す。
 
-成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、具体的な再開地点をコメントして `kotatsu:revise + agent:publisher` に残す。日付をまたいでも次の公開枠でDelivery recoveryを自己完結し、完了済みゲートを保持する。本文、画像、校正の判断が必要な失敗だけEditorialまたはProduction recoveryへ戻す。
+成功時は公開URL、PR、checksをコメントしてdoneにし、Issueをcloseする。通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、具体的な再開地点をコメントして `kotatsu:revise + agent:publisher` に残す。再開・委任はrecovery-workflowのExecution Priorityに従い、完了済みゲートを保持する。本文、画像、校正の判断が必要な失敗だけEditorialまたはProduction recoveryへ戻す。
 
 公開担当はVol.のmilestone自体は閉じない。最終記事Issueをcloseした後、進行編集の次回起動がVol.完了条件を確認して閉じる。
