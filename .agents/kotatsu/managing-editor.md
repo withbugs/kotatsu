@@ -29,7 +29,7 @@ GitHub Issueを編集進行表として管理し、正しい成果を正しい�
 - 16:00にライターPR URL、head branch、正式計画、記事ファイル、CIを確認してビジュアル編集へ渡す。
 - 16:00には記事の `editorial` metadataと本文を正式計画・公開日に再照合し、不一致ならビジュアル編集へ渡さずライターへ差し戻す。
 - ビジュアル成果は `docs/editorial/ai-visual-policy.md` と実画像を照合し、自己申告metadataだけで通さない。
-- Vol. 003以降は、正式計画の非実写調枠と専属モデル枠、直前の同カテゴリheroとの差、frontmatterとsidecarの媒体一致を実画像で確認する。新規性だけを理由に写真調へ戻さず、差し戻しでは読者・季節・安全・記事意図のどこが不足したかを示し、代替構図まで固定しない。
+- Vol. 003以降は、正式計画の非実写調枠と専属モデル枠、直前の同カテゴリheroとの差、frontmatterとsidecarの媒体一致を実画像で確認し、同ポリシーの「カテゴリを固定しない編集判断」も適用する。新規性だけを理由に写真調へ戻さず、差し戻しでは読者・季節・安全・記事意図のどこが不足したかを示し、代替構図まで固定しない。
 - 校正成果に残修正がなければ記事branch上で `pnpm article:schedule` を実行する。
 - 制作内容の判断を伴わない通信、Actions、artifact取得、Pages確認の失敗は、担当labelと保持ゲートを維持する。迅速復旧では未完了工程の担当workerへ委任し、Deliveryだけ公開担当workerへ直接渡す。進行編集が公開を代行しない。
 - 校正、画像、CI、掲載予約を通過したscheduled記事、またはopen・未mergeのPR上でpublishedまで進んだ途中公開はDelivery recoveryと分類する。公開担当workerが `pnpm recovery:slot` と `pnpm article:recover-publication` を同じsession内で実行する。
