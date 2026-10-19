@@ -17,7 +17,7 @@
 - `kotatsu:ready`: 次担当が新規着手できる
 - `kotatsu:running`: 担当が作業中
 - `kotatsu:review`: 進行編集の確認待ち
-- `kotatsu:revise`: 現担当が次回起動で処理する具体的な修正
+- `kotatsu:revise`: 現担当が処理できる具体的な修正・技術的な再開地点
 - `kotatsu:publish`: 掲載予約済みで、公開担当が処理できる
 - `kotatsu:done`: 完了
 
@@ -29,7 +29,7 @@
 | --- | --- | --- | --- |
 | `planned` | 進行編集 | `ready` | 着手時期、担当、milestone、入力成果物が揃う |
 | `ready` / `revise` | 担当エージェント | `running` | 作業開始時 |
-| `running` | 同じ担当エージェント | `revise` | 技術的失敗の再開地点を記録し、次の同担当起動を待つ |
+| `running` | 同じ担当エージェント | `revise` | 技術的失敗の再開地点と未完了操作を記録する |
 | `running` | 担当エージェント | `review` | 成果、PR/head branch、検証結果をコメント済み |
 | `review` | 進行編集 | `ready` | 次担当へ渡せる |
 | `review` | 進行編集 | `revise` | 現担当へ具体的な修正が必要 |
@@ -44,7 +44,7 @@
 
 ## Branch And Handoff
 
-- 予定実行の分離worktreeは、remote brokerで`origin/main`を取得した直後に `pnpm install --offline --frozen-lockfile --ignore-scripts` を実行する。lockfileとローカルpnpmストアだけで依存を復元し、不足時は外部取得へ切り替えずその起動を停止する。
+- 予定実行の分離worktreeは `github-access-policy.md` のStartup Gateを通してから作業する。
 - 承認済み正式計画は `origin/main` に存在する場合だけ制作へ使える。
 - 記事制作は、ライター、ビジュアル編集、校正、公開担当が同じ記事PR head branchへ変更を積む。
 - Draft PRは担当の作業中だけ許可する。担当完了時はReady for reviewにする。
@@ -77,13 +77,13 @@
 
 同じ担当に複数の起動時刻がある場合、すべて同じ成果物、検査、完了条件を使う。前の起動で完了済みなら何もせず、`ready`、実施可能な `revise`、または2時間を超えて有意な進捗がない同担当の `running` だけを処理する。直近2時間以内に更新された作業は重複処理しない。予定実行の欠損、技術障害、期限超過は `docs/editorial/recovery-workflow.md` で分類し、通常工程の品質基準を上書きしない。
 
-通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、失敗した担当が再開地点をコメントし、同じ担当の `kotatsu:revise` に残す。次の同担当起動が進行編集を介さず再開する。本文、画像、校正、公開日など編集判断が必要な失敗だけ `kotatsu:review + agent:managing-editor` へ戻す。これは同じ担当内の再試行であり、制作担当間の直接受け渡しではない。
+通信、Actions、artifact取得、Pages確認など制作内容を変えない技術的失敗は、失敗した担当が再開地点をコメントし、同じ担当の `kotatsu:revise` に残す。再開時刻と委任はrecovery-workflowのExecution Priorityに従う。本文、画像、校正、公開日など編集判断が必要な失敗だけ `kotatsu:review + agent:managing-editor` へ戻す。これは同じ担当内の再試行であり、制作担当間の直接受け渡しではない。
 
 ## Recovery
 
 予定実行の欠損、技術的失敗、公開予定日の超過、正本矛盾は `docs/editorial/recovery-workflow.md` を正本とする。通常工程は成果物と品質ゲートを定義し、復旧工程は完了済みゲートを保持する条件、未完了の再開地点、protected公開日を動かさない最短空き枠だけを定義する。
 
-09:00から18:00までに起動した予定済みタスクは、状態labelにかかわらずopenな `type:article` の更新時刻、PR、公開予定から遅延候補を確認する。予定担当の起動が1回欠けた、工程から2時間を超えて進捗がない、または公開予定日を過ぎた対象は復旧classを決める。対象があれば迅速復旧コーディネーターとして役割別workerを逐次dispatchする。activeまたはcheckpointの復旧goalは通常担当より先に再開し、実施可能なreviseを理由に固定時刻まで待たない。ただし、進行編集の09:00、12:00、16:00と編集長の10:00は、記事復旧より先に月次計画の期限判定を行う。排他leaseを持つのは最新記録が期限内の `state: active` であるsessionだけで、checkpointは即時再開できる。未来日時まで正常に掲載待機する `waiting-publishAt` は復旧優先対象にせず、ほかの記事を進める。技術的なDelivery recoveryは公開担当workerが `pnpm recovery:slot`、`pnpm article:recover-publication`、必要時の `pnpm recovery:actions` を同じsession内で実行する。Actions runのfresh待機、stale cancel/rerun、試行上限はコマンド出力に従い、手計算しない。読者向け内容の再確認が必要なEditorial recoveryは進行編集workerが `pnpm article:rebook` を使い、open・未mergeのpublished記事PRでは編集長再確認後に `--resume-unmerged-publication` を付けてdraftへ戻す。ProductionとEditorial recoveryでは制作workerごとに進行編集workerを挟む。
+root実行の優先順位、遅延の発見、lease、委任、停止条件はrecovery-workflowのExecution Priorityと各復旧節に従う。open・未mergeのpublished記事PRも復旧候補に含める。Deliveryは公開担当workerが同じsession内で回復し、Editorialは進行編集workerが `pnpm article:rebook` を使う。担当と公開時期は機械出力で決め、実施可能なreviseを固定時刻待ちにしない。
 
 正本矛盾はGovernance recoveryとし、`pnpm recovery:source-conflict` が返すownerへsource PRを委任する。同じfingerprintが未解決の間は元の制作ゲートを予定実行ごとに繰り返さず、source PRの修正、進行編集gate、元工程への復帰を進める。
 

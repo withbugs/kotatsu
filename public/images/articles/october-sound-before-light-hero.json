@@ -1,0 +1,77 @@
+{
+  "source": "ai-generated",
+  "visualMode": "illustration",
+  "volume": "vol-004",
+  "article": "october-sound-before-light",
+  "githubIssue": 121,
+  "editorialIntent": "音楽も読書も最後まで使い切らず、その日の明るさに応じて止めたり続きを選んだりできる、生活の中の文化時間を伝える。",
+  "subject": "薄手の青緑の長袖から伸びた架空の匿名人物の片手が手元灯のスイッチを押す。そばには伏せた無地の端末と閉じた本がある。",
+  "setting": "十月中旬の架空の室内。窓外のまだ緑の葉と青灰の夕方光、清潔な高い淡紫灰のテーブル、手元を照らす明かり。",
+  "composition": "横長3:2。斜めの近接detailでスイッチを押す手と照明、本、伏せた端末を同時に捉えるhuman-action。机の縁と脚を見せ、物が高い面に支持されていることを示す。",
+  "compositionFamily": "human-action",
+  "sceneFamily": "interior",
+  "perspective": "detail",
+  "humanPresence": "anonymous",
+  "cameraDistance": "close",
+  "visualTemperature": "mixed",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "muted teal",
+    "dusty lavender-gray",
+    "ivory",
+    "mineral blue",
+    "gray-green",
+    "soft warm white"
+  ],
+  "colorMood": "青緑と淡紫灰の塗り面、青灰の窓外、象牙色の本、局所的な柔らかい白い灯り。琥珀色を画面全体へ広げず、涼しい夕方と使える手元の光を共存させる。",
+  "creativeRationale": "直近3本の明るい写真調から、ガッシュと色鉛筆の触感へ切り替えた。前回CULTUREの無人の広い紙コラージュと音の帯を繰り返さず、止めた端末の隣で照明をつける片手の具体的な動作へ寄り、記事の『続きを選び直す』焦点を表す。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: illustration-story\nAsset type: original AI-generated KOTATSU Japanese editorial magazine article hero, landscape 3:2\nPrimary request: Create a refined gouache and colored-pencil editorial illustration about pausing music in a mid-October evening and choosing enough light for the next action. Show the ordinary gesture of switching on a reading lamp beside a phone that has been placed face down and a closed book. The choice to pause is the subject, not a display of possessions.\nScene/backdrop: An entirely fictional everyday home in Japan, mid-October with lingering mild weather. Tight side-oblique detail view of a clean raised pale lavender-gray table; its edge and a small portion of legs visible to establish it is furniture above the floor. Background is a softly painted cropped window with still-green leaves and cooling blue-gray daylight, no landmark.\nSubject: One adult's single naturally proportioned hand and forearm in a thin teal cotton long sleeve reach from the side to gently press the small switch on the base of a simple unbranded pale reading lamp. The lamp is on and casts soft neutral-white sufficient reading light on the surface. A plain closed ivory book with a small bookmark and an unbranded muted blue phone lying face down rest fully supported on that same clean table. No face, no full body, no jewelry; ordinary anatomy, five fingers with natural occlusion, one wrist, one forearm.\nStyle/medium: Clearly hand-painted non-photorealistic contemporary editorial illustration, opaque gouache color masses and delicate colored pencil contours, matte brush texture. Not cut paper, not collage, not a photograph or 3D rendering. Sophisticated quiet magazine art direction.\nComposition/framing: Horizontal 3:2, close detail at a slightly raised side-oblique viewpoint, human-action composition. Lamp base and hand are the focal point in the central area, with closed book and face-down phone visibly supported nearby. Balanced density; the action and essential objects remain visible within a center crop. Avoid an overhead flat lay or a wide room scene. Use subtle asymmetry rather than a product lineup.\nLighting/mood: Cooling blue-gray outside light meets a localized soft neutral-white lamp pool. Mixed light with clear usable visibility across the table and surrounding space. Quiet, breathable, no darkness to endure, no deep amber or dramatic sunset.\nColor palette: muted teal sleeve, dusty lavender-gray table, ivory book, mineral blue phone, gray-green leaves, soft white illumination. Gentle expressive brushwork, neither bright stock-photo look nor dominant brown/black.\nConstraints: no text, letters, readable book title, musical notation, album cover, labels, logos, trademarks, recognizable real people or celebrity likeness, recognizable real place, watermark. Only one hand and forearm; coherent finger anatomy, real support surfaces and furniture. All personal items stay entirely on the raised table, none on floor. No luxury product styling.\nAvoid: paper collage, diagonal abstract sound ribbons, floating objects, extra fingers or limbs, floor-placed books or phone, coffee or drinks, food, wool, heavy coat, blankets, fireplace, snow, peak autumn leaves, Halloween decorations, orange autumn cliches, dark amber glow, excessive wood, abstract room tableaux, sterile catalog styling.",
+  "promptSummary": "十月中旬の青灰色の夕方、薄い青緑の長袖の片手が手元灯をつける。伏せた端末と閉じた無地の本を、高い淡紫灰のテーブルに置いたガッシュと色鉛筆のイラスト。",
+  "caption": "音を止めて端末を伏せたあと、閉じた本のそばで手元灯をつける、十月の夕方の切替を描いたAI生成イラスト。",
+  "seasonalContext": "2026年10月16日の日本の架空の室内。暖かさが残る地域もある十月中旬、窓の夕方光が青灰へ移り、手元に必要な照明を選ぶ時間。全国共通の時刻を示さない。",
+  "seasonalCues": [
+    "薄手の青緑の長袖とまだ緑を残す窓外の葉が、十月中旬に残る暖かさと軽い調整を示す。",
+    "窓外の青灰色の夕方光と本の表面を照らす手元灯を併置し、早まる夕方と必要な明るさへの切替を示す。"
+  ],
+  "seasonalAvoid": [
+    "厚いウール、毛布、暖炉、雪、紅葉の盛りなど十月中旬を冬や晩秋へ固定する表現。",
+    "深い琥珀色や濃い茶色だけで秋を演出する画面、ハロウィン装飾、読書週間の先取り。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "readable book titles or album covers",
+    "musical notation",
+    "paper collage with diagonal sound ribbons",
+    "hygiene-sensitive items on floor",
+    "heavy winter materials",
+    "Halloween decorations"
+  ],
+  "similarityReviewedAgainst": [
+    "afternoon-route-by-return-time",
+    "after-rain-pause-before-putting-away",
+    "light-layer-between-morning-evening"
+  ],
+  "visualDifference": "直近3本の屋外分岐路（street-observation / high-angle / wide / none）、室内の通風ラック（spatial-interior / eye-level / wide / none）、歩く人物（human-action / eye-level / medium / anonymous）を実画像で比較した。今回はillustration / human-action / interior / detail / close / mixedで、灯りをつける片手へ寄った。隣接の分岐路と構図分類が異なり、室内全景や歩行姿も反復しない。新しい4本の中で静物が主題の画像は通風ラック1本だけで、今回は手の動作が主題。",
+  "sameCategoryReviewedAgainst": "shorter-evening-room-sound-books",
+  "categoryVisualDifference": "前回CULTUREのcollage / editorial-collage / graphic-space / eye-level / wide / cool / airy / noneから、illustration / human-action / interior / detail / close / mixed / balanced / anonymousへ8軸を変更。無人の平面空間と抽象的な音の帯を用いず、片手とスイッチの動作を近接で描く。",
+  "referenceSheetUse": "none; no roster model used; PEOPLE roster commitment remains reserved",
+  "diversityReview": "顔や全身を描かず、片手の動作だけで時間の切替を示す。性別、職業、家族構成、実在人物の経験を付与しない。専属モデルの匿名化ではなく、この画像は独立した架空の匿名人物を主題にする。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-10-13T18:01:40+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "薄い青緑の長袖、窓外のまだ緑の葉、青灰の夕方光と局所的な手元灯を原寸で確認。重い冬素材、雪、盛りの紅葉、ハロウィン装飾はない。手元の本と移動側の周囲が見え、暗さを我慢する場面ではない。",
+    "anatomyAndIdentity": "片手と前腕は1つ。伸ばした人差し指、親指と曲げた残りの指の重なり、手首の接続、スイッチとの接触に使用を妨げる破綻はない。顔はなく、実在人物・著名人の肖像への類似はない。",
+    "textAndBrands": "無地の本、端末、灯具、窓と家具を原寸で確認し、読める文字、ブランド名、ロゴ、歌詞、作品名、透かしはない。端末は一般的な無銘の形状で、商品や実在作品の推薦として扱わない。",
+    "retiredPatterns": "高いラックの布へ寄る写真調、本と斜めの音の帯の紙コラージュ、公園ベンチで横向きに休む人物のいずれも使用しない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "本と伏せた端末は清潔な高いテーブル上へ完全に支持され、机の縁と脚が見える。灯具と鉢も机上にある。食品、飲料、衣類、財布、鍵などの床置きはない。"
+  }
+}

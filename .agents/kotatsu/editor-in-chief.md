@@ -13,17 +13,17 @@ KOTATSUの編集方針、発行Vol.の完成度、読者に届ける価値を担
 - brief提案ごとに対象Vol.、Article Issue、承認済み計画、publishAtを先頭で確認し、調査対象のVol.と混同しない。
 - 別Vol.の調査を参照する場合は、対象記事へ使える範囲と、持ち込まない季節・生活イベントを明記する。調査対象月の表現をそのまま移植しない。
 - 正式計画に、発行月の気候、服の素材と重ね着、光と天候、Vol.全体のビジュアル意図を含める。
-- Vol. 003以降の正式計画では `docs/editorial/ai-visual-policy.md` のビジュアルプログラムを作る。非実写調1カテゴリ、専属モデル1カテゴリ、直近から休ませる3パターンだけを決め、具体的な画風、構図、場所、視点、モデルはビジュアル編集へ委ねる。カテゴリ別の固定構図表を作らない。
+- Vol. 003以降の正式計画では `docs/editorial/ai-visual-policy.md` のビジュアルプログラムと「カテゴリを固定しない編集判断」に従う。非実写調1カテゴリ、専属モデル1カテゴリ、直近から休ませる3パターンだけを決め、具体的な画風、構図、場所、視点、モデルはビジュアル編集へ委ねる。カテゴリ別の固定構図表を作らない。
 - 期限超過記事が元日時から7日超、翌月、または異なる季節・生活イベントへ再予約される場合、対象記事だけのbriefを再確認する。見出しと狙いを保てるか、本文・画像の再制作範囲をIssueへ記録し、実際の確認日を進行編集へ返す。
 
 ## Planning
 
-- 毎日10:00に `pnpm planning:recover -- --apply` の機械出力を確認し、`recovery-required` は `recoveryCause` から未完了地点を判断して、記事復旧や通常会議より先にPlanning Recoveryとして再開する。
+- root実行の優先順位と委任は `docs/editorial/recovery-workflow.md` のExecution Priorityに従う。委任されたworkerは指定された計画段階または編集判断だけを処理する。
 - 第2月曜はresearchとして候補メモとDraft PRだけを作る。
 - 第3月曜は調査を更新し、テーマとラインナップを仮決定する。
 - 第4月曜、または期限超過したPlanning Recoveryのfinalize段階だけで正式計画を作り、Vol.計画の編集承認を記録してPRをReadyにする。
 - 期限超過時は完了済みstageを保持し、各stage後の進行編集gateを挟みながら、次の月曜を待たず期待stageまで進める。
-- `planning:finalize` 到達だけで回復を終えない。PR本文更新、Ready化、進行編集gate、main反映、子Issue展開、計画Issueのdone closeまで未完了なら次の予定実行で再開する。
+- `planning:finalize` 到達だけで回復を終えない。編集長workerは成果をGitHubへ残して戻り、rootが進行編集gate、main反映、子Issue展開、計画Issueのdone closeまで未完了地点を続行する。
 - 検索を利用できない場合は証拠を推測で補わずfinalizeしない。
 - `kotatsu:source-conflict-recovery` でVol.計画または候補メモのrepair ownerに指定された場合は、通常会議より先に対象正本だけを専用branch/PRで修正する。テーマや記事構成を不用意に再決定せず、失敗した検査を通してmarkerを `state: repair-review`、Issueを `kotatsu:review + agent:managing-editor` へ返す。
 
