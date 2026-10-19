@@ -1,0 +1,79 @@
+{
+  "source": "ai-generated",
+  "visualMode": "collage",
+  "volume": "vol-004",
+  "article": "read-fabric-weight-before-buying",
+  "githubIssue": 122,
+  "editorialIntent": "手持ちの二枚を着て過ごすときのかさと扱いやすさを、袖口を整える小さな動作と座った腰の布の重なりから伝える。",
+  "subject": "珊瑚色の椅子に座る架空の匿名人物。薄緑の前開きの羽織と淡黄色の長袖を重ね、片手で反対側の内袖を引き出す。青いパンツと肘・腰のしわも見える。",
+  "setting": "2026年10月22日公開の日本向け記事を想定した、明るく抽象的なgraphic-space。特定の住居・店舗・気象・時刻を示さず、淡い色面で暖かさの残る昼を表す。",
+  "composition": "横長3:2。目の高さから頭部の一部、上半身、膝までを捉えたmediumのeditorial-collage。椅子と座位の人物を左寄りに大きく置き、中央の二つの袖口と手、肘から腰へ続く切り紙の層を焦点にする。",
+  "compositionFamily": "editorial-collage",
+  "sceneFamily": "graphic-space",
+  "perspective": "eye-level",
+  "humanPresence": "anonymous",
+  "cameraDistance": "medium",
+  "visualTemperature": "neutral",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "off-white",
+    "pale celadon green",
+    "butter yellow",
+    "mineral blue",
+    "pale coral",
+    "charcoal"
+  ],
+  "colorMood": "白い紙を背景に薄緑、淡黄、青を重ね、椅子の珊瑚色を小さく添える。茶や深い琥珀色へ寄せず、乾いた中立の明るさを保つ。",
+  "creativeRationale": "SHOPPINGの非実写調枠を第一案として使い、二枚を重ねたときだけ現れるかさを、紙を重ねる媒体そのものへ結びつけた。直近CULTUREも非実写調だが、その机上の片手の近接から、人物の座位と袖・腰の布を一緒に見せる中景へ移す。商品陳列や素材の優劣を示さず、身につけて動いた感触を記事の入口にする。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: illustration-story\nAsset type: original KOTATSU editorial magazine article hero, horizontal landscape 3:2, 1536x1024\nPrimary request: A sophisticated handmade cut-paper collage about discovering how two familiar lightweight garments feel together while sitting and gently straightening a cuff. The everyday movement and the overlapping paper layers carry the idea of bulk and ease before deciding whether to buy anything. This is an editorial image, not clothing advertising.\nScene/backdrop: An abstract off-white graphic space, a few pale daylight shapes suggesting mild October in Japan, no detailed room, no floor plane, no shop. One simple pale coral chair visibly supports the seated person.\nSubject: One entirely fictional anonymous adult, naturally ordinary medium build, depicted as a stylized paper-cut figure in a relaxed three-quarter side seated pose, head through lower legs within the frame. Short dark hair, an understated abstract face with no portrait realism. They wear a pale celadon thin cotton overshirt open over a soft butter-yellow long-sleeve shirt, and airy mineral-blue trousers. One bent arm brings a layered cuff forward while the other hand lightly pulls the yellow inner cuff into place. The two thin sleeves must remain visibly separate, with slight gathered folds at the elbow and waist. Coherent two arms, two hands with simplified anatomically sensible fingers. Quiet attentive gesture, no posing for fashion. Feet can be simply suggested or cropped below lower legs; no extra garments or objects.\nStyle/medium: Deliberate non-photorealistic cut-paper collage, tactile colored handmade paper, carefully torn and cut edges, visible layered paper shadows and restrained pencil crease lines. Bold simplified interlocking silhouettes and sculptural paper folds; no photoreal textile swatches, no gouache-painted realism, no 3D render.\nComposition/framing: Horizontal 3:2, eye-level medium-wide view of the seated figure and chair slightly left of center; asymmetric airy off-white space to the right. The seated knees, elbow and cuffs form a quiet zig-zag, with cuff movement clearly readable in the central area. All important clothing and gesture should survive a central website crop. No separate inset panels, no diagram, no product lineup, no overhead flat lay.\nColor palette: off-white, pale celadon green, butter yellow, mineral blue, small pale coral chair accent and charcoal paper hair. Neutral dry daylight, breathable light fabric, no dominant brown or amber. October adjustment layers with lingering mild weather, not winter.\nConstraints: original AI-generated fictional visual only; no real people or celebrities or likeness references; no logos, readable text, letters, prices, brands, labels, watermark, store signs. No personal items or garments on the floor; clothing is worn and chair-supported. No floating detached hands, no extra limbs, no fabric rack, no book, sound ribbons, lamp, phone, coffee, bags, accessories, heavy wool, coats, blankets, autumn leaves, snow, fireplace, Halloween decoration, luxury fashion campaign. No real image references.",
+  "promptSummary": "抽象的な明るい背景で、珊瑚色の椅子に座る架空の人物が薄緑の羽織と淡黄色の長袖を重ね、袖口を整える。青いパンツと肘・腰に寄る布を、切り紙の重なりとしわで表す紙コラージュ。",
+  "caption": "二枚を重ねて椅子に座り、内側の袖口を整える。服のかさを切り紙の層で表したAI生成ビジュアル。",
+  "seasonalContext": "2026年10月22日公開の日本向け記事。地域や室内外の暖かさの違いが残る十月を、薄い長袖と前を開けた軽い羽織、明るい昼の色面で表す。全国一律の気象や冬支度を示さない。",
+  "seasonalCues": [
+    "薄緑の軽い羽織を前開きで淡黄色の長袖へ重ね、袖口を引き出す動作で十月の調整可能な重ね着を示す。",
+    "白い背景に淡い緑と黄色の光の面を置き、厚い冬素材や深い琥珀色に頼らない、暖かさの残る昼の明るさを保つ。"
+  ],
+  "seasonalAvoid": [
+    "厚手のコート、ダウン、重いウール、暖炉、雪、紅葉の盛りで十月を冬へ固定する表現。",
+    "深い琥珀色や濃茶の大面積、ハロウィン装飾、九月の残暑や十一月の行事を主題にする表現。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "readable text or prices",
+    "product comparison charts",
+    "clothing on floor",
+    "retired fabric-rack close-up",
+    "books and diagonal sound ribbons",
+    "park-bench resting portrait",
+    "heavy winter materials"
+  ],
+  "similarityReviewedAgainst": [
+    "october-sound-before-light",
+    "afternoon-route-by-return-time",
+    "after-rain-pause-before-putting-away"
+  ],
+  "visualDifference": "生成前に直近3本の実画像を原寸で比較した。直近CULTUREの青灰・淡紫灰のガッシュによる机上の片手（human-action / interior / detail / close / mixed）から、白・薄緑・淡黄・珊瑚色の紙の層による座位の人物（editorial-collage / graphic-space / eye-level / medium / neutral）へ変更。分岐路の屋外広景、通風ラックの室内広景も反復しない。媒体名だけの変更ではなく、人体が占める面積、距離、背景、色と布の重なりを読者に見える差にした。直近4本の静物主題はLIFEのラック1本である。",
+  "sameCategoryReviewedAgainst": "review-september-fabrics-before-buying",
+  "categoryVisualDifference": "直近2号のSHOPPING実画像を比較。Vol.003のphotorealistic / material-study / workshop / detail / close / mixed / dense / noneから、collage / editorial-collage / graphic-space / eye-level / medium / neutral / balanced / anonymousへ8軸を変更。吊った素材を読む無人の接写から、着て座る人物と袖の動きへ焦点を移した。Vol.002の玄関で靴を磨く写真調の手元とも、履物・玄関・道具を使わず、紙の層と座位の上半身で差をつけた。",
+  "referenceSheetUse": "none; independent anonymous stylized fictional adult; no roster identity reference",
+  "diversityReview": "人物は独立した架空の切り紙表現で、専属モデルの省略表現ではない。性別、職業、家族構成、勤務先、発言、購入歴などを付与しない。PEOPLEの専属モデル枠は保持する。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-10-19T18:01:23+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "原寸で薄い二枚の長袖、開けた羽織、明るい白と淡色の背景を確認。袖は調整でき、重い冬素材、紅葉、雪、暖炉、行事装飾はない。しわと紙の層はかさを示すが、ウールや防寒具には見えない。",
+    "anatomyAndIdentity": "左右の腕と手は各1つで、肘・手首・袖の接続と、片手が反対側の袖へ触れる関係に使用を妨げる破綻はない。手指は紙の面で簡略化され、曲げた指の重なりが自然。顔は抽象的な架空の切り紙表現で、特定の実在人物や著名人を想起させる特徴はない。",
+    "textAndBrands": "服、ボタン、椅子、背景を原寸で確認し、文字、ブランド、ロゴ、価格、ラベル、透かし、実在店舗を示す要素はない。",
+    "retiredPatterns": "高いラックの布へ寄る写真調、本と斜めの音の帯の紙コラージュ、公園ベンチで横向きに休む人物は使っていない。今回は座位で袖を能動的に整える人物と抽象的な色面である。",
+    "layout": "3:2の全体と中央の主題を確認。頭頂と下腿は画面外だが、袖口を整える二つの手、肘と腰の布、椅子の支持面は画面内で読める。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "衣類はすべて人物が着用し、裾と腰は珊瑚色の椅子の座面に支持されている。背景は抽象的な紙の色面で、衣類や私物を床へ置く場面はない。食品、飲料、本、携帯電話、財布、鍵、鞄などの私物も描かない。"
+  }
+}
