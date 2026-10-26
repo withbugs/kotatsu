@@ -1,0 +1,76 @@
+{
+  "source": "ai-generated",
+  "usage": "volume-cover",
+  "visualMode": "illustration",
+  "volume": "vol-005",
+  "githubIssue": 136,
+  "editorialIntent": "Vol.005「十一月、手を動かす余白」を、紙や道具へ短く関われる空き面と、何もしない時間も受け止める生活の一角で表す。完成や器用さを成果として求めない。",
+  "subject": "淡い青灰の作業面、少し引いた椅子と掛けた紫色の長袖カーディガン、棚の無地の本、トレー上の折り紙と筆記具",
+  "setting": "2026年11月の日本の架空の室内、低い角度の白い昼光が壁と作業面へ届く時間。全国予報の数値や特定地域の天候は表さない。",
+  "composition": "eye-level / medium-wideのspatial-interior。椅子と広い空き面、右の棚を非対称に組み、紙と道具を接写せず生活空間の一部として扱う。",
+  "compositionFamily": "spatial-interior",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "none",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "mixed",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "chalk cream",
+    "mist blue-gray",
+    "muted plum",
+    "pale wood ochre",
+    "soft violet shadow"
+  ],
+  "colorMood": "白い昼光と青灰の作業面、淡い紫の影へ、木部とカーディガンの控えめな暖かさを添える。濃茶や琥珀色が大面積を占める室内にはしない。",
+  "creativeRationale": "六記事を小物の一覧へ分解せず、触れたり読んだりする前後の空き面を一つの室内として描いた。絵具の面と余白で生活の関わりを示すため、ガッシュのイラストを第一案に選んだ。LIFEの非実写調枠・STYLEの専属モデル枠は記事用として保持し、カバーで代替しない。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: illustration-story.\nAsset type: new formal volume cover illustration for KOTATSU, a Japanese everyday-life editorial magazine, November 2026 issue titled conceptually 'Room to engage with everyday things'. Landscape 1536x1024. Do not render a title or any typography.\nPrimary request: A quiet, lived-in multipurpose corner between uses, conveying that a person can briefly write, read, or simply leave a space open without needing to finish anything. One coherent room, not a montage.\nScene/backdrop: fictional modest Japanese interior in November daytime. Eye-level, medium-wide view. A small pale blue-gray laminate work surface spans the lower middle; a simple chair is pulled slightly away. A plain midweight muted plum long-sleeve cardigan hangs on the chair back, sleeves and hem clearly above the clean floor. A small shelf holds one closed plain book; a single folded unlettered note and one plain capped pencil rest together on a shallow tray on the work surface. Leave most of the surface unoccupied. No coffee, no plants or decorative shopping objects.\nStyle/medium: confident hand-painted editorial gouache illustration, broad matte color planes, visible dry-brush edges, subtle paper grain, gently simplified geometry, no photographic rendering and no torn-paper collage. Express depth through broad shapes, not ornamental detail.\nComposition/framing: chair, shelf and work surface form an asymmetric open arrangement with ample breathing room. A low diagonal patch of clear neutral-white daylight enters from outside the frame and falls across the surface and cream wall. Show the empty surface and space around the chair as the main subject; do not crop close to the stationery. Medium-wide eye-level rather than overhead or high-angle.\nLighting/mood: calm, legible November daylight, pale neutral highlights with soft violet shadow; neither amber autumn nostalgia nor wintry gloom. Moderate cotton-knit texture and full-length sleeves are visible seasonal cues, without heavy coats or snow.\nColor palette: chalk cream, mist blue, muted plum, a restrained pale ochre note, soft graphite; neutral overall with airy negative space.\nConstraints: entirely invented place; no humans, hands, faces, text, lettering, numerals, logos, brands, signs, watermark or recognizable artwork. Keep book, pencil, note and clothing on their intended shelf, tray or chair back, never on the floor. No wooden desk, book-and-coffee tableau, lamps, smartphone, road fork, seated figure adjusting cuffs, holiday decorations, gifts, sales symbols, autumn leaves, fireplace or snow. No luxury studio or perfectly curated showroom. The image itself is the illustration, no mockup frame or surrounding magazine.",
+  "promptSummary": "十一月の低い昼光が差す室内をガッシュ風に描く。淡い青灰の空いた作業面、椅子に掛けた紫の長袖、棚の本、トレー上の無地の紙と筆記具で、短く関わる余白を表す。",
+  "caption": "低い昼光が差す空き面に、紙と道具を少しだけ。Vol.005「十一月、手を動かす余白」の正式カバーのAI生成イラスト。",
+  "seasonalContext": "2026年11月の日本。地域・朝夕・室内外の差を残す室内の一例であり、最新全国予報を検証済みとはしない。脱ぎ着できる中厚の長袖と低い昼光を季節の手がかりとする。",
+  "seasonalCues": [
+    "中厚の紫色の長袖カーディガンを椅子の背へ掛け、室内で脱ぎ着できる幅を示す。",
+    "壁と青灰の作業面に低い角度の昼光が差し、淡い紫の影が長く延びる。"
+  ],
+  "seasonalAvoid": [
+    "雪、暖炉、厚い冬コート、全国一律の紅葉の盛りで地域や時期を固定しない。",
+    "濃い茶や琥珀色の暗い室内、クリスマス・セール・贈答記号へ寄せない。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real person or celebrity likeness",
+    "real brand logos or trademarks",
+    "readable lettering or signage",
+    "recognizable real artwork or location",
+    "book and coffee tableau",
+    "hands adjusting cuffs",
+    "lamp and smartphone close-up",
+    "road-fork panorama",
+    "hygiene-sensitive items on the floor"
+  ],
+  "similarityReviewedAgainst": [
+    "read-fabric-weight-before-buying",
+    "october-sound-before-light",
+    "afternoon-route-by-return-time"
+  ],
+  "visualDifference": "直近3本の実heroと制作中leave-one-plan-openを比較。袖口を整える人物のコラージュ、灯りに触れる手元の近接イラスト、分岐路の広景、ローズ長袖の立ち姿を使わず、人物不在の室内を中広景で描いた。直近CULTUREと同じイラスト媒体でも、片手・灯り・端末の接写を避け、椅子と空き面を含む空間へ距離を変えた。",
+  "previousVolumeCoverReviewedAgainst": "vol-004",
+  "coverDifference": "Vol.004のphotorealistic / street-observation / street / high-angle / wide / cool / balancedから、illustration / spatial-interior / interior / eye-level / medium-wide / mixed / airyへ7軸を変更。雨の路面と傘を、空いた室内面と椅子・長袖へ切り替えた。",
+  "referenceSheetUse": "none; roster checked, no people or model used in the formal cover",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-10-26T10:00:57+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "実画像で中厚の長袖、低い角度の白い昼光、青灰の作業面と紫の影を確認。窓外は緑と少量の黄葉で、紅葉の盛りや雪はない。木部の暖かさは白壁と青灰の空き面に抑えられ、厚い冬服や暗い琥珀色の室内に見えない。",
+    "anatomyAndIdentity": "人物、顔、手指は画面にない。専属モデルreferenceの流用や、実在人物との類似を生む肖像を含まない。",
+    "textAndBrands": "棚の本、トレーの紙、筆記具、衣類、窓と柱を拡大確認。読める文字、ロゴ、商標、店舗の看板、識別できる作品はない。",
+    "retiredPatterns": "道の分岐の広景、片手が灯りに触れる近接、椅子に座って袖口を整える人物の紙コラージュは反復していない。",
+    "productionComparison": "PR #135 head 52dd6c51c35882bd749ba39e8f3994420ae3d05eのleave-one-plan-open-hero.pngを取得して実画像比較。写真調の立ち姿・人物・ローズ長袖と青灰の羽織を中心とする画面から、人物のいない空き面へ変更。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "本は壁の棚、無地の紙と筆記具は作業面のトレー上。カーディガンは椅子の背に掛かり、両袖・裾とも床から離れている。床と敷物に食品、飲料、書籍、衣類、財布、鍵、端末はない。"
+  }
+}
