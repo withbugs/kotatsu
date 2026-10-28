@@ -1,0 +1,78 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-004",
+  "article": "leave-one-plan-open",
+  "githubIssue": 123,
+  "editorialIntent": "誘いへの返事を済ませ、追加の予定を一つ入れないと決めたあとの短い間を示す。余白を別の活動や達成で埋めず、実在取材や所有歴の紹介にしない。",
+  "subject": "完全に架空の専属AIモデル KEI が、くすんだローズ色の薄い長袖を着て、青灰の軽い羽織を腕に掛けたまま静かに立つ。",
+  "setting": "2026年10月下旬の日本を想定した、固有の住所や勤務先を示さない架空の住まい。淡い鉱物緑の壁、廊下の陰影、奥の窓にまだ緑の葉を置く。",
+  "composition": "横長3:2。顔から腰・腿上までのmediumなportrait-presence。目線よりわずかに低い位置から立ち姿を捉え、顔と羽織を支える両手を中央に保つ。室内全景より人物の動作の切れ目へ寄る。",
+  "compositionFamily": "portrait-presence",
+  "sceneFamily": "interior",
+  "perspective": "low-angle",
+  "humanPresence": "roster-model",
+  "cameraDistance": "medium",
+  "visualTemperature": "neutral",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "dusty rose",
+    "slate blue-gray",
+    "pale mineral green",
+    "chalk off-white",
+    "silver gray"
+  ],
+  "colorMood": "ローズ色の薄い綿、青灰の羽織、淡い緑の壁と白い自然光。廊下の小面積の陰影を残しながら、琥珀や濃茶へ全体を寄せない。",
+  "modelId": "K-05-KEI",
+  "creativeRationale": "予定を入れない判断を抽象記号や余暇の達成にせず、出かける直前の架空人物の存在感で受け止める。KEIの落ち着いた表情と手を止めた間を選び、personaの道具・園芸を必須の小物にしない。直近2本のイラストから写真調の顔と薄い布の質感へ移り、PEOPLEの専属モデル枠を満たす。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: original AI-generated KOTATSU Japanese editorial magazine article hero, landscape 3:2, 1536x1024.\nPrimary request: A quiet portrait about deciding to leave one future plan unfilled. The brief pause after sending a reply and picking up a light jacket, before leaving home. No reward activity, achievement, loneliness, or productivity message.\nInput image: the supplied sheet is an identity reference ONLY for the entirely fictional registered adult model K-05-KEI. Make ONE new continuous scene, not a reference sheet, collage, triptych, or copy of any reference panel. Preserve his broad stocky build, apparent age 58, close-cropped salt-and-pepper hair, round face, short gray beard and deep laugh lines. Do not imitate or reference any real person or celebrity. The reference's tools, balcony, gardening action and outfit are not requested.\nScene/backdrop: a modest completely fictional everyday Japanese home, late October with lingering mild daytime weather. A pale mineral-green plaster wall and a cropped doorway to an ordinary softly lit hallway. No identifiable location or architectural landmark. A small unobtrusive patch of still-green foliage may show beyond a high glazed panel.\nSubject: KEI stands quietly in a natural frontal three-quarter stance, torso and face visible, weight settled, gaze slightly past the camera as if pausing before the next action. A gentle thoughtful expression without posed smile or dramatic sadness. He wears a thin washed dusty-rose cotton long-sleeve band-collar shirt, lightly wrinkled, and slate-gray casual trousers. A lightweight unlined muted blue-gray jacket is draped naturally over ONE forearm and supported at waist level by his relaxed hands. Jacket clearly thin cotton, no thick knit, wool, tailoring or padded winter clothing. No bag. No phone or calendar in the frame. Face and hands clear and naturally proportioned.\nStyle/medium: photorealistic natural editorial portrait, fine ordinary textures and visible age lines, restrained grain, unpolished everyday dignity. No documentary or interview cues, no stock or fashion advertisement styling.\nComposition/framing: one horizontal 3:2 image, medium portrait-presence composition from just below eye height (subtle low angle, no distortion), head to upper thighs. Person near center, face and folded forearms within the central crop, a little breathing space around shoulders, simple wall and doorway provide balanced depth rather than a wide room. He is standing, not seated, not walking, not viewed from behind or in strict side profile. No table, chair, rack, props or posed gesture.\nLighting/mood: soft neutral-white daytime light across face and sleeves, small natural skin warmth; a modest shaded hallway supplies midtone depth. Clearly readable, calm, neutral temperature, balanced visual density. No amber glow, no deep brown dominance, no harsh summer sun.\nColor palette: dusty rose, muted slate blue-gray, pale mineral green, chalk off-white, natural skin and silver-gray hair.\nConstraints: new scene with identity continuity only. All clothing held on body or forearm, no personal items on any floor. Ordinary coherent anatomy: exactly two arms, natural five-fingered hands with realistic occlusion. No readable text, titles, dates, numbers, logos, brands, trademarks, real shop signs, real landmarks, watermark or extra people.\nAvoid: reference-sheet panels, gardening, tools, inherited blue short-sleeve shirt, rust trousers, pale-blue shirt, seated side-view portrait, shoulder bag, public park bench, wood tabletop still life, books with diagonal sound ribbons, fabric rack close-up, luxury decor, calendar symbols, autumn-leaf spectacle, snow, heavy coat, blanket, fireplace, Halloween, work uniform, jewelry focus, fashion pose.",
+  "promptSummary": "十月下旬の架空の住まいで、専属AIモデル KEI が薄いローズ色の長袖と青灰の羽織で静かに立つ。追加の予定を一つ入れず、次の行動の前に残る短い間を描く。",
+  "caption": "出かける前、薄い羽織を腕に掛けた架空の人物の、次の行動までの間を描くAI生成ビジュアル。",
+  "seasonalContext": "2026年10月28日公開の日本の架空の住まい。日中には暖かさが残る地域と涼しい朝夕の幅を、薄い長袖と着脱できる軽い羽織で扱う。全国共通の気温や日没時刻を示さない。",
+  "seasonalCues": [
+    "薄手のローズ色の綿の長袖と、腕に掛けた裏地のない青灰の羽織が、暖かい日中と涼しい帰り道への調整を示す。",
+    "白い自然光と奥の窓のまだ緑の葉が、冬や紅葉の盛りへ急がない十月下旬の室内を作る。"
+  ],
+  "seasonalAvoid": [
+    "厚いウール、ダウン、コート、毛布、暖炉、雪、紅葉の盛りで冬や晩秋へ一律に固定すること。",
+    "深い琥珀色や濃茶の大面積、ハロウィン装飾、十一月の行事や文化イベントを示す記号。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "recognizable real person or place",
+    "readable text or dates",
+    "reference sheet reuse",
+    "interview or workplace documentary cues",
+    "personal items on floor",
+    "seated pale-blue-shirt portrait with shoulder bag",
+    "heavy winter clothing"
+  ],
+  "similarityReviewedAgainst": [
+    "read-fabric-weight-before-buying",
+    "october-sound-before-light",
+    "afternoon-route-by-return-time"
+  ],
+  "visualDifference": "直近3本を実画像で比較。SHOPPINGの座って袖を見る紙コラージュ（editorial-collage / graphic-space / medium）、CULTUREの片手と照明の近接イラスト（human-action / interior / detail / close）、WEEKENDの無人の分岐路（street-observation / street / high-angle / wide）から、写真調の顔と立ち姿を主題にするmedium / portrait-presenceへ切り替えた。直近2本に対して同じ構図分類を反復せず、静物を主役にする画像を増やさない。",
+  "sameCategoryReviewedAgainst": "between-busy-and-quiet-weeks",
+  "categoryVisualDifference": "直近2号のPEOPLE実画像を比較した。前号のMIKIの淡青シャツ・着席・横向き・肩掛け鞄・明るい広い室内から、ローズ色の長袖で羽織を腕に掛けたKEIの正面寄りの立ち姿へ変更。前号のhuman-environment / eye-level / medium-wide / cool / airyからportrait-presence / low-angle / medium / neutral / balancedの5軸を変え、interiorとroster-modelは保持。Vol.002の後ろ向きに袖を整える人物とも、顔、姿勢、服色、羽織の扱いを変えた。媒体やモデルIDだけを変化の根拠にしていない。",
+  "referenceSheetUse": "docs/editorial/models/references/k-05-kei.png を完全に架空のKEIの顔、見た目58歳、短い白黒混じりの髪、短い灰色の髭、丸い顔、笑い皺、厚みのある体格のidentity referenceとして使用。3面構成、青い半袖、園芸、道具は公開画像へ流用していない。",
+  "diversityReview": "同じ若い人物像を反復せず、登録モデルKEIの年齢線と厚みのある体格を保つ。勤務先、住所、家族、健康状態、所有歴、実際の発言・経験を付与しない。実在人物や著名人への明らかな類似、固有の取材対象を示す情報は目視上見られない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-10-25T18:01:27+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "原寸で薄い長袖、皺のある軽い羽織、白い自然光、緑の葉を確認。重いウールや防寒着、紅葉、雪、暖炉、行事装飾はない。",
+    "anatomyAndIdentity": "reference sheetと顔、短い白黒混じりの髪、灰色の髭、丸い顔、皺、体格を比較し同一性を確認。両腕、手首、自然に重なる指と衣類の支持に使用を妨げる破綻はない。実在人物・著名人を参照しておらず、明らかな既知人物への類似も見られない。",
+    "textAndBrands": "顔、衣服のボタン、壁、開口部、窓を原寸で確認。読める文字、数字、ロゴ、看板、透かし、固有の住所はない。",
+    "retiredPatterns": "高いラックの布の近接、本と音の帯のコラージュ、公園ベンチで横向きに休む人物は使わない。前号PEOPLEの座位・鞄・淡青シャツも反復しない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "羽織は前腕と手で支持され、床に触れていない。服は着用中。見える廊下の床に携帯電話、本、飲料、食品、衣類、鍵などの私物はない。"
+  }
+}
