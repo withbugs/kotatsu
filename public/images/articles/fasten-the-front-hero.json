@@ -1,0 +1,75 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-005",
+  "article": "fasten-the-front",
+  "githubIssue": 137,
+  "editorialIntent": "一枚の服の前をどこまで留めるか、自分で止める小さな選択を示す。着こなしや器用さの採点にしない。",
+  "subject": "完全に架空の専属AIモデルSOUが、プラム色の長袖シャツを着て座り、前立てへ片手を添えている。",
+  "setting": "十一月初めの日本を想定した固有性のない室内。淡いラベンダー灰の壁と白い布張りの椅子、白い昼光。",
+  "composition": "横長3:2、目線の高さから頭から上腿を捉えるmedium。人物を右に寄せ、襟の開き、前立て、座った布の線を見せる。",
+  "compositionFamily": "human-action",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "roster-model",
+  "cameraDistance": "medium",
+  "visualTemperature": "neutral",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "muted plum",
+    "pale lavender-gray",
+    "off-white",
+    "charcoal"
+  ],
+  "modelId": "K-03-SOU",
+  "colorMood": "白い昼光と淡いラベンダー灰にプラム色の綿を合わせ、濃茶や琥珀色へ寄せない。",
+  "creativeRationale": "服を着た本人が前を留めるところで止める場面を、顔を隠さず描く。SOUの布を扱うpersonaを背景に選び、補修や所有歴は付与しない。直近PEOPLEの立ち姿と羽織、SHOPPINGの二枚の袖口とは、座位、一枚の前立て、視線、色と媒体を変える。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: KOTATSU article hero, horizontal 3:2 landscape, single scene.\nCreate a new fictional editorial visual for an article about choosing how far to fasten the front of one familiar garment, for November 2 in Japan. Input image is ONLY an identity reference for the entirely fictional AI adult K-03-SOU: preserve apparent age 42, lean build, narrow face, unruly dark hair with silver patch, round glasses, faint moustache and chin stubble. No real person reference. Do not copy reference panels, clothes, props or setting.\nScene: a modest fictional domestic interior in early November, pale lavender-gray wall, clean off-white upholstered chair without table or props, soft neutral white low-angle daytime light. SOU sits turned slightly toward the camera, shown head to upper thighs at eye level, face fully visible looking down calmly toward his shirt front. He wears ONE unbranded muted plum medium-weight cotton long-sleeve collared button shirt with sleeves down and charcoal trousers, no jacket, no undershirt visible, no extra clothing held. Uppermost button is left open, two middle buttons fastened, bottom section falls naturally. One relaxed hand lightly rests beside the center placket as if just deciding to stop fastening; other rests on clothed thigh, both hands anatomically coherent, natural fingers, no strain or gaping. Visible collar opening and clean continuous button placket must be plausible; no before-after panels or fashion scoring. Focus on his ordinary choice and fabric line, not hand dexterity or a tailoring demonstration. Medium framing, subject on right with restrained pale wall space left, balanced density. Quiet neutral light, subtle plum, pale lavender-gray, charcoal, natural skin. Face, glasses, silver patch and shirt detail readable. Natural lived-in fabric and skin, not fashion advertising. Clearly fictional AI visual, no biography or interview cues.\nAvoid: text, logos, signage, watermarks, real location or celebrity resemblance, excessive fingers, missing fingers, duplicated buttons, broken buttonholes, extra limbs, sleeve adjustment, layered clothing, rose-shirt standing man holding blue jacket, blue shirt still life, coral chair collage, wood tables, coffee, shopping, mirrors, sewing, heavy coats, snow, fireplace, Christmas, orange autumn foliage, amber light, any private items or clothes on floor.",
+  "promptSummary": "架空の専属AIモデルSOUが十一月の室内でプラム色の長袖シャツを着て座り、開いた襟から続く前立てへ片手を添える。白い昼光と淡いラベンダー灰の背景。",
+  "caption": "襟もとを開けた一枚のシャツで、前を留める手を止める場面。完全に架空の専属モデルを描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年11月2日公開、日本の地域や室内外の違いを残す架空の室内。中厚の綿の長袖と白い昼光を採用し、特定地域の気温や全国予報を表さない。",
+  "seasonalCues": [
+    "袖を下ろした中厚の綿の長袖シャツが、十一月初めの室内で調整できる一枚を示す。",
+    "白い低い角度の昼光と柔らかな影を用い、暗い冬景色や強い盛夏の光にしない。"
+  ],
+  "seasonalAvoid": [
+    "雪、暖炉、厚いコート、紅葉の盛りで全国一律の冬や晩秋へ固定しない。",
+    "半袖、夏の強い日射、琥珀色の暗い室内、クリスマス装飾を避ける。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "similarityReviewedAgainst": [
+    "leave-one-plan-open",
+    "read-fabric-weight-before-buying",
+    "october-sound-before-light"
+  ],
+  "visualDifference": "直近3本の実heroを比較。直前PEOPLEのportrait-presenceの立ち姿と腕の羽織から、座位で前立てへ手を添えるhuman-actionへ変更。SHOPPINGの二枚の袖口と珊瑚椅子の紙コラージュ、CULTUREの本と照明の近接イラストから、一枚のシャツと顔を見せる写真調の中景へ変えた。直近4本で静物主役を増やさない。",
+  "sameCategoryReviewedAgainst": "light-layer-between-morning-evening",
+  "categoryVisualDifference": "直近2号のSTYLE実画像を確認。前回のtransit / low-angle / mixed / anonymousから、interior / eye-level / neutral / roster-modelの4軸を変更。human-actionとmediumは保持しつつ、通路を歩き羽織を持つ動作を、室内の座位で一枚の前立てを選ぶ動作へ変えた。Vol.003の回廊に椅子とシャツだけを置く静物も反復しない。モデルIDや媒体名だけを変化の根拠にしない。",
+  "referenceSheetUse": "docs/editorial/models/references/k-03-sou.pngをidentity referenceとして使用。42歳の見た目、細身の体格、細い顔、銀の部分を含む乱れた黒髪、丸眼鏡、薄い口髭と顎の髭を保持。参照の三面構成、服、靴磨き、地図は流用しない。",
+  "diversityReview": "完全に架空の成人SOUの年齢線と細身体格を参照と比較。実在人物や著名人を参照しておらず、既知人物への明らかな類似は見られない。職業、住所、所有歴、実体験、発言は付与しない。",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "personal items on floor",
+    "sleeve adjustment or layered clothing",
+    "text or watermark",
+    "fashion scoring",
+    "winter clichés"
+  ],
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-10-30T18:07:47+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "原寸で長袖の綿、自然な布の皺、白い昼光と影を確認。雪、厚い冬服、紅葉、行事装飾なし。",
+    "anatomyAndIdentity": "参照と顔、髪の銀の部分、丸眼鏡、薄い髭、見た目年齢と体格を比較。片手は前立てへ添え、片手は腿に置く。指の重なり、手首、二本の腕、襟と連続するボタン列に使用を妨げる破綻はない。",
+    "textAndBrands": "顔、眼鏡、シャツ、ボタン、椅子、壁を原寸で確認。読める文字、ロゴ、看板、透かしはない。",
+    "retiredPatterns": "分岐路の高所広景、本と端末と照明の近接イラスト、珊瑚色の椅子で二枚の袖口を整えるコラージュを使わない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "衣服は着用中。両手は前立てと腿にあり、椅子は清潔な布張り。見える床に私物や衣類、食品、書籍、端末は置かれていない。"
+  }
+}

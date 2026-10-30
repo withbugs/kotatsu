@@ -7,8 +7,8 @@ kind: feature
 template: feature
 status: draft
 publishAt: "2026-11-02T00:00:00+09:00"
-heroImage: "__AI_VISUAL_PENDING__"
-heroAlt: "前開きの服の留め方を選ぶ場面のAI生成ビジュアル（制作前）"
+heroImage: "/images/articles/fasten-the-front-hero.png"
+heroAlt: "プラム色の長袖シャツを着て椅子に座り、開いた襟から続く前立てへ手を添える、完全に架空の専属モデルSOUのAI生成ビジュアル"
 editorial:
   issueNumber: 137
   approvedPlan: "docs/editorial/plans/vol-005.md"
@@ -23,25 +23,24 @@ editorial:
     crossVolumeDecision: not-applicable
 visual:
   source: ai-generated
-  mode: pending
-  promptSummary: "制作前のブリーフ。一枚の前開きの服を着た架空専属AIモデルが、前を留める範囲を選ぶ場面。服の前の線と本人の過ごし方の関係を伝える。モデルID、媒体、構図、場所、距離、光と色の具体化はビジュアル編集へ委ねる。"
-  intent: "いつもの留め方を少し変える楽しさと、変えずに着る自由を残す。細く見せる比較、着こなしの採点、器用さの評価にしない。"
-  seasonalContext: "2026年11月2日公開、日本向け。地域や室内外の違いを残す。最新全国予報本文は取得できておらず、当日の気温や全国一律の冬服を想定しない。前を留めるだけで防寒が足りるという描写にしない。"
+  mode: photorealistic
+  promptSummary: "架空の専属AIモデルSOUが十一月の室内でプラム色の長袖シャツを着て座り、開いた襟から続く前立てへ片手を添える。白い昼光と淡いラベンダー灰の背景。"
+  intent: "前をどこまで留めるかを自分で選び、途中で止める小さな楽しさを描く。着こなしや器用さを採点しない。"
+  seasonalContext: "2026年11月2日公開、日本向けの架空の室内。地域や室内外の差を残し、特定の気温や全国予報を示さない。"
   seasonalCues:
-    - "長袖の前開きの一枚と、留めた範囲・開いた範囲で異なる布の線。地域に無理のない素材の厚さはビジュアル編集が選ぶ。"
-    - "日中の必要な明るさを保ち、白や青灰なども使える十一月の光。紅葉や雪を全国共通の背景にしない。"
+    - "袖を下ろした中厚の綿の長袖シャツで、十一月初めの室内の一枚を示す。"
+    - "白い低い角度の昼光と柔らかな影を用い、盛夏の強い日射や暗い冬景色にしない。"
   seasonalAvoid:
-    - seasonally implausible layering
-    - "雪、暖炉、厚い冬服、紅葉の盛り、クリスマス装飾で季節と地域を固定する画面"
-    - "濃い茶や琥珀色だけで十一月を説明する暗い室内、盛夏の服装"
+    - "雪、暖炉、厚いコート、紅葉の盛りで季節と地域を固定しない。"
+    - "半袖、強い夏の日射、暗い琥珀色の室内、クリスマス装飾を避ける。"
+  seasonalityReviewedBy: "agent:visual-editor"
   avoid:
     - real brand logos
     - real store signage
     - celebrity likeness
-    - "袖口を引き出す二枚の重ね着、買い物前の試着や商品比較を中心にする画面"
-    - "実在人物の取材や愛用品紹介に見える設定。専属モデルは台帳とidentity referenceを参照し、顔と体格の連続性を保つ"
-    - "服や私物の床・地面・玄関土間への直置き"
-    - "直近誌面と同じ構図の反復。Vol.005のretiredPatternsを確認する"
+    - "二枚の袖口を整える構図、商品比較、買い物前の試着を中心にする画面"
+    - "実在取材、勤務先、所有歴や実体験を付与する演出"
+    - "服や私物を床・地面・玄関土間へ直置きする配置"
 tags:
   - 手持ちの服
   - ボタン
