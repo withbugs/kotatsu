@@ -1,0 +1,73 @@
+{
+  "source": "ai-generated",
+  "visualMode": "illustration",
+  "volume": "vol-005",
+  "article": "a-place-to-write",
+  "githubIssue": 138,
+  "editorialIntent": "普段使う面を短く借り、途中の紙も元へ戻せる関係を見せる。専用机や片づけの達成を条件にしない。",
+  "subject": "黄土色の机の一角に置いた白紙とふた付きの緑のペン、開いた紙ファイル、封筒をまとめた赤茶のトレー。",
+  "setting": "2026年11月上旬の日本を想定した架空の明るい室内。拡散した昼光で作業面が見え、奥に布を掛けたかごと無地の蓋付き容器がある。",
+  "composition": "机の前縁を含む斜め上からの接近構図。白紙から開いたファイルへ視線が渡り、奥の封筒が別の用事の残る面を示す。",
+  "compositionFamily": "editorial-illustration",
+  "sceneFamily": "interior",
+  "perspective": "high-angle",
+  "humanPresence": "none",
+  "cameraDistance": "close",
+  "visualTemperature": "warm",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "light ochre",
+    "chalk cream",
+    "muted brick red",
+    "dark pine green"
+  ],
+  "colorMood": "黄土色と生成りの乾いた絵具の質感に赤茶と深緑を添える。暗い琥珀光ではなく明るい拡散光。",
+  "creativeRationale": "LIFEの非実写調枠をグワッシュの描画で担う。室内人物が続く誌面から、借りる面と戻す先の関係へ焦点を移す。前2号LIFEの靴鞄の通風空間から主題・距離・媒体・温度を変え、整理の完成形ではなく普段の用事の間にある紙を描く。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: illustration-story\nAsset type: original AI-generated hero for KOTATSU Japanese lifestyle magazine, landscape 3:2.\nPrimary request: An editorial illustration for an article about borrowing a small portion of an everyday shared table to write, then returning paper and tools to their familiar place. Show the relationship between a temporary writing area and an accessible return place, without praising tidiness or productivity.\nScene: fictional ordinary Japanese interior in early November, bright diffuse daytime light. Close oblique high-angle view of one corner of a muted ochre laminate table, visibly a raised tabletop with its front edge. A single off-white sheet rests safely away from the edge on a small open area. One capped dark green pen lies beside it. An open ochre document folder with two loose sheets is nearby; a shallow brick-red tray at the back holds two plain envelopes for another task. The everyday surface continues outside the frame; it is not an empty designer desk. No floor visible.\nStyle: hand-painted gouache and dry-brush editorial illustration with restrained block-print grain, flattened yet coherent spatial depth, confident irregular contours, subtle overlapping shapes. Clearly painted, not photographic, not paper cutout collage, not an infographic. No panels, arrows, labels, lettering or diagram.\nComposition: intimate high-angle oblique crop, close camera distance. The pale sheet and open folder form a gentle diagonal with open space between them; objects are grounded on the same clean continuous tabletop. No top-down flat lay, no product grid, no room-wide view, no person or hands. Full bleed image.\nPalette: light ochre, chalk cream, muted brick red, restrained dark pine green accents. Soft neutral white November daylight, dry matte paper and felt-like painted textures; no amber sunset, no dominant purple/blue gray.\nSeason: temperate Japanese indoor November, soft lower-season daylight and dry matte textures, no tropical sun, no snow, heater, coat, holiday decorations or forced autumn leaves.\nConstraints: no readable marks on papers, no logos, trademarks, real brands, watermarks, coffee, books, lamps, flowers, phone, food, drink, actual private correspondence, people or celebrity likeness. All paper and tools clearly on a clean raised table, no belongings on floor. Do not copy an existing hero or reference sheet. Calm lived-in practicality, no perfectionist luxury staging.",
+  "promptSummary": "十一月の架空の室内で、黄土色の机の一角に白紙と緑のペン、開いた紙ファイル、封筒の赤茶トレーを置く、斜め上からの接近グワッシュイラスト。",
+  "caption": "紙を広げる面と、途中の紙を戻すファイル。いつもの机を短く借りる場面を描いたAI生成イラストレーション。",
+  "seasonalContext": "2026年11月6日公開、日本の温帯の架空の室内。地域の天候・気温を断定しない。",
+  "seasonalCues": [
+    "低い季節の柔らかい拡散昼光で机上の紙が明瞭に見える",
+    "乾いたマットな紙・絵具と奥の織り布がつくる、盛夏の強光ではない室内の素材感"
+  ],
+  "seasonalAvoid": [
+    "雪・暖房・厚いコート・クリスマス装飾による真冬への固定",
+    "盛夏の強い日射、熱帯植物、暗い琥珀色の夕景"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "readable private text",
+    "real logos",
+    "real person likeness",
+    "floor placement",
+    "coffee and books",
+    "photorealistic fallback",
+    "window lamp hand closeup"
+  ],
+  "similarityReviewedAgainst": [
+    "fasten-the-front",
+    "leave-one-plan-open",
+    "read-fabric-weight-before-buying"
+  ],
+  "visualDifference": "直近3本の実heroを比較。紫シャツでボタンを留める人物、羽織を持つ人物、袖を扱う人物コラージュに対し、人物なしの接近した描画へ。青灰・紫から黄土色・赤茶へ切り替え、衣服ではなく面と紙の関係を見せる。",
+  "sameCategoryReviewedAgainst": "after-rain-pause-before-putting-away",
+  "categoryVisualDifference": "前回LIFEのphotorealistic / spatial-interior / eye-level / wide / cool / airyからillustration / editorial-illustration / high-angle / close / warm / balancedへ6軸変更。前々号shoes-bags-rest-after-rainの別々の台と靴鞄も実画像で比較し、単一の連続した机面と紙へ変えた。",
+  "referenceSheetUse": "none; no people used. 登録済み全6モデルを確認し、今号の専属モデル枠はSTYLEで充足済み。",
+  "diversityReview": "人物を置かず、性別・年齢・身体条件・職業を読者像として固定しない。無記入の紙で書いた量の評価をしない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-11-02T18:06:00+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "明るい拡散昼光、乾いた紙と布の質感を実画像で確認。雪・暖房・紅葉・行事装飾なし。温かな色は絵具の面であり、暗い夕景ではない。",
+    "anatomyAndIdentity": "人物・顔・手指なし。実在人物との同一性・類似の対象なし。白紙、ペン、ファイル、トレーの形状と支持面を原寸で確認。",
+    "textAndBrands": "白紙・封筒・容器・筆記具に可読文字、ロゴ、看板、透かしなし。",
+    "retiredPatterns": "分岐路の広景、青灰の窓辺で灯りに触れる手、本と端末、袖を整える人物のコラージュは使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "紙、ペン、ファイル、封筒トレー、布かご、蓋付き容器はすべて連続した高い机面上。前縁と支持面を確認し、床・土間は画面にない。紙は縁から離れ、飲食物はない。"
+  }
+}
