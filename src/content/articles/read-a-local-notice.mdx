@@ -7,8 +7,8 @@ kind: feature
 template: feature
 status: draft
 publishAt: "2026-11-10T00:00:00+09:00"
-heroImage: "__AI_VISUAL_PENDING__"
-heroAlt: "公共の案内をひとつ読む場面のAI生成ビジュアル（生成待ち）"
+heroImage: "/images/articles/read-a-local-notice-hero.png"
+heroAlt: "青と生成りの紙を留めた架空の公共施設の掲示板と、低い昼光の差す壁を描いた写真調のAI生成ビジュアル。掲示は抽象的な線と図形で、実在の催事情報ではない"
 editorial:
   issueNumber: 139
   approvedPlan: "docs/editorial/plans/vol-005.md"
@@ -23,13 +23,14 @@ editorial:
     crossVolumeDecision: not-applicable
 visual:
   source: ai-generated
-  mode: pending
-  promptSummary: "公共の掲示の前で、ひとつの案内の短い文に目をとめる場面。実在施設や催事の記録に見せず、参加を決める前の静かな関心を表す。画風、構図、場所、視点、人物の有無は本文と最新誌面を見てビジュアル編集が決める。"
+  mode: photorealistic
+  promptSummary: "十一月の架空の公共施設で、青と生成りの抽象的な掲示と低い昼光の差す壁を、目の高さの中景で描く写真調のAI生成ビジュアル。人物と可読の催事情報は含めない。"
   intent: "掲示の情報をすべて集めず、読むだけでも文化との接点を選べる余韻を伝える。外出や参加の達成を評価しない。"
   seasonalContext: "2026年11月10日公開、日本の架空の公共空間。特定地域の気温や天候、紅葉を断定しない。"
   seasonalCues:
-    - "人物を使う場合は長袖や調整できる前開きを候補とし、地域・室内外に合う服装を選ぶ。"
-    - "掲示を無理なく読める明るさと、盛夏の強い直射光に偏らない光を保つ。"
+    - "壁に斜めに差す低い角度の柔らかな昼光。"
+    - "乾いたマットな紙と淡い陰影をもつ室内の壁面。盛夏の強い照り返しを避けた明るさ。"
+  seasonalityReviewedBy: agent:visual-editor
   seasonalAvoid:
     - "全国一律の雪、紅葉の盛り、厚い冬服や暖炉で十一月を固定する演出。"
     - "暗い掲示面、濃い茶色や琥珀色、大量の落葉だけで季節を表す画面。"
