@@ -19,6 +19,7 @@ jobs:
     permissions:
       contents: read
       issues: read
+      pages: read
     outputs:
       pages_checks: ${{ steps.pages-checks.outputs.checks }}
     steps:
