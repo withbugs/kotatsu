@@ -18,7 +18,17 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - run: pnpm exec playwright install --with-deps chromium
+      - name: Install Japanese font for screenshots
+        timeout-minutes: 2
+        run: |
+          font_dir="$HOME/.local/share/fonts"
+          install -d "$font_dir"
+          curl --fail --silent --show-error --retry 2 --retry-max-time 60 --max-time 30 \
+            --output "$font_dir/NotoSansCJKjp-Regular.otf" \
+            'https://raw.githubusercontent.com/notofonts/noto-cjk/Sans2.004/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf'
+          fc-cache -f "$font_dir"
+      - run: pnpm exec playwright install chromium
+        timeout-minutes: 5
       - run: pnpm test:visual
       - uses: actions/upload-artifact@v4
         if: always()

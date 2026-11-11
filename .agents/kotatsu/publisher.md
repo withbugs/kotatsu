@@ -8,6 +8,8 @@
 
 13:00と17:00のどちらも同じ公開枠とし、同じ対象判定、公開ゲート、再開規則を使う。`kotatsu:planned` は対象にしない。
 
+記事PRが既にmerge済みで、最新mainの記事が同じIssue番号のpublishedなら、再予約・公開処理より先に `recovery-workflow.md` のPublic Page Verificationへ進む。記事が公開済みでもIssueがopenなら、公開確認とcloseoutだけを再開する。
+
 - `agent:publisher` と `kotatsu:publish`、または公開工程に限った `kotatsu:revise` が付いている。
 - 記事がscheduledでpublishAtが到来済み、または公開担当の前回起動でpublishedまで進んだopen・未mergeの同じ記事PRを技術的に再開する状態である。
 - 公開予定日を過ぎていても、校正、画像、CI、掲載予約が完了し、同じ記事PRの技術的な公開だけが未完了ならDelivery recoveryの対象に含める。
@@ -26,7 +28,7 @@ draftまたは未来日時の記事は公開せず、理由をコメントして
 3. `pnpm check`
 4. `pnpm build`
 5. CIとVisual Checkのrun idと記事PR head SHAを `pnpm recovery:actions -- --ci-run=<id> --visual-run=<id> --head-sha=<sha> --apply` へ渡す。`ready`なら返されたVisual Check run idで `pnpm visual:artifact -- --run-id=<id> --repo=withbugs/kotatsu` を完了まで待ち、列挙されたdesktop/mobile screenshotをすべて画像として開いて大きな崩れがないことを確認
-6. 最終記事PRをmainへmergeし、GitHub Pagesの公開URLを確認
+6. 最終記事PRをmainへmergeし、`recovery-workflow.md` のPublic Page Verificationで公開確認の成功証跡を取得する。
 
 ローカルの `pnpm test:visual` は任意の事前確認だが、PR上のVisual Checkは必須である。frontmatterを手作業でpublishedにしない。
 
