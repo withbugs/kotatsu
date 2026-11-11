@@ -101,6 +101,21 @@ rootコーディネーター自身は本文、画像、校正、編集承認、�
 
 利用上限、PC停止、Codexアプリ停止などで予定済みタスク自体がGitHubへ結果を残せなかった場合も、次に起動した迅速復旧コーディネーターまたは進行編集はIssueとPRの最終更新時刻から同じ分類を行う。失敗した実行の再現を待たない。
 
+## Public Page Verification
+
+GitHub Pagesのdeploy後、同じworkflowの `Pages article #<Issue番号> / <slug>` jobが、公開中のHTMLとheroを同じビルドの成果物と照合する。openな記事Issueに対応するpublished記事を対象にするため、既にmerge済みでcloseoutだけ残った記事も確認できる。公開先の一時的な不達や古い配信結果はjob内の有界再試行で扱う。
+
+通常公開後とmerge済みDelivery復旧では、公開担当が記事PRのmerge、保持済みゲート、最新 `origin/main` の同一Issue番号・slug・publishedを照合する。そのmain SHAの `deploy.yml` runを既存brokerで取得する。
+
+```text
+node scripts/editorial/kotatsu-github.mjs run list --repo withbugs/kotatsu --workflow deploy.yml --branch main --commit <main SHA> --limit 5 --json databaseId,headSha,status,url
+node scripts/editorial/kotatsu-github.mjs run view <run id> --repo withbugs/kotatsu --json workflowName,headBranch,headSha,status,jobs,url
+```
+
+同じmain SHAの `Deploy GitHub Pages` runに `deploy` と対象Issue番号・slugが一致する記事確認jobがあり、双方がcompleted/successの場合だけ、公開URL、確認job URLと完了時刻、main SHAを記録して `kotatsu:done` でcloseする。別記事のjob成功やdeploy成功だけでは代用しない。未完了なら同じrunを短時間だけ確認し、失敗・未到達ならrun/jobと再開地点をcheckpointに残す。ブラウザ承認待ちやローカルの公開URL取得に切り替えない。
+
+既にmergeされた記事は公開確認だけを再開し、記事branch、本文、画像、公開日、掲載予約、merge、deployをやり直さない。確認失敗を理由に再予約の経路へ入れない。
+
 ## Delivery Recovery
 
 当日中の技術的中断は `kotatsu:revise + agent:publisher` に再開地点を残す。迅速復旧では次の日中root実行が公開担当workerへ委任し、通常担当の13:00または17:00まで待たない。`article:publish` と `visual:artifact` は再実行可能として扱い、commit、artifact、mergeを重複させない。
