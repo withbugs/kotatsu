@@ -7,8 +7,8 @@ kind: feature
 template: feature
 status: draft
 publishAt: "2026-11-16T00:00:00+09:00"
-heroImage: "__AI_VISUAL_PENDING__"
-heroAlt: "本を読みかけて、ふとページをめくる手が止まる場面（AI生成イメージ）"
+heroImage: "/images/articles/words-for-an-unfinished-book-hero.png"
+heroAlt: "赤茶のカーディガンを着た人が、緑のソファで無地の本を開いたまま視線を上げるAI生成ビジュアル"
 editorial:
   issueNumber: 140
   approvedPlan: "docs/editorial/plans/vol-005.md"
@@ -23,16 +23,17 @@ editorial:
     crossVolumeDecision: not-applicable
 visual:
   source: ai-generated
-  mode: pending
-  promptSummary: "読みかけの一冊の途中で、ページから気持ちが離れずにいるひととき。記録する手順より、読む動きがいったん止まったことを伝える。"
-  intent: "本の文面や装丁を見せず、一節に出会ったあとの間を残す。紙や音声の記録は選択肢であり、筆記具や端末を主役にする必要はない。"
-  seasonalContext: "十一月の日本の室内。地域や時間帯で体感や光は異なるため、天候や冷え込みは固定しない。"
+  mode: photorealistic
+  promptSummary: "十一月の昼、赤茶のカーディガンを着た架空の読者が緑のソファで無地の文庫本を開いたまま、視線を少し上げる写真調のAI生成ビジュアル。"
+  intent: "小説の一場面が心に残り、次のページをめくる前にひと息とどまる間を描く。記録の道具や読了を主題にしない。"
+  seasonalContext: "2026年11月16日公開。十一月中旬の日本を想定した架空の室内の昼。特定地域の気温や天候は示さない。"
   seasonalCues:
-    - "人物が入る場合は長袖や脱ぎ着できる薄手の上着など、室温に合わせた装い"
-    - "読む面に十分な明るさを残す。物を置く場合は用途がわかる清潔な面を使う"
+    - "赤茶色のニットカーディガンと生成りの長袖を重ね、手元に袖口が見える。"
+    - "壁と布地に柔らかな昼光が差し、本の手元も十分に明るい。"
+  seasonalityReviewedBy: agent:visual-editor
   seasonalAvoid:
-    - seasonally implausible layering
-    - "雪、暖炉、大量の紅葉で地域や季節を一律に見せる演出"
+    - "盛夏の薄着、強い照り返し。"
+    - "雪、暖炉、厚い外套、紅葉の盛りで季節や地域を一律に見せる演出。"
   avoid:
     - real brand logos
     - real store signage
