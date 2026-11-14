@@ -1,0 +1,72 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-005",
+  "article": "words-for-an-unfinished-book",
+  "githubIssue": 140,
+  "editorialIntent": "小説の一場面が心に残り、次のページをめくる前にひと息とどまる間を描く。記録の道具や読了を主題にしない。",
+  "subject": "赤茶のニットを着た架空の読者が、緑のソファで無地の文庫本を開いたまま本の向こうを見る。",
+  "setting": "2026年11月16日公開。十一月中旬の日本を想定した架空の室内の昼。特定地域の気温や天候は示さない。",
+  "composition": "ソファと人物の上半身から膝までを斜め前から捉える中広景。本と視線の先に余白を置く。",
+  "compositionFamily": "human-environment",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "anonymous",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "warm",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "brick red",
+    "sage green",
+    "cream",
+    "charcoal"
+  ],
+  "colorMood": "赤茶の編み地とセージグリーンの布地に、生成りの壁と穏やかな昼光。",
+  "creativeRationale": "本の文字や記録の手順を見せず、開いたままの本と外れた視線で読書の間を表す。今号のLIFEの机上イラストとSTYLEの専属モデル枠を尊重し、ここでは別の架空の読者を生活空間ごと写す写真調を選んだ。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural. Generate a landscape 3:2 editorial hero image for Japanese culture magazine KOTATSU, for an essay about the pause when a passage in a novel stays with you. A quiet mid-November midday in an ordinary Japanese home. At a diagonal side angle from just below seated eye height, medium-wide candid framing of a wholly fictional anonymous adult reader, seated sideways on a sage fabric sofa, holding a small unmarked open paperback over their lap. Their gaze has drifted slightly past the book for a beat, calm and unposed, and the page is still. The page faces the reader, and we see only the back of the unmarked cover and the ivory page edges. One anatomically natural hand supports the spine from below, the other rests relaxed by the edge without writing or pointing. Muted brick-red light knit cardigan over a cream long-sleeve cotton top, visible cuffs, charcoal trousers; gentle low-angled November daylight from an off-frame source, bright enough to read. Sage upholstery, cream wall, brick knit, neutral with soft warm accents, ordinary woven textures, airy composition. Keep the reader and the book near the central crop area, with room around them; no frontal portrait. No readable or pseudo-readable text, signage, brand, logo, watermark, celebrity likeness, desk, coffee, lamps, phone, pens, visible window, snow, peak foliage, heavy outdoor layers, or objects on the floor. No added graphics. Convey the pause through the gaze and still open book.",
+  "promptSummary": "十一月の昼、赤茶のカーディガンを着た架空の読者が緑のソファで無地の文庫本を開いたまま、視線を少し上げる写真調のAI生成ビジュアル。",
+  "caption": "ページをめくる前に、小説の一場面を思い返すひととき。架空の読者を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年11月16日公開。十一月中旬の日本を想定した架空の室内の昼。特定地域の気温や天候は示さない。",
+  "seasonalCues": [
+    "赤茶色のニットカーディガンと生成りの長袖を重ね、手元に袖口が見える。",
+    "壁と布地に柔らかな昼光が差し、本の手元も十分に明るい。"
+  ],
+  "seasonalAvoid": [
+    "盛夏の薄着、強い照り返し。",
+    "雪、暖炉、厚い外套、紅葉の盛りで季節や地域を一律に見せる演出。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "実在作品の装丁、可読文字、借りた本への書き込み。",
+    "本と端末を置いた窓辺の灯り、机上の道具を主役にする構図。",
+    "本や私物の床への直置き。"
+  ],
+  "similarityReviewedAgainst": [
+    "read-a-local-notice",
+    "a-place-to-write",
+    "fasten-the-front"
+  ],
+  "visualDifference": "直近3本の実画像を比較。無人の掲示板と机上の紙から、ソファで読む人へ。STYLEの前立てを留める正面の動作に対し、斜めから視線の先とソファを含め、本を持ったまま止まる時間を描いた。",
+  "sameCategoryReviewedAgainst": "october-sound-before-light",
+  "categoryVisualDifference": "Vol.004の手元灯に触れる手の近接イラストから、ソファで本を開いた人物の中広景へ変更。媒体、構図、視点、距離、色温度、密度を変えた。Vol.003の無人の紙コラージュと音の帯も実画像で確認し、光や音の変化ではなく、読者の姿と視線に焦点を置いた。",
+  "referenceSheetUse": "none; 架空の匿名人物。登録済み6人を確認したが同一性参照は使用していない。",
+  "diversityReview": "顔と視線は一人の架空の読者を表すために使用。書く道具や読了を条件にする演出はない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-11-13T18:02:03+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "長袖の重ね着と柔らかい斜めの昼光を確認。雪、暖炉、盛りの紅葉なし。",
+    "anatomyAndIdentity": "両手の指、手首と袖口、本の保持、視線を確認。目立つ破綻や特定の実在人物を想起させる特徴は見当たらない。",
+    "textAndBrands": "無地の表紙と小口が見える。判読できる文字、ロゴ、透かしなし。",
+    "retiredPatterns": "分岐路の広景、窓辺の灯りと端末、袖口を整える紙コラージュは使用していない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "本は読者の両手で保持され、布はソファの背に掛かっている。床置きの私物はない。"
+  }
+}
