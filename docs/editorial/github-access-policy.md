@@ -24,6 +24,7 @@ fetch、switch、offline installには、初回呼び出しから `sandbox_permi
 - milestone closeoutはrepository固定の `node scripts/editorial/close-complete-milestones.mjs --apply` を使う。
 - 月次計画の期限判定と欠落queue作成はrepository固定の `node scripts/editorial/monthly-planning-recovery.mjs --apply` を使う。このスクリプトだけが `withbugs/kotatsu` の全Vol. milestoneと計画Issueを照合し、未来Vol.1件の範囲で欠けたmilestoneとresearch Issueを作成できる。
 - 必須Actionsのstale判定と再実行はrepository固定の `pnpm recovery:actions -- --ci-run=<id> --visual-run=<id> --head-sha=<sha> --apply`（`actions-recovery.mjs`の固定alias）を使う。予定実行がrunを直接cancel/rerunしない。
+- 公開工程の `pnpm visual:artifact` による成果物取得は、予定実行では `node scripts/editorial/kotatsu-github.mjs run download <run-id> --repo withbugs/kotatsu --head-sha <article-head-sha>` で実行する。最初の `exec_command` から `sandbox_permissions: "require_escalated"` を指定する。brokerは記事PRと同じhead SHAの成功済みVisual Check runを照合し、同じ取得処理で固定名 `kotatsu-visual-check` の成果物を一時ディレクトリへ保存する。終了まで待ち、列挙されたdesktop/mobile画像をすべて開いて確認する。
 - local branch、commit、switch、mergeは通常の `git` を使う。
 
 ## Isolated Worktrees
