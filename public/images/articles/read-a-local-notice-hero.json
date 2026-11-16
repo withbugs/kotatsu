@@ -1,0 +1,74 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-005",
+  "article": "read-a-local-notice",
+  "githubIssue": 139,
+  "editorialIntent": "ひとつの掲示へ目をとめ、参加を決める前の関心を残す。外出や参加の達成を条件にしない。",
+  "subject": "架空の公共施設の掲示面。青と生成りの紙に抽象的な線と小さな赤土色の図形があり、右の壁に低い昼光が差す。",
+  "setting": "2026年11月10日公開、日本の温帯を想定した架空の公共施設の明るい室内。実在施設や催事の記録ではない。",
+  "composition": "掲示面と隣の壁を目の高さから斜めに捉える中景。中央の青い一枚へ視線を集め、右に壁と通路の余白を残す。",
+  "compositionFamily": "spatial-interior",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "none",
+  "cameraDistance": "medium",
+  "visualTemperature": "cool",
+  "visualDensity": "airy",
+  "dominantPalette": [
+    "mineral blue",
+    "chalk white",
+    "pale cool gray",
+    "muted terracotta",
+    "brushed silver"
+  ],
+  "colorMood": "青と薄灰の明るい中間色、乾いた紙、銀色の細い枠。赤土色は小さなアクセント。",
+  "creativeRationale": "記事の入口である公共の掲示と距離を選ぶ余白を、無人の室内の写真調で表す。LIFEの机上グワッシュとSTYLEの人物から媒体・主題・距離を変える。前2号WEEKENDの散歩や帰路の屋外へ戻さず、情報の入口だけを切り取る。専属モデル枠はSTYLE、非実写調枠はLIFEで充足済み。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural\nAsset type: original AI-generated landscape 3:2 hero image for Japanese editorial magazine KOTATSU, 1536x1024.\nPrimary request: A quiet fictional community-center notice wall that invites looking at one announcement without suggesting attendance or a destination. No people. This is an imagined editorial scene, not a record of a real venue or event.\nScene: an ordinary modest Japanese public-building interior in temperate early November, a pale cool-gray wall with a simple shallow brushed-aluminum notice panel. A few separate cream and pale blue sheets are mounted neatly inside the panel, with one slightly larger pale blue sheet becoming the gentle focus. Sheets carry only subtle abstract gray line-like marks and one small abstract muted terracotta shape, absolutely no readable writing, characters, numbers, dates, venue names, QR codes, logos or realistic event advertisements. They should suggest notices at a glance without supplying any information. A sliver of the clean empty corridor remains at right; no destination doorway as focal point. No luxury architecture.\nComposition: eye-level, medium distance, slightly oblique view of the notice panel and adjacent plain wall, panel occupying about two-thirds of the frame. Enough quiet space to allow attention to settle on one sheet. Clearly an interior wall, no tabletop still life, no flat lay, no street, no branching paths. Full bleed, natural understated editorial realism, coherent architectural geometry, subtle matte paper texture, not a product mockup or illustration.\nLighting and season: clear cool-neutral low-angle November daylight from an unseen side window, a soft elongated rectangular patch of daylight on the adjacent wall, gentle legible illumination across paper, dry matte paper and quiet indoor surfaces. No dramatic amber sunset, no summer glare, no snow, autumn-leaf decorations, thick coats, heaters or holiday symbols. The season is conveyed by lower-angle soft light and dry indoor material textures without asserting local weather.\nPalette: mineral blue, chalk white, pale cool gray, tiny muted terracotta accent, restrained brushed silver. Airy, cool, calm, ordinary rather than showroom-perfect.\nConstraints: newly generated fictional scene only, no real facility or landmark, no people, faces, hands or bodies; no coffee, books, phones, personal belongings, food, plants, clocks, readable marks, branding or watermark. Nothing placed on floor. No reuse of an existing hero. No posters that could be mistaken for real event information.",
+  "promptSummary": "十一月の架空の公共施設で、青と生成りの抽象的な掲示と低い昼光の差す壁を、目の高さの中景で描く写真調のAI生成ビジュアル。人物と可読の催事情報は含めない。",
+  "caption": "一枚の案内に目がとまる余白を描いたAI生成ビジュアル。掲示の線や図形は架空の表現で、実在する催事情報ではありません。",
+  "seasonalContext": "2026年11月10日公開、日本の温帯の架空の公共施設の室内。特定地域の気温・天候を断定しない。",
+  "seasonalCues": [
+    "壁に斜めに差す低い角度の柔らかな昼光",
+    "乾いたマットな紙と淡い陰影をもつ室内の壁面。盛夏の強い照り返しを避けた明るさ"
+  ],
+  "seasonalAvoid": [
+    "全国一律の雪、厚い冬服、暖房やクリスマス装飾",
+    "紅葉の盛り、暗い琥珀光、盛夏の強い直射光"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "readable event information",
+    "real facility names",
+    "logos and trademarks",
+    "people and hands",
+    "floor placement of belongings",
+    "branching roads",
+    "coffee and books"
+  ],
+  "similarityReviewedAgainst": [
+    "a-place-to-write",
+    "fasten-the-front",
+    "leave-one-plan-open"
+  ],
+  "visualDifference": "直近3本の実heroを比較。机上の接近グワッシュ、ボタンを留める人物、羽織を持つ人物に対し、無人の公共室内の掲示面へ。黄土色・紫・衣服から青灰の壁と紙へ変え、机上静物の連続を避けた。",
+  "sameCategoryReviewedAgainst": "afternoon-route-by-return-time",
+  "categoryVisualDifference": "前回WEEKENDのstreet-observation / street / high-angle / wide / neutral / balancedからspatial-interior / interior / eye-level / medium / cool / airyへ6軸変更。前々号before-the-holidays-neighborhood-walkのベンチで休む人物も実画像比較し、無人の屋内掲示へ主題を移した。媒体は写真調を継続するが、散歩・帰路の景観を反復しない。",
+  "referenceSheetUse": "none; no people. 登録済み全6モデルを確認し、今回は掲示と読む前の余白を主題にする。",
+  "diversityReview": "人物を描かず年齢・性別・身体条件を読者像に固定しない。立って読むことや外出の達成を評価する場面にしない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-11-07T18:03:31+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "原寸で壁の低い昼光、紙の乾いた質感と明るさを確認。雪・紅葉・暖房・行事装飾なし。地域の天候を特定する要素なし。",
+    "anatomyAndIdentity": "人物・顔・手指なし。掲示枠、留め具、紙の支持面と壁・床の接合に使用を妨げる破綻なし。",
+    "textAndBrands": "紙は抽象的な波線と図形のみ。可読文字、数字、日付、QRコード、ロゴ、実在施設名、透かしなし。札幌市の案内の再現ではない。",
+    "retiredPatterns": "分岐路の広景、窓辺で灯りに触れる手、本と端末、袖を整える人物コラージュはいずれも不使用。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "掲示の紙は壁面パネルへ留め具で固定。右下に見える通路床は空で、書籍、衣類、飲食物、端末などの私物なし。"
+  }
+}
