@@ -1,0 +1,70 @@
+{
+  "source": "ai-generated",
+  "visualMode": "photorealistic",
+  "volume": "vol-005",
+  "article": "read-how-a-tool-is-made",
+  "githubIssue": 141,
+  "editorialIntent": "製法を読んで道具の模様や仕上げに目を向ける記事を支える。ブランドや製品を特定せず、部位の違いが見えることを優先する。",
+  "subject": "小さな粒状の模様のある架空の鉄の急須一つ。取り外した蓋を横に置き、開口部の内側に光が返る。",
+  "setting": "2026年11月22日公開。十一月下旬の日本を想定した架空の室内の昼。特定の地域や気温を示さない。",
+  "composition": "高い斜め位置からの近景。台の角と急須敷きが見える範囲を残し、胴の模様、口の内側、蓋を中央付近で見比べられるようにする。",
+  "compositionFamily": "material-study",
+  "sceneFamily": "interior",
+  "perspective": "high-angle",
+  "humanPresence": "none",
+  "cameraDistance": "close",
+  "visualTemperature": "cool",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "graphite",
+    "muted gray-green",
+    "pale cream"
+  ],
+  "colorMood": "灰緑の台と淡い生成りの布に、濃い灰色の鉄と冷めた斜光。",
+  "creativeRationale": "同じ急須の粒状の外面と光を返す内面を一画面で読み取れるよう、素材の反射差がわかる写真調の近景にした。今号のLIFEの非実写調とSTYLEの専属モデル枠を踏まえ、購入を促す商品陳列や人物の身振りを入れず、本文が伝える部位の差を中心に置く。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: quiet Japanese independent magazine editorial, material study. Asset: landscape 3:2 hero for KOTATSU about noticing a tool’s making from the information that comes with it. In an ordinary Japanese home in late November, an unbranded small cast-iron Japanese teapot sits open on a clean low cream ceramic trivet on a muted gray-green kitchen counter. Its matching lid rests right side up on the same trivet beside it. One rounded squat pot, one correctly attached short pouring spout pointing diagonally right, one simple slender fixed arch handle with both ends attached, one round opening with a smooth dark enamel-like inner wall. Give the matte dark gray cast body a subtle field of small raised dots, rendered tactile under the low soft side daylight, and let a restrained diffuse glint inside the empty opening reveal the different finish. High three-quarter close view at roughly 35–45 degrees from horizontal, never flat-lay, just enough room around the intact pot; keep opening, cast texture, spout and lid in the middle of the frame within safe crops. Show the edged counter/trivet as a clear working surface. At the outer edge, a loosely folded medium-weight undyed cotton tea cloth brings a seasonal indoor texture. Low angled late-November daylight traces a long, diffuse shadow across the clean countertop, illumination bright enough to see both surfaces. Palette of graphite, faded gray-green, and pale cream. Modest home use, unstyled and tactile, not glossy product advertising, no dramatic vignette. No person or hands, brand, text, fake letters, watermark, printed design, food, flames, stove, steam, snow, festive decoration, vivid foliage, amber room or floor placement. An invented generic teapot, never reproduce any branded item or reference image.",
+  "promptSummary": "十一月の斜めの昼光が入る台所で、鉄の急須一つの粒状の鋳肌と光を返す内面を、蓋を外した近景で描く。",
+  "caption": "蓋を外すと、急須の胴を覆う粒の模様と光を返す内側が見える。架空の道具を描いたAI生成ビジュアル。",
+  "seasonalContext": "2026年11月22日公開。十一月下旬の日本を想定した架空の室内の昼。特定の地域や気温を示さない。",
+  "seasonalCues": [
+    "窓から低い昼光が差し、台の上へ斜めに長い影が伸びる。",
+    "生成りの中厚の綿布に織り目と緩やかな折り目が見える。"
+  ],
+  "seasonalAvoid": [
+    "盛夏を連想させる強い照り返しや薄い布。",
+    "雪、盛りの紅葉、暖炉、濃い琥珀色だけの暗い室内。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "実在商品、公式写真、既刊画像の再現、タグ、値札、可読文字。",
+    "直火やコンロ、蒸気、道具の床置き。"
+  ],
+  "similarityReviewedAgainst": [
+    "words-for-an-unfinished-book",
+    "read-a-local-notice",
+    "a-place-to-write"
+  ],
+  "visualDifference": "直近3本の実画像を比較。CULTUREの人物とソファを含む暖かい中広景から、無人で冷色の器の近景へ。WEEKENDの壁面に連なる紙の遠近やLIFEの黄土色の広い机と紙のイラストに対し、斜め上から一器の表面と開口部を同時に見る。",
+  "sameCategoryReviewedAgainst": "read-fabric-weight-before-buying",
+  "categoryVisualDifference": "Vol.004の紙コラージュで珊瑚色の椅子と袖口を映す人物の目の高さの中景から、写真調の無人の台所で器の鋳肌と内側を見る高い斜め位置の近景へ変えた。Vol.003の衣類ラックを写す写真調も実画像で比較し、布の垂直な反復を避けて一つの器へ焦点を置いた。",
+  "referenceSheetUse": "なし。誌面の専属モデル枠はSTYLEで使用。",
+  "diversityReview": "衣服や人物を主題にした直近のSHOPPING二本に対し、使用前の道具の具体的な部位を人の登場なしで示す。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-11-16T16:15:43.4837811+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "斜めに入る柔らかい昼光と中厚の綿布を確認。冬の屋外や盛夏を示す要素は見当たらない。",
+    "objectIntegrity": "胴、注ぎ口、弧を描く一本の取っ手の両端、開口部と蓋を確認。奥の内面に反射があり、鋳肌の粒と区別できる。人物なし。",
+    "textAndBrands": "急須、蓋、敷き台、布にロゴ、文字、看板、値札、透かしは見当たらない。",
+    "retiredPatterns": "二手に分かれる道、窓辺で本や端末に並んだ灯り、珊瑚色の椅子で袖口を整える場面はいずれも使っていない。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "急須本体と蓋は白い陶製の敷き台に、布は清潔なキッチンカウンターに置いている。カウンターの前縁が見え、床置きや火気はない。"
+  }
+}
