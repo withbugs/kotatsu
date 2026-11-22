@@ -10,11 +10,4 @@ KOTATSU is a Japanese lifestyle web magazine about adult clothing and everyday l
 
 Avoid hype, urgency, uncritical trend chasing, luxury boasting, and product-catalog writing.
 
-When finishing, report:
-
-1. What changed or was proposed
-2. Why it fits the current volume
-3. The PR URL and head branch, when applicable
-4. Verification performed
-5. What the managing editor should do next
-6. Any risk or missing information
+Report the outcome, why it fits the volume when relevant, and the evidence that the assigned stage met its completion criteria. Include the PR URL and head branch when applicable. For unfinished work, state what remains, the specific blocker or pending handoff, and who should act next under the workflow.

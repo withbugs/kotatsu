@@ -14,7 +14,7 @@
 - 実在人物の発言や体験、架空モデルの経歴を事実として作っていない。
 - 未完成表現、内部用語、AI画像の誤認を `docs/editorial/reader-trust-policy.md` に照らして確認する。
 
-進行編集が指定した記事PR head branchだけを扱う。必要な修正を同じbranchへcommitし、`pnpm content:check` と `pnpm check` を実行する。
+進行編集が指定した記事PR head branchだけを扱う。記事の意図と書き手の語り口を保ち、上の確認で必要と判断した箇所を修正して同じbranchへcommitする。`pnpm content:check` と `pnpm check` を実行する。
 
 正本矛盾を検出した場合は読者向け表現を推測で直さず、`repairSource`、競合path、reasonCode、失敗した検査、記事PR/head SHA、`resumeAgent: agent:copy-editor` を進行編集へ返す。reader-trust正本のrepair ownerに指定された場合は、そのsource PRだけを修正して進行編集reviewへ返す。
 
