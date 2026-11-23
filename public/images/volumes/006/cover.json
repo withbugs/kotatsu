@@ -1,0 +1,72 @@
+{
+  "source": "ai-generated",
+  "usage": "volume-cover",
+  "visualMode": "photorealistic",
+  "volume": "vol-006",
+  "githubIssue": 155,
+  "editorialIntent": "Vol.006「十二月、次へ持っていくもの」を、冬ごとに袖を通す上着とマフラー、日々の道で見上げる木で表す。年をまたいで残る身近な色や風景に目を向ける。",
+  "subject": "青いニットのマフラーと青灰のコートを着た架空の通行人。少し葉を残す大きな落葉樹の脇を歩く。",
+  "setting": "2026年12月上旬の日本の温帯域を想定した架空の緑道。初冬のある晴れた日の午後。",
+  "composition": "草地の縁から低い視点で小道を見渡す広景。画面中央の人物と幹を、上方へ伸びる枝と横へ続く道でつなぐ。",
+  "compositionFamily": "human-environment",
+  "sceneFamily": "nature",
+  "perspective": "low-angle",
+  "humanPresence": "anonymous",
+  "cameraDistance": "wide",
+  "visualTemperature": "cool",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "pale sky blue",
+    "slate blue",
+    "deep evergreen",
+    "cobalt blue",
+    "copper"
+  ],
+  "colorMood": "冷たい青空と青灰のコートに、コバルトのマフラーと低い日差しで光る草の細い帯を重ねる。",
+  "creativeRationale": "着慣れた色と、通るたびに見る木を同じ風景に置いた。写真的な遠景で、いつもの道を歩くときに目に入る色と、日ごとに枝が見える変化を伝える。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: photorealistic-natural.\nAsset: original landscape AI-generated cover image, 1536 x 1024, edge to edge, for the December 2026 issue of a Japanese everyday-life magazine. Theme: the familiar things we carry into the next year.\nA quiet early December afternoon along a familiar footpath on the edge of a small fictional residential greenway in temperate Japan. Compose from a low camera position at the grassy verge, looking slightly upward across the path. A single fully fictional adult in mid-stride, seen small in side silhouette, wearing an ordinary smoke-blue wool coat and the same well-worn vivid cobalt knitted scarf they return to each winter. The person is neither posing nor looking at camera; their small face is in natural soft shadow and carries no identifiable likeness. Hands are naturally inside coat pockets. A mature deciduous tree next to the path has a recognizable web of mostly bare branches and only a handful of remaining copper leaves; muted evergreen foliage deeper in the scene makes clear the landscape is not uniformly bare. No snow. Low clear late-afternoon sun runs sideways along the path, with soft long shadows, clear cold pale sky, and one thin line of warm sunlight along the scarf and grass. Ground foliage is sparse. The landscape and the figure sharing it matter equally. Keep the walking figure and the main trunk and lower branch junction grouped around center, with room around them for tight centered crops and some branches naturally continuing out of frame. Balanced visual density, well-defined silhouettes at small scale. Cool overall: chalk-blue sky, slate-blue wool and deep fir green, one clear cobalt accent, a little copper. Natural texture, tactile but restrained, quiet confidence, contemporary Japanese editorial photography aesthetic with subtly soft contrast. No text, date, signage, logos, watermark, ornaments, holidays, shopping bags, storefronts, roads or traffic, interior furniture, board with paper, book or sofa, kettles, visible hand anatomy, recognizable location or person, or privately owned items on the ground. No mockup or magazine typography.",
+  "promptSummary": "十二月初旬の緑道を低い視点から描く。青いマフラーの架空の人物が、少し葉を残す落葉樹のそばを、低い午後の光の中で歩く。",
+  "caption": "青いマフラーでいつもの道を歩く。Vol.006「十二月、次へ持っていくもの」の正式カバー。AI生成ビジュアル。",
+  "seasonalContext": "2026年12月上旬の日本の温帯域。降雪や葉の残り方には地域差があるため、雪のない緑道の一場面を描いた。",
+  "seasonalCues": [
+    "青灰のウール調コートに厚手の青いニットのマフラーを重ねている。",
+    "枝先に銅色の葉がわずかに残り、背後には常緑樹がある。",
+    "斜めからの低い昼光が草の縁を照らし、道に長い影が落ちる。"
+  ],
+  "seasonalAvoid": [
+    "全国一律の積雪や落葉を連想させる、地面を覆う雪や一面の裸木。",
+    "真夏の頭上光、薄着、クリスマスや歳末セールの装飾。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real persons or identifiable locations",
+    "lettering, logos or signage",
+    "holiday and sale decorations",
+    "hygiene-sensitive items on the ground"
+  ],
+  "similarityReviewedAgainst": [
+    "read-how-a-tool-is-made",
+    "words-for-an-unfinished-book",
+    "read-a-local-notice"
+  ],
+  "visualDifference": "直近3記事の鉄瓶の静物、室内で本を読む人物、廊下の掲示板を実画像で比較した。道を横切る人物と枝を主体に、屋外の低い視点から広く撮ったような構図へ変えた。",
+  "previousVolumeCoverReviewedAgainst": "vol-005",
+  "coverDifference": "Vol.005のガッシュ風イラスト、人物不在の室内、目線の高さの中広景、寒暖混合、余白の多い画面から、写真調、人物と緑道、低い視点の広景、寒色中心、枝と空が画面を分ける構成へ変更した。",
+  "referenceSheetUse": "none; roster checked, no roster model or likeness reference used",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-11-23T10:00:02+09:00",
+  "imageReview": {
+    "dimensions": "1536x1024",
+    "seasonality": "コートと厚手のマフラー、枝と残葉、常緑樹、横からの低い日差しを確認。積雪や季節行事の装飾はない。",
+    "anatomyAndIdentity": "成人の横向きの全身を広景の一部として確認。手はポケットに入り、顔は遠く陰に入っている。参照画像や専属モデルを使っていない。歩幅と靴の接地に不自然さは見られない。",
+    "textAndBrands": "衣類と小道の周囲を確認。文字、ロゴ、標識、特定の場所を示す建造物はない。",
+    "retiredPatterns": "廊下の灰色の掲示板、緑のソファと赤茶の上着で読書する人物、淡い円形の敷物に置いた黒い鉄瓶を反復していない。",
+    "responsiveCrop": "公開後のレイアウトをローカルのビルド出力で再現。トップ、Vol.ページ、アーカイブをPC（1440×1100）とPixel 7相当で目視し、青いマフラーの人物と木の幹・枝の分かれ目が各枠に残ることを確認した。スマートフォンのトップでは紹介文が人物の上部に重なるが、マフラーと歩く姿は見える。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "コートとマフラーは着用中で地面に触れない。足元は靴と舗装された道で、私物の置き物はない。"
+  }
+}
