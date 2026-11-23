@@ -80,7 +80,7 @@ rapid recovery sessionは次の手順で行う。
 
 1. 工程が最も進み、元の公開予定が最も早い遅延記事を1件だけ選ぶ。
 2. Issueへ `<!-- kotatsu:rapid-recovery -->`、session id、owner run、goal、class、現在工程、PR head SHA、開始時刻、120分後の期限、`active` 状態をコメントし、現在担当1つと `kotatsu:running` を反映して再取得する。最新のsession記録が `state: active` で期限内の場合だけ有効な別leaseとして扱い、開始しない。後続の `checkpoint`、`waiting-publishAt`、`completed` 記録があるsessionは、元のexpiresAtが未来でも排他leaseを持たない。
-3. 現在工程のrole cardを指定してworkerを1件だけ起動する。workerには指定IssueとPR branchだけを扱い、別agentを起動せず、成果、検査、再開地点をGitHubへ残すよう明記する。
+3. 現在工程のrole card、対象Issue・PR branch、再開地点、保持する成果、工程の完了条件を渡し、workerを1件だけ起動する。workerは別agentを起動せず指定範囲で作業し、成果、検査、中断時の再開地点をGitHubへ記録して戻る。
 4. worker完了を待ってIssue、PR、Actionsとhead SHAを再取得する。ProductionまたはEditorialの制作workerがreviewへ戻した場合は進行編集workerを起動し、その判断後に必要な修正担当または次担当workerを起動する。実施可能な差し戻しは同じsessionで続け、workerを並列実行しない。
 5. 公開完了でgoalを `completed` にする。人手でしか決められない編集判断、owner未登録の正本矛盾、回復不能な外部障害、予期しないhead SHA変更、120分経過、worker 8件完了、19:00 JSTでは、現在工程、次action、`endedAt`を記録してgoalを `checkpoint` にし、その時点でleaseを解放する。既知ownerの正本矛盾はSource-of-Truth Recoveryへ移し、checkpointにしない。19:00以降に新しいworkerを起動しない。
 
