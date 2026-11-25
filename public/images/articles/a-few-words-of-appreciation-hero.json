@@ -1,0 +1,70 @@
+{
+  "source": "ai-generated",
+  "visualMode": "illustration",
+  "volume": "vol-005",
+  "article": "a-few-words-of-appreciation",
+  "githubIssue": 142,
+  "editorialIntent": "椅子を片づけたあと、言葉を口にするか考える短い間を、二人の距離と扉に添える手で描く。",
+  "subject": "扉に片手を添える架空の人物ミナと、重ね椅子のそばに腕を下ろして立つ架空の相手。",
+  "setting": "2026年11月27日公開。関東平地の十一月下旬を想定した架空の室内の夕方。地域や日ごとの天候と気温は特定しない。",
+  "composition": "横長4:3。目線の高さから部屋を斜めに見た中広景。扉、二人、窓、重ね椅子を一画面に収め、人物の間に椅子と夕暮れの窓を残す。",
+  "compositionFamily": "editorial-illustration",
+  "sceneFamily": "interior",
+  "perspective": "eye-level",
+  "humanPresence": "anonymous",
+  "cameraDistance": "medium-wide",
+  "visualTemperature": "mixed",
+  "visualDensity": "balanced",
+  "dominantPalette": [
+    "slate blue",
+    "muted aubergine",
+    "soft ochre",
+    "chalk beige"
+  ],
+  "colorMood": "窓の青灰色と室内の淡い壁を背景に、くすんだ赤紫の上着と黄土色のシャツを置く。",
+  "creativeRationale": "一人の表情に寄らず、人の間の距離と、言葉の代わりに扉を支える手が同時に見える絵にした。ガッシュ調の筆跡が架空の場面だと伝え、発話や感謝を決めつけずに記事へ入れる。",
+  "generationMode": "built-in image_gen",
+  "finalPrompt": "Use case: illustration-story. Draw one new landscape gouache editorial image for a Japanese fiction feature, no text. Use a 4:3 landscape frame if available. All the important action must fit within the MIDDLE 70% of the canvas width, with visible empty wall at both left and right edges. The final article crops the image to central 4:3. Medium-wide view from just inside an unidentifiable, plain Japanese multipurpose room at early evening in late November. Two completely fictional adults occupy the middle of the room in a quiet pause. At 38% of image width, short dark-haired Mina in a midweight long-sleeved muted aubergine cotton overshirt quietly rests one hand on the slightly open door. Keep her whole hand and the door contact inside the inner third of the left half, around 32% of canvas width. At 60% of width, her short-haired companion wears a midweight long-sleeved muted ochre cotton shirt with cuffs at the wrists and arms relaxed. A small stack of tubular-steel chairs sits between and slightly behind them, around 52% of image width, beneath a modest window with dark blue-gray twilight and faint reflection. Keep both faces, Mina's hand, and enough of the chair stack visible within the middle 70% even if side strips are trimmed. Show people from above their heads to about their knees, not closer. Camera at human eye level and oblique to room; upper wall and edges have breathing room. Faces are thoughtful and ordinary, no emphatic expression, no exaggerated eye contact, no speech bubbles, no gift or bow. Contemporary gouache on lightly textured paper, chalk wall, slate-blue evening, muted mauve and soft ochre clothing, naturally illuminated indoor midtones. The room is clean and visually modest. Visible hands anatomically coherent, stacked chairs visually coherent, no private or hygiene-sensitive belongings on floor. No logos, brands, signs, lettering, numbers, snow, conspicuous autumn leaves, fireplace, gifts, holiday decor, stock-photo language, real people or places.",
+  "promptSummary": "十一月下旬の夕方、扉に手を添えたミナと、重ねた椅子のそばに立つ相手の間をガッシュ調の横長イラストで描く。",
+  "caption": "椅子を片づけたあと、ミナは扉に手を添える。十一月の夕方を描いたAI生成イラスト。",
+  "seasonalContext": "2026年11月27日公開。関東平地の十一月下旬を想定した架空の室内の夕方。地域や日ごとの天候と気温は特定しない。",
+  "seasonalCues": [
+    "中厚の綿の長袖が二人の手首まで伸び、ミナの衿から内側の服が少しのぞく。",
+    "窓の外は青灰色に暮れ、室内灯の反射と、椅子や袖の輪郭が読める明るさが残る。"
+  ],
+  "seasonalAvoid": [
+    "厚い防寒着、雪、暖炉、盛りの紅葉で晩秋の気候を一様に見せる表現。",
+    "贈答や祝日、クリスマスの装飾、濃い琥珀色だけの室内。"
+  ],
+  "seasonalityReviewedBy": "agent:visual-editor",
+  "avoid": [
+    "real brand logos",
+    "real store signage",
+    "celebrity likeness",
+    "実在の場所・勤務先を示す標識、可読文字、祝日や贈答の記号。",
+    "お辞儀や花束で感謝が伝わったと決めつける演出、私物の床置き。"
+  ],
+  "similarityReviewedAgainst": [
+    "read-how-a-tool-is-made",
+    "words-for-an-unfinished-book",
+    "read-a-local-notice"
+  ],
+  "visualDifference": "直近3本の鉄の急須の素材近景、ソファで本を開く一人の写真調、無人の掲示板を実画像比較した。二人が立つ室内の距離、扉と椅子の位置、夕暮れの窓、ガッシュ調の筆跡を新たに画面へ入れた。",
+  "sameCategoryReviewedAgainst": "leave-one-plan-open",
+  "categoryVisualDifference": "前号の専属モデル一人の低い視点からの立ち姿・淡い昼光・写真調の中景から、架空の二人を目線の高さで捉える中広景、青灰の窓と淡い室内光の混合、ガッシュ調に変更。媒体、構図分類、視点、距離、色温度、人物区分の6軸が異なる。Vol.003の着席した専属モデルにも見られた一人の横顔、昼光、鞄を主にせず、二人の位置と扉を支える動作を見せた。",
+  "diversityReview": "架空の二人に異なる髪型、服の色、姿勢、役割を与え、特定の職場、関係性、年齢の断定を加えていない。実在人物や専属モデルの参照は使用していない。",
+  "reviewedBy": "agent:visual-editor",
+  "generatedAt": "2026-11-25T17:10:07+09:00",
+  "imageReview": {
+    "dimensions": "1448x1086",
+    "seasonality": "二人の長袖、青灰色に暗くなった窓、室内灯の反射を原寸で確認。雪や重い防寒着、行事の装飾はない。",
+    "anatomyAndIdentity": "原寸で両者の目線、四肢のつながり、手指、ミナの手と扉の接点、椅子の重なりを確認。掲載を妨げる破綻や明らかな既知人物への類似は見られない。",
+    "textAndBrands": "衣類、窓、椅子、扉や壁に可読文字、標識、ロゴ、透かしは見られない。",
+    "cropping": "記事・カードの4:3をPCとスマホの表示相当サイズに縮小し、16:10の中央トリミングと合わせて確認。二人の顔、扉に添えた手、重ねた椅子が残る。"
+  },
+  "readerComfort": {
+    "reviewedBy": "agent:visual-editor",
+    "hygieneSensitiveItemsOnFloor": [],
+    "placementNotes": "床には家具である重ね椅子の脚が接地する。衣服は二人が着用し、食品、書籍、端末、鞄などの私物は床にない。"
+  }
+}
